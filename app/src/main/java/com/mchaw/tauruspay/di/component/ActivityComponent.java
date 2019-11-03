@@ -4,6 +4,10 @@ import com.mchaw.tauruspay.base.activity.BaseActivity;
 import com.mchaw.tauruspay.MainActivity;
 import com.mchaw.tauruspay.di.ActivityScoped;
 import com.mchaw.tauruspay.ui.fragment.ScoreFragment;
+import com.mchaw.tauruspay.ui.main.besure.BesureFragment;
+import com.mchaw.tauruspay.ui.main.home.HomeFragment;
+import com.mchaw.tauruspay.ui.main.mine.MineFragment;
+import com.mchaw.tauruspay.ui.main.recharge.RechargeFragment;
 
 import dagger.Component;
 
@@ -24,4 +28,12 @@ public interface ActivityComponent {
     void inject(BaseActivity activity);
 
     void inject(ScoreFragment scoreFragment);
+
+    void inject(HomeFragment homeFragment);
+
+    void inject(RechargeFragment rechargeFragment);
+
+    void inject(BesureFragment besureFragment);
+
+    void inject(MineFragment mineFragment);
 }
