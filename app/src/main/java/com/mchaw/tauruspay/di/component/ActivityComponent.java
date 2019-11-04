@@ -28,12 +28,4 @@ public interface ActivityComponent {
     void inject(BaseActivity activity);
 
     void inject(ScoreFragment scoreFragment);
-
-    void inject(HomeFragment homeFragment);
-
-    void inject(RechargeFragment rechargeFragment);
-
-    void inject(BesureFragment besureFragment);
-
-    void inject(MineFragment mineFragment);
 }

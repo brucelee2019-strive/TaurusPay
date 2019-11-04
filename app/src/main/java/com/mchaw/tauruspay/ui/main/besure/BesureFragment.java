@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 
 import com.mchaw.tauruspay.R;
+import com.mchaw.tauruspay.base.fragment.BaseFragment;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 
@@ -13,26 +14,14 @@ import com.mchaw.tauruspay.di.component.ActivityComponent;
  * @date : 2019/11/3 0003 21:09
  * @description :
  */
-public class BesureFragment extends BasePresentFragment {
+public class BesureFragment extends BaseFragment {
     @Override
     protected int getContentViewId() {
         return R.layout.fragment_besure;
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        setUserVisibleHint(true);
-        super.onActivityCreated(savedInstanceState);
-    }
-
-    @Override
     protected void initFragment() {
-        super.initFragment();
-    }
 
-    @Override
-    public void injectFragmentComponent(ActivityComponent component) {
-        super.injectFragmentComponent(component);
-        component.inject(this);
     }
 }

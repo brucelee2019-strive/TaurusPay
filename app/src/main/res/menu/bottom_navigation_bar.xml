@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_home"
+        android:checked="true"
+        android:icon="@drawable/mcaw_main_home"
+        android:title="@string/bottom_main" />
+    <item
+        android:id="@+id/navigation_score"
+        android:icon="@drawable/mcaw_main_recharge"
+        android:title="@string/bottom_score" />
+    <item
+        android:id="@+id/navigation_discover"
+        android:icon="@drawable/mcaw_main_besure"
+        android:title="@string/bottom_discover" />
+    <item
+        android:id="@+id/navigation_mine"
+        android:icon="@drawable/mcaw_main_mine"
+        android:title="@string/bottom_mine" />
+</menu>
