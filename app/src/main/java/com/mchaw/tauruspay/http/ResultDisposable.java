@@ -16,8 +16,8 @@ import io.reactivex.functions.Function;
  * @date : 2019/10/29 0029 21:54
  */
 public class ResultDisposable<T> implements ObservableTransformer<ResultBean<T>, T> {
-    //请求成功
-    private static final int CODE_SUCCESS = 200;
+    //"0"表示请求成功
+    private static final int CODE_SUCCESS = 0;
     //请求失败
     private static final int CODE_FAIL = 500;
     //Session失效

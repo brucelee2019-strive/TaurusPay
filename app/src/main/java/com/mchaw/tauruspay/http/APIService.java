@@ -5,6 +5,7 @@ import com.mchaw.tauruspay.bean.Movie;
 import com.mchaw.tauruspay.bean.ResultBean;
 import com.mchaw.tauruspay.bean.ScoreAllStateBean;
 import com.mchaw.tauruspay.bean.ShopBean;
+import com.mchaw.tauruspay.bean.login.LoginBean;
 
 
 import java.util.List;
@@ -41,4 +42,8 @@ public interface APIService {
     @FormUrlEncoded
     @POST("satinApi")
     Observable<ResultBean<List<Movie>>> getTop250(@Field("type") int type, @Field("page")int page);
+
+    @FormUrlEncoded
+    @POST("login")
+    Observable<ResultBean<LoginBean>> getLoginBean(@Field("username") String username, @Field("code") String code,@Field("passwd") String passwd);
 }
