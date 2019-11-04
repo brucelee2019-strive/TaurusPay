@@ -4,9 +4,103 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:background="@color/colorAccent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="45dp"
+        android:gravity="center"
         android:text="必看"
-        android:gravity="center"/>
+        android:textSize="20dp"
+        android:textColor="@color/white"/>
 
+    <TextView
+        android:id="@+id/tv_txt1"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp">
+    </TextView>
+
+    <TextView
+        android:id="@+id/tv_txt2"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp">
+    </TextView>
+
+    <TextView
+        android:id="@+id/tv_txt3"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp">
+    </TextView>
+
+    <TextView
+        android:id="@+id/tv_txt4"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp">
+    </TextView>
+
+    <TextView
+        android:id="@+id/tv_txt5"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp">
+    </TextView>
+
+    <TextView
+        android:id="@+id/tv_txt6"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp">
+    </TextView>
+
+    <TextView
+        android:id="@+id/tv_txt7"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp">
+    </TextView>
+
+    <TextView
+        android:id="@+id/tv_txt8"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#ff0000"
+        android:textSize="14dp">
+    </TextView>
+
+    <TextView
+        android:id="@+id/tv_txt9"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#ff0000"
+        android:textSize="14dp">
+    </TextView>
 </LinearLayout>

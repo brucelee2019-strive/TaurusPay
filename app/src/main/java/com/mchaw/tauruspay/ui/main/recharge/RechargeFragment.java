@@ -21,6 +21,12 @@ public class RechargeFragment extends BaseFragment {
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        setUserVisibleHint(true);
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
     protected void initFragment() {
 
     }
