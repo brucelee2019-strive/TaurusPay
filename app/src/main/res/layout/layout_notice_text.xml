@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="30dp"
+    android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="公告"
+        android:textColor="#ff0000"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="5dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="|"
+        android:textColor="@color/black"
+        android:textSize="16sp"></TextView>
+
+    <TextView
+        android:id="@+id/tv_notice_text"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_weight="1"
+        android:ellipsize="marquee"
+        android:gravity="center"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:singleLine="true"
+        android:text="请及时确认收款,不及时确认收款导致退款的,将降低信用,信用归0将直接封号,请珍惜自己的账号!!!"
+        android:textColor="#666666"
+        android:textSize="12sp" />
+</LinearLayout>
