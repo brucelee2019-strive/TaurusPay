@@ -58,6 +58,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_bill"
         android:layout_width="match_parent"
         android:layout_height="50dp">
 
@@ -98,6 +99,7 @@
         android:background="@color/black"></TextView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_bank_set"
         android:layout_width="match_parent"
         android:layout_height="50dp">
 
@@ -138,6 +140,7 @@
         android:background="@color/black"></TextView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_qr_code"
         android:layout_width="match_parent"
         android:layout_height="50dp">
 
@@ -178,6 +181,7 @@
         android:background="@color/black"></TextView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_activate_word"
         android:layout_width="match_parent"
         android:layout_height="50dp">
 
@@ -218,6 +222,7 @@
         android:background="@color/black"></TextView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_change_password"
         android:layout_width="match_parent"
         android:layout_height="50dp">
 
@@ -258,6 +263,7 @@
         android:background="@color/black"></TextView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_about"
         android:layout_width="match_parent"
         android:layout_height="50dp">
 
