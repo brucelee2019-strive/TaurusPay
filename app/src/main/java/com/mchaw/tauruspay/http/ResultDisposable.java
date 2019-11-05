@@ -8,6 +8,7 @@ import com.mchaw.tauruspay.bean.ResultBean;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
+import io.reactivex.Observer;
 import io.reactivex.functions.Function;
 
 /**

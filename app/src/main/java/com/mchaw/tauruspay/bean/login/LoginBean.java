@@ -18,12 +18,12 @@ import java.util.List;
 public class LoginBean {
     private String token;
     private String name;
-    private int deposit;
+    private long deposit;
     private int vip;
     private int state;
     private int point;
     private int rate;
-    private int sellamount;
+    private long sellamount;
     private int sellcount;
 
     public String getToken() {
@@ -42,11 +42,11 @@ public class LoginBean {
         this.name = name;
     }
 
-    public int getDeposit() {
+    public long getDeposit() {
         return deposit;
     }
 
-    public void setDeposit(int deposit) {
+    public void setDeposit(long deposit) {
         this.deposit = deposit;
     }
 
@@ -82,11 +82,11 @@ public class LoginBean {
         this.rate = rate;
     }
 
-    public int getSellamount() {
+    public long getSellamount() {
         return sellamount;
     }
 
-    public void setSellamount(int sellamount) {
+    public void setSellamount(long sellamount) {
         this.sellamount = sellamount;
     }
 

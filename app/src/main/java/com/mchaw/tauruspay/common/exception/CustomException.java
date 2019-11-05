@@ -17,6 +17,7 @@ public class CustomException extends Exception{
     public CustomException() {
         super();
     }
+
     public CustomException(int code){
         super();
         this.code = code;

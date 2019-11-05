@@ -37,12 +37,12 @@ android {
         vectorDrawables.useSupportLibrary = true
 
         //生产环境
-        buildConfigField 'String', 'PROD_API', '"https://www.apiopen.top/"'
+        buildConfigField 'String', 'PROD_API', '"http://39.100.141.107/api/"'
         buildConfigField 'String', 'PROD_WS', '"https://im-gateway.apiopen.com/ws"'
         buildConfigField 'String', 'PROD_H5', '"https://app-h5.apiopen.com/"'
 
         //测试环境
-        buildConfigField 'String', 'TEST_API', '"https://www.apiopen.top/"'
+        buildConfigField 'String', 'TEST_API', '"http://39.100.141.107/api/"'
         buildConfigField 'String', 'TEST_WS', '"https://test-im-gateway.apiopen.com/ws"'
         buildConfigField 'String', 'TEST_H5', '"https://test-app-h5.apiopen.com/"'
 

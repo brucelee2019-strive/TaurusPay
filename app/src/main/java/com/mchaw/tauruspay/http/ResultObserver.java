@@ -7,6 +7,7 @@ import com.mchaw.tauruspay.common.exception.CustomException;
 import com.mchaw.tauruspay.common.exception.EmptyException;
 import com.mchaw.tauruspay.common.exception.SessionInvalidException;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
+import com.mchaw.tauruspay.common.util.ToastUtils;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -60,6 +61,7 @@ public abstract class ResultObserver<T> extends DisposableObserver<T> {
     public abstract void onSuccess(T t);
 
     public void onFail(String msg) {
+
     }
 
     public void onFail(int code, String msg) {
