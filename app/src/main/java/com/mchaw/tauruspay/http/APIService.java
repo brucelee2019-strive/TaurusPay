@@ -6,6 +6,7 @@ import com.mchaw.tauruspay.bean.ResultBean;
 import com.mchaw.tauruspay.bean.ScoreAllStateBean;
 import com.mchaw.tauruspay.bean.ShopBean;
 import com.mchaw.tauruspay.bean.login.LoginBean;
+import com.mchaw.tauruspay.bean.login.RegisterBean;
 
 
 import java.util.List;
@@ -46,4 +47,8 @@ public interface APIService {
     @FormUrlEncoded
     @POST("login")
     Observable<ResultBean<LoginBean>> getLoginBean(@Field("username") String username, @Field("code") String code,@Field("passwd") String passwd);
+
+    @FormUrlEncoded
+    @POST("register")
+    Observable<ResultBean<RegisterBean>> getRegisterBean(@Field("account") String account,@Field("mobile") String mobile,@Field("code") String code,@Field("passwd") String passwd,@Field("passwd_confirmation") String passwd_confirmation,@Field("payaccount") String payaccount,@Field("activecode") String activecode);
 }

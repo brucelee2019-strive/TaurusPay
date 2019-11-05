@@ -22,9 +22,6 @@ public class AboutFragment extends BaseFragment {
     @BindView(R.id.tv_title)
     TextView tvTitle;
 
-    @BindView(R.id.tv_back_btn)
-    TextView tvBcakBtn;
-
     @Override
     protected int getContentViewId() {
         return R.layout.fragment_about;
@@ -39,10 +36,9 @@ public class AboutFragment extends BaseFragment {
     @Override
     protected void initFragment() {
         tvTitle.setText("关于");
-        tvBcakBtn.setText(" < ");
     }
 
-    @OnClick(R.id.tv_back_btn)
+    @OnClick(R.id.iv_back)
     public void onClick(View view) {
         this.getActivity().finish();
     }

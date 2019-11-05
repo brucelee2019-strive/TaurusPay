@@ -221,4 +221,11 @@
     <color name="screen_dialog_checked">#FFFCF4E8</color>
     <color name="BBB">#BBBBBB</color>
     <color name="C222">#222</color>
+    <!-- 麻城爱玩 -->
+    <color name="bdbdbd">#bdbdbd</color>
+    <color name="f0a300">#f0a300</color>
+    <color name="color_black_5">#555555</color>
+    <color name="color_black_7">#777777</color>
+    <color name="color_black_0">#000000</color>
+    <color name="c9c4c1">#c9c4c1</color>
 </resources>

@@ -17,6 +17,7 @@ import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.login.constract.LoginConstract;
 import com.mchaw.tauruspay.ui.login.presenter.LoginPresenter;
+import com.mchaw.tauruspay.ui.login.register.RegisterFragment;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -28,18 +29,12 @@ import butterknife.OnClick;
  */
 public class LoginFragment extends BasePresentFragment<LoginPresenter> implements LoginConstract.View {
 
-    @BindView(R.id.test)
-    TextView test;
     @BindView(R.id.et_account)
     EditText etUserName;
     @BindView(R.id.et_password)
     EditText etPasswd;
-    @BindView(R.id.et_auth_code)
-    EditText etAuthCode;
     @BindView(R.id.tv_login_btn)
     TextView tvLoginBtn;
-
-    private String username,code,passwd;
 
     @Override
     protected int getContentViewId() {
@@ -55,7 +50,6 @@ public class LoginFragment extends BasePresentFragment<LoginPresenter> implement
     @Override
     protected void initFragment() {
         super.initFragment();
-        //presenter.getLoginBean("wuhuaxiang","1234","123457");
     }
 
     @Override
@@ -66,29 +60,40 @@ public class LoginFragment extends BasePresentFragment<LoginPresenter> implement
 
     @Override
     public void setLoginBean(LoginBean loginBean) {
-        test.setText(loginBean.getName());
-        Intent intent = new Intent(getActivity(),MainActivity.class);
+        Intent intent = new Intent(getActivity(), MainActivity.class);
         startActivity(intent);
+        getActivity().finish();
     }
 
-    @OnClick(R.id.tv_login_btn)
+    @OnClick({R.id.tv_login_btn, R.id.tv_register, R.id.tv_find_password})
     public void onClick(View view) {
-        login(etUserName.getText().toString(),etAuthCode.getText().toString(),etPasswd.getText().toString());
+        switch (view.getId()) {
+            case R.id.tv_login_btn:
+                login(etUserName.getText().toString(), "1234", etPasswd.getText().toString());
+                break;
+            case R.id.tv_register:
+                startFragment(new RegisterFragment());
+                break;
+            case R.id.tv_find_password:
+                break;
+            default:
+                break;
+        }
     }
 
-    private void login(String username,String code,String passwd){
-        if(TextUtils.isEmpty(username)){
-            ToastUtils.showShortToast(getContext(),"用户名不能为空！");
+    private void login(String username, String code, String passwd) {
+        if (TextUtils.isEmpty(username)) {
+            ToastUtils.showShortToast(getContext(), "用户名不能为空！");
             return;
         }
-        if(TextUtils.isEmpty(passwd)){
-            ToastUtils.showShortToast(getContext(),"密码不能为空！");
+        if (TextUtils.isEmpty(passwd)) {
+            ToastUtils.showShortToast(getContext(), "密码不能为空！");
             return;
         }
-        if(TextUtils.isEmpty(code)){
-            ToastUtils.showShortToast(getContext(),"验证码不能为空！");
+        if (TextUtils.isEmpty(code)) {
+            ToastUtils.showShortToast(getContext(), "验证码不能为空！");
             return;
         }
-        presenter.getLoginBean(username,code,passwd);
+        presenter.getLoginBean(username, code, passwd);
     }
 }

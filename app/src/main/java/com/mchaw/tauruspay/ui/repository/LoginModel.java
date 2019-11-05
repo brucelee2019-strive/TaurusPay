@@ -2,6 +2,7 @@ package com.mchaw.tauruspay.ui.repository;
 
 import com.mchaw.tauruspay.bean.ScoreAllStateBean;
 import com.mchaw.tauruspay.bean.login.LoginBean;
+import com.mchaw.tauruspay.bean.login.RegisterBean;
 import com.mchaw.tauruspay.http.ResultDisposable;
 import com.mchaw.tauruspay.http.ScheduleTranformer;
 
@@ -24,5 +25,11 @@ public class LoginModel extends BaseModel{
         return apiService.getLoginBean(username,code,passwd)
                 .compose(new ResultDisposable<LoginBean>())
                 .compose(new ScheduleTranformer<LoginBean>());
+    }
+
+    public Observable<RegisterBean> getRegisterBean(String account, String mobile, String code, String passwd, String passwd_confirmation, String payaccount, String activecode) {
+        return apiService.getRegisterBean(account,mobile,code,passwd,passwd_confirmation,payaccount,activecode)
+                .compose(new ResultDisposable<RegisterBean>())
+                .compose(new ScheduleTranformer<RegisterBean>());
     }
 }
