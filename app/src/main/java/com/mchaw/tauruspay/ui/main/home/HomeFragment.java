@@ -29,7 +29,7 @@ public class HomeFragment extends BaseFragment {
     @BindView(R.id.tv_after_sale_txt)
     TextView tvAfterSaleTxt;
 
-    private String strPre = "*开始代售前，请保持<font color='#8d64cb'>金牛话费</font>与<font color='#ff0000'>支付宝</font>在线";
+    private String strPre = "*开始代售前，请保持<font color='#f5c443'>金牛话费</font>与<font color='#00aaef'>支付宝</font>在线";
     private String strAfter = "*开始代售时，请及时查询确认收款";
 
     @Override

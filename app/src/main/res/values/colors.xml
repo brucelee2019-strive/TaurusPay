@@ -228,4 +228,8 @@
     <color name="color_black_7">#777777</color>
     <color name="color_black_0">#000000</color>
     <color name="c9c4c1">#c9c4c1</color>
+    <color name="f5c443">#f5c443</color>
+    <color name="color_black_25">#252525</color>
+    <color name="color_black_3">#333333</color>
+    <color name="color_cut_off_line">#cccccc</color>
 </resources>
