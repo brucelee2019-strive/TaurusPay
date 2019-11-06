@@ -13,7 +13,7 @@ public interface RegisterConstract {
     interface View extends BaseView {
         void setRegisterBean(RegisterBean registerBean);
     }
-    interface Presenter extends BasePresenter<View> {
+    interface Presenter extends BasePresenter<RegisterConstract.View> {
         void getRegisterBean(String account,String mobile,String code,String passwd,String passwd_confirmation,String payaccount,String activecode);
     }
 }

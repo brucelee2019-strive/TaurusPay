@@ -8,6 +8,7 @@ import com.mchaw.tauruspay.ui.login.LoginActivity;
 import com.mchaw.tauruspay.ui.login.LoginFragment;
 import com.mchaw.tauruspay.ui.login.password.PasswordFragment;
 import com.mchaw.tauruspay.ui.login.register.RegisterFragment;
+import com.mchaw.tauruspay.ui.main.home.transferaccounts.TransferAccountsFragment;
 
 import dagger.Component;
 
@@ -36,4 +37,6 @@ public interface ActivityComponent {
     void inject(RegisterFragment registerFragment);
 
     void inject(PasswordFragment passwordFragment);
+
+    void inject(TransferAccountsFragment transferAccountsFragment);
 }

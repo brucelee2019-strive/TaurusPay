@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:text="公告"
-        android:textColor="#ff0000"
+        android:textColor="@color/e94630"
         android:textSize="16sp" />
 
     <TextView

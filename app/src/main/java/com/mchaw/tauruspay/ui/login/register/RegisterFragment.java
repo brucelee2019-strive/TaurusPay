@@ -68,8 +68,16 @@ public class RegisterFragment extends BasePresentFragment<RegisterPresenter> imp
 
     @Override
     public void setRegisterBean(RegisterBean registerBean) {
-        ToastUtils.showShortToast(getContext(),"注册成功！");
-        getActivity().finish();
+        if(registerBean==null){
+            ToastUtils.showShortToast(getContext(),"异常,注册失败！请重新尝试");
+            return;
+        }
+        if(registerBean.getA() == 1) {
+            ToastUtils.showShortToast(getContext(), "注册成功！");
+            getActivity().finish();
+        }else{
+            ToastUtils.showShortToast(getContext(),"异常,注册失败！请重新尝试");
+        }
     }
 
     @OnClick({R.id.tv_get_auth_code, R.id.tv_register_btn,R.id.iv_back})

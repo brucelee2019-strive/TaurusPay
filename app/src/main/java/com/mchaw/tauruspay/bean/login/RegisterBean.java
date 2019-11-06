@@ -7,4 +7,17 @@ package com.mchaw.tauruspay.bean.login;
  */
 public class RegisterBean {
 
+    /**
+     * a : 1
+     */
+
+    private int a;
+
+    public int getA() {
+        return a;
+    }
+
+    public void setA(int a) {
+        this.a = a;
+    }
 }

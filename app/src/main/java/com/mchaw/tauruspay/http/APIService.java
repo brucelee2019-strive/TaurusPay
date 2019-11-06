@@ -5,6 +5,7 @@ import com.mchaw.tauruspay.bean.Movie;
 import com.mchaw.tauruspay.bean.ResultBean;
 import com.mchaw.tauruspay.bean.ScoreAllStateBean;
 import com.mchaw.tauruspay.bean.ShopBean;
+import com.mchaw.tauruspay.bean.home.TransferAccountsBean;
 import com.mchaw.tauruspay.bean.login.LoginBean;
 import com.mchaw.tauruspay.bean.login.PasswordBean;
 import com.mchaw.tauruspay.bean.login.RegisterBean;
@@ -56,4 +57,8 @@ public interface APIService {
     @FormUrlEncoded
     @POST("password/token")
     Observable<ResultBean<PasswordBean>> getRegisterBean(@Field("token") String token,@Field("code") String code, @Field("passwd") String passwd, @Field("passwd_confirmation") String passwd_confirmation);
+
+    @FormUrlEncoded
+    @POST("recharge/transfer")
+    Observable<ResultBean<TransferAccountsBean>> getTransferAccountsBean(@Field("api_token") String api_token, @Field("code") String code, @Field("account") String account, @Field("payname") String payname,@Field("amount") String amount);
 }
