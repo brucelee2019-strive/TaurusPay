@@ -16,6 +16,7 @@ import com.mchaw.tauruspay.bean.login.LoginBean;
 import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.login.constract.LoginConstract;
+import com.mchaw.tauruspay.ui.login.password.PasswordFragment;
 import com.mchaw.tauruspay.ui.login.presenter.LoginPresenter;
 import com.mchaw.tauruspay.ui.login.register.RegisterFragment;
 
@@ -75,6 +76,7 @@ public class LoginFragment extends BasePresentFragment<LoginPresenter> implement
                 startFragment(new RegisterFragment());
                 break;
             case R.id.tv_find_password:
+                startFragment(new PasswordFragment());
                 break;
             default:
                 break;

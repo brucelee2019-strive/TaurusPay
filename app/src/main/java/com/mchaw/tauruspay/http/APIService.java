@@ -6,6 +6,7 @@ import com.mchaw.tauruspay.bean.ResultBean;
 import com.mchaw.tauruspay.bean.ScoreAllStateBean;
 import com.mchaw.tauruspay.bean.ShopBean;
 import com.mchaw.tauruspay.bean.login.LoginBean;
+import com.mchaw.tauruspay.bean.login.PasswordBean;
 import com.mchaw.tauruspay.bean.login.RegisterBean;
 
 
@@ -51,4 +52,8 @@ public interface APIService {
     @FormUrlEncoded
     @POST("register")
     Observable<ResultBean<RegisterBean>> getRegisterBean(@Field("account") String account,@Field("mobile") String mobile,@Field("code") String code,@Field("passwd") String passwd,@Field("passwd_confirmation") String passwd_confirmation,@Field("payaccount") String payaccount,@Field("activecode") String activecode);
+
+    @FormUrlEncoded
+    @POST("password/token")
+    Observable<ResultBean<PasswordBean>> getRegisterBean(@Field("token") String token,@Field("code") String code, @Field("passwd") String passwd, @Field("passwd_confirmation") String passwd_confirmation);
 }

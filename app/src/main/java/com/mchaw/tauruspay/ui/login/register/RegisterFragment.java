@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
@@ -16,7 +17,6 @@ import com.mchaw.tauruspay.ui.login.register.constract.RegisterConstract;
 import com.mchaw.tauruspay.ui.login.register.presenter.RegisterPresenter;
 
 import butterknife.BindView;
-import butterknife.BindViews;
 import butterknife.OnClick;
 
 /**
@@ -26,6 +26,8 @@ import butterknife.OnClick;
  */
 public class RegisterFragment extends BasePresentFragment<RegisterPresenter> implements RegisterConstract.View {
 
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
     @BindView(R.id.et_account)
     EditText etAccount;
     @BindView(R.id.et_phone_number)
@@ -55,6 +57,7 @@ public class RegisterFragment extends BasePresentFragment<RegisterPresenter> imp
     @Override
     protected void initFragment() {
         super.initFragment();
+        tvTitle.setText("注册");
     }
 
     @Override
