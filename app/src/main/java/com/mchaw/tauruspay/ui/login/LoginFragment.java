@@ -13,6 +13,7 @@ import com.mchaw.tauruspay.MainActivity;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.bean.login.LoginBean;
+import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.login.constract.LoginConstract;
@@ -57,10 +58,15 @@ public class LoginFragment extends BasePresentFragment<LoginPresenter> implement
     public void injectFragmentComponent(ActivityComponent component) {
         super.injectFragmentComponent(component);
         component.inject(this);
+
     }
 
     @Override
     public void setLoginBean(LoginBean loginBean) {
+        if(loginBean == null){
+            return;
+        }
+        PreferencesUtils.putString(getContext(),"token",loginBean.getToken());
         Intent intent = new Intent(getActivity(), MainActivity.class);
         startActivity(intent);
         getActivity().finish();

@@ -1,6 +1,7 @@
 package com.mchaw.tauruspay;
 
 import android.app.Application;
+import android.widget.ScrollView;
 
 import com.mchaw.tauruspay.common.Constant;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
@@ -23,6 +24,8 @@ public class MyFrameApplication extends Application {
         return appComponent;
     }
 
+    public static String tokenStr;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -33,6 +36,7 @@ public class MyFrameApplication extends Application {
                 .appModule(new AppModule(this))
                 .apiServiceModule(new ApiServiceModule())
                 .build();
+        tokenStr = PreferencesUtils.getString(MyFrameApplication.this,"token");
     }
 
     /**
