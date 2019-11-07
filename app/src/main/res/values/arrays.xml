@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sale_list_choise">
+        <item>待售</item>
+        <item>收款</item>
+    </string-array>
+</resources>

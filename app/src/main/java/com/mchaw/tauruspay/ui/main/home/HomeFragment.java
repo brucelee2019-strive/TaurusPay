@@ -11,6 +11,7 @@ import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BaseFragment;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
+import com.mchaw.tauruspay.ui.main.home.forsale.ForSaleFragment;
 import com.mchaw.tauruspay.ui.main.home.transferaccounts.TransferAccountsFragment;
 
 import butterknife.BindView;
@@ -60,6 +61,7 @@ public class HomeFragment extends BaseFragment {
                 startFragment(new TransferAccountsFragment());
                 break;
             case R.id.tv_start_sail:
+                startFragment(new ForSaleFragment());
                 break;
             default:
                 break;
