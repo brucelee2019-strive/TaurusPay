@@ -25,5 +25,6 @@ public class RechargeAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
     protected void convert(@NonNull BaseViewHolder helper, String item) {
         helper.setText(R.id.tv_recharge_result,item);
         helper.setTextColor(R.id.tv_recharge_result, ContextCompat.getColor(mContext,item.equals("未通过")?R.color.color_news_stick:R.color.color_special));
+        helper.setImageResource(R.id.iv_recharge_state,item.equals("未通过")?R.drawable.cz_icon_jz:R.drawable.cz_icon_cg);
     }
 }

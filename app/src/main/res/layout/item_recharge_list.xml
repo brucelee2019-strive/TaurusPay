@@ -3,27 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="60dp">
+    android:layout_height="80dp">
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="@color/black"
-        android:text="TextView"
+        android:layout_height="10dp"
+        android:background="@color/bdbdbd"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <ImageView
         android:id="@+id/textView3"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
-        android:background="@drawable/bg_text_btn"
+        android:background="@drawable/cz_icon_cz"
         android:gravity="center"
-        android:text="充值"
-        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -69,6 +66,16 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_sale_money"
         android:textSize="12sp"
         android:textColor="@color/color_special"/>
+
+    <ImageView
+        android:id="@+id/iv_recharge_state"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginEnd="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_recharge_result"
+        app:layout_constraintEnd_toStartOf="@+id/tv_recharge_result"
+        app:layout_constraintTop_toTopOf="@+id/tv_recharge_result"
+        app:srcCompat="@drawable/cz_icon_cg" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
