@@ -18,12 +18,11 @@ import java.util.List;
 public class CollectionListAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
 
     public CollectionListAdapter(@Nullable List<String> data) {
-        super(R.layout.item_recharge_list, data);
+        super(R.layout.item_collection_list, data);
     }
 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, String item) {
-        helper.setText(R.id.tv_recharge_result,item);
-        helper.setTextColor(R.id.tv_recharge_result, ContextCompat.getColor(mContext,item.equals("未通过")?R.color.color_news_stick:R.color.color_special));
+        helper.setText(R.id.tv_order_num,item);
     }
 }

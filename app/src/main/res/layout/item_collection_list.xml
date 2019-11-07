@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/bdbdbd"></TextView>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+        <ImageView
+            android:id="@+id/iv_zfb_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_line"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread"
+            app:srcCompat="@drawable/ds_icon_zfb" />
+
+        <TextView
+            android:id="@+id/tv_line"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginEnd="8dp"
+            android:background="@color/bdbdbd"
+            app:layout_constraintBottom_toTopOf="@+id/tv_residue_time"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/iv_zfb_icon"
+            app:layout_constraintTop_toBottomOf="@id/iv_zfb_icon" />
+
+        <TextView
+            android:id="@+id/tv_residue_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="剩余退款时间："
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/iv_zfb_icon"
+            app:layout_constraintTop_toBottomOf="@id/tv_line" />
+
+        <TextView
+            android:id="@+id/tv_time_show"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_residue_time"
+            app:layout_constraintStart_toEndOf="@+id/tv_residue_time"
+            app:layout_constraintTop_toTopOf="@+id/tv_residue_time" />
+
+        <TextView
+            android:id="@+id/textView36"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="订单编号："
+            app:layout_constraintStart_toEndOf="@+id/iv_zfb_icon"
+            app:layout_constraintTop_toTopOf="@+id/iv_zfb_icon" />
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="2019-11-07 20:00:00"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_zfb_icon"
+            app:layout_constraintStart_toEndOf="@+id/iv_zfb_icon" />
+
+        <TextView
+            android:id="@+id/tv_order_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="dkfjskdjf"
+            app:layout_constraintBottom_toBottomOf="@+id/textView36"
+            app:layout_constraintStart_toEndOf="@+id/textView36"
+            app:layout_constraintTop_toTopOf="@+id/textView36" />
+
+        <TextView
+            android:id="@+id/tv_order_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="￥303.00"
+            android:textColor="@color/color_black_0"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_order_num"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_order_num" />
+
+        <ImageView
+            android:id="@+id/imageView11"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="4dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_income_amout"
+            app:layout_constraintEnd_toStartOf="@+id/tv_income_amout"
+            app:layout_constraintTop_toTopOf="@+id/tv_income_amout"
+            app:srcCompat="@drawable/skjl_icon_zhuan" />
+
+        <TextView
+            android:id="@+id/tv_income_amout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+1.51"
+            android:textColor="@color/f54343"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_date"
+            app:layout_constraintEnd_toEndOf="@+id/tv_order_amount"
+            app:layout_constraintTop_toTopOf="@+id/tv_date" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/bdbdbd"></TextView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_black_0"></TextView>
+
+</LinearLayout>
