@@ -1,6 +1,9 @@
 package com.mchaw.tauruspay.ui.main.recharge;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,12 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BaseFragment;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
+import com.mchaw.tauruspay.common.Constant;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * @author : Bruce Lee
@@ -57,5 +62,30 @@ public class RechargeFragment extends BaseFragment {
         rvIncomeRecoed.setLayoutManager(new LinearLayoutManager(getContext()));
         RechargeAdapter rechargeAdapter = new RechargeAdapter(list);
         rvIncomeRecoed.setAdapter(rechargeAdapter);
+    }
+
+    @OnClick({R.id.tv_recharge_btn})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tv_recharge_btn:
+                startFragmentForResult(new RechargeNextFragment(), Constant.RECHARGE_NEXT_FRAGMENT_BACK);
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case Constant.RECHARGE_NEXT_FRAGMENT_BACK:
+
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
