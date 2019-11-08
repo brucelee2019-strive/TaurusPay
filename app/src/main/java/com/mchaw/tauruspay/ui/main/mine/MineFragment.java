@@ -8,8 +8,12 @@ import androidx.annotation.Nullable;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BaseFragment;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
+import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
+import com.mchaw.tauruspay.ui.login.password.PasswordFragment;
 import com.mchaw.tauruspay.ui.main.mine.about.AboutFragment;
+import com.mchaw.tauruspay.ui.main.mine.bank.MyBankCardFragment;
+import com.mchaw.tauruspay.ui.main.mine.qrcode.QRCodeFragment;
 
 import butterknife.OnClick;
 
@@ -35,18 +39,24 @@ public class MineFragment extends BaseFragment {
 
     }
 
-    @OnClick({R.id.cl_bill,R.id.cl_bank_set,R.id.cl_qr_code,R.id.cl_activate_word,R.id.cl_change_password,R.id.cl_about})
+    @OnClick({R.id.tv_login_out,R.id.cl_bill,R.id.cl_bank_set,R.id.cl_qr_code,R.id.cl_activate_word,R.id.cl_change_password,R.id.cl_about})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.tv_login_out:
+                break;
             case R.id.cl_bill:
                 break;
             case R.id.cl_bank_set:
+                startFragment(new MyBankCardFragment());
                 break;
             case R.id.cl_qr_code:
+                startFragment(new QRCodeFragment());
                 break;
             case R.id.cl_activate_word:
+                ToastUtils.showShortToast(getContext(),"暂未开启");
                 break;
             case R.id.cl_change_password:
+                startFragment(new PasswordFragment());
                 break;
             case R.id.cl_about:
                 startFragment(new AboutFragment());

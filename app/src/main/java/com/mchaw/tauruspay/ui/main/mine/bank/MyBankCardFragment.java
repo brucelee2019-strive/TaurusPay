@@ -1,4 +1,4 @@
-package com.mchaw.tauruspay.ui.main.mine.about;
+package com.mchaw.tauruspay.ui.main.mine.bank;
 
 import android.os.Bundle;
 import android.view.View;
@@ -8,23 +8,23 @@ import androidx.annotation.Nullable;
 
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BaseFragment;
+import com.mchaw.tauruspay.ui.main.mine.dialog.ChangeBankCardDialog;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
  * @author Bruce Lee
- * @date : 2019/11/4 17:53
+ * @date : 2019/11/8 17:06
  * @description:
  */
-public class AboutFragment extends BaseFragment {
-
+public class MyBankCardFragment extends BaseFragment {
     @BindView(R.id.tv_back_title)
     TextView tvTitle;
 
     @Override
     protected int getContentViewId() {
-        return R.layout.fragment_about;
+        return R.layout.fragment_my_bank_card;
     }
 
     @Override
@@ -35,11 +35,18 @@ public class AboutFragment extends BaseFragment {
 
     @Override
     protected void initFragment() {
-        tvTitle.setText("关于");
+        tvTitle.setText("我的银行卡");
     }
 
-    @OnClick(R.id.iv_back)
+    @OnClick({R.id.iv_back,R.id.cl_my_bank_card})
     public void onClick(View view) {
-        this.getActivity().finish();
+        switch (view.getId()){
+            case R.id.iv_back:
+                this.getActivity().finish();
+                break;
+            case R.id.cl_my_bank_card:
+                ChangeBankCardDialog.showDialog(getChildFragmentManager());
+                break;
+        }
     }
 }
