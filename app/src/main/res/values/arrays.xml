@@ -4,4 +4,9 @@
         <item>待售</item>
         <item>收款</item>
     </string-array>
+
+    <string-array name="record_list_choise">
+        <item>批准</item>
+        <item>拒绝</item>
+    </string-array>
 </resources>

@@ -1,6 +1,7 @@
-package com.mchaw.tauruspay.ui.main.home.forsale;
+package com.mchaw.tauruspay.ui.main.recharge.record;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -9,36 +10,29 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.flyco.tablayout.SlidingTabLayout;
 import com.mchaw.tauruspay.R;
-import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
-import com.mchaw.tauruspay.bean.home.ForSaleBean;
-import com.mchaw.tauruspay.bean.home.SelledOrderBean;
-import com.mchaw.tauruspay.bean.home.SellingOrderBean;
+import com.mchaw.tauruspay.base.fragment.BaseFragment;
 import com.mchaw.tauruspay.common.adapter.TabPageAdapter;
-import com.mchaw.tauruspay.di.component.ActivityComponent;
-import com.mchaw.tauruspay.ui.main.home.forsale.constract.ForSaleConstract;
-import com.mchaw.tauruspay.ui.main.home.forsale.presenter.ForSalePresenter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindArray;
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * @author Bruce Lee
- * @date : 2019/11/7 10:30
- * @description:代售Fragment
+ * @date : 2019/11/4 10:35
+ * @description:
  */
-public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> implements ForSaleConstract.View,ViewPager.OnPageChangeListener{
-
-    @BindView(R.id.tv_notice_text)
-    TextView tvNotiveText;
+public class RecordMainFragment extends BaseFragment implements ViewPager.OnPageChangeListener{
+    @BindView(R.id.tv_back_title)
+    TextView tvBackTitle;
     @BindView(R.id.tab_layout)
     SlidingTabLayout tabLayout;
     @BindView(R.id.view_page)
     ViewPager viewPage;
 
-    @BindArray(R.array.sale_list_choise)
+    @BindArray(R.array.record_list_choise)
     String[] saleTabs;
 
     private ArrayList<Fragment> mFragments = new ArrayList<>();
@@ -46,7 +40,7 @@ public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> imple
 
     @Override
     protected int getContentViewId() {
-        return R.layout.fragment_for_sale;
+        return R.layout.fragment_record_main;
     }
 
     @Override
@@ -57,10 +51,9 @@ public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> imple
 
     @Override
     protected void initFragment() {
-        super.initFragment();
-        tvNotiveText.setSelected(true);
-        mFragments.add(new ForSaleListFragment());
-        mFragments.add(new CollectionListFragment());
+        tvBackTitle.setText("审核");
+        mFragments.add(new RecordSucceedFragment());
+        mFragments.add(new RecordFailedFragment());
         TabPageAdapter adapter = new TabPageAdapter(getChildFragmentManager(), mFragments, saleTabs);
         viewPage.setAdapter(adapter);
         viewPage.setCurrentItem(currentPage);
@@ -70,25 +63,9 @@ public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> imple
         viewPage.addOnPageChangeListener(this);
     }
 
-    @Override
-    public void injectFragmentComponent(ActivityComponent component) {
-        super.injectFragmentComponent(component);
-        component.inject(this);
-    }
-
-    @Override
-    public void setForSaleBean(ForSaleBean forSaleBean) {
-
-    }
-
-    @Override
-    public void setForSaleList(List<SellingOrderBean> list) {
-
-    }
-
-    @Override
-    public void setCollectionlist(List<SelledOrderBean> list) {
-
+    @OnClick(R.id.iv_back)
+    public void onClick(View view){
+        getActivity().finish();
     }
 
     @Override

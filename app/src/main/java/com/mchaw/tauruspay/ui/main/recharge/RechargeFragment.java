@@ -14,6 +14,7 @@ import com.mchaw.tauruspay.base.fragment.BaseFragment;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.common.Constant;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
+import com.mchaw.tauruspay.ui.main.recharge.record.RecordMainFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,11 +65,14 @@ public class RechargeFragment extends BaseFragment {
         rvIncomeRecoed.setAdapter(rechargeAdapter);
     }
 
-    @OnClick({R.id.tv_recharge_btn})
+    @OnClick({R.id.tv_recharge_btn,R.id.tv_record})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_recharge_btn:
                 startFragmentForResult(new RechargeNextFragment(), Constant.RECHARGE_NEXT_FRAGMENT_BACK);
+                break;
+            case R.id.tv_record:
+                startFragment(new RecordMainFragment());
                 break;
             default:
                 break;
