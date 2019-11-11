@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.bean.login.PasswordBean;
+import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.login.password.constract.PasswordConstract;
@@ -62,8 +63,17 @@ public class PasswordFragment extends BasePresentFragment<PasswordPresenter> imp
 
     @Override
     public void setPasswordBean(PasswordBean passwordBean) {
-        ToastUtils.showShortToast(getContext(),"密码重置成功！");
-        getActivity().finish();
+        if(passwordBean == null) {
+            ToastUtils.showShortToast(getContext(),"密码重置失败！");
+            return;
+        }
+        if(TextUtils.isEmpty(passwordBean.getApi_token())){
+            ToastUtils.showShortToast(getContext(),"密码重置失败！");
+        }else {
+            ToastUtils.showShortToast(getContext(), "密码重置成功！");
+            PreferencesUtils.putString(getContext(),"token",passwordBean.getApi_token());
+            getActivity().finish();
+        }
     }
 
     @OnClick({R.id.tv_get_auth_code, R.id.tv_reset_btn,R.id.iv_back})
@@ -72,7 +82,7 @@ public class PasswordFragment extends BasePresentFragment<PasswordPresenter> imp
             case R.id.tv_get_auth_code:
                 break;
             case R.id.tv_reset_btn:
-                resetPasswd("",etAuthCode.getText().toString(),etPasswd.getText().toString(),etPasswdSure.getText().toString());
+                resetPasswd(PreferencesUtils.getString(getContext(),"token"),etAuthCode.getText().toString(),etPasswd.getText().toString(),etPasswdSure.getText().toString());
                 break;
             case R.id.iv_back:
                 getActivity().finish();
@@ -83,6 +93,10 @@ public class PasswordFragment extends BasePresentFragment<PasswordPresenter> imp
     }
 
     private void resetPasswd(String token,String code,String passwd,String passwdConfirmation){
+        if(TextUtils.isEmpty(token)){
+            ToastUtils.showShortToast(getContext(),"token无效!(查看是否登录或注册)");
+            return;
+        }
         if(TextUtils.isEmpty(code)){
             ToastUtils.showShortToast(getContext(),"验证码不能为空！");
             return;

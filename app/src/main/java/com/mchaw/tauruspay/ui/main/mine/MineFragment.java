@@ -1,11 +1,13 @@
 package com.mchaw.tauruspay.ui.main.mine;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.mchaw.tauruspay.MainActivity;
 import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BaseFragment;
@@ -13,6 +15,7 @@ import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
+import com.mchaw.tauruspay.ui.login.LoginActivity;
 import com.mchaw.tauruspay.ui.login.password.PasswordFragment;
 import com.mchaw.tauruspay.ui.main.mine.about.AboutFragment;
 import com.mchaw.tauruspay.ui.main.mine.bank.MyBankCardFragment;
@@ -54,6 +57,13 @@ public class MineFragment extends BaseFragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_login_out:
+                PreferencesUtils.removeKey(getContext(),"token");
+                PreferencesUtils.removeKey(getContext(),"name");
+                PreferencesUtils.removeKey(getContext(),"payname");
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+                ToastUtils.showShortToast(getContext(),"退出成功！");
                 break;
             case R.id.cl_bill:
                 break;
