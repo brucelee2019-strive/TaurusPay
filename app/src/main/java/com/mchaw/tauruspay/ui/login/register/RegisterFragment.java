@@ -72,7 +72,7 @@ public class RegisterFragment extends BasePresentFragment<RegisterPresenter> imp
             ToastUtils.showShortToast(getContext(),"异常,注册失败！请重新尝试");
             return;
         }
-        if(registerBean.getA() == 1) {
+        if(!TextUtils.isEmpty(registerBean.getTime())) {
             ToastUtils.showShortToast(getContext(), "注册成功！");
             getActivity().finish();
         }else{

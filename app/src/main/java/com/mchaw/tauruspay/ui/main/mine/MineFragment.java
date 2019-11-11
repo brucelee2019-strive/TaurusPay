@@ -2,12 +2,15 @@ package com.mchaw.tauruspay.ui.main.mine;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BaseFragment;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
+import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.login.password.PasswordFragment;
@@ -15,6 +18,7 @@ import com.mchaw.tauruspay.ui.main.mine.about.AboutFragment;
 import com.mchaw.tauruspay.ui.main.mine.bank.MyBankCardFragment;
 import com.mchaw.tauruspay.ui.main.mine.qrcode.QRCodeFragment;
 
+import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
@@ -23,6 +27,12 @@ import butterknife.OnClick;
  * @description :
  */
 public class MineFragment extends BaseFragment {
+
+    @BindView(R.id.tv_user_nickname)
+    TextView tvUserNickname;
+    @BindView(R.id.tv_user_anme)
+    TextView tvPayName;
+
     @Override
     protected int getContentViewId() {
         return R.layout.fragment_mine;
@@ -36,7 +46,8 @@ public class MineFragment extends BaseFragment {
 
     @Override
     protected void initFragment() {
-
+        tvUserNickname.setText(PreferencesUtils.getString(getContext(),"name"));
+        tvPayName.setText(PreferencesUtils.getString(getContext(),"payname"));
     }
 
     @OnClick({R.id.tv_login_out,R.id.cl_bill,R.id.cl_bank_set,R.id.cl_qr_code,R.id.cl_activate_word,R.id.cl_change_password,R.id.cl_about})

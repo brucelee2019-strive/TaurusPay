@@ -35,8 +35,6 @@ public class LoginFragment extends BasePresentFragment<LoginPresenter> implement
     EditText etUserName;
     @BindView(R.id.et_password)
     EditText etPasswd;
-    @BindView(R.id.tv_login_btn)
-    TextView tvLoginBtn;
 
     @Override
     protected int getContentViewId() {
@@ -67,6 +65,8 @@ public class LoginFragment extends BasePresentFragment<LoginPresenter> implement
             return;
         }
         PreferencesUtils.putString(getContext(),"token",loginBean.getToken());
+        PreferencesUtils.putString(getContext(),"name",loginBean.getName());
+        PreferencesUtils.putString(getContext(),"payname",loginBean.getName());
         Intent intent = new Intent(getActivity(), MainActivity.class);
         startActivity(intent);
         getActivity().finish();

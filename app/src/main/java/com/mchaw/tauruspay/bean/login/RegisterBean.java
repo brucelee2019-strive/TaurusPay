@@ -7,17 +7,13 @@ package com.mchaw.tauruspay.bean.login;
  */
 public class RegisterBean {
 
-    /**
-     * a : 1
-     */
+    private String time;
 
-    private int a;
-
-    public int getA() {
-        return a;
+    public String getTime() {
+        return time;
     }
 
-    public void setA(int a) {
-        this.a = a;
+    public void setTime(String time) {
+        this.time = time;
     }
 }

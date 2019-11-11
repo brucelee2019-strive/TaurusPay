@@ -18,6 +18,7 @@ import java.util.List;
 public class LoginBean {
     private String token;
     private String name;
+    private String payname;
     private long deposit;
     private int vip;
     private int state;
@@ -40,6 +41,14 @@ public class LoginBean {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPayname() {
+        return payname;
+    }
+
+    public void setPayname(String payname) {
+        this.payname = payname;
     }
 
     public long getDeposit() {
