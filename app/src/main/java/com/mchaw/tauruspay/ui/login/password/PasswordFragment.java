@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.bean.login.PasswordBean;
+import com.mchaw.tauruspay.common.dialog.LoadingDialog;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
@@ -63,6 +64,7 @@ public class PasswordFragment extends BasePresentFragment<PasswordPresenter> imp
 
     @Override
     public void setPasswordBean(PasswordBean passwordBean) {
+        LoadingDialog.dismissDailog();
         if(passwordBean == null) {
             ToastUtils.showShortToast(getContext(),"密码重置失败！");
             return;
@@ -75,6 +77,12 @@ public class PasswordFragment extends BasePresentFragment<PasswordPresenter> imp
             getActivity().finish();
         }
     }
+
+    @Override
+    public void setPasswordFail() {
+
+    }
+
 
     @OnClick({R.id.tv_get_auth_code, R.id.tv_reset_btn,R.id.iv_back})
     public void onClick(View view) {
@@ -114,5 +122,6 @@ public class PasswordFragment extends BasePresentFragment<PasswordPresenter> imp
             return;
         }
         presenter.getPasswordBean(token,code,passwd,passwdConfirmation);
+        LoadingDialog.showDialog(getChildFragmentManager());
     }
 }

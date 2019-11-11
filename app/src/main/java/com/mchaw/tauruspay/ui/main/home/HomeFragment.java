@@ -37,7 +37,7 @@ public class HomeFragment extends BaseFragment {
     @BindView(R.id.tv_repertory)
     TextView tvRepertory;
 
-    @BindView(R.id.tv_today_agency_income)
+    @BindView(R.id.tv_today_sell_income_money)
     TextView tvTodayAgencyIncome;
 
     @BindView(R.id.tv_today_money_for_sale)
@@ -70,7 +70,6 @@ public class HomeFragment extends BaseFragment {
         tvTodayAgencyIncome.setText(PreferencesUtils.getString(getContext(),"point"));
         tvTodayMoneyForSale.setText(PreferencesUtils.getString(getContext(),"sellamount"));
         tvTodayTimeForSale.setText(PreferencesUtils.getString(getContext(),"sellcount"));
-
     }
 
     @OnClick({R.id.tv_transfer_btn, R.id.tv_start_sail})

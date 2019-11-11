@@ -36,6 +36,7 @@ public class RegisterPresenter extends RxPresenter<RegisterConstract.View> imple
                     @Override
                     public void onFail(String msg) {
                         mView.showError(msg);
+                        mView.setRegisterFail();
                     }
                 });
         addSubscribe(disposable);

@@ -68,11 +68,11 @@ public class LoginFragment extends BasePresentFragment<LoginPresenter> implement
         }
         PreferencesUtils.putString(getContext(),"token",loginBean.getToken());
         PreferencesUtils.putString(getContext(),"name",loginBean.getName());
-        PreferencesUtils.putString(getContext(),"payname",loginBean.getName());
-        PreferencesUtils.putString(getContext(),"sellamount",loginBean.getName());
-        PreferencesUtils.putString(getContext(),"sellcount",loginBean.getName());
-        PreferencesUtils.putString(getContext(),"point",loginBean.getName());
-        PreferencesUtils.putString(getContext(),"deposit",loginBean.getName());
+        PreferencesUtils.putString(getContext(),"payname",loginBean.getPayname());
+        PreferencesUtils.putString(getContext(),"sellamount",String.valueOf(loginBean.getSellamount()));
+        PreferencesUtils.putString(getContext(),"sellcount",String.valueOf(loginBean.getSellcount()));
+        PreferencesUtils.putString(getContext(),"point",String.valueOf(loginBean.getPoint()));
+        PreferencesUtils.putString(getContext(),"deposit",String.valueOf(loginBean.getDeposit()));
         Intent intent = new Intent(getActivity(), MainActivity.class);
         startActivity(intent);
         getActivity().finish();

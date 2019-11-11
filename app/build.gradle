@@ -47,7 +47,7 @@ android {
         buildConfigField 'String', 'TEST_H5', '"https://test-app-h5.apiopen.com/"'
 
         //开发环境
-        buildConfigField 'String', 'DEV_API', '"https://www.apiopen.top/"'
+        buildConfigField 'String', 'DEV_API', '"http://39.100.141.107/api/"'
         buildConfigField 'String', 'DEV_WS', '"https://dev-im-gateway.apiopen.com/ws"'
         buildConfigField 'String', 'DEV_H5', '"https://dev-app-h5.apiopen.com/"'
     }

@@ -35,6 +35,7 @@ public class PasswordPresenter extends RxPresenter<PasswordConstract.View> imple
 
                     @Override
                     public void onFail(String msg) {
+                        mView.setPasswordFail();
                         mView.showError(msg);
                     }
                 });

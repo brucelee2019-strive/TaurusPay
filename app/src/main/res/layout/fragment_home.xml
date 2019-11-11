@@ -151,10 +151,10 @@
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/textView10"/>
+            app:layout_constraintBottom_toTopOf="@+id/tv_today_sell_income_money"/>
 
         <TextView
-            android:id="@+id/textView10"
+            android:id="@+id/tv_today_sell_income_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"

@@ -14,6 +14,7 @@ import com.mchaw.tauruspay.ui.login.register.constract.RegisterConstract;
 public interface PasswordConstract {
     interface View extends BaseView {
         void setPasswordBean(PasswordBean passwordBean);
+        void setPasswordFail();
     }
     interface Presenter extends BasePresenter<PasswordConstract.View> {
         void getPasswordBean(String token,String code,String passwd,String passwd_confirmation);

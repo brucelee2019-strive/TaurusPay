@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.bean.login.RegisterBean;
+import com.mchaw.tauruspay.common.dialog.LoadingDialog;
 import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.login.register.constract.RegisterConstract;
@@ -68,6 +69,7 @@ public class RegisterFragment extends BasePresentFragment<RegisterPresenter> imp
 
     @Override
     public void setRegisterBean(RegisterBean registerBean) {
+        LoadingDialog.dismissDailog();
         if(registerBean==null){
             ToastUtils.showShortToast(getContext(),"异常,注册失败！请重新尝试");
             return;
@@ -78,6 +80,11 @@ public class RegisterFragment extends BasePresentFragment<RegisterPresenter> imp
         }else{
             ToastUtils.showShortToast(getContext(),"异常,注册失败！请重新尝试");
         }
+    }
+
+    @Override
+    public void setRegisterFail() {
+        LoadingDialog.dismissDailog();
     }
 
     @OnClick({R.id.tv_get_auth_code, R.id.tv_register_btn,R.id.iv_back})
@@ -131,5 +138,6 @@ public class RegisterFragment extends BasePresentFragment<RegisterPresenter> imp
             return;
         }
         presenter.getRegisterBean(account,phoneNumber,authCode,passwd,passwdSure,realName,activeCode);
+        LoadingDialog.showDialog(getChildFragmentManager());
     }
 }

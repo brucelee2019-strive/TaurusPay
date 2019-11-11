@@ -9,6 +9,7 @@ import com.mchaw.tauruspay.bean.home.TransferAccountsBean;
 import com.mchaw.tauruspay.bean.login.LoginBean;
 import com.mchaw.tauruspay.bean.login.PasswordBean;
 import com.mchaw.tauruspay.bean.login.RegisterBean;
+import com.mchaw.tauruspay.bean.recharge.RechargeNextBean;
 
 
 import java.util.List;
@@ -61,4 +62,8 @@ public interface APIService {
     @FormUrlEncoded
     @POST("recharge/transfer")
     Observable<ResultBean<TransferAccountsBean>> getTransferAccountsBean(@Field("api_token") String api_token, @Field("code") String code, @Field("account") String account, @Field("payname") String payname,@Field("amount") String amount);
+
+    @FormUrlEncoded
+    @POST("recharge/request/100000")
+    Observable<ResultBean<RechargeNextBean>> getRechargeNextBean(@Field("api_token") String api_token);
 }

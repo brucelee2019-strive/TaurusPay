@@ -12,13 +12,25 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BaseFragment;
+import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
+import com.mchaw.tauruspay.bean.recharge.RechargeNextBean;
+import com.mchaw.tauruspay.bean.recharge.RechargeTraBean;
 import com.mchaw.tauruspay.common.Constant;
+import com.mchaw.tauruspay.common.dialog.LoadingDialog;
+import com.mchaw.tauruspay.common.util.PreferencesUtils;
+import com.mchaw.tauruspay.di.component.ActivityComponent;
+import com.mchaw.tauruspay.ui.main.recharge.constract.RechargeNextConstract;
+import com.mchaw.tauruspay.ui.main.recharge.presenter.RechargeNextPresenter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -28,7 +40,7 @@ import butterknife.OnClick;
  * @date : 2019/11/7 19:57
  * @description:
  */
-public class RechargeNextFragment extends BaseFragment {
+public class RechargeNextFragment extends BasePresentFragment<RechargeNextPresenter> implements RechargeNextConstract.View {
     @BindView(R.id.tv_back_title)
     TextView tvBackTitle;
     @BindView(R.id.tv_remittance_btn)
@@ -67,6 +79,7 @@ public class RechargeNextFragment extends BaseFragment {
 
     @Override
     protected void initFragment() {
+        super.initFragment();
         state = RECHARGEING;
         tvBackTitle.setText("充值");
         showByState(RECHARGEING);
@@ -89,6 +102,12 @@ public class RechargeNextFragment extends BaseFragment {
         });
     }
 
+    @Override
+    public void injectFragmentComponent(ActivityComponent component) {
+        super.injectFragmentComponent(component);
+        component.inject(this);
+    }
+
     @OnClick({R.id.iv_back, R.id.tv_remittance_btn})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -97,8 +116,8 @@ public class RechargeNextFragment extends BaseFragment {
                 break;
             case R.id.tv_remittance_btn:
                 if(state == RECHARGEING){
-                    state = AUDITING;
-                    showByState(AUDITING);
+                    LoadingDialog.showDialog(getChildFragmentManager());
+                    presenter.getRechargeNextBean(PreferencesUtils.getString(getContext(),"token"));
                 } else {
                     Intent intent = new Intent();
                     //intent.putExtra(Constant.INTENT_TYPE, type);
@@ -122,5 +141,46 @@ public class RechargeNextFragment extends BaseFragment {
         etRechargeNum.setFocusableInTouchMode(state==RECHARGEING?true:false);
     }
 
+    List<RechargeTraBean> list = new ArrayList<RechargeTraBean>();
+    @Override
+    public void setRechargeNextBean(RechargeNextBean rechargeNextBean) {
+        LoadingDialog.dismissDailog();
+        if(rechargeNextBean == null){
+            return;
+        }
+        state = AUDITING;
+        showByState(AUDITING);
+        RechargeTraBean r1 = new RechargeTraBean();
+        r1.setTitle("到账额度");
+        r1.setContent(rechargeNextBean.getAmount());
+        list.add(r1);
+        RechargeTraBean r2 = new RechargeTraBean();
+        r2.setTitle("收款账户");
+        r2.setContent(rechargeNextBean.getAccount());
+        list.add(r2);
+        RechargeTraBean r3 = new RechargeTraBean();
+        r3.setTitle("收款银行");
+        r3.setContent(rechargeNextBean.getBank());
+        list.add(r3);
+        RechargeTraBean r4 = new RechargeTraBean();
+        r4.setTitle("支行信息");
+        r4.setContent(rechargeNextBean.getBankname());
+        list.add(r4);
+        RechargeTraBean r5 = new RechargeTraBean();
+        r5.setTitle("收款卡号");
+        r5.setContent(rechargeNextBean.getCardnumber());
+        list.add(r5);
+        RechargeTraBean r6 = new RechargeTraBean();
+        r6.setTitle("留言码");
+        r6.setContent(rechargeNextBean.getRemarks());
+        list.add(r6);
+        rvRechargeMes.setLayoutManager(new LinearLayoutManager(getContext()));
+        RechargeNextAdapter rechargeNextAdapter = new RechargeNextAdapter(list);
+        rvRechargeMes.setAdapter(rechargeNextAdapter);
+    }
 
+    @Override
+    public void setRechargeNextFail() {
+        LoadingDialog.dismissDailog();
+    }
 }
