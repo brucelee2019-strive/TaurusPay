@@ -13,6 +13,7 @@ import com.mchaw.tauruspay.MainActivity;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.bean.login.LoginBean;
+import com.mchaw.tauruspay.common.dialog.LoadingDialog;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
@@ -61,15 +62,25 @@ public class LoginFragment extends BasePresentFragment<LoginPresenter> implement
 
     @Override
     public void setLoginBean(LoginBean loginBean) {
+        LoadingDialog.dismissDailog();
         if(loginBean == null){
             return;
         }
         PreferencesUtils.putString(getContext(),"token",loginBean.getToken());
         PreferencesUtils.putString(getContext(),"name",loginBean.getName());
         PreferencesUtils.putString(getContext(),"payname",loginBean.getName());
+        PreferencesUtils.putString(getContext(),"sellamount",loginBean.getName());
+        PreferencesUtils.putString(getContext(),"sellcount",loginBean.getName());
+        PreferencesUtils.putString(getContext(),"point",loginBean.getName());
+        PreferencesUtils.putString(getContext(),"deposit",loginBean.getName());
         Intent intent = new Intent(getActivity(), MainActivity.class);
         startActivity(intent);
         getActivity().finish();
+    }
+
+    @Override
+    public void setLoginFail() {
+        LoadingDialog.dismissDailog();
     }
 
     @OnClick({R.id.tv_login_btn, R.id.tv_register, R.id.tv_find_password})
@@ -103,5 +114,6 @@ public class LoginFragment extends BasePresentFragment<LoginPresenter> implement
             return;
         }
         presenter.getLoginBean(username, code, passwd);
+        LoadingDialog.showDialog(getChildFragmentManager());
     }
 }

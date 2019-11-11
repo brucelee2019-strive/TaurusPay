@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BaseFragment;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
+import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.main.home.forsale.ForSaleFragment;
 import com.mchaw.tauruspay.ui.main.home.transferaccounts.TransferAccountsFragment;
@@ -33,6 +34,18 @@ public class HomeFragment extends BaseFragment {
     @BindView(R.id.tv_after_sale_txt)
     TextView tvAfterSaleTxt;
 
+    @BindView(R.id.tv_repertory)
+    TextView tvRepertory;
+
+    @BindView(R.id.tv_today_agency_income)
+    TextView tvTodayAgencyIncome;
+
+    @BindView(R.id.tv_today_money_for_sale)
+    TextView tvTodayMoneyForSale;
+
+    @BindView(R.id.tv_today_time_for_sale)
+    TextView tvTodayTimeForSale;
+
     private String strPre = "*开始代售前，请保持<font color='#FF9600'>金牛话费</font>与<font color='#00aaef'>支付宝</font>在线";
     private String strAfter = "*开始代售时，请及时查询确认收款";
 
@@ -52,6 +65,12 @@ public class HomeFragment extends BaseFragment {
         tvNotiveText.setSelected(true);
         tvPreSaleTxt.setText(Html.fromHtml(strPre));
         tvAfterSaleTxt.setText(strAfter);
+
+        tvRepertory.setText(PreferencesUtils.getString(getContext(),"deposit"));
+        tvTodayAgencyIncome.setText(PreferencesUtils.getString(getContext(),"point"));
+        tvTodayMoneyForSale.setText(PreferencesUtils.getString(getContext(),"sellamount"));
+        tvTodayTimeForSale.setText(PreferencesUtils.getString(getContext(),"sellcount"));
+
     }
 
     @OnClick({R.id.tv_transfer_btn, R.id.tv_start_sail})

@@ -35,6 +35,7 @@ public class LoginPresenter extends RxPresenter<LoginConstract.View> implements 
 
                     @Override
                     public void onFail(String msg) {
+                        mView.setLoginFail();
                         mView.showError(msg);
                     }
                 });

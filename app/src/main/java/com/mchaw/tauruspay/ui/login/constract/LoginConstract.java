@@ -12,6 +12,7 @@ import com.mchaw.tauruspay.bean.login.LoginBean;
 public interface LoginConstract {
     interface View extends BaseView {
         void setLoginBean(LoginBean loginBean);
+        void setLoginFail();
     }
     interface Presenter extends BasePresenter<LoginConstract.View> {
         void getLoginBean(String username,String code,String passwd);
