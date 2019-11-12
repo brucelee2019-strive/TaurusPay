@@ -10,6 +10,7 @@ import com.mchaw.tauruspay.ui.login.password.PasswordFragment;
 import com.mchaw.tauruspay.ui.login.register.RegisterFragment;
 import com.mchaw.tauruspay.ui.main.home.forsale.ForSaleFragment;
 import com.mchaw.tauruspay.ui.main.home.transferaccounts.TransferAccountsFragment;
+import com.mchaw.tauruspay.ui.main.recharge.RechargeFragment;
 import com.mchaw.tauruspay.ui.main.recharge.RechargeNextFragment;
 
 import dagger.Component;
@@ -45,4 +46,6 @@ public interface ActivityComponent {
     void inject(ForSaleFragment forSaleFragment);
 
     void inject(RechargeNextFragment rechargeNextFragment);
+
+    void inject(RechargeFragment rechargeFragment);
 }

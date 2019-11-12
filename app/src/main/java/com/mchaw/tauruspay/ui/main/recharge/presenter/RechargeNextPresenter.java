@@ -3,6 +3,7 @@ package com.mchaw.tauruspay.ui.main.recharge.presenter;
 import com.mchaw.tauruspay.base.mvp.presenter.RxPresenter;
 import com.mchaw.tauruspay.bean.login.LoginBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeNextBean;
+import com.mchaw.tauruspay.bean.recharge.RechargeSureBean;
 import com.mchaw.tauruspay.http.ResultObserver;
 import com.mchaw.tauruspay.ui.main.recharge.constract.RechargeNextConstract;
 import com.mchaw.tauruspay.ui.repository.FundModel;
@@ -27,12 +28,30 @@ public class RechargeNextPresenter extends RxPresenter<RechargeNextConstract.Vie
 
 
     @Override
-    public void getRechargeNextBean(String token) {
-        Disposable disposable = fundModel.getRechargeNextBean(token)
+    public void getRechargeNextBean(String paymentNum,String token) {
+        Disposable disposable = fundModel.getRechargeNextBean(paymentNum,token)
                 .subscribeWith(new ResultObserver<RechargeNextBean>() {
                     @Override
-                    public void onSuccess(RechargeNextBean loginBean) {
-                        mView.setRechargeNextBean(loginBean);
+                    public void onSuccess(RechargeNextBean rechargeNextBean) {
+                        mView.setRechargeNextBean(rechargeNextBean);
+                    }
+
+                    @Override
+                    public void onFail(String msg) {
+                        mView.setRechargeNextFail();
+                        mView.showError(msg);
+                    }
+                });
+        addSubscribe(disposable);
+    }
+
+    @Override
+    public void getRechargeSureBean(String orderId,String token) {
+        Disposable disposable = fundModel.getRechargeSureBean(orderId,token)
+                .subscribeWith(new ResultObserver<RechargeSureBean>() {
+                    @Override
+                    public void onSuccess(RechargeSureBean rechargeSureBean) {
+                        mView.setRechargeSureBean(rechargeSureBean);
                     }
 
                     @Override

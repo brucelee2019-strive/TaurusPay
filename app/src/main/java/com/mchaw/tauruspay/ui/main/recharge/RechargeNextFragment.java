@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
@@ -19,10 +20,12 @@ import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BaseFragment;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.bean.recharge.RechargeNextBean;
+import com.mchaw.tauruspay.bean.recharge.RechargeSureBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeTraBean;
 import com.mchaw.tauruspay.common.Constant;
 import com.mchaw.tauruspay.common.dialog.LoadingDialog;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
+import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.main.recharge.constract.RechargeNextConstract;
 import com.mchaw.tauruspay.ui.main.recharge.presenter.RechargeNextPresenter;
@@ -61,6 +64,7 @@ public class RechargeNextFragment extends BasePresentFragment<RechargeNextPresen
     TextView tvIncomeNum;
 
     private String outToNum;
+    private String orderNum;
 
     private int RECHARGEING = 0;
     private int AUDITING = 1;
@@ -117,12 +121,14 @@ public class RechargeNextFragment extends BasePresentFragment<RechargeNextPresen
             case R.id.tv_remittance_btn:
                 if(state == RECHARGEING){
                     LoadingDialog.showDialog(getChildFragmentManager());
-                    presenter.getRechargeNextBean(PreferencesUtils.getString(getContext(),"token"));
+                    presenter.getRechargeNextBean(outToNum,PreferencesUtils.getString(getContext(),"token"));
                 } else {
-                    Intent intent = new Intent();
-                    //intent.putExtra(Constant.INTENT_TYPE, type);
-                    getActivity().setResult(Activity.RESULT_OK, intent);
-                    getActivity().finish();
+                    if(TextUtils.isEmpty(orderNum)){
+                        ToastUtils.showShortToast(getContext(),"订单号有误！");
+                        return;
+                    }
+                    LoadingDialog.showDialog(getChildFragmentManager());
+                    presenter.getRechargeSureBean(orderNum,PreferencesUtils.getString(getContext(),"token"));
                 }
                 break;
             default:
@@ -141,13 +147,16 @@ public class RechargeNextFragment extends BasePresentFragment<RechargeNextPresen
         etRechargeNum.setFocusableInTouchMode(state==RECHARGEING?true:false);
     }
 
-    List<RechargeTraBean> list = new ArrayList<RechargeTraBean>();
+    List<RechargeTraBean> list = new ArrayList();
+    //下一步成功
     @Override
     public void setRechargeNextBean(RechargeNextBean rechargeNextBean) {
         LoadingDialog.dismissDailog();
         if(rechargeNextBean == null){
+            ToastUtils.showShortToast(getContext(),"服务器返回结果为空");
             return;
         }
+        orderNum = rechargeNextBean.getOrderid();
         state = AUDITING;
         showByState(AUDITING);
         RechargeTraBean r1 = new RechargeTraBean();
@@ -179,8 +188,24 @@ public class RechargeNextFragment extends BasePresentFragment<RechargeNextPresen
         rvRechargeMes.setAdapter(rechargeNextAdapter);
     }
 
+    //请求失败
     @Override
     public void setRechargeNextFail() {
         LoadingDialog.dismissDailog();
+    }
+
+    //我已汇款成功
+    @Override
+    public void setRechargeSureBean(RechargeSureBean rechargeSureBean) {
+        LoadingDialog.dismissDailog();
+        if(rechargeSureBean==null){
+            ToastUtils.showShortToast(getContext(),"服务器返回结果为空");
+            return;
+        }
+        Intent intent = new Intent();
+        intent.putExtra(Constant.INTENT_ID,rechargeSureBean.getOrderid());
+        intent.putExtra(Constant.INTENT_MSG,outToNum);
+        getActivity().setResult(Activity.RESULT_OK, intent);
+        getActivity().finish();
     }
 }

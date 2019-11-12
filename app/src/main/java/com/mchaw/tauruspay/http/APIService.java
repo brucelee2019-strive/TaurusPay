@@ -9,7 +9,9 @@ import com.mchaw.tauruspay.bean.home.TransferAccountsBean;
 import com.mchaw.tauruspay.bean.login.LoginBean;
 import com.mchaw.tauruspay.bean.login.PasswordBean;
 import com.mchaw.tauruspay.bean.login.RegisterBean;
+import com.mchaw.tauruspay.bean.recharge.RechargeBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeNextBean;
+import com.mchaw.tauruspay.bean.recharge.RechargeSureBean;
 
 
 import java.util.List;
@@ -19,6 +21,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -64,6 +67,14 @@ public interface APIService {
     Observable<ResultBean<TransferAccountsBean>> getTransferAccountsBean(@Field("api_token") String api_token, @Field("code") String code, @Field("account") String account, @Field("payname") String payname,@Field("amount") String amount);
 
     @FormUrlEncoded
-    @POST("recharge/request/100000")
-    Observable<ResultBean<RechargeNextBean>> getRechargeNextBean(@Field("api_token") String api_token);
+    @POST("recharge/request/{paymentNum}")
+    Observable<ResultBean<RechargeNextBean>> getRechargeNextBean(@Path("paymentNum")String paymentNum,@Field("api_token") String api_token);
+
+    @FormUrlEncoded
+    @POST("recharge/complete/{orderId}")
+    Observable<ResultBean<RechargeSureBean>> getRechargeSureBean(@Path("orderId")String orderId, @Field("api_token") String api_token);
+
+    @FormUrlEncoded
+    @POST("recharge/list")
+    Observable<ResultBean<List<RechargeBean>>> getRechargeList(@Field("api_token") String api_token);
 }
