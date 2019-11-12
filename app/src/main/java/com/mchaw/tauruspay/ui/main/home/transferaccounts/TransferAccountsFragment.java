@@ -2,6 +2,7 @@ package com.mchaw.tauruspay.ui.main.home.transferaccounts;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -9,6 +10,9 @@ import androidx.annotation.Nullable;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.bean.home.TransferAccountsBean;
+import com.mchaw.tauruspay.common.dialog.LoadingDialog;
+import com.mchaw.tauruspay.common.util.PreferencesUtils;
+import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.main.home.transferaccounts.constract.TransferAccountsConstract;
 import com.mchaw.tauruspay.ui.main.home.transferaccounts.presenter.TransferAccountsPresenter;
@@ -25,6 +29,16 @@ public class TransferAccountsFragment extends BasePresentFragment<TransferAccoun
 
     @BindView(R.id.tv_back_title)
     TextView tvBackTitle;
+
+    @BindView(R.id.et_amout)
+    EditText etAmout;
+    @BindView(R.id.et_account)
+    EditText etAccount;
+    @BindView(R.id.et_name)
+    EditText etName;
+    @BindView(R.id.et_passwd)
+    EditText etCode;
+
 
     @Override
     protected int getContentViewId() {
@@ -51,7 +65,18 @@ public class TransferAccountsFragment extends BasePresentFragment<TransferAccoun
 
     @Override
     public void setTransferAccountsBean(TransferAccountsBean transferAccountsBean) {
+        LoadingDialog.dismissDailog();
+        if(transferAccountsBean == null){
+            ToastUtils.showShortToast(getContext(),"服务器返回数据为空！");
+            return;
+        }
+        ToastUtils.showShortToast(getContext(),"转账成功");
+        getActivity().finish();
+    }
 
+    @Override
+    public void setTransferAccountsFail() {
+        LoadingDialog.dismissDailog();
     }
 
     @OnClick({R.id.iv_back, R.id.tv_transfer_account_sure})
@@ -61,7 +86,11 @@ public class TransferAccountsFragment extends BasePresentFragment<TransferAccoun
                 getActivity().finish();
                 break;
             case R.id.tv_transfer_account_sure:
-                //presenter.getTransferAccountsBean();
+                presenter.getTransferAccountsBean(PreferencesUtils.getString(getContext(),"token"),etCode.getText().toString(),
+                        etAccount.getText().toString(),
+                        etName.getText().toString(),
+                        etAmout.getText().toString());
+                LoadingDialog.showDialog(getChildFragmentManager());
                 break;
             default:
                 break;

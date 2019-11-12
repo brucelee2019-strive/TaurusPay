@@ -74,7 +74,7 @@ public class RechargeFragment extends BasePresentFragment<RechargeListPresenter>
         rechargeAdapter = new RechargeAdapter(rechargeBeanList);
         rvIncomeRecoed.setAdapter(rechargeAdapter);
         presenter.getRechargeList(PreferencesUtils.getString(getContext(),"token"));
-        Log.i("lililili",PreferencesUtils.getString(getContext(),"token"));
+        Log.i("cici",PreferencesUtils.getString(getContext(),"token"));
     }
 
     @OnClick({R.id.tv_recharge_btn,R.id.tv_record})

@@ -12,6 +12,7 @@ import com.mchaw.tauruspay.bean.home.TransferAccountsBean;
 public interface TransferAccountsConstract {
     interface View extends BaseView {
         void setTransferAccountsBean(TransferAccountsBean transferAccountsBean);
+        void setTransferAccountsFail();
     }
     interface Presenter extends BasePresenter<TransferAccountsConstract.View> {
         void getTransferAccountsBean(String token,String code,String account,String payname,String amount);

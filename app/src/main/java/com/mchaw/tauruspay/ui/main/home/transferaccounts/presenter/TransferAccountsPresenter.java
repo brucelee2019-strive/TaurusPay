@@ -38,6 +38,7 @@ public class TransferAccountsPresenter extends RxPresenter<TransferAccountsConst
 
                     @Override
                     public void onFail(String msg) {
+                        mView.setTransferAccountsFail();
                         mView.showError(msg);
                     }
                 });

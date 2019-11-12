@@ -6,4 +6,13 @@ package com.mchaw.tauruspay.bean.home;
  * @description:
  */
 public class TransferAccountsBean {
+    private String time;
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
 }
