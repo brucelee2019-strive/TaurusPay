@@ -1,6 +1,7 @@
 package com.mchaw.tauruspay.ui.repository;
 
 import com.mchaw.tauruspay.bean.ScoreAllStateBean;
+import com.mchaw.tauruspay.bean.home.HomeDataBean;
 import com.mchaw.tauruspay.bean.login.LoginBean;
 import com.mchaw.tauruspay.bean.login.PasswordBean;
 import com.mchaw.tauruspay.bean.login.RegisterBean;
@@ -21,22 +22,28 @@ public class LoginModel extends BaseModel{
     public LoginModel() {
 
     }
-
+    //登录
     public Observable<LoginBean> getLoginBean(String username, String code, String passwd) {
         return apiService.getLoginBean(username,code,passwd)
                 .compose(new ResultDisposable<LoginBean>())
                 .compose(new ScheduleTranformer<LoginBean>());
     }
-
+    //注册
     public Observable<RegisterBean> getRegisterBean(String account, String mobile, String code, String passwd, String passwd_confirmation, String payaccount, String activecode) {
         return apiService.getRegisterBean(account,mobile,code,passwd,passwd_confirmation,payaccount,activecode)
                 .compose(new ResultDisposable<RegisterBean>())
                 .compose(new ScheduleTranformer<RegisterBean>());
     }
-
+    //修改密码
     public Observable<PasswordBean> getPasswordBean(String token, String code, String passwd, String passwd_confirmation) {
         return apiService.getRegisterBean(token,code,passwd,passwd_confirmation)
                 .compose(new ResultDisposable<PasswordBean>())
                 .compose(new ScheduleTranformer<PasswordBean>());
+    }
+    //获取个人信息
+    public Observable<HomeDataBean> getHomeDataBean(String token) {
+        return apiService.getHomeDataBean(token)
+                .compose(new ResultDisposable<HomeDataBean>())
+                .compose(new ScheduleTranformer<HomeDataBean>());
     }
 }

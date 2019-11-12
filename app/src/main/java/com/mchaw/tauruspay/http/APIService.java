@@ -5,6 +5,7 @@ import com.mchaw.tauruspay.bean.Movie;
 import com.mchaw.tauruspay.bean.ResultBean;
 import com.mchaw.tauruspay.bean.ScoreAllStateBean;
 import com.mchaw.tauruspay.bean.ShopBean;
+import com.mchaw.tauruspay.bean.home.HomeDataBean;
 import com.mchaw.tauruspay.bean.home.TransferAccountsBean;
 import com.mchaw.tauruspay.bean.login.LoginBean;
 import com.mchaw.tauruspay.bean.login.PasswordBean;
@@ -77,4 +78,7 @@ public interface APIService {
     @FormUrlEncoded
     @POST("recharge/list")
     Observable<ResultBean<List<RechargeBean>>> getRechargeList(@Field("api_token") String api_token);
+
+    @GET("my/sellinfo")
+    Observable<ResultBean<HomeDataBean>> getHomeDataBean(@Query("api_token") String api_token);
 }
