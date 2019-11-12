@@ -57,9 +57,16 @@ public class MineFragment extends BaseFragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_login_out:
-                PreferencesUtils.removeKey(getContext(),"token");
-                PreferencesUtils.removeKey(getContext(),"name");
-                PreferencesUtils.removeKey(getContext(),"payname");
+//                PreferencesUtils.removeKey(getContext(),"token");
+//                PreferencesUtils.removeKey(getContext(),"name");
+//                PreferencesUtils.removeKey(getContext(),"payname");
+                PreferencesUtils.putString(getContext(),"token","");
+                PreferencesUtils.putString(getContext(),"name","");
+                PreferencesUtils.putString(getContext(),"payname","");
+                PreferencesUtils.putString(getContext(),"sellamount","");
+                PreferencesUtils.putString(getContext(),"sellcount","");
+                PreferencesUtils.putString(getContext(),"point","");
+                PreferencesUtils.putString(getContext(),"deposit","");
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
                 getActivity().finish();
