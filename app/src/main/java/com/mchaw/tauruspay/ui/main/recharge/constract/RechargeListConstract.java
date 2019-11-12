@@ -2,6 +2,7 @@ package com.mchaw.tauruspay.ui.main.recharge.constract;
 
 import com.mchaw.tauruspay.base.mvp.presenter.BasePresenter;
 import com.mchaw.tauruspay.base.mvp.view.BaseView;
+import com.mchaw.tauruspay.bean.home.HomeDataBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeBean;
 
 import java.util.List;
@@ -14,8 +15,10 @@ import java.util.List;
 public interface RechargeListConstract {
     interface View extends BaseView {
        void setRechargeList(List<RechargeBean> list);
+        void setHomeDataBean(HomeDataBean homeDataBean);
     }
     interface Presenter extends BasePresenter<RechargeListConstract.View> {
         void getRechargeList(String token);
+        void getHomeDataBean(String api_token);
     }
 }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BaseFragment;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
+import com.mchaw.tauruspay.bean.home.HomeDataBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeBean;
 import com.mchaw.tauruspay.common.Constant;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
@@ -37,6 +39,9 @@ public class RechargeFragment extends BasePresentFragment<RechargeListPresenter>
     @BindView(R.id.rv_income_record)
     RecyclerView rvIncomeRecoed;
 
+    @BindView(R.id.tv_repertory_money)
+    TextView tvRepertoryMoney;
+
     private List<RechargeBean> rechargeBeanList = new ArrayList();
     private RechargeAdapter rechargeAdapter;
 
@@ -58,6 +63,7 @@ public class RechargeFragment extends BasePresentFragment<RechargeListPresenter>
 
         }else{
             presenter.getRechargeList(PreferencesUtils.getString(getContext(),"token"));
+            presenter.getHomeDataBean(PreferencesUtils.getString(getContext(),"token"));
         }
     }
 
@@ -74,6 +80,7 @@ public class RechargeFragment extends BasePresentFragment<RechargeListPresenter>
         rechargeAdapter = new RechargeAdapter(rechargeBeanList);
         rvIncomeRecoed.setAdapter(rechargeAdapter);
         presenter.getRechargeList(PreferencesUtils.getString(getContext(),"token"));
+        presenter.getHomeDataBean(PreferencesUtils.getString(getContext(),"token"));
         Log.i("cici",PreferencesUtils.getString(getContext(),"token"));
     }
 
@@ -108,5 +115,10 @@ public class RechargeFragment extends BasePresentFragment<RechargeListPresenter>
     @Override
     public void setRechargeList(List<RechargeBean> list) {
         rechargeAdapter.setNewData(list);
+    }
+
+    @Override
+    public void setHomeDataBean(HomeDataBean homeDataBean) {
+        tvRepertoryMoney.setText(String.valueOf(homeDataBean.getDeposit()));
     }
 }

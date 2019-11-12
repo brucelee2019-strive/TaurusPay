@@ -12,9 +12,11 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.bean.home.ForSaleBean;
+import com.mchaw.tauruspay.bean.home.HomeDataBean;
 import com.mchaw.tauruspay.bean.home.SelledOrderBean;
 import com.mchaw.tauruspay.bean.home.SellingOrderBean;
 import com.mchaw.tauruspay.common.adapter.TabPageAdapter;
+import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.main.home.forsale.constract.ForSaleConstract;
 import com.mchaw.tauruspay.ui.main.home.forsale.presenter.ForSalePresenter;
@@ -32,6 +34,13 @@ import butterknife.OnClick;
  * @description:代售Fragment
  */
 public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> implements ForSaleConstract.View,ViewPager.OnPageChangeListener{
+
+    @BindView(R.id.tv_all_coin_num)
+    TextView tvAllCoinNum;
+    @BindView(R.id.tv_today_income_num)
+    TextView tvTodayIncomeNum;
+    @BindView(R.id.tv_sailing_coin_num)
+    TextView tvSailingCoinNum;
 
     @BindView(R.id.tv_back_title)
     TextView tvBackTitle;
@@ -73,6 +82,7 @@ public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> imple
         tabLayout.setViewPager(viewPage, saleTabs);
         tabLayout.onPageSelected(currentPage);
         viewPage.addOnPageChangeListener(this);
+        presenter.getHomeDataBean(PreferencesUtils.getString(getContext(),"token"));
     }
 
     @Override
@@ -94,6 +104,13 @@ public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> imple
     @Override
     public void setCollectionlist(List<SelledOrderBean> list) {
 
+    }
+
+    @Override
+    public void setHomeDataBean(HomeDataBean homeDataBean) {
+        tvAllCoinNum.setText(String.valueOf(homeDataBean.getDeposit()));
+        tvTodayIncomeNum.setText(String.valueOf(0));
+        tvSailingCoinNum.setText(String.valueOf(0));
     }
 
     @Override

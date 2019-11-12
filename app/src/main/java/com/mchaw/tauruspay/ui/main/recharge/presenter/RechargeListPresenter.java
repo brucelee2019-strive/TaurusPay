@@ -1,11 +1,13 @@
 package com.mchaw.tauruspay.ui.main.recharge.presenter;
 
 import com.mchaw.tauruspay.base.mvp.presenter.RxPresenter;
+import com.mchaw.tauruspay.bean.home.HomeDataBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeNextBean;
 import com.mchaw.tauruspay.http.ResultObserver;
 import com.mchaw.tauruspay.ui.main.recharge.constract.RechargeListConstract;
 import com.mchaw.tauruspay.ui.repository.FundModel;
+import com.mchaw.tauruspay.ui.repository.LoginModel;
 
 import java.util.List;
 
@@ -22,6 +24,9 @@ public class RechargeListPresenter extends RxPresenter<RechargeListConstract.Vie
 
     @Inject
     FundModel fundModel;
+
+    @Inject
+    LoginModel loginModel;
 
     @Inject
     public RechargeListPresenter() {
@@ -45,5 +50,24 @@ public class RechargeListPresenter extends RxPresenter<RechargeListConstract.Vie
                     }
                 });
         addSubscribe(reChargeListDisposable);
+    }
+
+    Disposable homeBeanDisposable;
+    @Override
+    public void getHomeDataBean(String api_token) {
+        removeSubscribe(homeBeanDisposable);
+        homeBeanDisposable = loginModel.getHomeDataBean(api_token)
+                .subscribeWith(new ResultObserver<HomeDataBean>() {
+                    @Override
+                    public void onSuccess(HomeDataBean homeDataBean) {
+                        mView.setHomeDataBean(homeDataBean);
+                    }
+
+                    @Override
+                    public void onFail(String msg) {
+                        mView.showError(msg);
+                    }
+                });
+        addSubscribe(homeBeanDisposable);
     }
 }

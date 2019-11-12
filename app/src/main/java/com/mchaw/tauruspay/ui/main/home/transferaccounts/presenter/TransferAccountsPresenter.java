@@ -1,6 +1,7 @@
 package com.mchaw.tauruspay.ui.main.home.transferaccounts.presenter;
 
 import com.mchaw.tauruspay.base.mvp.presenter.RxPresenter;
+import com.mchaw.tauruspay.bean.home.HomeDataBean;
 import com.mchaw.tauruspay.bean.home.TransferAccountsBean;
 import com.mchaw.tauruspay.bean.login.RegisterBean;
 import com.mchaw.tauruspay.http.ResultObserver;
@@ -23,8 +24,30 @@ public class TransferAccountsPresenter extends RxPresenter<TransferAccountsConst
     FundModel fundModel;
 
     @Inject
+    LoginModel loginModel;
+
+    @Inject
     public TransferAccountsPresenter() {
 
+    }
+
+    Disposable homeBeanDisposable;
+    @Override
+    public void getHomeDataBean(String api_token) {
+        removeSubscribe(homeBeanDisposable);
+        homeBeanDisposable = loginModel.getHomeDataBean(api_token)
+                .subscribeWith(new ResultObserver<HomeDataBean>() {
+                    @Override
+                    public void onSuccess(HomeDataBean homeDataBean) {
+                        mView.setHomeDataBean(homeDataBean);
+                    }
+
+                    @Override
+                    public void onFail(String msg) {
+                        mView.showError(msg);
+                    }
+                });
+        addSubscribe(homeBeanDisposable);
     }
 
     @Override

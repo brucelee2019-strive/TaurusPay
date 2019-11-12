@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
+import com.mchaw.tauruspay.bean.home.HomeDataBean;
 import com.mchaw.tauruspay.bean.home.TransferAccountsBean;
 import com.mchaw.tauruspay.common.dialog.LoadingDialog;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
@@ -39,6 +40,9 @@ public class TransferAccountsFragment extends BasePresentFragment<TransferAccoun
     @BindView(R.id.et_passwd)
     EditText etCode;
 
+    @BindView(R.id.tv_all_cost)
+    TextView tvAllCost;
+
 
     @Override
     protected int getContentViewId() {
@@ -55,6 +59,7 @@ public class TransferAccountsFragment extends BasePresentFragment<TransferAccoun
     protected void initFragment() {
         super.initFragment();
         tvBackTitle.setText("转账");
+        presenter.getHomeDataBean(PreferencesUtils.getString(getContext(),"token"));
     }
 
     @Override
@@ -77,6 +82,11 @@ public class TransferAccountsFragment extends BasePresentFragment<TransferAccoun
     @Override
     public void setTransferAccountsFail() {
         LoadingDialog.dismissDailog();
+    }
+
+    @Override
+    public void setHomeDataBean(HomeDataBean homeDataBean) {
+        tvAllCost.setText(String.valueOf(homeDataBean.getDeposit()));
     }
 
     @OnClick({R.id.iv_back, R.id.tv_transfer_account_sure})
