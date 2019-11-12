@@ -1,6 +1,7 @@
 package com.mchaw.tauruspay.ui.main.home.forsale;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -23,6 +24,7 @@ import java.util.List;
 
 import butterknife.BindArray;
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * @author Bruce Lee
@@ -31,6 +33,8 @@ import butterknife.BindView;
  */
 public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> implements ForSaleConstract.View,ViewPager.OnPageChangeListener{
 
+    @BindView(R.id.tv_back_title)
+    TextView tvBackTitle;
     @BindView(R.id.tv_notice_text)
     TextView tvNotiveText;
     @BindView(R.id.tab_layout)
@@ -58,6 +62,7 @@ public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> imple
     @Override
     protected void initFragment() {
         super.initFragment();
+        tvBackTitle.setText("代售");
         tvNotiveText.setSelected(true);
         mFragments.add(new ForSaleListFragment());
         mFragments.add(new CollectionListFragment());
@@ -105,4 +110,17 @@ public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> imple
     public void onPageScrollStateChanged(int state) {
 
     }
+
+    @OnClick(R.id.iv_back)
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.iv_back:
+                getActivity().finish();
+                break;
+            default:
+                break;
+        }
+    }
+
+
 }

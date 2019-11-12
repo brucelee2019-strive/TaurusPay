@@ -5,6 +5,42 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="@color/color_black_3"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:paddingTop="5dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/white_back_icon" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_back_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textColor="@color/white"
+            android:textSize="26sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_back"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <include layout="@layout/layout_notice_text"/>
 
@@ -96,14 +132,23 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.flyco.tablayout.SlidingTabLayout
-            android:background="@color/f5c443"
+            android:background="@color/white"
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            app:tl_textSelectColor="@color/color_black_0"
-            app:tl_textUnselectColor="@color/white"
-            app:tl_tab_space_equal="true">
+            app:tl_divider_color="#1A000000"
+            app:tl_divider_padding="13dp"
+            app:tl_divider_width="1dp"
+            app:tl_indicator_color="#000000"
+            app:tl_indicator_height="1.5dp"
+            app:tl_indicator_width_equal_title="true"
+            app:tl_tab_padding="22dp"
+            app:tl_tab_space_equal="true"
+            app:tl_textSelectColor="#000000"
+            app:tl_textUnselectColor="#66000000"
+            app:tl_underline_color="#1A000000"
+            app:tl_underline_height="1dp">
         </com.flyco.tablayout.SlidingTabLayout>
 
     </LinearLayout>

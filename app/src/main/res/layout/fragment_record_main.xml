@@ -6,13 +6,22 @@
     android:layout_height="match_parent">
     <include layout="@layout/layout_left_back_bar"/>
     <com.flyco.tablayout.SlidingTabLayout
-        android:background="@color/f5c443"
+        android:background="@color/white"
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        app:tl_textSelectColor="@color/color_black_0"
-        app:tl_textUnselectColor="@color/white"
-        app:tl_tab_space_equal="true">
+        app:tl_divider_color="#1A000000"
+        app:tl_divider_padding="13dp"
+        app:tl_divider_width="1dp"
+        app:tl_indicator_color="#000000"
+        app:tl_indicator_height="1.5dp"
+        app:tl_indicator_width_equal_title="true"
+        app:tl_tab_padding="22dp"
+        app:tl_tab_space_equal="true"
+        app:tl_textSelectColor="#000000"
+        app:tl_textUnselectColor="#66000000"
+        app:tl_underline_color="#1A000000"
+        app:tl_underline_height="1dp">
     </com.flyco.tablayout.SlidingTabLayout>
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_page"
