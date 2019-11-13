@@ -53,6 +53,9 @@ public class ForSalePresenter extends RxPresenter<ForSaleConstract.View> impleme
                 .subscribeWith(new ResultObserver<HomeDataBean>() {
                     @Override
                     public void onSuccess(HomeDataBean homeDataBean) {
+                        if(mView == null){
+                            return;
+                        }
                         mView.setHomeDataBean(homeDataBean);
                     }
 

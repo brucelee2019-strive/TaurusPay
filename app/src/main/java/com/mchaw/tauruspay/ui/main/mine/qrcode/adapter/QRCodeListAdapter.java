@@ -22,6 +22,9 @@ public class QRCodeListAdapter extends BaseQuickAdapter<String, BaseViewHolder> 
 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, String item) {
+        helper.addOnClickListener(R.id.cl_303,R.id.cl_313,R.id.cl_785,R.id.cl_786,R.id.cl_1215,R.id.cl_1216,R.id.cl_2515,
+                R.id.cl_2516,R.id.cl_4985,R.id.cl_4988,R.id.cl_7988,R.id.cl_9988
+        ,R.id.tv_show_order_list);
         helper.setText(R.id.tv_zfb_account, item);
     }
 }
