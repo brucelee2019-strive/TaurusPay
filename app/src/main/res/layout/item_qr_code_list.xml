@@ -231,6 +231,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/ll_2"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:orientation="horizontal">
@@ -356,6 +357,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/ll_3"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:orientation="horizontal">

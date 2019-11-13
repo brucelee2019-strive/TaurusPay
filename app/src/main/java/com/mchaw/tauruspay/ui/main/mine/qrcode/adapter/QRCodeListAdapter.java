@@ -28,5 +28,9 @@ public class QRCodeListAdapter extends BaseQuickAdapter<QRCodeGroupBean, BaseVie
         ,R.id.tv_show_order_list);
         helper.setText(R.id.tv_zfb_account, item.getAccount());
         helper.setText(R.id.tv_zfb_nike_name,item.getNick());
+        helper.setGone(R.id.ll_1,item.isShowItems());
+        helper.setGone(R.id.ll_2,item.isShowItems());
+        helper.setGone(R.id.ll_3,item.isShowItems());
+        helper.setImageResource(R.id.tv_show_order_list,item.isShowItems()==true?R.drawable.ds_btn_sq:R.drawable.ds_btn_zk);
     }
 }

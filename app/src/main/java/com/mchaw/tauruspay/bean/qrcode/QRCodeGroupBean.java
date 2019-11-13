@@ -25,6 +25,16 @@ public class QRCodeGroupBean {
     private int sellamount;
     private int sellcount;
 
+    private boolean showItems = false;
+
+    public boolean isShowItems() {
+        return showItems;
+    }
+
+    public void setShowItems(boolean showItems) {
+        this.showItems = showItems;
+    }
+
     public int getId() {
         return id;
     }
