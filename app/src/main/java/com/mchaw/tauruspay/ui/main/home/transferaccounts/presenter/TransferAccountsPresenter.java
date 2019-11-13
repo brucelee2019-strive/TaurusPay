@@ -39,11 +39,17 @@ public class TransferAccountsPresenter extends RxPresenter<TransferAccountsConst
                 .subscribeWith(new ResultObserver<HomeDataBean>() {
                     @Override
                     public void onSuccess(HomeDataBean homeDataBean) {
+                        if(mView==null){
+                            return;
+                        }
                         mView.setHomeDataBean(homeDataBean);
                     }
 
                     @Override
                     public void onFail(String msg) {
+                        if(mView==null){
+                            return;
+                        }
                         mView.showError(msg);
                     }
                 });

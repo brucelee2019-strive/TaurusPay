@@ -10,6 +10,8 @@ import com.mchaw.tauruspay.bean.home.TransferAccountsBean;
 import com.mchaw.tauruspay.bean.login.LoginBean;
 import com.mchaw.tauruspay.bean.login.PasswordBean;
 import com.mchaw.tauruspay.bean.login.RegisterBean;
+import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupBean;
+import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupCreateBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeNextBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeSureBean;
@@ -81,4 +83,12 @@ public interface APIService {
 
     @GET("my/sellinfo")
     Observable<ResultBean<HomeDataBean>> getHomeDataBean(@Query("api_token") String api_token);
+
+    @FormUrlEncoded
+    @POST("sell/mygroup")
+    Observable<ResultBean<List<QRCodeGroupBean>>> getQRCodeGroupList(@Field("api_token") String api_token);
+
+    @FormUrlEncoded
+    @POST("sell/creategroup")
+    Observable<ResultBean<QRCodeGroupCreateBean>> getQRCodeGroupBean(@Field("api_token") String api_token,@Field("account") String account,@Field("nick") String nick,@Field("paytype") String paytype);
 }

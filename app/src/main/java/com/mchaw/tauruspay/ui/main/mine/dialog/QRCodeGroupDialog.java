@@ -2,44 +2,47 @@ package com.mchaw.tauruspay.ui.main.mine.dialog;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.fragment.app.FragmentManager;
 
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.dialog.BaseDialogFragment;
-
-import org.greenrobot.eventbus.EventBus;
+import com.mchaw.tauruspay.common.util.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
  * @author Bruce Lee
- * @date : 2019/11/8 17:20
+ * @date : 2019/11/13 15:08
  * @description:
  */
-public class ChangeBankCardDialog extends BaseDialogFragment {
-    @BindView(R.id.tv_context)
-    TextView tvContext;
+public class QRCodeGroupDialog extends BaseDialogFragment {
+    @BindView(R.id.et_income_account)
+    EditText etIncomeAccount;
+    @BindView(R.id.et_income_nick)
+    EditText etIncomeNick;
 
     public static void showDialog(FragmentManager manager) {
-        ChangeBankCardDialog changeBankCardDialog = new ChangeBankCardDialog();
-        changeBankCardDialog.show(manager, null);
+        QRCodeGroupDialog qrCodeGroupDialog = new QRCodeGroupDialog();
+        qrCodeGroupDialog.show(manager, null);
     }
 
     @Override
     protected int getContentViewId() {
-        return R.layout.dialog_base;
+        return R.layout.dialog_qrcode_group;
     }
 
     @Override
     protected void initDialogFragment(View view) {
-        tvContext.setText("要修改银行卡码？");
+
     }
 
     @Override
@@ -50,7 +53,6 @@ public class ChangeBankCardDialog extends BaseDialogFragment {
             dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.setCancelable(true);
-
             Window window = dialog.getWindow();
             //window.setWindowAnimations(R.style.SignDialogAnim);
             WindowManager.LayoutParams wl = window.getAttributes();
@@ -68,19 +70,26 @@ public class ChangeBankCardDialog extends BaseDialogFragment {
                 }
                 break;
             case R.id.tv_sure:
+                if(TextUtils.isEmpty(etIncomeAccount.getText().toString())){
+                    ToastUtils.showShortToast(getContext(),"账号不能为空！");
+                    return;
+                }
+                if(TextUtils.isEmpty(etIncomeNick.getText().toString())){
+                    ToastUtils.showShortToast(getContext(),"昵称不能为空！");
+                    return;
+                }
                 if (dialog != null) {
                     dialog.dismiss();
                 }
-                ConfirmListener confirmListener = (ConfirmListener) getParentFragment();
-                confirmListener.onClickComplete("狗剩儿");
+                QRCodeGroupDialog.ConfirmListener confirmListener = (QRCodeGroupDialog.ConfirmListener) getParentFragment();
+                confirmListener.onClickComplete("1",etIncomeAccount.getText().toString(),etIncomeNick.getText().toString());
                 break;
             default:
                 break;
         }
     }
 
-
     public interface ConfirmListener {
-        void onClickComplete(String name);
+        void onClickComplete(String code ,String account,String nick);
     }
 }

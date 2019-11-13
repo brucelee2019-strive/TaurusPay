@@ -7,7 +7,9 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.mchaw.tauruspay.R;
+import com.mchaw.tauruspay.base.dialog.DialogCallBack;
 import com.mchaw.tauruspay.base.fragment.BaseFragment;
+import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.ui.main.mine.dialog.ChangeBankCardDialog;
 
 import butterknife.BindView;
@@ -18,7 +20,7 @@ import butterknife.OnClick;
  * @date : 2019/11/8 17:06
  * @description:
  */
-public class MyBankCardFragment extends BaseFragment {
+public class MyBankCardFragment extends BaseFragment implements ChangeBankCardDialog.ConfirmListener {
     @BindView(R.id.tv_back_title)
     TextView tvTitle;
 
@@ -48,5 +50,10 @@ public class MyBankCardFragment extends BaseFragment {
                 ChangeBankCardDialog.showDialog(getChildFragmentManager());
                 break;
         }
+    }
+
+    @Override
+    public void onClickComplete(String name) {
+        ToastUtils.showShortToast(getContext(),name);
     }
 }

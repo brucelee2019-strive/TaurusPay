@@ -61,6 +61,9 @@ public class ForSalePresenter extends RxPresenter<ForSaleConstract.View> impleme
 
                     @Override
                     public void onFail(String msg) {
+                        if(mView==null){
+                            return;
+                        }
                         mView.showError(msg);
                     }
                 });

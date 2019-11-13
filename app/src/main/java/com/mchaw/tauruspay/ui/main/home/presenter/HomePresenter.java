@@ -33,11 +33,17 @@ public class HomePresenter extends RxPresenter<HomeConstract.View> implements Ho
                 .subscribeWith(new ResultObserver<HomeDataBean>() {
                     @Override
                     public void onSuccess(HomeDataBean homeDataBean) {
+                        if(mView==null){
+                           return;
+                        }
                         mView.setHomeDataBean(homeDataBean);
                     }
 
                     @Override
                     public void onFail(String msg) {
+                        if(mView==null){
+                            return;
+                        }
                         mView.showError(msg);
                     }
                 });
