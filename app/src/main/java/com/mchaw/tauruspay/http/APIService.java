@@ -13,6 +13,7 @@ import com.mchaw.tauruspay.bean.login.PasswordBean;
 import com.mchaw.tauruspay.bean.login.RegisterBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupCreateBean;
+import com.mchaw.tauruspay.bean.qrcode.QRCodeStallBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeUrlBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeNextBean;
@@ -95,8 +96,11 @@ public interface APIService {
     @POST("sell/creategroup")
     Observable<ResultBean<QRCodeGroupCreateBean>> getQRCodeGroupBean(@Field("api_token") String api_token,@Field("account") String account,@Field("nick") String nick,@Field("paytype") String paytype);
 
-
     @FormUrlEncoded
     @POST("sell/updateqrcode")
-    Observable<ResultBean<QRCodeUrlBean>> getUpLoadingQRCodeUrlBean(@Field("api_token") String api_token,@Field("codeid") int codeid,@Field("url") String url);
+    Observable<ResultBean<QRCodeUrlBean>> getUpLoadingQRCodeUrlBean(@Field("api_token") String api_token,@Field("codeid") String codeid,@Field("url") String url);
+
+    @FormUrlEncoded
+    @POST("sell/groupinfo/{groupid}")
+    Observable<ResultBean<QRCodeStallBean>> getQRCodeStalls(@Path("groupid") String groupid, @Field("api_token") String api_token);
 }

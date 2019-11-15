@@ -3,6 +3,7 @@ package com.mchaw.tauruspay.ui.repository;
 import com.mchaw.tauruspay.bean.ALiYunCodeBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupCreateBean;
+import com.mchaw.tauruspay.bean.qrcode.QRCodeStallBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeUrlBean;
 import com.mchaw.tauruspay.http.ResultDisposable;
 import com.mchaw.tauruspay.http.ScheduleTranformer;
@@ -38,9 +39,17 @@ public class QRCodeModel extends BaseModel{
                 .compose(new ScheduleTranformer<QRCodeGroupCreateBean>());
     }
 
-    public Observable<QRCodeUrlBean> getUpLoadingQRCodeUrlBean(String token,int codeid,String url) {
+    public Observable<QRCodeUrlBean> getUpLoadingQRCodeUrlBean(String token,String codeid,String url) {
         return apiService.getUpLoadingQRCodeUrlBean(token,codeid,url)
                 .compose(new ResultDisposable<QRCodeUrlBean>())
                 .compose(new ScheduleTranformer<QRCodeUrlBean>());
+    }
+
+
+
+    public Observable<QRCodeStallBean> getQRCodeStalls(String groupid, String api_token) {
+        return apiService.getQRCodeStalls(groupid,api_token)
+                .compose(new ResultDisposable<QRCodeStallBean>())
+                .compose(new ScheduleTranformer<QRCodeStallBean>());
     }
 }

@@ -16,11 +16,9 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.mchaw.tauruspay.R;
@@ -28,6 +26,7 @@ import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.bean.ALiYunCodeBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupCreateBean;
+import com.mchaw.tauruspay.bean.qrcode.QRCodeStallBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeUrlBean;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
@@ -36,21 +35,17 @@ import com.mchaw.tauruspay.ui.main.mine.dialog.QRCodeGroupDialog;
 import com.mchaw.tauruspay.ui.main.mine.qrcode.adapter.QRCodeListAdapter;
 import com.mchaw.tauruspay.ui.main.mine.qrcode.constract.QRCodeConstract;
 import com.mchaw.tauruspay.ui.main.mine.qrcode.presenter.QRCodePresenter;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 /**
@@ -92,59 +87,116 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
         rvQRList.setLayoutManager(new LinearLayoutManager(getContext()));
         qrCodeListAdapter = new QRCodeListAdapter(list);
         qrCodeListAdapter.setOnItemChildClickListener(this);
-        qrCodeListAdapter.setOnItemChildClickListener(this);
+        qrCodeListAdapter.setOnItemClickListener(this);
         rvQRList.setAdapter(qrCodeListAdapter);
         presenter.getQRCodeGroupList(PreferencesUtils.getString(getContext(), "token"));
         Log.i("cici",PreferencesUtils.getString(getContext(), "token"));
     }
 
+    private int groupid;
+    private QRCodeGroupBean qrCodeGroupBean;
+    private int tag;
+    private boolean canDone = true;
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
         switch (view.getId()) {
             case R.id.cl_303:
-                pickImageFromAlbum2();
+                if(canDone) {
+                    pickImageFromAlbum2();
+                    tag = 0;
+                }
+                canDone = false;
                 break;
             case R.id.cl_313:
-                pickImageFromAlbum2();
+                if(canDone) {
+                    pickImageFromAlbum2();
+                    tag = 1;
+                }
+                canDone = false;
                 break;
             case R.id.cl_785:
-                pickImageFromAlbum2();
+                if(canDone) {
+                    pickImageFromAlbum2();
+                    tag = 2;
+                }
+                canDone = false;
                 break;
             case R.id.cl_786:
-                pickImageFromAlbum2();
+                if(canDone) {
+                    pickImageFromAlbum2();
+                    tag = 3;
+                }
+                canDone = false;
                 break;
             case R.id.cl_1215:
-                pickImageFromAlbum2();
+                if(canDone) {
+                    pickImageFromAlbum2();
+                    tag = 4;
+                }
+                canDone = false;
                 break;
             case R.id.cl_1216:
-                pickImageFromAlbum2();
+                if(canDone) {
+                    pickImageFromAlbum2();
+                    tag = 5;
+                }
+                canDone = false;
                 break;
             case R.id.cl_2515:
-                pickImageFromAlbum2();
+                if(canDone) {
+                    pickImageFromAlbum2();
+                    tag = 6;
+                }
+                canDone = false;
                 break;
             case R.id.cl_2516:
-                pickImageFromAlbum2();
+                if(canDone) {
+                    pickImageFromAlbum2();
+                    tag = 7;
+                }
+                canDone = false;
                 break;
             case R.id.cl_4985:
-                pickImageFromAlbum2();
+                if(canDone) {
+                    pickImageFromAlbum2();
+                    tag = 8;
+                }
+                canDone = false;
                 break;
             case R.id.cl_4988:
-                pickImageFromAlbum2();
+                if(canDone) {
+                    pickImageFromAlbum2();
+                    tag = 9;
+                }
+                canDone = false;
                 break;
             case R.id.cl_7988:
-                pickImageFromAlbum2();
+                if(canDone) {
+                    pickImageFromAlbum2();
+                    tag = 10;
+                }
+                canDone = false;
                 break;
             case R.id.cl_9988:
-                pickImageFromAlbum2();
+                if(canDone) {
+                    pickImageFromAlbum2();
+                    tag = 11;
+                }
+                canDone = false;
                 break;
             case R.id.tv_show_order_list:
-                QRCodeGroupBean qrCodeGroupBean = (QRCodeGroupBean) adapter.getItem(position);
+                qrCodeGroupBean = (QRCodeGroupBean) adapter.getItem(position);
                 boolean ishow = qrCodeGroupBean.isShowItems();
                 qrCodeGroupBean.setShowItems(!ishow);
                 adapter.notifyItemChanged(position);
+                if(!ishow){
+                    groupid = qrCodeGroupBean.getId();
+                    presenter.getQRCodeStalls(String.valueOf(groupid),PreferencesUtils.getString(getContext(),"token"));
+                }
                 break;
             default:
                 break;
+
         }
     }
 
@@ -209,7 +261,6 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
     private Bitmap bitmap;
     private String mAvatar;
     private String qrCodeUrl;
-    private int index = 0;
 
     //相机返回
     @Override
@@ -334,7 +385,7 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
         return result;
     }
 
-    //请求天行url
+    //请求阿里云url
     private void tianALiYunDecode(String mAvatar) {
         OkHttpClient client = new OkHttpClient();
         FormBody formBody = new FormBody.Builder().add("imgdata", "data:image/jpeg;base64," + mAvatar).build();
@@ -358,7 +409,7 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
                                 if (ALiYunCodeBean.getStatus() == 1) {
                                     if (!TextUtils.isEmpty(ALiYunCodeBean.getData().getRaw_text())) {
                                         qrCodeUrl = ALiYunCodeBean.getData().getRaw_text();
-                                        presenter.getUpLoadingQRCodeUrlBean(PreferencesUtils.getString(getContext(),"token"),index,qrCodeUrl);
+                                        presenter.getUpLoadingQRCodeUrlBean(PreferencesUtils.getString(getContext(),"token"),qrCodeGroupBean.getQrcodes().get(tag).getId(),qrCodeUrl);
                                     } else {
                                         ToastUtils.showShortToast(getContext(), "图片解析失败！");
                                     }
@@ -381,9 +432,28 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
 
     }
 
+    //上传二维码url给服务器返回的结果
     @Override
     public void setUpLoadingQRCodeUrlBean(QRCodeUrlBean qrCodeUrlBean) {
+        canDone = true;
 
+    }
+
+    //获取分组的二维码档口返回的结果
+    @Override
+    public void setQRCodeStalls(QRCodeStallBean bean) {
+        //组装数据给qrCodeListAdapter
+        if(bean == null){
+            ToastUtils.showShortToast(getContext(),"服务器返回数据为null!");
+        }
+        if(bean.getQrcodes()==null||bean.getQrcodes().size()<=0){
+            ToastUtils.showShortToast(getContext(),"服务器返回数据为null!");
+        }
+        if(groupid == bean.getGroupid()){//确保同一组
+            //赋值
+            qrCodeGroupBean.setQrcodes(bean.getQrcodes());
+        }
+        qrCodeListAdapter.notifyDataSetChanged();
     }
 
 }

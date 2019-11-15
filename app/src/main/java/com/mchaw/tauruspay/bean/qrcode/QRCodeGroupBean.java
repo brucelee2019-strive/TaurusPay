@@ -1,5 +1,7 @@
 package com.mchaw.tauruspay.bean.qrcode;
 
+import java.util.List;
+
 /**
  * @author Bruce Lee
  * @date : 2019/11/13 11:23
@@ -25,7 +27,18 @@ public class QRCodeGroupBean {
     private int sellamount;
     private int sellcount;
 
+    //用来操控展开，收紧按钮。和作为请求二维码档口的判断依据
     private boolean showItems = false;
+
+    private List<QRCodeStallBean.QrcodesBean> qrcodes;
+
+    public List<QRCodeStallBean.QrcodesBean> getQrcodes() {
+        return qrcodes;
+    }
+
+    public void setQrcodes(List<QRCodeStallBean.QrcodesBean> qrcodes) {
+        this.qrcodes = qrcodes;
+    }
 
     public boolean isShowItems() {
         return showItems;

@@ -4,6 +4,7 @@ import com.mchaw.tauruspay.base.mvp.presenter.RxPresenter;
 import com.mchaw.tauruspay.bean.ALiYunCodeBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupCreateBean;
+import com.mchaw.tauruspay.bean.qrcode.QRCodeStallBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeUrlBean;
 import com.mchaw.tauruspay.http.ResultObserver;
 import com.mchaw.tauruspay.ui.main.mine.qrcode.constract.QRCodeConstract;
@@ -65,12 +66,29 @@ public class QRCodePresenter extends RxPresenter<QRCodeConstract.View> implement
     }
 
     @Override
-    public void getUpLoadingQRCodeUrlBean(String token,int codeid,String url) {
+    public void getUpLoadingQRCodeUrlBean(String token,String codeid,String url) {
         Disposable disposable = qrCodeModel.getUpLoadingQRCodeUrlBean(token,codeid,url)
                 .subscribeWith(new ResultObserver<QRCodeUrlBean>() {
                     @Override
                     public void onSuccess(QRCodeUrlBean bean) {
                        mView.setUpLoadingQRCodeUrlBean(bean);
+                    }
+
+                    @Override
+                    public void onFail(String msg) {
+                        mView.showError(msg);
+                    }
+                });
+        addSubscribe(disposable);
+    }
+
+    @Override
+    public void getQRCodeStalls(String groupid, String api_token) {
+        Disposable disposable = qrCodeModel.getQRCodeStalls(groupid,api_token)
+                .subscribeWith(new ResultObserver<QRCodeStallBean>() {
+                    @Override
+                    public void onSuccess(QRCodeStallBean bean) {
+                        mView.setQRCodeStalls(bean);
                     }
 
                     @Override
