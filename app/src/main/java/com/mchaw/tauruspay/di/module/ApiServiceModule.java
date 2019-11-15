@@ -1,5 +1,7 @@
 package com.mchaw.tauruspay.di.module;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mchaw.tauruspay.BuildConfig;
@@ -11,6 +13,7 @@ import com.mchaw.tauruspay.http.environment.EnvironmentManager;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
@@ -19,6 +22,7 @@ import dagger.Module;
 import dagger.Provides;
 import okhttp3.Cache;
 import okhttp3.CacheControl;
+import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -65,16 +69,6 @@ public class ApiServiceModule {
 //                if (!TextUtils.isEmpty(MyFrameApplication.getInstance().getSessionKey())) {
 //                    builder.header("sessionKey", MyFrameApplication.getInstance().getSessionKey());
 //                }
-//                builder.header("channel", "runx");
-                builder.header("Server", "nginx");
-                builder.header("Date", "Wed, 30 Oct 2019 17:30:08 GMT");
-                builder.header("Content-Type", "application/json;charset=utf-8");
-                builder.header("Transfer-Encoding", "chunked");
-                builder.header("Connection", "keep-alive");
-                builder.header("Access-Control-Allow-Origin", "*");
-                builder.header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
-                builder.header("Access-Control-Max-Age", "3600");
-                builder.header("Access-Control-Allow-Headers", "x-requested-with");
                 Request request = builder.build();
                 return chain.proceed(request);
             }
@@ -113,7 +107,7 @@ public class ApiServiceModule {
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .connectTimeout(60, TimeUnit.SECONDS)
                 .readTimeout(100, TimeUnit.SECONDS)
-                .writeTimeout(60,TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
                 .retryOnConnectionFailure(true)
                 .cache(cache)
                 .addInterceptor(loggingInterceptor)
@@ -133,7 +127,7 @@ public class ApiServiceModule {
 
     @Provides
     @Singleton
-    public Retrofit provideRetrofit (OkHttpClient client, Gson gson) {
+    public Retrofit provideRetrofit(OkHttpClient client, Gson gson) {
         return new Retrofit.Builder()
                 .client(client)
                 .baseUrl(EnvironmentManager.newInstance().baseUrl())
@@ -145,6 +139,6 @@ public class ApiServiceModule {
     @Provides
     @Singleton
     public APIService provideAPIService(Retrofit retrofit) {
-        return  retrofit.create(APIService.class);
+        return retrofit.create(APIService.class);
     }
 }

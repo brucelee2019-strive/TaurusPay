@@ -5,6 +5,7 @@ import com.mchaw.tauruspay.bean.Movie;
 import com.mchaw.tauruspay.bean.ResultBean;
 import com.mchaw.tauruspay.bean.ScoreAllStateBean;
 import com.mchaw.tauruspay.bean.ShopBean;
+import com.mchaw.tauruspay.bean.ALiYunCodeBean;
 import com.mchaw.tauruspay.bean.home.HomeDataBean;
 import com.mchaw.tauruspay.bean.home.TransferAccountsBean;
 import com.mchaw.tauruspay.bean.login.LoginBean;
@@ -12,6 +13,7 @@ import com.mchaw.tauruspay.bean.login.PasswordBean;
 import com.mchaw.tauruspay.bean.login.RegisterBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupCreateBean;
+import com.mchaw.tauruspay.bean.qrcode.QRCodeUrlBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeNextBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeSureBean;
@@ -26,6 +28,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.Url;
 
 /**
  * @author : Bruce Lee
@@ -91,4 +94,9 @@ public interface APIService {
     @FormUrlEncoded
     @POST("sell/creategroup")
     Observable<ResultBean<QRCodeGroupCreateBean>> getQRCodeGroupBean(@Field("api_token") String api_token,@Field("account") String account,@Field("nick") String nick,@Field("paytype") String paytype);
+
+
+    @FormUrlEncoded
+    @POST("sell/updateqrcode")
+    Observable<ResultBean<QRCodeUrlBean>> getUpLoadingQRCodeUrlBean(@Field("api_token") String api_token,@Field("codeid") int codeid,@Field("url") String url);
 }

@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -21,10 +22,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.google.gson.Gson;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
+import com.mchaw.tauruspay.bean.ALiYunCodeBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupCreateBean;
+import com.mchaw.tauruspay.bean.qrcode.QRCodeUrlBean;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
@@ -34,11 +38,20 @@ import com.mchaw.tauruspay.ui.main.mine.qrcode.constract.QRCodeConstract;
 import com.mchaw.tauruspay.ui.main.mine.qrcode.presenter.QRCodePresenter;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  * @author Bruce Lee
@@ -82,46 +95,47 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
         qrCodeListAdapter.setOnItemChildClickListener(this);
         rvQRList.setAdapter(qrCodeListAdapter);
         presenter.getQRCodeGroupList(PreferencesUtils.getString(getContext(), "token"));
+        Log.i("cici",PreferencesUtils.getString(getContext(), "token"));
     }
 
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
         switch (view.getId()) {
             case R.id.cl_303:
-                getPhoneAlbum();
+                pickImageFromAlbum2();
                 break;
             case R.id.cl_313:
                 pickImageFromAlbum2();
                 break;
             case R.id.cl_785:
-                getPhoneAlbum();
+                pickImageFromAlbum2();
                 break;
             case R.id.cl_786:
-                getPhoneAlbum();
+                pickImageFromAlbum2();
                 break;
             case R.id.cl_1215:
-                getPhoneAlbum();
+                pickImageFromAlbum2();
                 break;
             case R.id.cl_1216:
-                getPhoneAlbum();
+                pickImageFromAlbum2();
                 break;
             case R.id.cl_2515:
-                getPhoneAlbum();
+                pickImageFromAlbum2();
                 break;
             case R.id.cl_2516:
-                getPhoneAlbum();
+                pickImageFromAlbum2();
                 break;
             case R.id.cl_4985:
-                getPhoneAlbum();
+                pickImageFromAlbum2();
                 break;
             case R.id.cl_4988:
-                getPhoneAlbum();
+                pickImageFromAlbum2();
                 break;
             case R.id.cl_7988:
-                getPhoneAlbum();
+                pickImageFromAlbum2();
                 break;
             case R.id.cl_9988:
-                getPhoneAlbum();
+                pickImageFromAlbum2();
                 break;
             case R.id.tv_show_order_list:
                 QRCodeGroupBean qrCodeGroupBean = (QRCodeGroupBean) adapter.getItem(position);
@@ -175,12 +189,13 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
     private void getPhoneAlbum() {
         Intent intent = new Intent();
         intent.setType("image/*");// 开启Pictures画面Type设定为image
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-//        if (Build.VERSION.SDK_INT < 19) {
-//            intent.setAction(Intent.ACTION_GET_CONTENT);
-//        } else {
-//            intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
-//        }
+        //intent.setAction(Intent.ACTION_GET_CONTENT);
+        if (Build.VERSION.SDK_INT < 19) {
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+        } else {
+            intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
+        }
+        intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, REQUEST_CODE_SELECT_PHOTO);
     }
 
@@ -189,12 +204,14 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
         intent.setAction(Intent.ACTION_PICK);
         intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, REQUEST_CODE_SELECT_PHOTO);
-
     }
 
     private Bitmap bitmap;
     private String mAvatar;
+    private String qrCodeUrl;
+    private int index = 0;
 
+    //相机返回
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -218,6 +235,7 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
 
     /**
      * 4.4之前
+     * 获得图片绝对路径
      *
      * @param data
      */
@@ -243,6 +261,8 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
 
     /**
      * 4.4以上版本
+     * 获得图片绝对路径
+     *
      * @param data
      */
     private void handleImageOnKitKat(Intent data) {
@@ -271,16 +291,99 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
 
     private void displayImage(String imagePath) {
         if (imagePath != null) {
-            Log.i("cici",imagePath);
-            bitmap = BitmapFactory.decodeFile(imagePath);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 40, baos);
-            byte[] b = baos.toByteArray();
-            Log.d("d", "压缩后的大小=" + b.length);
-            mAvatar = Base64.encodeToString(b, Base64.DEFAULT);
-            Log.i("cici",mAvatar);
+            BitmapFactory.Options newOpts = new BitmapFactory.Options();
+            newOpts.inJustDecodeBounds = false;
+            newOpts.inSampleSize = 8;
+            newOpts.inPreferredConfig = Bitmap.Config.RGB_565;
+            bitmap = BitmapFactory.decodeFile(imagePath, newOpts);
+            mAvatar = bitmapToBase64(bitmap);
+            //调用阿里云
+            tianALiYunDecode(mAvatar);
         } else {
             ToastUtils.showShortToast(getContext(), "获取图片失败!");
         }
     }
+
+    //图片转base64
+    private static String bitmapToBase64(Bitmap bitmap) {
+        String result = null;
+        ByteArrayOutputStream baos = null;
+        try {
+            if (bitmap != null) {
+                baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
+
+                baos.flush();
+                baos.close();
+
+                byte[] bitmapBytes = baos.toByteArray();
+                result = Base64.encodeToString(bitmapBytes, Base64.DEFAULT);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (baos != null) {
+                    baos.flush();
+                    baos.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+    //请求天行url
+    private void tianALiYunDecode(String mAvatar) {
+        OkHttpClient client = new OkHttpClient();
+        FormBody formBody = new FormBody.Builder().add("imgdata", "data:image/jpeg;base64," + mAvatar).build();
+        Request request = new Request.Builder().url("http://qrapi.market.alicloudapi.com/yunapi/qrdecode.html")
+                .addHeader("Host", "qrapi.market.alicloudapi.com")
+                .addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
+                .addHeader("Authorization", "APPCODE ceff3e32309048aba2659a5459c62670").post(formBody).build();
+        client.newCall(request).enqueue(new Callback() {
+            public void onFailure(Call call, IOException e) {
+                System.out.println(e.getMessage());
+            }
+
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.code() == 200) {
+                    String result = response.body().string();
+                    ALiYunCodeBean ALiYunCodeBean = new Gson().fromJson(result, ALiYunCodeBean.class);
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (ALiYunCodeBean != null) {
+                                if (ALiYunCodeBean.getStatus() == 1) {
+                                    if (!TextUtils.isEmpty(ALiYunCodeBean.getData().getRaw_text())) {
+                                        qrCodeUrl = ALiYunCodeBean.getData().getRaw_text();
+                                        presenter.getUpLoadingQRCodeUrlBean(PreferencesUtils.getString(getContext(),"token"),index,qrCodeUrl);
+                                    } else {
+                                        ToastUtils.showShortToast(getContext(), "图片解析失败！");
+                                    }
+                                } else {
+                                    ToastUtils.showShortToast(getContext(), "图片解析失败！");
+                                }
+                            }
+                        }
+                    });
+                } else {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ToastUtils.showShortToast(getContext(), "图片解析失败！");
+                        }
+                    });
+                }
+            }
+        });
+
+    }
+
+    @Override
+    public void setUpLoadingQRCodeUrlBean(QRCodeUrlBean qrCodeUrlBean) {
+
+    }
+
 }
