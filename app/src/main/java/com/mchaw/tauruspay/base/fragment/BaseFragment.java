@@ -1,5 +1,6 @@
 package com.mchaw.tauruspay.base.fragment;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -48,6 +49,7 @@ public abstract class BaseFragment extends Fragment implements FragmentStartHelp
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         getIntentData();
     }
 
