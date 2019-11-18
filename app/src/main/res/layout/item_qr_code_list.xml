@@ -120,13 +120,13 @@
         <ImageView
             app:layout_constraintVertical_chainStyle="spread"
             android:id="@+id/iv_303"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/tv_303"
-            app:srcCompat="@drawable/ewmk_icon_ewm_h" />
+            app:srcCompat="@drawable/qrcode_add" />
 
         <TextView
             android:id="@+id/tv_303"
@@ -150,13 +150,13 @@
         <ImageView
             app:layout_constraintVertical_chainStyle="spread"
             android:id="@+id/iv_313"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/tv_313"
-            app:srcCompat="@drawable/ewmk_icon_ewm_h" />
+            app:srcCompat="@drawable/qrcode_add" />
 
         <TextView
             android:id="@+id/tv_313"
@@ -180,13 +180,13 @@
         <ImageView
             app:layout_constraintVertical_chainStyle="spread"
             android:id="@+id/iv_785"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/tv_785"
-            app:srcCompat="@drawable/ewmk_icon_ewm_h" />
+            app:srcCompat="@drawable/qrcode_add" />
 
         <TextView
             android:id="@+id/tv_785"
@@ -210,13 +210,13 @@
         <ImageView
             app:layout_constraintVertical_chainStyle="spread"
             android:id="@+id/iv_786"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/tv_786"
-            app:srcCompat="@drawable/ewmk_icon_ewm_h" />
+            app:srcCompat="@drawable/qrcode_add" />
 
         <TextView
             android:id="@+id/tv_786"
@@ -246,13 +246,13 @@
             <ImageView
                 app:layout_constraintVertical_chainStyle="spread"
                 android:id="@+id/iv_1215"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/tv_1215"
-                app:srcCompat="@drawable/ewmk_icon_ewm_h" />
+                app:srcCompat="@drawable/qrcode_add" />
 
             <TextView
                 android:id="@+id/tv_1215"
@@ -276,13 +276,13 @@
             <ImageView
                 app:layout_constraintVertical_chainStyle="spread"
                 android:id="@+id/iv_1216"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/tv_1216"
-                app:srcCompat="@drawable/ewmk_icon_ewm_h" />
+                app:srcCompat="@drawable/qrcode_add" />
 
             <TextView
                 android:id="@+id/tv_1216"
@@ -306,13 +306,13 @@
             <ImageView
                 app:layout_constraintVertical_chainStyle="spread"
                 android:id="@+id/iv_2515"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/tv_2515"
-                app:srcCompat="@drawable/ewmk_icon_ewm_h" />
+                app:srcCompat="@drawable/qrcode_add" />
 
             <TextView
                 android:id="@+id/tv_2515"
@@ -336,13 +336,13 @@
             <ImageView
                 app:layout_constraintVertical_chainStyle="spread"
                 android:id="@+id/iv_2516"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/tv_2516"
-                app:srcCompat="@drawable/ewmk_icon_ewm_h" />
+                app:srcCompat="@drawable/qrcode_add" />
 
             <TextView
                 android:id="@+id/tv_2516"
@@ -372,13 +372,13 @@
             <ImageView
                 app:layout_constraintVertical_chainStyle="spread"
                 android:id="@+id/iv_4985"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/tv_4985"
-                app:srcCompat="@drawable/ewmk_icon_ewm_h" />
+                app:srcCompat="@drawable/qrcode_add" />
 
             <TextView
                 android:id="@+id/tv_4985"
@@ -402,13 +402,13 @@
             <ImageView
                 app:layout_constraintVertical_chainStyle="spread"
                 android:id="@+id/iv_4988"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/tv_4988"
-                app:srcCompat="@drawable/ewmk_icon_ewm_h" />
+                app:srcCompat="@drawable/qrcode_add" />
 
             <TextView
                 android:id="@+id/tv_4988"
@@ -432,13 +432,13 @@
             <ImageView
                 app:layout_constraintVertical_chainStyle="spread"
                 android:id="@+id/iv_7988"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/tv_7988"
-                app:srcCompat="@drawable/ewmk_icon_ewm_h" />
+                app:srcCompat="@drawable/qrcode_add" />
 
             <TextView
                 android:id="@+id/tv_7988"
@@ -462,13 +462,13 @@
             <ImageView
                 app:layout_constraintVertical_chainStyle="spread"
                 android:id="@+id/iv_9988"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/tv_9988"
-                app:srcCompat="@drawable/ewmk_icon_ewm_h" />
+                app:srcCompat="@drawable/qrcode_add" />
 
             <TextView
                 android:id="@+id/tv_9988"

@@ -1,12 +1,10 @@
 package com.mchaw.tauruspay.ui.main.mine.qrcode.adapter;
 
-import android.app.Activity;
+
 import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentTransaction;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.mchaw.tauruspay.R;
@@ -50,51 +48,51 @@ public class QRCodeListAdapter extends BaseQuickAdapter<QRCodeGroupBean, BaseVie
     private void setQRCodeStatus(QRCodeStallBean.QrcodesBean qrcodesBean,BaseViewHolder helper,int tag) {
         switch (tag) {
             case 0:
-                helper.setImageResource(R.id.iv_303,qrcodesBean.getStatus()==0?R.drawable.ewmk_icon_ewm_h:R.drawable.ewmk_icon_ewm);
+                helper.setImageResource(R.id.iv_303,qrcodesBean.getStatus()==0?R.drawable.qrcode_add:R.drawable.qrcode_auditing);
                 helper.setText(R.id.tv_303, StringUtils.fenToYuanInt(qrcodesBean.getQuota()));
                 break;
             case 1:
-                helper.setImageResource(R.id.iv_313,qrcodesBean.getStatus()==0?R.drawable.ewmk_icon_ewm_h:R.drawable.ewmk_icon_ewm);
+                helper.setImageResource(R.id.iv_313,qrcodesBean.getStatus()==0?R.drawable.qrcode_add:R.drawable.qrcode_auditing);
                 helper.setText(R.id.tv_313,StringUtils.fenToYuanInt(qrcodesBean.getQuota()));
                 break;
             case 2:
-                helper.setImageResource(R.id.iv_785,qrcodesBean.getStatus()==0?R.drawable.ewmk_icon_ewm_h:R.drawable.ewmk_icon_ewm);
+                helper.setImageResource(R.id.iv_785,qrcodesBean.getStatus()==0?R.drawable.qrcode_add:R.drawable.qrcode_auditing);
                 helper.setText(R.id.tv_785,StringUtils.fenToYuanInt(qrcodesBean.getQuota()));
                 break;
             case 3:
-                helper.setImageResource(R.id.iv_786,qrcodesBean.getStatus()==0?R.drawable.ewmk_icon_ewm_h:R.drawable.ewmk_icon_ewm);
+                helper.setImageResource(R.id.iv_786,qrcodesBean.getStatus()==0?R.drawable.qrcode_add:R.drawable.qrcode_auditing);
                 helper.setText(R.id.tv_786,StringUtils.fenToYuanInt(qrcodesBean.getQuota()));
                 break;
             case 4:
-                helper.setImageResource(R.id.iv_1215,qrcodesBean.getStatus()==0?R.drawable.ewmk_icon_ewm_h:R.drawable.ewmk_icon_ewm);
+                helper.setImageResource(R.id.iv_1215,qrcodesBean.getStatus()==0?R.drawable.qrcode_add:R.drawable.qrcode_auditing);
                 helper.setText(R.id.tv_1215,StringUtils.fenToYuanInt(qrcodesBean.getQuota()));
                 break;
             case 5:
-                helper.setImageResource(R.id.iv_1216,qrcodesBean.getStatus()==0?R.drawable.ewmk_icon_ewm_h:R.drawable.ewmk_icon_ewm);
+                helper.setImageResource(R.id.iv_1216,qrcodesBean.getStatus()==0?R.drawable.qrcode_add:R.drawable.qrcode_auditing);
                 helper.setText(R.id.tv_1216,StringUtils.fenToYuanInt(qrcodesBean.getQuota()));
                 break;
             case 6:
-                helper.setImageResource(R.id.iv_2515,qrcodesBean.getStatus()==0?R.drawable.ewmk_icon_ewm_h:R.drawable.ewmk_icon_ewm);
+                helper.setImageResource(R.id.iv_2515,qrcodesBean.getStatus()==0?R.drawable.qrcode_add:R.drawable.qrcode_auditing);
                 helper.setText(R.id.tv_2515,StringUtils.fenToYuanInt(qrcodesBean.getQuota()));
                 break;
             case 7:
-                helper.setImageResource(R.id.iv_2516,qrcodesBean.getStatus()==0?R.drawable.ewmk_icon_ewm_h:R.drawable.ewmk_icon_ewm);
+                helper.setImageResource(R.id.iv_2516,qrcodesBean.getStatus()==0?R.drawable.qrcode_add:R.drawable.qrcode_auditing);
                 helper.setText(R.id.tv_2516,StringUtils.fenToYuanInt(qrcodesBean.getQuota()));
                 break;
             case 8:
-                helper.setImageResource(R.id.iv_4985,qrcodesBean.getStatus()==0?R.drawable.ewmk_icon_ewm_h:R.drawable.ewmk_icon_ewm);
+                helper.setImageResource(R.id.iv_4985,qrcodesBean.getStatus()==0?R.drawable.qrcode_add:R.drawable.qrcode_auditing);
                 helper.setText(R.id.tv_4985,StringUtils.fenToYuanInt(qrcodesBean.getQuota()));
                 break;
             case 9:
-                helper.setImageResource(R.id.iv_4988,qrcodesBean.getStatus()==0?R.drawable.ewmk_icon_ewm_h:R.drawable.ewmk_icon_ewm);
+                helper.setImageResource(R.id.iv_4988,qrcodesBean.getStatus()==0?R.drawable.qrcode_add:R.drawable.qrcode_auditing);
                 helper.setText(R.id.tv_4988,StringUtils.fenToYuanInt(qrcodesBean.getQuota()));
                 break;
             case 10:
-                helper.setImageResource(R.id.iv_7988,qrcodesBean.getStatus()==0?R.drawable.ewmk_icon_ewm_h:R.drawable.ewmk_icon_ewm);
+                helper.setImageResource(R.id.iv_7988,qrcodesBean.getStatus()==0?R.drawable.qrcode_add:R.drawable.qrcode_auditing);
                 helper.setText(R.id.tv_7988,StringUtils.fenToYuanInt(qrcodesBean.getQuota()));
                 break;
             case 11:
-                helper.setImageResource(R.id.iv_9988,qrcodesBean.getStatus()==0?R.drawable.ewmk_icon_ewm_h:R.drawable.ewmk_icon_ewm);
+                helper.setImageResource(R.id.iv_9988,qrcodesBean.getStatus()==0?R.drawable.qrcode_add:R.drawable.qrcode_auditing);
                 helper.setText(R.id.tv_9988,StringUtils.fenToYuanInt(qrcodesBean.getQuota()));
                 break;
             default:

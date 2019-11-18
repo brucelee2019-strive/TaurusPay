@@ -70,7 +70,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/mcaw_main_recharge_on" />
+            app:srcCompat="@drawable/wd_icon_zd" />
 
         <TextView
             android:id="@+id/tv_bill"
@@ -111,7 +111,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/mcaw_main_recharge_on" />
+            app:srcCompat="@drawable/wd_icon_yhk" />
 
         <TextView
             android:id="@+id/tv_bank_set"
@@ -152,7 +152,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/mcaw_main_recharge_on" />
+            app:srcCompat="@drawable/wd_icon_ewmk" />
 
         <TextView
             android:id="@+id/tv_qr_code"
@@ -193,7 +193,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/mcaw_main_recharge_on" />
+            app:srcCompat="@drawable/wd_icon_jhkl" />
 
         <TextView
             android:id="@+id/tv_activate_word"
@@ -234,7 +234,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/mcaw_main_recharge_on" />
+            app:srcCompat="@drawable/wd_icon_xgmm" />
 
         <TextView
             android:id="@+id/tv_change_password"
@@ -275,7 +275,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/mcaw_main_recharge_on" />
+            app:srcCompat="@drawable/wd_icon_gy" />
 
         <TextView
             android:id="@+id/tv_about"

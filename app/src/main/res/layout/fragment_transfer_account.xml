@@ -59,11 +59,13 @@
             android:id="@+id/textView11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="转账金额"
             android:textColor="@color/color_black_5"
             android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/et_amout"
+            app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -179,6 +181,7 @@
             android:id="@+id/et_amout"
             android:layout_width="214dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:background="@color/white"
             android:ems="10"
             android:hint="请输入需要转出的额度"
@@ -223,13 +226,14 @@
             android:id="@+id/tv_all_repertory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
+            android:layout_marginEnd="8dp"
             android:padding="16dp"
             android:text="全部"
             android:textColor="#000000"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/et_amout"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/et_amout"
             app:layout_constraintTop_toTopOf="@+id/et_amout"
             app:layout_constraintVertical_bias="0.542" />
 
