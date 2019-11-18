@@ -28,6 +28,7 @@ import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupCreateBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeStallBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeUrlBean;
+import com.mchaw.tauruspay.common.util.Base64Utils;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
@@ -85,7 +86,7 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
     protected void initFragment() {
         super.initFragment();
         rvQRList.setLayoutManager(new LinearLayoutManager(getContext()));
-        qrCodeListAdapter = new QRCodeListAdapter(list);
+        qrCodeListAdapter = new QRCodeListAdapter(getActivity(),list);
         qrCodeListAdapter.setOnItemChildClickListener(this);
         qrCodeListAdapter.setOnItemClickListener(this);
         rvQRList.setAdapter(qrCodeListAdapter);
@@ -99,93 +100,93 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
     private boolean canDone = true;
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+        qrCodeGroupBean = (QRCodeGroupBean) adapter.getItem(position);
         switch (view.getId()) {
             case R.id.cl_303:
                 if(canDone) {
-                    pickImageFromAlbum2();
                     tag = 0;
+                    openPhotoAlbum(tag);
                 }
                 canDone = false;
                 break;
             case R.id.cl_313:
                 if(canDone) {
-                    pickImageFromAlbum2();
                     tag = 1;
+                    openPhotoAlbum(tag);
                 }
                 canDone = false;
                 break;
             case R.id.cl_785:
                 if(canDone) {
-                    pickImageFromAlbum2();
                     tag = 2;
+                    openPhotoAlbum(tag);
                 }
                 canDone = false;
                 break;
             case R.id.cl_786:
                 if(canDone) {
-                    pickImageFromAlbum2();
                     tag = 3;
+                    openPhotoAlbum(tag);
                 }
                 canDone = false;
                 break;
             case R.id.cl_1215:
                 if(canDone) {
-                    pickImageFromAlbum2();
                     tag = 4;
+                    openPhotoAlbum(tag);
                 }
                 canDone = false;
                 break;
             case R.id.cl_1216:
                 if(canDone) {
-                    pickImageFromAlbum2();
                     tag = 5;
+                    openPhotoAlbum(tag);
                 }
                 canDone = false;
                 break;
             case R.id.cl_2515:
                 if(canDone) {
-                    pickImageFromAlbum2();
                     tag = 6;
+                    openPhotoAlbum(tag);
                 }
                 canDone = false;
                 break;
             case R.id.cl_2516:
                 if(canDone) {
-                    pickImageFromAlbum2();
                     tag = 7;
+                    openPhotoAlbum(tag);
                 }
                 canDone = false;
                 break;
             case R.id.cl_4985:
                 if(canDone) {
-                    pickImageFromAlbum2();
                     tag = 8;
+                    openPhotoAlbum(tag);
                 }
                 canDone = false;
                 break;
             case R.id.cl_4988:
                 if(canDone) {
-                    pickImageFromAlbum2();
                     tag = 9;
+                    openPhotoAlbum(tag);
                 }
                 canDone = false;
                 break;
             case R.id.cl_7988:
                 if(canDone) {
-                    pickImageFromAlbum2();
                     tag = 10;
+                    openPhotoAlbum(tag);
                 }
                 canDone = false;
                 break;
             case R.id.cl_9988:
                 if(canDone) {
-                    pickImageFromAlbum2();
                     tag = 11;
+                    openPhotoAlbum(tag);
                 }
                 canDone = false;
                 break;
             case R.id.tv_show_order_list:
-                qrCodeGroupBean = (QRCodeGroupBean) adapter.getItem(position);
                 boolean ishow = qrCodeGroupBean.isShowItems();
                 qrCodeGroupBean.setShowItems(!ishow);
                 adapter.notifyItemChanged(position);
@@ -200,19 +201,27 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
         }
     }
 
+    private void openPhotoAlbum(int tag){
+        if(qrCodeGroupBean.getQrcodes().get(tag).getStatus()==1){
+            ToastUtils.showShortToast(getContext(),"审核中...，不能修改！");
+            canDone = false;
+            return;
+        }
+        pickImageFromAlbum2();
+    }
+
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_add_item})
+    @OnClick({R.id.iv_back, R.id.iv_add_item})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
                 getActivity().finish();
                 break;
-            case R.id.tv_add_item:
-                ToastUtils.showShortToast(getContext(), "添加二维码库");
+            case R.id.iv_add_item:
                 QRCodeGroupDialog.showDialog(getChildFragmentManager());
                 break;
             default:
@@ -220,6 +229,10 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
         }
     }
 
+    /**
+     * 获取二维码库的集合
+     * @param list
+     */
     @Override
     public void setQRCodeGroupList(List<QRCodeGroupBean> list) {
         qrCodeListAdapter.setNewData(list);
@@ -281,6 +294,8 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
                 default:
                     break;
             }
+        }else{
+            canDone = true;
         }
     }
 
@@ -340,6 +355,9 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
         displayImage(imagePath); // 根据图片路径显示图片
     }
 
+    /**
+     * @param imagePath
+     */
     private void displayImage(String imagePath) {
         if (imagePath != null) {
             BitmapFactory.Options newOpts = new BitmapFactory.Options();
@@ -347,46 +365,20 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
             newOpts.inSampleSize = 8;
             newOpts.inPreferredConfig = Bitmap.Config.RGB_565;
             bitmap = BitmapFactory.decodeFile(imagePath, newOpts);
-            mAvatar = bitmapToBase64(bitmap);
+            mAvatar = Base64Utils.bitmapToBase64(bitmap);
             //调用阿里云
-            tianALiYunDecode(mAvatar);
+            aLiYunDecode(mAvatar);
         } else {
             ToastUtils.showShortToast(getContext(), "获取图片失败!");
         }
     }
 
-    //图片转base64
-    private static String bitmapToBase64(Bitmap bitmap) {
-        String result = null;
-        ByteArrayOutputStream baos = null;
-        try {
-            if (bitmap != null) {
-                baos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
 
-                baos.flush();
-                baos.close();
-
-                byte[] bitmapBytes = baos.toByteArray();
-                result = Base64.encodeToString(bitmapBytes, Base64.DEFAULT);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (baos != null) {
-                    baos.flush();
-                    baos.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return result;
-    }
-
-    //请求阿里云url
-    private void tianALiYunDecode(String mAvatar) {
+    /**
+     * 通过阿里云获取图片的url
+     * @param mAvatar 图片的base64字符串
+     */
+    private void aLiYunDecode(String mAvatar) {
         OkHttpClient client = new OkHttpClient();
         FormBody formBody = new FormBody.Builder().add("imgdata", "data:image/jpeg;base64," + mAvatar).build();
         Request request = new Request.Builder().url("http://qrapi.market.alicloudapi.com/yunapi/qrdecode.html")
@@ -429,17 +421,26 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
                 }
             }
         });
-
     }
 
-    //上传二维码url给服务器返回的结果
+
+    /**
+     * 上传二维码url给服务器返回的结果
+     * @param qrCodeUrlBean
+     */
     @Override
     public void setUpLoadingQRCodeUrlBean(QRCodeUrlBean qrCodeUrlBean) {
         canDone = true;
-
+        //qrCodeListAdapter需刷新，档口的UI为审核状态
+        qrCodeGroupBean.getQrcodes().get(tag).setStatus(1);
+        qrCodeListAdapter.notifyDataSetChanged();
     }
 
-    //获取分组的二维码档口返回的结果
+
+    /**
+     * 获取分组的二维码档口返回的结果
+     * @param bean
+     */
     @Override
     public void setQRCodeStalls(QRCodeStallBean bean) {
         //组装数据给qrCodeListAdapter
@@ -450,10 +451,9 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
             ToastUtils.showShortToast(getContext(),"服务器返回数据为null!");
         }
         if(groupid == bean.getGroupid()){//确保同一组
-            //赋值
+            //赋值 list(12个二维码档口id)
             qrCodeGroupBean.setQrcodes(bean.getQrcodes());
         }
         qrCodeListAdapter.notifyDataSetChanged();
     }
-
 }

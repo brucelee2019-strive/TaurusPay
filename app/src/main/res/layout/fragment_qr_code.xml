@@ -70,20 +70,26 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_qr_list"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
-    </androidx.recyclerview.widget.RecyclerView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_qr_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </androidx.recyclerview.widget.RecyclerView>
 
-    <TextView
-        android:id="@+id/tv_add_item"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:text="添加"
-        android:textSize="26sp"
-        android:textColor="@color/color_black_0"
-        android:gravity="center">
-    </TextView>
+        <ImageView
+            android:id="@+id/iv_add_item"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:src="@drawable/flow_btn"
+            android:layout_gravity="bottom|right"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="32dp"
+            ></ImageView>
+    </FrameLayout>
+
+
 </LinearLayout>

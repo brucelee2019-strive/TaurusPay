@@ -17,6 +17,7 @@ import com.mchaw.tauruspay.bean.home.SelledOrderBean;
 import com.mchaw.tauruspay.bean.home.SellingOrderBean;
 import com.mchaw.tauruspay.common.adapter.TabPageAdapter;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
+import com.mchaw.tauruspay.common.util.StringUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.main.home.forsale.constract.ForSaleConstract;
 import com.mchaw.tauruspay.ui.main.home.forsale.presenter.ForSalePresenter;
@@ -108,7 +109,7 @@ public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> imple
 
     @Override
     public void setHomeDataBean(HomeDataBean homeDataBean) {
-        tvAllCoinNum.setText(String.valueOf(homeDataBean.getDeposit()));
+        tvAllCoinNum.setText(StringUtils.fenToYuan(homeDataBean.getDeposit()));
         tvTodayIncomeNum.setText(String.valueOf(0));
         tvSailingCoinNum.setText(String.valueOf(0));
     }
@@ -138,6 +139,5 @@ public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> imple
                 break;
         }
     }
-
 
 }

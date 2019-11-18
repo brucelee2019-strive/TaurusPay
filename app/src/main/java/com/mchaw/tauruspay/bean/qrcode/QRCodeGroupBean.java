@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * @author Bruce Lee
  * @date : 2019/11/13 11:23
- * @description:
+ * @description: 二维码库list集合的itemBean
  */
 public class QRCodeGroupBean {
 
@@ -30,6 +30,7 @@ public class QRCodeGroupBean {
     //用来操控展开，收紧按钮。和作为请求二维码档口的判断依据
     private boolean showItems = false;
 
+    //QrcodesBean的list
     private List<QRCodeStallBean.QrcodesBean> qrcodes;
 
     public List<QRCodeStallBean.QrcodesBean> getQrcodes() {

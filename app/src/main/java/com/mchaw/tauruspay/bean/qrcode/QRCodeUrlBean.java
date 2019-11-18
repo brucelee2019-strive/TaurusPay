@@ -3,7 +3,7 @@ package com.mchaw.tauruspay.bean.qrcode;
 /**
  * @author Bruce Lee
  * @date : 2019/11/15 16:20
- * @description:
+ * @description:上传二维码url给服务器成功返回的Bean
  */
 public class QRCodeUrlBean {
 

@@ -29,6 +29,7 @@ public class QRCodeStallBean {
     private int deposit;
     private int sellamount;
     private int sellcount;
+    //12个二维码集合
     private List<QrcodesBean> qrcodes;
 
     public int getGroupid() {

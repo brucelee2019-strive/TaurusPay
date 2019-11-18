@@ -13,6 +13,7 @@ import com.mchaw.tauruspay.bean.home.HomeDataBean;
 import com.mchaw.tauruspay.bean.home.TransferAccountsBean;
 import com.mchaw.tauruspay.common.dialog.LoadingDialog;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
+import com.mchaw.tauruspay.common.util.StringUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.main.home.transferaccounts.constract.TransferAccountsConstract;
@@ -86,7 +87,7 @@ public class TransferAccountsFragment extends BasePresentFragment<TransferAccoun
 
     @Override
     public void setHomeDataBean(HomeDataBean homeDataBean) {
-        tvAllCost.setText(String.valueOf(homeDataBean.getDeposit()));
+        tvAllCost.setText(StringUtils.fenToYuan(homeDataBean.getDeposit()));
     }
 
     @OnClick({R.id.iv_back, R.id.tv_transfer_account_sure})

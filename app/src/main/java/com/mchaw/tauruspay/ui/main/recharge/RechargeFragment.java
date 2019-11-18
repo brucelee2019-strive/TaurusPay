@@ -18,6 +18,7 @@ import com.mchaw.tauruspay.bean.home.HomeDataBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeBean;
 import com.mchaw.tauruspay.common.Constant;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
+import com.mchaw.tauruspay.common.util.StringUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.main.recharge.constract.RechargeListConstract;
 import com.mchaw.tauruspay.ui.main.recharge.presenter.RechargeListPresenter;
@@ -119,6 +120,6 @@ public class RechargeFragment extends BasePresentFragment<RechargeListPresenter>
 
     @Override
     public void setHomeDataBean(HomeDataBean homeDataBean) {
-        tvRepertoryMoney.setText(String.valueOf(homeDataBean.getDeposit()));
+        tvRepertoryMoney.setText(StringUtils.fenToYuan(homeDataBean.getDeposit()));
     }
 }

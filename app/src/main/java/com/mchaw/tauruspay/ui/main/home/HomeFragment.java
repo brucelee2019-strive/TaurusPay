@@ -12,6 +12,7 @@ import com.mchaw.tauruspay.base.fragment.BaseFragment;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.bean.home.HomeDataBean;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
+import com.mchaw.tauruspay.common.util.StringUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.main.home.constract.HomeConstract;
 import com.mchaw.tauruspay.ui.main.home.forsale.ForSaleFragment;
@@ -112,10 +113,10 @@ public class HomeFragment extends BasePresentFragment<HomePresenter> implements 
 
     @Override
     public void setHomeDataBean(HomeDataBean homeDataBean) {
-        tvRepertory.setText(String.valueOf(homeDataBean.getDeposit()));
-        tvTodayAgencyIncome.setText(String.valueOf(homeDataBean.getDaypoint()));
-        tvTodayMoneyForSale.setText(String.valueOf(homeDataBean.getDayamount()));
-        tvTodayTimeForSale.setText(String.valueOf(homeDataBean.getDaycount()));
-        tvAlreadyIncome.setText(String.valueOf(homeDataBean.getDaydeposit()));
+        tvRepertory.setText(StringUtils.fenToYuan(homeDataBean.getDeposit()));
+        tvTodayAgencyIncome.setText(StringUtils.fenToYuan(homeDataBean.getDaypoint()));
+        tvTodayMoneyForSale.setText(StringUtils.fenToYuan(homeDataBean.getDayamount()));
+        tvTodayTimeForSale.setText(StringUtils.fenToYuan(homeDataBean.getDaycount()));
+        tvAlreadyIncome.setText(StringUtils.fenToYuan(homeDataBean.getDaydeposit()));
     }
 }

@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tv_last_orders_num"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/bdbdbd"></TextView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+        <ImageView
+            android:id="@+id/iv_ds_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_ds_line"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ds_icon_zfb" />
+
+        <TextView
+            android:id="@+id/tv_ds_line"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginEnd="8dp"
+            android:background="@color/bdbdbd"
+            app:layout_constraintBottom_toTopOf="@+id/tv_last_orders"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/iv_ds_icon"
+            app:layout_constraintTop_toBottomOf="@+id/iv_ds_icon" />
+
+        <TextView
+            android:id="@+id/tv_last_orders"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="已上传"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/iv_ds_icon"
+            app:layout_constraintTop_toBottomOf="@+id/tv_ds_line" />
+
+        <TextView
+            android:id="@+id/textView32"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12张"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_last_orders"
+            app:layout_constraintStart_toEndOf="@+id/tv_last_orders"
+            app:layout_constraintTop_toTopOf="@+id/tv_last_orders"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/tv_show_order_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:paddingLeft="40dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_last_orders"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_last_orders"
+            app:srcCompat="@drawable/ds_btn_sq" />
+
+        <TextView
+            android:id="@+id/textView33"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="支付宝账号："
+            app:layout_constraintStart_toEndOf="@+id/iv_ds_icon"
+            app:layout_constraintTop_toTopOf="@+id/iv_ds_icon" />
+
+        <TextView
+            android:id="@+id/textView34"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="支付宝昵称："
+            app:layout_constraintBottom_toBottomOf="@+id/iv_ds_icon"
+            app:layout_constraintStart_toEndOf="@+id/iv_ds_icon" />
+
+        <TextView
+            android:id="@+id/tv_zfb_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="@+id/textView33"
+            app:layout_constraintStart_toEndOf="@+id/textView33"
+            app:layout_constraintTop_toTopOf="@+id/textView33" />
+
+        <TextView
+            android:id="@+id/tv_zfb_nike_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="@+id/textView34"
+            app:layout_constraintStart_toEndOf="@+id/textView34"
+            app:layout_constraintTop_toTopOf="@+id/textView34"
+            app:layout_constraintVertical_bias="0.0" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <!--    <LinearLayout-->
+    <!--        android:id="@+id/ll_1"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="100dp"-->
+    <!--        android:orientation="horizontal">-->
+    <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--            android:id="@+id/cl_303"-->
+    <!--            android:background="@drawable/ds_ds_bg"-->
+    <!--            android:layout_margin="5dp"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_weight="1"-->
+    <!--            android:layout_height="match_parent">-->
+
+    <!--            <ImageView-->
+    <!--                app:layout_constraintVertical_chainStyle="spread"-->
+    <!--                android:id="@+id/iv_303"-->
+    <!--                android:layout_width="50dp"-->
+    <!--                android:layout_height="50dp"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toTopOf="parent"-->
+    <!--                app:layout_constraintBottom_toTopOf="@+id/tv_303"-->
+    <!--                app:srcCompat="@drawable/ds_icon_zfb" />-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/tv_303"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:text="303"-->
+    <!--                android:textColor="@color/f54343"-->
+    <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--                app:layout_constraintEnd_toEndOf="@+id/iv_303"-->
+    <!--                app:layout_constraintStart_toStartOf="@+id/iv_303"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/iv_303" />-->
+    <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+    <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--            android:id="@+id/cl_313"-->
+    <!--            android:background="@drawable/ds_ds_bg"-->
+    <!--            android:layout_margin="5dp"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_weight="1"-->
+    <!--            android:layout_height="match_parent">-->
+
+    <!--            <ImageView-->
+    <!--                app:layout_constraintVertical_chainStyle="spread"-->
+    <!--                android:id="@+id/iv_313"-->
+    <!--                android:layout_width="50dp"-->
+    <!--                android:layout_height="50dp"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toTopOf="parent"-->
+    <!--                app:layout_constraintBottom_toTopOf="@+id/tv_313"-->
+    <!--                app:srcCompat="@drawable/ds_icon_zfb" />-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/tv_313"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:text="303"-->
+    <!--                android:textColor="@color/f54343"-->
+    <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--                app:layout_constraintEnd_toEndOf="@+id/iv_313"-->
+    <!--                app:layout_constraintStart_toStartOf="@+id/iv_313"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/iv_313" />-->
+    <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+    <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--            android:id="@+id/cl_785"-->
+    <!--            android:background="@drawable/ds_ds_bg"-->
+    <!--            android:layout_margin="5dp"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_weight="1"-->
+    <!--            android:layout_height="match_parent">-->
+
+    <!--            <ImageView-->
+    <!--                app:layout_constraintVertical_chainStyle="spread"-->
+    <!--                android:id="@+id/iv_785"-->
+    <!--                android:layout_width="50dp"-->
+    <!--                android:layout_height="50dp"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toTopOf="parent"-->
+    <!--                app:layout_constraintBottom_toTopOf="@+id/tv_785"-->
+    <!--                app:srcCompat="@drawable/ds_icon_zfb" />-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/tv_785"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:text="303"-->
+    <!--                android:textColor="@color/f54343"-->
+    <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--                app:layout_constraintEnd_toEndOf="@+id/iv_785"-->
+    <!--                app:layout_constraintStart_toStartOf="@+id/iv_785"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/iv_785" />-->
+    <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+    <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--            android:id="@+id/cl_786"-->
+    <!--            android:background="@drawable/ds_ds_bg"-->
+    <!--            android:layout_margin="5dp"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_weight="1"-->
+    <!--            android:layout_height="match_parent">-->
+
+    <!--            <ImageView-->
+    <!--                app:layout_constraintVertical_chainStyle="spread"-->
+    <!--                android:id="@+id/iv_786"-->
+    <!--                android:layout_width="50dp"-->
+    <!--                android:layout_height="50dp"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toTopOf="parent"-->
+    <!--                app:layout_constraintBottom_toTopOf="@+id/tv_786"-->
+    <!--                app:srcCompat="@drawable/ds_icon_zfb" />-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/tv_786"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:text="303"-->
+    <!--                android:textColor="@color/f54343"-->
+    <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--                app:layout_constraintEnd_toEndOf="@+id/iv_786"-->
+    <!--                app:layout_constraintStart_toStartOf="@+id/iv_786"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/iv_786" />-->
+    <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+    <!--    </LinearLayout>-->
+    <!--    <LinearLayout-->
+    <!--        android:id="@+id/ll_2"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="100dp"-->
+    <!--        android:orientation="horizontal">-->
+    <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--            android:id="@+id/cl_1215"-->
+    <!--            android:background="@drawable/ds_ds_bg"-->
+    <!--            android:layout_margin="5dp"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_weight="1"-->
+    <!--            android:layout_height="match_parent">-->
+
+    <!--            <ImageView-->
+    <!--                app:layout_constraintVertical_chainStyle="spread"-->
+    <!--                android:id="@+id/iv_1215"-->
+    <!--                android:layout_width="50dp"-->
+    <!--                android:layout_height="50dp"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toTopOf="parent"-->
+    <!--                app:layout_constraintBottom_toTopOf="@+id/tv_1215"-->
+    <!--                app:srcCompat="@drawable/ds_icon_zfb" />-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/tv_1215"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:text="303"-->
+    <!--                android:textColor="@color/f54343"-->
+    <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--                app:layout_constraintEnd_toEndOf="@+id/iv_1215"-->
+    <!--                app:layout_constraintStart_toStartOf="@+id/iv_1215"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/iv_1215" />-->
+    <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+    <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--            android:id="@+id/cl_1216"-->
+    <!--            android:background="@drawable/ds_ds_bg"-->
+    <!--            android:layout_margin="5dp"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_weight="1"-->
+    <!--            android:layout_height="match_parent">-->
+
+    <!--            <ImageView-->
+    <!--                app:layout_constraintVertical_chainStyle="spread"-->
+    <!--                android:id="@+id/iv_1216"-->
+    <!--                android:layout_width="50dp"-->
+    <!--                android:layout_height="50dp"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toTopOf="parent"-->
+    <!--                app:layout_constraintBottom_toTopOf="@+id/tv_1216"-->
+    <!--                app:srcCompat="@drawable/ds_icon_zfb" />-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/tv_1216"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:text="303"-->
+    <!--                android:textColor="@color/f54343"-->
+    <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--                app:layout_constraintEnd_toEndOf="@+id/iv_1216"-->
+    <!--                app:layout_constraintStart_toStartOf="@+id/iv_1216"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/iv_1216" />-->
+    <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+    <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--            android:id="@+id/cl_2515"-->
+    <!--            android:background="@drawable/ds_ds_bg"-->
+    <!--            android:layout_margin="5dp"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_weight="1"-->
+    <!--            android:layout_height="match_parent">-->
+
+    <!--            <ImageView-->
+    <!--                app:layout_constraintVertical_chainStyle="spread"-->
+    <!--                android:id="@+id/iv_2515"-->
+    <!--                android:layout_width="50dp"-->
+    <!--                android:layout_height="50dp"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toTopOf="parent"-->
+    <!--                app:layout_constraintBottom_toTopOf="@+id/tv_2515"-->
+    <!--                app:srcCompat="@drawable/ds_icon_zfb" />-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/tv_2515"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:text="303"-->
+    <!--                android:textColor="@color/f54343"-->
+    <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--                app:layout_constraintEnd_toEndOf="@+id/iv_2515"-->
+    <!--                app:layout_constraintStart_toStartOf="@+id/iv_2515"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/iv_2515" />-->
+    <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+    <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--            android:id="@+id/cl_2516"-->
+    <!--            android:background="@drawable/ds_ds_bg"-->
+    <!--            android:layout_margin="5dp"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_weight="1"-->
+    <!--            android:layout_height="match_parent">-->
+
+    <!--            <ImageView-->
+    <!--                app:layout_constraintVertical_chainStyle="spread"-->
+    <!--                android:id="@+id/iv_2516"-->
+    <!--                android:layout_width="50dp"-->
+    <!--                android:layout_height="50dp"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toTopOf="parent"-->
+    <!--                app:layout_constraintBottom_toTopOf="@+id/tv_2516"-->
+    <!--                app:srcCompat="@drawable/ds_icon_zfb" />-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/tv_2516"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:text="303"-->
+    <!--                android:textColor="@color/f54343"-->
+    <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--                app:layout_constraintEnd_toEndOf="@+id/iv_2516"-->
+    <!--                app:layout_constraintStart_toStartOf="@+id/iv_2516"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/iv_2516" />-->
+    <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+    <!--    </LinearLayout>-->
+    <!--    <LinearLayout-->
+    <!--        android:id="@+id/ll_3"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="100dp"-->
+    <!--        android:orientation="horizontal">-->
+    <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--            android:id="@+id/cl_4985"-->
+    <!--            android:background="@drawable/ds_ds_bg"-->
+    <!--            android:layout_margin="5dp"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_weight="1"-->
+    <!--            android:layout_height="match_parent">-->
+
+    <!--            <ImageView-->
+    <!--                app:layout_constraintVertical_chainStyle="spread"-->
+    <!--                android:id="@+id/iv_4985"-->
+    <!--                android:layout_width="50dp"-->
+    <!--                android:layout_height="50dp"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toTopOf="parent"-->
+    <!--                app:layout_constraintBottom_toTopOf="@+id/tv_4985"-->
+    <!--                app:srcCompat="@drawable/ds_icon_zfb" />-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/tv_4985"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:text="303"-->
+    <!--                android:textColor="@color/f54343"-->
+    <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--                app:layout_constraintEnd_toEndOf="@+id/iv_4985"-->
+    <!--                app:layout_constraintStart_toStartOf="@+id/iv_4985"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/iv_4985" />-->
+    <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+    <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--            android:id="@+id/cl_4988"-->
+    <!--            android:background="@drawable/ds_ds_bg"-->
+    <!--            android:layout_margin="5dp"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_weight="1"-->
+    <!--            android:layout_height="match_parent">-->
+
+    <!--            <ImageView-->
+    <!--                app:layout_constraintVertical_chainStyle="spread"-->
+    <!--                android:id="@+id/iv_4988"-->
+    <!--                android:layout_width="50dp"-->
+    <!--                android:layout_height="50dp"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toTopOf="parent"-->
+    <!--                app:layout_constraintBottom_toTopOf="@+id/tv_4988"-->
+    <!--                app:srcCompat="@drawable/ds_icon_zfb" />-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/tv_4988"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:text="303"-->
+    <!--                android:textColor="@color/f54343"-->
+    <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--                app:layout_constraintEnd_toEndOf="@+id/iv_4988"-->
+    <!--                app:layout_constraintStart_toStartOf="@+id/iv_4988"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/iv_4988" />-->
+    <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+    <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--            android:id="@+id/cl_7988"-->
+    <!--            android:background="@drawable/ds_ds_bg"-->
+    <!--            android:layout_margin="5dp"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_weight="1"-->
+    <!--            android:layout_height="match_parent">-->
+
+    <!--            <ImageView-->
+    <!--                app:layout_constraintVertical_chainStyle="spread"-->
+    <!--                android:id="@+id/iv_7988"-->
+    <!--                android:layout_width="50dp"-->
+    <!--                android:layout_height="50dp"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toTopOf="parent"-->
+    <!--                app:layout_constraintBottom_toTopOf="@+id/tv_7988"-->
+    <!--                app:srcCompat="@drawable/ds_icon_zfb" />-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/tv_7988"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:text="303"-->
+    <!--                android:textColor="@color/f54343"-->
+    <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--                app:layout_constraintEnd_toEndOf="@+id/iv_7988"-->
+    <!--                app:layout_constraintStart_toStartOf="@+id/iv_7988"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/iv_7988" />-->
+    <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+    <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--            android:id="@+id/cl_9988"-->
+    <!--            android:background="@drawable/ds_ds_bg"-->
+    <!--            android:layout_margin="5dp"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_weight="1"-->
+    <!--            android:layout_height="match_parent">-->
+
+    <!--            <ImageView-->
+    <!--                app:layout_constraintVertical_chainStyle="spread"-->
+    <!--                android:id="@+id/iv_9988"-->
+    <!--                android:layout_width="50dp"-->
+    <!--                android:layout_height="50dp"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toTopOf="parent"-->
+    <!--                app:layout_constraintBottom_toTopOf="@+id/tv_9988"-->
+    <!--                app:srcCompat="@drawable/ds_icon_zfb" />-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/tv_9988"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:text="303"-->
+    <!--                android:textColor="@color/f54343"-->
+    <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--                app:layout_constraintEnd_toEndOf="@+id/iv_9988"-->
+    <!--                app:layout_constraintStart_toStartOf="@+id/iv_9988"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/iv_9988" />-->
+    <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+    <!--    </LinearLayout>-->
+    <FrameLayout
+        android:id="@+id/fl_qr_code_group"
+        android:layout_width="match_parent"
+        android:layout_height="330dp">
+    </FrameLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/bdbdbd"></TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_black_0"></TextView>
+</LinearLayout>

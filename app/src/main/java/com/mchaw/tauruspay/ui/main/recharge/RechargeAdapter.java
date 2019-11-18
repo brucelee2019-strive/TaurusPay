@@ -8,6 +8,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.bean.recharge.RechargeBean;
+import com.mchaw.tauruspay.common.util.StringUtils;
 
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class RechargeAdapter extends BaseQuickAdapter<RechargeBean, BaseViewHold
 //        helper.setImageResource(R.id.iv_recharge_state,item.equals("未通过")?R.drawable.cz_icon_jz:R.drawable.cz_icon_cg);
         helper.setText(R.id.tv_sale_num, "订单编号：" + item.getOrderid());
         helper.setText(R.id.tv_sale_time, item.getUpdate());
-        helper.setText(R.id.tv_sale_money, "+" + item.getAmount());
+        helper.setText(R.id.tv_sale_money, "+" + StringUtils.fenToYuan(item.getAmount()));
         switch (item.getStatus()) {
             case 0:
             case 1:
