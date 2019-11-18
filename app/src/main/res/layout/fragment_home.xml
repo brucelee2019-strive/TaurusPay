@@ -26,18 +26,18 @@
         android:layout_weight="10">
 
         <TextView
-            app:layout_constraintVertical_chainStyle="spread"
             android:id="@+id/tv_repertory_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:text="库存话费(元)"
             android:textColor="@color/color_black_25"
             android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_repertory"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/tv_repertory"/>
+            app:layout_constraintVertical_chainStyle="spread" />
 
         <TextView
             android:id="@+id/tv_repertory"
@@ -57,13 +57,12 @@
             android:layout_marginEnd="16dp"
             android:background="@drawable/bg_text_btn"
             android:gravity="center"
-            android:paddingLeft="15dp"
-            android:paddingTop="5dp"
-            android:paddingRight="15dp"
-            android:paddingBottom="5dp"
+            android:paddingLeft="16dp"
+            android:paddingTop="4dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="4dp"
             android:text="转账"
             android:textColor="@color/white"
-            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/tv_repertory"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -140,18 +139,18 @@
         android:layout_weight="8">
 
         <TextView
-            app:layout_constraintVertical_chainStyle="spread"
             android:id="@+id/tv_today_agency_income"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:text="今日代售收益(元)"
             android:textColor="@color/color_black_25"
             android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_today_sell_income_money"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/tv_today_sell_income_money"/>
+            app:layout_constraintVertical_chainStyle="spread" />
 
         <TextView
             android:id="@+id/tv_today_sell_income_money"
@@ -214,24 +213,26 @@
         android:layout_weight="8">
 
         <TextView
-            app:layout_constraintVertical_chainStyle="spread"
             android:id="@+id/tv_start_sail"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
             android:background="@drawable/bg_text_btn"
             android:gravity="center"
-            android:text="开始代售"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
+            android:text="开始代售"
+            android:textStyle="bold"
             android:textColor="@color/white"
-            android:textSize="24sp"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_pre_sale_txt"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/tv_pre_sale_txt"/>
+            app:layout_constraintVertical_chainStyle="spread" />
 
         <TextView
             android:id="@+id/tv_pre_sale_txt"

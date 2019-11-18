@@ -68,13 +68,16 @@
             android:layout_centerVertical="true"
             android:gravity="center"
             android:background="@drawable/bg_text_btn"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="充值"
+            android:textStyle="bold"
             android:textColor="@color/white"
-            android:textSize="30sp"></TextView>
+            android:textSize="20sp"></TextView>
     </RelativeLayout>
 
 </LinearLayout>

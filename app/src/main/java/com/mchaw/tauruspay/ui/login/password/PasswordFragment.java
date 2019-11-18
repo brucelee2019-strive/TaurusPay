@@ -28,7 +28,7 @@ import butterknife.OnClick;
  */
 public class PasswordFragment extends BasePresentFragment<PasswordPresenter> implements PasswordConstract.View{
 
-    @BindView(R.id.tv_title)
+    @BindView(R.id.tv_back_title)
     TextView tvTitle;
     @BindView(R.id.et_account)
     EditText etAccount;

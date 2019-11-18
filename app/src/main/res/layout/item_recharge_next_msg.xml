@@ -42,6 +42,7 @@
             android:paddingTop="4dp"
             android:paddingBottom="4dp"
             android:text="复制"
+            android:textStyle="italic"
             android:textColor="@color/white"
             android:background="@drawable/bg_text_btn"
             app:layout_constraintStart_toEndOf="@+id/tv_income_num"

@@ -27,7 +27,7 @@ import butterknife.OnClick;
  */
 public class RegisterFragment extends BasePresentFragment<RegisterPresenter> implements RegisterConstract.View {
 
-    @BindView(R.id.tv_title)
+    @BindView(R.id.tv_back_title)
     TextView tvTitle;
     @BindView(R.id.et_account)
     EditText etAccount;
