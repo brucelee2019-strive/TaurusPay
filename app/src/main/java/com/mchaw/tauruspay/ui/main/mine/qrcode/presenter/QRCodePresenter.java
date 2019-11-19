@@ -1,6 +1,7 @@
 package com.mchaw.tauruspay.ui.main.mine.qrcode.presenter;
 
 import com.mchaw.tauruspay.base.mvp.presenter.RxPresenter;
+import com.mchaw.tauruspay.bean.qrcode.DeleteQRCodeGroupBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupCreateBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeStallBean;
@@ -88,6 +89,23 @@ public class QRCodePresenter extends RxPresenter<QRCodeConstract.View> implement
                     @Override
                     public void onSuccess(QRCodeStallBean bean) {
                         mView.setQRCodeStalls(bean);
+                    }
+
+                    @Override
+                    public void onFail(String msg) {
+                        mView.showError(msg);
+                    }
+                });
+        addSubscribe(disposable);
+    }
+
+    @Override
+    public void deleteQRCodeGroup(String groupid, String api_token) {
+        Disposable disposable = qrCodeModel.deleteQRCodeGroup(groupid,api_token)
+                .subscribeWith(new ResultObserver<DeleteQRCodeGroupBean>() {
+                    @Override
+                    public void onSuccess(DeleteQRCodeGroupBean bean) {
+                        mView.setDeleteQRCodeGroup(bean);
                     }
 
                     @Override

@@ -75,4 +75,10 @@ public class Constant {
      */
     public static final int RECHARGE_NEXT_FRAGMENT_BACK = 100;
 
+    /**
+     * 二维码库界面状态值
+     */
+    public static final int PAGE_NORMAL_STATE = 101;
+    public static final int PAGE_DELETE_STATE = 102;
+
 }

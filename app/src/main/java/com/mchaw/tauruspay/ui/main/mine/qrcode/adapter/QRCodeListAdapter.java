@@ -10,6 +10,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeStallBean;
+import com.mchaw.tauruspay.common.Constant;
 import com.mchaw.tauruspay.common.util.StringUtils;
 
 import java.util.List;
@@ -31,7 +32,7 @@ public class QRCodeListAdapter extends BaseQuickAdapter<QRCodeGroupBean, BaseVie
     protected void convert(@NonNull BaseViewHolder helper, QRCodeGroupBean item) {
         helper.addOnClickListener(R.id.cl_303, R.id.cl_313, R.id.cl_785, R.id.cl_786, R.id.cl_1215, R.id.cl_1216, R.id.cl_2515,
                 R.id.cl_2516, R.id.cl_4985, R.id.cl_4988, R.id.cl_7988, R.id.cl_9988
-                , R.id.tv_show_order_list);
+                , R.id.tv_show_order_list,R.id.iv_delete);
         helper.setText(R.id.tv_zfb_account, item.getAccount());
         helper.setText(R.id.tv_zfb_nike_name, item.getNick());
         helper.setGone(R.id.ll_1, item.isShowItems());
@@ -43,6 +44,8 @@ public class QRCodeListAdapter extends BaseQuickAdapter<QRCodeGroupBean, BaseVie
                 setQRCodeStatus(item.getQrcodes().get(i), helper,i);
             }
         }
+        helper.setGone(R.id.iv_delete,item.getCanDelete()== Constant.PAGE_DELETE_STATE);
+        helper.setGone(R.id.tv_show_order_list,!item.isCanClickShowItems());
     }
 
     private void setQRCodeStatus(QRCodeStallBean.QrcodesBean qrcodesBean,BaseViewHolder helper,int tag) {

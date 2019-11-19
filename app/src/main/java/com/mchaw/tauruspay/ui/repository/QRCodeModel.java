@@ -1,6 +1,7 @@
 package com.mchaw.tauruspay.ui.repository;
 
 import com.mchaw.tauruspay.bean.ALiYunCodeBean;
+import com.mchaw.tauruspay.bean.qrcode.DeleteQRCodeGroupBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupCreateBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeStallBean;
@@ -52,4 +53,11 @@ public class QRCodeModel extends BaseModel{
                 .compose(new ResultDisposable<QRCodeStallBean>())
                 .compose(new ScheduleTranformer<QRCodeStallBean>());
     }
+
+    public Observable<DeleteQRCodeGroupBean> deleteQRCodeGroup(String groupid, String api_token) {
+        return apiService.deleteQRCodeGroup(groupid,api_token)
+                .compose(new ResultDisposable<DeleteQRCodeGroupBean>())
+                .compose(new ScheduleTranformer<DeleteQRCodeGroupBean>());
+    }
+
 }

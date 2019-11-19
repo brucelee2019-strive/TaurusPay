@@ -33,6 +33,28 @@ public class QRCodeGroupBean {
     //QrcodesBean的list
     private List<QRCodeStallBean.QrcodesBean> qrcodes;
 
+    //控制删除按钮是否显示
+    private int canDelete;
+
+    //用来操控展开，收紧按钮,能否被点击
+    private boolean canClickShowItems = false;
+
+    public boolean isCanClickShowItems() {
+        return canClickShowItems;
+    }
+
+    public void setCanClickShowItems(boolean canClickShowItems) {
+        this.canClickShowItems = canClickShowItems;
+    }
+
+    public int getCanDelete() {
+        return canDelete;
+    }
+
+    public void setCanDelete(int canDelete) {
+        this.canDelete = canDelete;
+    }
+
     public List<QRCodeStallBean.QrcodesBean> getQrcodes() {
         return qrcodes;
     }

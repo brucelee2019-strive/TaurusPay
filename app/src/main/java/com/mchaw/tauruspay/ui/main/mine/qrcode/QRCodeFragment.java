@@ -12,34 +12,40 @@ import android.os.Bundle;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
+
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.bean.ALiYunCodeBean;
+import com.mchaw.tauruspay.bean.qrcode.DeleteQRCodeGroupBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupCreateBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeStallBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeUrlBean;
+import com.mchaw.tauruspay.common.Constant;
 import com.mchaw.tauruspay.common.util.Base64Utils;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
+import com.mchaw.tauruspay.ui.main.mine.dialog.QRCodeGroupDeleteDialog;
 import com.mchaw.tauruspay.ui.main.mine.dialog.QRCodeGroupDialog;
 import com.mchaw.tauruspay.ui.main.mine.qrcode.adapter.QRCodeListAdapter;
 import com.mchaw.tauruspay.ui.main.mine.qrcode.constract.QRCodeConstract;
 import com.mchaw.tauruspay.ui.main.mine.qrcode.presenter.QRCodePresenter;
-import java.io.ByteArrayOutputStream;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import okhttp3.Call;
@@ -54,15 +60,21 @@ import okhttp3.Response;
  * @date : 2019/11/8 19:23
  * @description:
  */
-public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> implements QRCodeConstract.View, BaseQuickAdapter.OnItemChildClickListener, BaseQuickAdapter.OnItemClickListener, QRCodeGroupDialog.ConfirmListener {
+public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> implements QRCodeConstract.View, BaseQuickAdapter.OnItemChildClickListener, BaseQuickAdapter.OnItemClickListener, QRCodeGroupDialog.ConfirmListener, QRCodeGroupDeleteDialog.ConfirmListener {
     private static final int REQUEST_CODE_SELECT_PHOTO = 111;
     @BindView(R.id.rv_qr_list)
     RecyclerView rvQRList;
 
-    @BindView(R.id.iv_back)
-    ImageView ivBack;
+    @BindView(R.id.iv_add_item)
+    ImageView ivAddItem;
+    @BindView(R.id.tv_back_title)
+    TextView tvBackTitle;
+    @BindView(R.id.tv_right)
+    TextView tvRight;
 
-    private List<QRCodeGroupBean> list = new ArrayList();
+    private int pageState;
+
+    private List<QRCodeGroupBean> qrCodeGroupBeanList = new ArrayList();
     private QRCodeListAdapter qrCodeListAdapter;
 
     @Override
@@ -86,101 +98,103 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
     protected void initFragment() {
         super.initFragment();
         rvQRList.setLayoutManager(new LinearLayoutManager(getContext()));
-        qrCodeListAdapter = new QRCodeListAdapter(getActivity(),list);
+        qrCodeListAdapter = new QRCodeListAdapter(getActivity(), qrCodeGroupBeanList);
         qrCodeListAdapter.setOnItemChildClickListener(this);
         qrCodeListAdapter.setOnItemClickListener(this);
         rvQRList.setAdapter(qrCodeListAdapter);
         presenter.getQRCodeGroupList(PreferencesUtils.getString(getContext(), "token"));
-        Log.i("cici",PreferencesUtils.getString(getContext(), "token"));
+        Log.i("cici", PreferencesUtils.getString(getContext(), "token"));
+        pageState = Constant.PAGE_NORMAL_STATE;
     }
 
     private int groupid;
     private QRCodeGroupBean qrCodeGroupBean;
     private int tag;
     private boolean canDone = true;
+
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
         qrCodeGroupBean = (QRCodeGroupBean) adapter.getItem(position);
         switch (view.getId()) {
             case R.id.cl_303:
-                if(canDone) {
+                if (canDone) {
                     tag = 0;
                     openPhotoAlbum(tag);
                 }
                 canDone = false;
                 break;
             case R.id.cl_313:
-                if(canDone) {
+                if (canDone) {
                     tag = 1;
                     openPhotoAlbum(tag);
                 }
                 canDone = false;
                 break;
             case R.id.cl_785:
-                if(canDone) {
+                if (canDone) {
                     tag = 2;
                     openPhotoAlbum(tag);
                 }
                 canDone = false;
                 break;
             case R.id.cl_786:
-                if(canDone) {
+                if (canDone) {
                     tag = 3;
                     openPhotoAlbum(tag);
                 }
                 canDone = false;
                 break;
             case R.id.cl_1215:
-                if(canDone) {
+                if (canDone) {
                     tag = 4;
                     openPhotoAlbum(tag);
                 }
                 canDone = false;
                 break;
             case R.id.cl_1216:
-                if(canDone) {
+                if (canDone) {
                     tag = 5;
                     openPhotoAlbum(tag);
                 }
                 canDone = false;
                 break;
             case R.id.cl_2515:
-                if(canDone) {
+                if (canDone) {
                     tag = 6;
                     openPhotoAlbum(tag);
                 }
                 canDone = false;
                 break;
             case R.id.cl_2516:
-                if(canDone) {
+                if (canDone) {
                     tag = 7;
                     openPhotoAlbum(tag);
                 }
                 canDone = false;
                 break;
             case R.id.cl_4985:
-                if(canDone) {
+                if (canDone) {
                     tag = 8;
                     openPhotoAlbum(tag);
                 }
                 canDone = false;
                 break;
             case R.id.cl_4988:
-                if(canDone) {
+                if (canDone) {
                     tag = 9;
                     openPhotoAlbum(tag);
                 }
                 canDone = false;
                 break;
             case R.id.cl_7988:
-                if(canDone) {
+                if (canDone) {
                     tag = 10;
                     openPhotoAlbum(tag);
                 }
                 canDone = false;
                 break;
             case R.id.cl_9988:
-                if(canDone) {
+                if (canDone) {
                     tag = 11;
                     openPhotoAlbum(tag);
                 }
@@ -190,10 +204,13 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
                 boolean ishow = qrCodeGroupBean.isShowItems();
                 qrCodeGroupBean.setShowItems(!ishow);
                 adapter.notifyItemChanged(position);
-                if(!ishow){
+                if (!ishow) {
                     groupid = qrCodeGroupBean.getId();
-                    presenter.getQRCodeStalls(String.valueOf(groupid),PreferencesUtils.getString(getContext(),"token"));
+                    presenter.getQRCodeStalls(String.valueOf(groupid), PreferencesUtils.getString(getContext(), "token"));
                 }
+                break;
+            case R.id.iv_delete:
+                QRCodeGroupDeleteDialog.showDialog(getChildFragmentManager(),qrCodeGroupBean.getAccount(),qrCodeGroupBean.getNick(),qrCodeGroupBean.getId(),qrCodeGroupBean.getPaytype());
                 break;
             default:
                 break;
@@ -201,9 +218,9 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
         }
     }
 
-    private void openPhotoAlbum(int tag){
-        if(qrCodeGroupBean.getQrcodes().get(tag).getStatus()==1){
-            ToastUtils.showShortToast(getContext(),"审核中...，不能修改！");
+    private void openPhotoAlbum(int tag) {
+        if (qrCodeGroupBean.getQrcodes().get(tag).getStatus() == 1) {
+            ToastUtils.showShortToast(getContext(), "审核中...，不能修改！");
             canDone = false;
             return;
         }
@@ -212,10 +229,9 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
     }
 
-    @OnClick({R.id.iv_back, R.id.iv_add_item})
+    @OnClick({R.id.iv_back, R.id.iv_add_item, R.id.tv_right})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -224,6 +240,44 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
             case R.id.iv_add_item:
                 QRCodeGroupDialog.showDialog(getChildFragmentManager());
                 break;
+            case R.id.tv_right:
+                pageState(pageState);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void pageState(int state) {
+        switch (state) {
+            case Constant.PAGE_NORMAL_STATE:
+                if(qrCodeGroupBeanList!=null&&qrCodeGroupBeanList.size()>0) {
+                pageState = Constant.PAGE_DELETE_STATE;
+                tvRight.setText("取消");
+                ivAddItem.setVisibility(View.GONE);
+                    for (QRCodeGroupBean bean : qrCodeGroupBeanList) {
+                        bean.setCanDelete(Constant.PAGE_DELETE_STATE);
+                        bean.setShowItems(false);
+                        bean.setCanClickShowItems(true);
+                    }
+                    qrCodeListAdapter.notifyDataSetChanged();
+                }else{
+                    ToastUtils.showShortToast(getContext(),"没有请求到二维码库！");
+                }
+                break;
+            case Constant.PAGE_DELETE_STATE:
+                pageState = Constant.PAGE_NORMAL_STATE;
+                tvRight.setText("编辑");
+                ivAddItem.setVisibility(View.VISIBLE);
+                if(qrCodeGroupBeanList!=null&&qrCodeGroupBeanList.size()>0) {
+                    for (QRCodeGroupBean bean : qrCodeGroupBeanList) {
+                        bean.setCanDelete(Constant.PAGE_NORMAL_STATE);
+                        bean.setShowItems(false);
+                        bean.setCanClickShowItems(false);
+                    }
+                    qrCodeListAdapter.notifyDataSetChanged();
+                }
+                break;
             default:
                 break;
         }
@@ -231,10 +285,12 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
 
     /**
      * 获取二维码库的集合
+     *
      * @param list
      */
     @Override
     public void setQRCodeGroupList(List<QRCodeGroupBean> list) {
+        qrCodeGroupBeanList = list;
         qrCodeListAdapter.setNewData(list);
     }
 
@@ -294,7 +350,7 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
                 default:
                     break;
             }
-        }else{
+        } else {
             canDone = true;
         }
     }
@@ -376,6 +432,7 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
 
     /**
      * 通过阿里云获取图片的url
+     *
      * @param mAvatar 图片的base64字符串
      */
     private void aLiYunDecode(String mAvatar) {
@@ -401,7 +458,7 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
                                 if (ALiYunCodeBean.getStatus() == 1) {
                                     if (!TextUtils.isEmpty(ALiYunCodeBean.getData().getRaw_text())) {
                                         qrCodeUrl = ALiYunCodeBean.getData().getRaw_text();
-                                        presenter.getUpLoadingQRCodeUrlBean(PreferencesUtils.getString(getContext(),"token"),qrCodeGroupBean.getQrcodes().get(tag).getId(),qrCodeUrl);
+                                        presenter.getUpLoadingQRCodeUrlBean(PreferencesUtils.getString(getContext(), "token"), qrCodeGroupBean.getQrcodes().get(tag).getId(), qrCodeUrl);
                                     } else {
                                         ToastUtils.showShortToast(getContext(), "图片解析失败！");
                                     }
@@ -426,6 +483,7 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
 
     /**
      * 上传二维码url给服务器返回的结果
+     *
      * @param qrCodeUrlBean
      */
     @Override
@@ -439,21 +497,45 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
 
     /**
      * 获取分组的二维码档口返回的结果
+     *
      * @param bean
      */
     @Override
     public void setQRCodeStalls(QRCodeStallBean bean) {
         //组装数据给qrCodeListAdapter
-        if(bean == null){
-            ToastUtils.showShortToast(getContext(),"服务器返回数据为null!");
+        if (bean == null) {
+            ToastUtils.showShortToast(getContext(), "服务器返回数据为null!");
         }
-        if(bean.getQrcodes()==null||bean.getQrcodes().size()<=0){
-            ToastUtils.showShortToast(getContext(),"服务器返回数据为null!");
+        if (bean.getQrcodes() == null || bean.getQrcodes().size() <= 0) {
+            ToastUtils.showShortToast(getContext(), "服务器返回数据为null!");
         }
-        if(groupid == bean.getGroupid()){//确保同一组
+        if (groupid == bean.getGroupid()) {//确保同一组
             //赋值 list(12个二维码档口id)
             qrCodeGroupBean.setQrcodes(bean.getQrcodes());
         }
         qrCodeListAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 确定删除二维码组
+     * @param id
+     */
+    @Override
+    public void onClickComplete(int id) {
+        presenter.deleteQRCodeGroup(String.valueOf(id),PreferencesUtils.getString(getContext(),"token"));
+    }
+
+    /**
+     * 删除二维码分组成功返回的结果
+     * @param deleteQRCodeGroupBean
+     */
+    @Override
+    public void setDeleteQRCodeGroup(DeleteQRCodeGroupBean deleteQRCodeGroupBean) {
+        if(deleteQRCodeGroupBean==null){
+            ToastUtils.showShortToast(getContext(),"服务器错误，删除失败！");
+        }
+        ToastUtils.showShortToast(getContext(),"删除成功！");
+        presenter.getQRCodeGroupList(PreferencesUtils.getString(getContext(), "token"));
+        pageState(Constant.PAGE_DELETE_STATE);
     }
 }
