@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -15,12 +16,16 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.mchaw.tauruspay.base.activity.BaseActivity;
+import com.mchaw.tauruspay.bean.eventbus.LoginoutEvent;
 import com.mchaw.tauruspay.common.util.NoNullUtils;
+import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.main.besure.BesureFragment;
 import com.mchaw.tauruspay.ui.main.home.HomeFragment;
 import com.mchaw.tauruspay.ui.main.mine.MineFragment;
 import com.mchaw.tauruspay.ui.main.recharge.RechargeFragment;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 
@@ -188,5 +193,13 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
                 break;
         }
         return true;
+    }
+
+    @Subscribe
+    public void loginouted(LoginoutEvent event) {
+        if (event == null) {
+            return;
+        }
+        bottomView.setCurrentItem(0);
     }
 }

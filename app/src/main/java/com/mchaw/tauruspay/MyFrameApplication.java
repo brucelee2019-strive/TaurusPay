@@ -24,7 +24,7 @@ public class MyFrameApplication extends Application {
         return appComponent;
     }
 
-    public static String tokenStr;
+    public static String tokenStr = "";
 
     @Override
     public void onCreate() {

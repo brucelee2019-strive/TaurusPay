@@ -3,6 +3,7 @@ package com.mchaw.tauruspay.ui.login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -73,8 +74,6 @@ public class LoginFragment extends BasePresentFragment<LoginPresenter> implement
         PreferencesUtils.putString(getContext(),"sellcount",String.valueOf(loginBean.getSellcount()));
         PreferencesUtils.putString(getContext(),"point",String.valueOf(loginBean.getPoint()));
         PreferencesUtils.putString(getContext(),"deposit",String.valueOf(loginBean.getDeposit()));
-        Intent intent = new Intent(getActivity(), MainActivity.class);
-        startActivity(intent);
         getActivity().finish();
     }
 
@@ -115,5 +114,10 @@ public class LoginFragment extends BasePresentFragment<LoginPresenter> implement
         }
         presenter.getLoginBean(username, code, passwd);
         LoadingDialog.showDialog(getChildFragmentManager());
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        return false;
     }
 }

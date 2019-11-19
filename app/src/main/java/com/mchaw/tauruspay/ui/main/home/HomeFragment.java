@@ -2,11 +2,13 @@ package com.mchaw.tauruspay.ui.main.home;
 
 import android.os.Bundle;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BaseFragment;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
@@ -14,6 +16,7 @@ import com.mchaw.tauruspay.bean.home.HomeDataBean;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.StringUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
+import com.mchaw.tauruspay.ui.login.LoginFragment;
 import com.mchaw.tauruspay.ui.main.home.constract.HomeConstract;
 import com.mchaw.tauruspay.ui.main.home.forsale.ForSaleFragment;
 import com.mchaw.tauruspay.ui.main.home.presenter.HomePresenter;
@@ -91,9 +94,17 @@ public class HomeFragment extends BasePresentFragment<HomePresenter> implements 
     @Override
     protected void initFragment() {
         super.initFragment();
+        if(TextUtils.isEmpty(MyFrameApplication.getInstance().tokenStr)){
+            startFragment(new LoginFragment());
+        }
         tvNotiveText.setSelected(true);
         tvPreSaleTxt.setText(Html.fromHtml(strPre));
         tvAfterSaleTxt.setText(strAfter);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         presenter.getHomeDataBean(PreferencesUtils.getString(getContext(),"token"));
     }
 

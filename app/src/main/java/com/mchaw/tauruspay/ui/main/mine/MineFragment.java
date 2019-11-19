@@ -7,18 +7,15 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-import com.mchaw.tauruspay.MainActivity;
-import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BaseFragment;
-import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
-import com.mchaw.tauruspay.di.component.ActivityComponent;
-import com.mchaw.tauruspay.ui.login.LoginActivity;
+import com.mchaw.tauruspay.ui.login.LoginFragment;
 import com.mchaw.tauruspay.ui.login.password.PasswordFragment;
 import com.mchaw.tauruspay.ui.main.mine.about.AboutFragment;
 import com.mchaw.tauruspay.ui.main.mine.bank.MyBankCardFragment;
+import com.mchaw.tauruspay.ui.main.mine.dialog.LoginOutDialog;
 import com.mchaw.tauruspay.ui.main.mine.qrcode.QRCodeFragment;
 
 import butterknife.BindView;
@@ -29,7 +26,7 @@ import butterknife.OnClick;
  * @date : 2019/11/3 0003 21:11
  * @description :
  */
-public class MineFragment extends BaseFragment {
+public class MineFragment extends BaseFragment implements LoginOutDialog.ConfirmListener{
 
     @BindView(R.id.tv_user_nickname)
     TextView tvUserNickname;
@@ -48,6 +45,17 @@ public class MineFragment extends BaseFragment {
     }
 
     @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(hidden){
+
+        }else{
+            tvUserNickname.setText(PreferencesUtils.getString(getContext(),"name"));
+            tvPayName.setText(PreferencesUtils.getString(getContext(),"payname"));
+        }
+    }
+
+    @Override
     protected void initFragment() {
         tvUserNickname.setText(PreferencesUtils.getString(getContext(),"name"));
         tvPayName.setText(PreferencesUtils.getString(getContext(),"payname"));
@@ -57,20 +65,7 @@ public class MineFragment extends BaseFragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_login_out:
-//                PreferencesUtils.removeKey(getContext(),"token");
-//                PreferencesUtils.removeKey(getContext(),"name");
-//                PreferencesUtils.removeKey(getContext(),"payname");
-                PreferencesUtils.putString(getContext(),"token","");
-                PreferencesUtils.putString(getContext(),"name","");
-                PreferencesUtils.putString(getContext(),"payname","");
-                PreferencesUtils.putString(getContext(),"sellamount","");
-                PreferencesUtils.putString(getContext(),"sellcount","");
-                PreferencesUtils.putString(getContext(),"point","");
-                PreferencesUtils.putString(getContext(),"deposit","");
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                startActivity(intent);
-                getActivity().finish();
-                ToastUtils.showShortToast(getContext(),"退出成功！");
+                LoginOutDialog.showDialog(getChildFragmentManager());
                 break;
             case R.id.cl_bill:
                 break;
@@ -90,5 +85,11 @@ public class MineFragment extends BaseFragment {
                 startFragment(new AboutFragment());
                 break;
         }
+    }
+
+    @Override
+    public void onClickComplete() {
+        startFragment(new LoginFragment());
+        ToastUtils.showShortToast(getContext(),"退出成功！");
     }
 }
