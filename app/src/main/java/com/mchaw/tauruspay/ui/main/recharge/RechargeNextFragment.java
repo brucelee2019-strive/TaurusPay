@@ -1,6 +1,9 @@
 package com.mchaw.tauruspay.ui.main.recharge;
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -16,6 +19,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BaseFragment;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
@@ -25,6 +29,7 @@ import com.mchaw.tauruspay.bean.recharge.RechargeTraBean;
 import com.mchaw.tauruspay.common.Constant;
 import com.mchaw.tauruspay.common.dialog.LoadingDialog;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
+import com.mchaw.tauruspay.common.util.StringUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.main.recharge.constract.RechargeNextConstract;
@@ -43,7 +48,7 @@ import butterknife.OnClick;
  * @date : 2019/11/7 19:57
  * @description:
  */
-public class RechargeNextFragment extends BasePresentFragment<RechargeNextPresenter> implements RechargeNextConstract.View {
+public class RechargeNextFragment extends BasePresentFragment<RechargeNextPresenter> implements RechargeNextConstract.View, BaseQuickAdapter.OnItemChildClickListener {
     @BindView(R.id.tv_back_title)
     TextView tvBackTitle;
     @BindView(R.id.tv_remittance_btn)
@@ -69,6 +74,8 @@ public class RechargeNextFragment extends BasePresentFragment<RechargeNextPresen
     private int RECHARGEING = 0;
     private int AUDITING = 1;
     private int state;
+    private List<RechargeTraBean> list = new ArrayList();
+    private RechargeNextAdapter rechargeNextAdapter;
 
     @Override
     protected int getContentViewId() {
@@ -95,7 +102,7 @@ public class RechargeNextFragment extends BasePresentFragment<RechargeNextPresen
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                tvIncomeNum.setText(s.toString());
+                tvIncomeNum.setText(s.toString()+".00");
                 outToNum = s.toString();
             }
 
@@ -104,6 +111,10 @@ public class RechargeNextFragment extends BasePresentFragment<RechargeNextPresen
 
             }
         });
+        rvRechargeMes.setLayoutManager(new LinearLayoutManager(getContext()));
+        rechargeNextAdapter = new RechargeNextAdapter(list);
+        rechargeNextAdapter.setOnItemChildClickListener(this);
+        rvRechargeMes.setAdapter(rechargeNextAdapter);
     }
 
     @Override
@@ -119,16 +130,17 @@ public class RechargeNextFragment extends BasePresentFragment<RechargeNextPresen
                 getActivity().finish();
                 break;
             case R.id.tv_remittance_btn:
-                if(state == RECHARGEING){
+                if (state == RECHARGEING) {
                     LoadingDialog.showDialog(getChildFragmentManager());
-                    presenter.getRechargeNextBean(outToNum,PreferencesUtils.getString(getContext(),"token"));
+                    //服务器要的单位是分
+                    presenter.getRechargeNextBean(outToNum+"00", PreferencesUtils.getString(getContext(), "token"));
                 } else {
-                    if(TextUtils.isEmpty(orderNum)){
-                        ToastUtils.showShortToast(getContext(),"订单号有误！");
+                    if (TextUtils.isEmpty(orderNum)) {
+                        ToastUtils.showShortToast(getContext(), "订单号有误！");
                         return;
                     }
                     LoadingDialog.showDialog(getChildFragmentManager());
-                    presenter.getRechargeSureBean(orderNum,PreferencesUtils.getString(getContext(),"token"));
+                    presenter.getRechargeSureBean(orderNum, PreferencesUtils.getString(getContext(), "token"));
                 }
                 break;
             default:
@@ -137,23 +149,22 @@ public class RechargeNextFragment extends BasePresentFragment<RechargeNextPresen
     }
 
     private void showByState(int state) {
-        tvRemittanceBtn.setText(state==RECHARGEING?"下一步":"我已汇款");
-        tvRemittanceNotice.setText(state==RECHARGEING?"点击下一步可显示对应的收款卡号":"如以完成，请点击我已汇款");
-        ivStateRecharging.setImageResource(state==RECHARGEING?R.drawable.cz_btn_cz_xz:R.drawable.cz_btn_cz_mr);
-        ivStateAuditing.setImageResource(state==RECHARGEING?R.drawable.cz_btn_sh_mr:R.drawable.cz_btn_sh_xz);
-        clRechargeNum.setVisibility(state==RECHARGEING?View.VISIBLE:View.GONE);
-        rvRechargeMes.setVisibility(state==RECHARGEING?View.GONE:View.VISIBLE);
-        etRechargeNum.setFocusable(state==RECHARGEING?true:false);
-        etRechargeNum.setFocusableInTouchMode(state==RECHARGEING?true:false);
+        tvRemittanceBtn.setText(state == RECHARGEING ? "下一步" : "我已汇款");
+        tvRemittanceNotice.setText(state == RECHARGEING ? "点击下一步可显示对应的收款卡号" : "如以完成，请点击我已汇款");
+        ivStateRecharging.setImageResource(state == RECHARGEING ? R.drawable.cz_btn_cz_xz : R.drawable.cz_btn_cz_mr);
+        ivStateAuditing.setImageResource(state == RECHARGEING ? R.drawable.cz_btn_sh_mr : R.drawable.cz_btn_sh_xz);
+        clRechargeNum.setVisibility(state == RECHARGEING ? View.VISIBLE : View.GONE);
+        rvRechargeMes.setVisibility(state == RECHARGEING ? View.GONE : View.VISIBLE);
+        etRechargeNum.setFocusable(state == RECHARGEING ? true : false);
+        etRechargeNum.setFocusableInTouchMode(state == RECHARGEING ? true : false);
     }
 
-    List<RechargeTraBean> list = new ArrayList();
     //下一步成功
     @Override
     public void setRechargeNextBean(RechargeNextBean rechargeNextBean) {
         LoadingDialog.dismissDailog();
-        if(rechargeNextBean == null){
-            ToastUtils.showShortToast(getContext(),"服务器返回结果为空");
+        if (rechargeNextBean == null) {
+            ToastUtils.showShortToast(getContext(), "服务器返回结果为空");
             return;
         }
         orderNum = rechargeNextBean.getOrderid();
@@ -161,7 +172,7 @@ public class RechargeNextFragment extends BasePresentFragment<RechargeNextPresen
         showByState(AUDITING);
         RechargeTraBean r1 = new RechargeTraBean();
         r1.setTitle("到账额度");
-        r1.setContent(rechargeNextBean.getAmount());
+        r1.setContent(StringUtils.fenToYuan(rechargeNextBean.getAmount()));
         list.add(r1);
         RechargeTraBean r2 = new RechargeTraBean();
         r2.setTitle("收款账户");
@@ -183,9 +194,7 @@ public class RechargeNextFragment extends BasePresentFragment<RechargeNextPresen
         r6.setTitle("留言码");
         r6.setContent(rechargeNextBean.getRemarks());
         list.add(r6);
-        rvRechargeMes.setLayoutManager(new LinearLayoutManager(getContext()));
-        RechargeNextAdapter rechargeNextAdapter = new RechargeNextAdapter(list);
-        rvRechargeMes.setAdapter(rechargeNextAdapter);
+        rechargeNextAdapter.notifyDataSetChanged();
     }
 
     //请求失败
@@ -198,14 +207,36 @@ public class RechargeNextFragment extends BasePresentFragment<RechargeNextPresen
     @Override
     public void setRechargeSureBean(RechargeSureBean rechargeSureBean) {
         LoadingDialog.dismissDailog();
-        if(rechargeSureBean==null){
-            ToastUtils.showShortToast(getContext(),"服务器返回结果为空");
+        if (rechargeSureBean == null) {
+            ToastUtils.showShortToast(getContext(), "服务器返回结果为空");
             return;
         }
         Intent intent = new Intent();
-        intent.putExtra(Constant.INTENT_ID,rechargeSureBean.getOrderid());
-        intent.putExtra(Constant.INTENT_MSG,outToNum);
+        intent.putExtra(Constant.INTENT_ID, rechargeSureBean.getOrderid());
+        intent.putExtra(Constant.INTENT_MSG, outToNum);
         getActivity().setResult(Activity.RESULT_OK, intent);
         getActivity().finish();
+    }
+
+    @Override
+    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+        RechargeTraBean rechargeTraBean = (RechargeTraBean) adapter.getItem(position);
+        switch (view.getId()) {
+            case R.id.tv_copy_btn:
+                //获取剪贴板管理器：
+                ClipboardManager cm = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                // 创建普通字符型ClipData
+                ClipData mClipData = ClipData.newPlainText("Label", rechargeTraBean.getContent());
+                // 将ClipData内容放到系统剪贴板里。
+                cm.setPrimaryClip(mClipData);
+                if(TextUtils.isEmpty(rechargeTraBean.getContent())){
+                    ToastUtils.showShortToast(getContext(),"没有可复制的内容");
+                    return;
+                }
+                ToastUtils.showShortToast(getContext(),"已复制<"+rechargeTraBean.getContent()+">到剪切板");
+                break;
+            default:
+                break;
+        }
     }
 }
