@@ -39,6 +39,8 @@ public class StringUtils {
     }
 
     public static String earningsYuan(int f){
-        return "";
+        DecimalFormat df=new DecimalFormat("0.00");
+        String str = df.format((float)f/100000*5);
+        return str;
     }
 }
