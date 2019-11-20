@@ -46,62 +46,62 @@ public class ForSaleListAdapter extends BaseQuickAdapter<QRCodeGroupBean, BaseVi
         switch (tag) {
             case 0:
                 helper.setText(R.id.tv_up_303, StringUtils.fenToYuanInt(qrcodesBean.getQuota()));
-                helper.setText(R.id.tv_mid_303, StringUtils.earningsYuan(qrcodesBean.getQuota()));
+                helper.setText(R.id.tv_mid_303, "赚"+StringUtils.earningsYuan(qrcodesBean.getQuota()));
                 helper.setText(R.id.tv_dow_303, setSellState(qrcodesBean.getStatus()));
                 break;
             case 1:
                 helper.setText(R.id.tv_up_313, StringUtils.fenToYuanInt(qrcodesBean.getQuota()));
-                helper.setText(R.id.tv_mid_313, StringUtils.earningsYuan(qrcodesBean.getQuota()));
+                helper.setText(R.id.tv_mid_313, "赚"+StringUtils.earningsYuan(qrcodesBean.getQuota()));
                 helper.setText(R.id.tv_dow_313, setSellState(qrcodesBean.getStatus()));
                 break;
             case 2:
                 helper.setText(R.id.tv_up_785, StringUtils.fenToYuanInt(qrcodesBean.getQuota()));
-                helper.setText(R.id.tv_mid_785, StringUtils.earningsYuan(qrcodesBean.getQuota()));
+                helper.setText(R.id.tv_mid_785, "赚"+StringUtils.earningsYuan(qrcodesBean.getQuota()));
                 helper.setText(R.id.tv_dow_785, setSellState(qrcodesBean.getStatus()));
                 break;
             case 3:
                 helper.setText(R.id.tv_up_786, StringUtils.fenToYuanInt(qrcodesBean.getQuota()));
-                helper.setText(R.id.tv_mid_786, StringUtils.earningsYuan(qrcodesBean.getQuota()));
+                helper.setText(R.id.tv_mid_786, "赚"+StringUtils.earningsYuan(qrcodesBean.getQuota()));
                 helper.setText(R.id.tv_dow_786, setSellState(qrcodesBean.getStatus()));
                 break;
             case 4:
                 helper.setText(R.id.tv_up_1215, StringUtils.fenToYuanInt(qrcodesBean.getQuota()));
-                helper.setText(R.id.tv_mid_1215, StringUtils.earningsYuan(qrcodesBean.getQuota()));
+                helper.setText(R.id.tv_mid_1215, "赚"+StringUtils.earningsYuan(qrcodesBean.getQuota()));
                 helper.setText(R.id.tv_dow_1215, setSellState(qrcodesBean.getStatus()));
                 break;
             case 5:
                 helper.setText(R.id.tv_up_1216, StringUtils.fenToYuanInt(qrcodesBean.getQuota()));
-                helper.setText(R.id.tv_mid_1216, StringUtils.earningsYuan(qrcodesBean.getQuota()));
+                helper.setText(R.id.tv_mid_1216, "赚"+StringUtils.earningsYuan(qrcodesBean.getQuota()));
                 helper.setText(R.id.tv_dow_1216, setSellState(qrcodesBean.getStatus()));
                 break;
             case 6:
                 helper.setText(R.id.tv_up_2515, StringUtils.fenToYuanInt(qrcodesBean.getQuota()));
-                helper.setText(R.id.tv_mid_2515, StringUtils.earningsYuan(qrcodesBean.getQuota()));
+                helper.setText(R.id.tv_mid_2515, "赚"+StringUtils.earningsYuan(qrcodesBean.getQuota()));
                 helper.setText(R.id.tv_dow_2515, setSellState(qrcodesBean.getStatus()));
                 break;
             case 7:
                 helper.setText(R.id.tv_up_2516, StringUtils.fenToYuanInt(qrcodesBean.getQuota()));
-                helper.setText(R.id.tv_mid_2516, StringUtils.earningsYuan(qrcodesBean.getQuota()));
+                helper.setText(R.id.tv_mid_2516, "赚"+StringUtils.earningsYuan(qrcodesBean.getQuota()));
                 helper.setText(R.id.tv_dow_2516, setSellState(qrcodesBean.getStatus()));
                 break;
             case 8:
                 helper.setText(R.id.tv_up_4985, StringUtils.fenToYuanInt(qrcodesBean.getQuota()));
-                helper.setText(R.id.tv_mid_4985, StringUtils.earningsYuan(qrcodesBean.getQuota()));
+                helper.setText(R.id.tv_mid_4985, "赚"+StringUtils.earningsYuan(qrcodesBean.getQuota()));
                 helper.setText(R.id.tv_dow_4985, setSellState(qrcodesBean.getStatus()));
                 break;
             case 9:
                 helper.setText(R.id.tv_up_4988, StringUtils.fenToYuanInt(qrcodesBean.getQuota()));
-                helper.setText(R.id.tv_mid_4988, StringUtils.earningsYuan(qrcodesBean.getQuota()));
+                helper.setText(R.id.tv_mid_4988, "赚"+StringUtils.earningsYuan(qrcodesBean.getQuota()));
                 helper.setText(R.id.tv_dow_4988, setSellState(qrcodesBean.getStatus()));
                 break;
             case 10:
                 helper.setText(R.id.tv_up_7988, StringUtils.fenToYuanInt(qrcodesBean.getQuota()));
-                helper.setText(R.id.tv_mid_7988, StringUtils.earningsYuan(qrcodesBean.getQuota()));
+                helper.setText(R.id.tv_mid_7988, "赚"+StringUtils.earningsYuan(qrcodesBean.getQuota()));
                 helper.setText(R.id.tv_dow_7988, setSellState(qrcodesBean.getStatus()));
                 break;
             case 11:
                 helper.setText(R.id.tv_up_9988, StringUtils.fenToYuanInt(qrcodesBean.getQuota()));
-                helper.setText(R.id.tv_mid_9988, StringUtils.earningsYuan(qrcodesBean.getQuota()));
+                helper.setText(R.id.tv_mid_9988, "赚"+StringUtils.earningsYuan(qrcodesBean.getQuota()));
                 helper.setText(R.id.tv_dow_9988, setSellState(qrcodesBean.getStatus()));
                 break;
             default:
