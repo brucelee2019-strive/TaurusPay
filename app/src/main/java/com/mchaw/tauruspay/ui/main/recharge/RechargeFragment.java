@@ -26,9 +26,15 @@ import com.mchaw.tauruspay.ui.main.recharge.record.RecordMainFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * @author : Bruce Lee
@@ -61,10 +67,13 @@ public class RechargeFragment extends BasePresentFragment<RechargeListPresenter>
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if(hidden){
-
+            //结束轮询
+            stopPolling();
         }else{
-            presenter.getRechargeList(PreferencesUtils.getString(getContext(),"token"));
-            presenter.getHomeDataBean(PreferencesUtils.getString(getContext(),"token"));
+            //presenter.getRechargeList(PreferencesUtils.getString(getContext(),"token"));
+            //presenter.getHomeDataBean(PreferencesUtils.getString(getContext(),"token"));
+            //开启轮询
+            startPolling(1);
         }
     }
 
@@ -81,7 +90,7 @@ public class RechargeFragment extends BasePresentFragment<RechargeListPresenter>
         rechargeAdapter = new RechargeAdapter(rechargeBeanList);
         rvIncomeRecoed.setAdapter(rechargeAdapter);
         presenter.getRechargeList(PreferencesUtils.getString(getContext(),"token"));
-        presenter.getHomeDataBean(PreferencesUtils.getString(getContext(),"token"));
+        //presenter.getHomeDataBean(PreferencesUtils.getString(getContext(),"token"));
         Log.i("cici",PreferencesUtils.getString(getContext(),"token"));
     }
 
@@ -105,7 +114,7 @@ public class RechargeFragment extends BasePresentFragment<RechargeListPresenter>
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case Constant.RECHARGE_NEXT_FRAGMENT_BACK:
-                    presenter.getRechargeList(PreferencesUtils.getString(getContext(),"token"));
+                    //presenter.getRechargeList(PreferencesUtils.getString(getContext(),"token"));
                     break;
                 default:
                     break;
@@ -115,11 +124,78 @@ public class RechargeFragment extends BasePresentFragment<RechargeListPresenter>
 
     @Override
     public void setRechargeList(List<RechargeBean> list) {
+        rechargeBeanList = list;
         rechargeAdapter.setNewData(list);
     }
 
     @Override
     public void setHomeDataBean(HomeDataBean homeDataBean) {
         tvRepertoryMoney.setText(StringUtils.fenToYuan(homeDataBean.getDeposit()));
+    }
+
+    @Override
+    public void setRechargeUpdateList(List<RechargeBean> list) {
+        for (int i = 0; i < rechargeBeanList.size(); i++) {
+            // 判断listTemp集合中是否包含list中的元素
+            if (!list.contains(rechargeBeanList.get(i))) {
+                // 将未包含的元素添加进listTemp集合中
+                list.add(rechargeBeanList.get(i));
+            }
+        }
+        rechargeAdapter.setNewData(list);
+    }
+
+    //以下是轮询
+    private Disposable disposable;
+    public void startPolling(int time) {
+        disposable = Observable.interval(0, time, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long aLong) throws Exception {
+                        Log.i("cici","轮询中...");
+                        presenter.getHomeDataBean(PreferencesUtils.getString(getContext(),"token"));
+                        presenter.getRechargeUpdateList(PreferencesUtils.getString(getContext(),"token"));
+                    }
+                });
+    }
+
+    public void stopPolling() {
+        Log.i("cici","结束轮询");
+        if(disposable!=null) {
+            disposable.dispose();
+        }
+    }
+
+    //生命周期管理
+    @Override
+    public void onResume() {
+        super.onResume();
+        startPolling(1);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        stopPolling();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        stopPolling();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        stopPolling();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        stopPolling();
     }
 }

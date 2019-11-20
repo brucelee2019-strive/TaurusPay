@@ -14,11 +14,18 @@ import java.util.List;
  */
 public interface RechargeListConstract {
     interface View extends BaseView {
-       void setRechargeList(List<RechargeBean> list);
+        void setRechargeList(List<RechargeBean> list);
+
         void setHomeDataBean(HomeDataBean homeDataBean);
+
+        void setRechargeUpdateList(List<RechargeBean> list);
     }
+
     interface Presenter extends BasePresenter<RechargeListConstract.View> {
         void getRechargeList(String token);
+
         void getHomeDataBean(String api_token);
+
+        void getRechargeUpdateList(String api_token);
     }
 }

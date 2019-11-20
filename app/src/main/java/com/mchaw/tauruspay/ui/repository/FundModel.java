@@ -51,4 +51,12 @@ public class FundModel extends BaseModel{
                 .compose(new ResultDisposable<List<RechargeBean>>())
                 .compose(new ScheduleTranformer<List<RechargeBean>>());
     }
+
+
+    //轮询订单列表刷新订单状态
+    public Observable<List<RechargeBean>> getRechargeUpdateList(String api_token) {
+        return apiService.getRechargeUpdateList(api_token)
+                .compose(new ResultDisposable<List<RechargeBean>>())
+                .compose(new ScheduleTranformer<List<RechargeBean>>());
+    }
 }

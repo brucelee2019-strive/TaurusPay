@@ -108,4 +108,8 @@ public interface APIService {
     @FormUrlEncoded
     @POST("sell/deletegroup/{groupid}")
     Observable<ResultBean<DeleteQRCodeGroupBean>> deleteQRCodeGroup(@Path("groupid") String groupid, @Field("api_token") String api_token);
+
+    @FormUrlEncoded
+    @POST("recharge/update")
+    Observable<ResultBean<List<RechargeBean>>> getRechargeUpdateList(@Field("api_token") String api_token);
 }
