@@ -3,6 +3,7 @@ package com.mchaw.tauruspay.ui.main.home;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -100,6 +101,7 @@ public class HomeFragment extends BasePresentFragment<HomePresenter> implements 
         tvNotiveText.setSelected(true);
         tvPreSaleTxt.setText(Html.fromHtml(strPre));
         tvAfterSaleTxt.setText(strAfter);
+        Log.i("cici",PreferencesUtils.getString(getContext(),"token"));
     }
 
     @Override

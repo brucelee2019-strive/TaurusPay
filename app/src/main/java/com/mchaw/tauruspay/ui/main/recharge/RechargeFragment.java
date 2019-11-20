@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BaseFragment;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
@@ -143,6 +144,9 @@ public class RechargeFragment extends BasePresentFragment<RechargeListPresenter>
             }
         }
         rechargeAdapter.setNewData(list);
+        for(RechargeBean rechargeBean:list){
+            Log.i("cici",rechargeBean.getAmount());
+        }
     }
 
     //以下是轮询

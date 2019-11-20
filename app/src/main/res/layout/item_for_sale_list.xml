@@ -45,7 +45,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_ds_line" />
 
         <TextView
-            android:id="@+id/textView32"
+            android:id="@+id/tv_last_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0"
@@ -122,6 +122,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_zfb_account" />
     </androidx.constraintlayout.widget.ConstraintLayout>
     <LinearLayout
+        android:id="@+id/ll_1"
         android:layout_width="match_parent"
         android:layout_height="65dp"
         android:orientation="horizontal">
@@ -256,6 +257,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/ll_2"
         android:layout_width="match_parent"
         android:layout_height="65dp"
         android:orientation="horizontal">
@@ -390,6 +392,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/ll_3"
         android:layout_width="match_parent"
         android:layout_height="65dp"
         android:orientation="horizontal">
@@ -401,39 +404,39 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/tv_up_2521"
+                android:id="@+id/tv_up_2515"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="303.00"
                 android:textColor="@color/f5c443"
                 android:textSize="14sp"
-                app:layout_constraintBottom_toTopOf="@+id/tv_mid_2521"
+                app:layout_constraintBottom_toTopOf="@+id/tv_mid_2515"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="spread_inside" />
 
             <TextView
-                android:id="@+id/tv_mid_2521"
+                android:id="@+id/tv_mid_2515"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="赚1.52"
                 android:textColor="@color/f54343"
                 android:textSize="12sp"
-                app:layout_constraintBottom_toTopOf="@+id/tv_dow_2521"
-                app:layout_constraintStart_toStartOf="@+id/tv_up_2521"
-                app:layout_constraintTop_toBottomOf="@+id/tv_up_2521" />
+                app:layout_constraintBottom_toTopOf="@+id/tv_dow_2515"
+                app:layout_constraintStart_toStartOf="@+id/tv_up_2515"
+                app:layout_constraintTop_toBottomOf="@+id/tv_up_2515" />
 
             <TextView
-                android:id="@+id/tv_dow_2521"
+                android:id="@+id/tv_dow_2515"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="已达上限"
                 android:textColor="@color/blue00aaef"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/tv_mid_2521"
-                app:layout_constraintTop_toBottomOf="@+id/tv_mid_2521" />
+                app:layout_constraintStart_toStartOf="@+id/tv_mid_2515"
+                app:layout_constraintTop_toBottomOf="@+id/tv_mid_2515" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -524,6 +527,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/ll_4"
         android:layout_width="match_parent"
         android:layout_height="65dp"
         android:orientation="horizontal">

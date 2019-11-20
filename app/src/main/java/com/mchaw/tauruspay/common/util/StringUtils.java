@@ -1,5 +1,7 @@
 package com.mchaw.tauruspay.common.util;
 
+import java.text.DecimalFormat;
+
 /**
  * @author Bruce Lee
  * @date : 2019/11/18 16:25
@@ -34,5 +36,9 @@ public class StringUtils {
         }
         String strm = fen.substring(0,fen.length()-2);   //截掉后两位
         return strm;
+    }
+
+    public static String earningsYuan(int f){
+        return "";
     }
 }
