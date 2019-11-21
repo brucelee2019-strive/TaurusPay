@@ -15,7 +15,7 @@ import io.reactivex.Observable;
 /**
  * @author : Bruce Lee
  * @date : 2019/11/4 0004 21:48
- * @description :
+ * @description : 登录注册及个人信息订阅名目
  */
 public class LoginModel extends BaseModel{
     @Inject

@@ -16,7 +16,7 @@ import io.reactivex.Observable;
 /**
  * @author Bruce Lee
  * @date : 2019/11/6 17:03
- * @description:
+ * @description:充值转账订阅名目
  */
 public class FundModel extends BaseModel{
     @Inject
@@ -24,7 +24,7 @@ public class FundModel extends BaseModel{
 
     }
 
-    //转账
+    //转账给另一个账号
     public Observable<TransferAccountsBean> getTransferAccountsBean(String api_token, String code, String account, String payname, String amount) {
         return apiService.getTransferAccountsBean(api_token,code,account,payname,amount)
                 .compose(new ResultDisposable<TransferAccountsBean>())
@@ -45,7 +45,7 @@ public class FundModel extends BaseModel{
                 .compose(new ScheduleTranformer<RechargeSureBean>());
     }
 
-    //订单列表
+    //充值订单列表
     public Observable<List<RechargeBean>> getRechargeList(String api_token) {
         return apiService.getRechargeList(api_token)
                 .compose(new ResultDisposable<List<RechargeBean>>())
@@ -53,7 +53,7 @@ public class FundModel extends BaseModel{
     }
 
 
-    //轮询订单列表刷新订单状态
+    //轮询充值订单列表刷新订单状态
     public Observable<List<RechargeBean>> getRechargeUpdateList(String api_token) {
         return apiService.getRechargeUpdateList(api_token)
                 .compose(new ResultDisposable<List<RechargeBean>>())
