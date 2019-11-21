@@ -14,9 +14,11 @@ import java.util.List;
 public interface CollectionListConstract {
     interface View extends BaseView {
         void setTradingList(List<SellingOrderBean> list);
+        //void setUpLodingReceivables(int succeed);
     }
 
     interface Presenter extends BasePresenter<CollectionListConstract.View> {
         void getTradingList(String api_token);
+        void upLodingReceivables(String codeId,String api_token);
     }
 }

@@ -1,6 +1,7 @@
 package com.mchaw.tauruspay.ui.main.home.forsale;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -24,8 +25,14 @@ import com.mchaw.tauruspay.ui.main.recharge.RechargeAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * @author Bruce Lee
@@ -51,6 +58,16 @@ public class ForSaleListFragment extends BasePresentFragment<ForSaleListPresente
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         setUserVisibleHint(true);
         super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(hidden){
+            stopPolling();
+        }else{
+           startPolling(10);
+        }
     }
 
     @Override
@@ -141,5 +158,57 @@ public class ForSaleListFragment extends BasePresentFragment<ForSaleListPresente
             default:
                 break;
         }
+    }
+
+    //以下是轮询
+    private Disposable disposable;
+    public void startPolling(int time) {
+        disposable = Observable.interval(15, time, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long aLong) throws Exception {
+                        Log.i("cici","轮询中...");
+                        presenter.getQRCodeStalls(String.valueOf(groupid), PreferencesUtils.getString(getContext(), "token"));
+                    }
+                });
+    }
+
+    public void stopPolling() {
+        Log.i("cici","结束轮询");
+        if(disposable!=null) {
+            disposable.dispose();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        startPolling(1);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        stopPolling();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        stopPolling();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        stopPolling();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        stopPolling();
     }
 }

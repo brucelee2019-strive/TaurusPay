@@ -45,9 +45,15 @@ import com.mchaw.tauruspay.ui.main.mine.qrcode.presenter.QRCodePresenter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -105,6 +111,7 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
         presenter.getQRCodeGroupList(PreferencesUtils.getString(getContext(), "token"));
         Log.i("cici", PreferencesUtils.getString(getContext(), "token"));
         pageState = Constant.PAGE_NORMAL_STATE;
+        startPolling(5);
     }
 
     private int groupid;
@@ -539,5 +546,58 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
         ToastUtils.showShortToast(getContext(),"删除成功！");
         presenter.getQRCodeGroupList(PreferencesUtils.getString(getContext(), "token"));
         pageState(Constant.PAGE_DELETE_STATE);
+    }
+
+    //以下是轮询
+    private Disposable disposable;
+    public void startPolling(int time) {
+        disposable = Observable.interval(15, time, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long aLong) throws Exception {
+                        Log.i("cici","轮询中...");
+                        presenter.getQRCodeStalls(String.valueOf(groupid), PreferencesUtils.getString(getContext(), "token"));
+                    }
+                });
+    }
+
+    public void stopPolling() {
+        Log.i("cici","结束轮询");
+        if(disposable!=null) {
+            disposable.dispose();
+        }
+    }
+
+    //生命周期
+    @Override
+    public void onResume() {
+        super.onResume();
+        startPolling(1);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        stopPolling();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        stopPolling();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        stopPolling();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        stopPolling();
     }
 }

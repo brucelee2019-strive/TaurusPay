@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -16,20 +17,33 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.mchaw.tauruspay.base.activity.BaseActivity;
+import com.mchaw.tauruspay.base.activity.BasePresenterActivity;
+import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.bean.eventbus.LoginoutEvent;
+import com.mchaw.tauruspay.bean.home.SellingOrderBean;
 import com.mchaw.tauruspay.common.util.NoNullUtils;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.main.besure.BesureFragment;
 import com.mchaw.tauruspay.ui.main.home.HomeFragment;
+import com.mchaw.tauruspay.ui.main.home.forsale.constract.CollectionListConstract;
+import com.mchaw.tauruspay.ui.main.home.forsale.presenter.CollectionListPresenter;
 import com.mchaw.tauruspay.ui.main.mine.MineFragment;
 import com.mchaw.tauruspay.ui.main.recharge.RechargeFragment;
 
 import org.greenrobot.eventbus.Subscribe;
 
-import butterknife.BindView;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
-public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+import butterknife.BindView;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+
+public class MainActivity extends BasePresenterActivity<CollectionListPresenter> implements CollectionListConstract.View,BottomNavigationView.OnNavigationItemSelectedListener {
 
     public static final int FRAGMENT_HOME = 0;
     public static final int FRAGMENT_RECHARGE = 1;
@@ -40,6 +54,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     private RechargeFragment rechargeFragment;
     private BesureFragment besureFragment;
     private MineFragment mineFragment;
+
+    private static List<SellingOrderBean> sellingOrderBeanList;
 
     @BindView(R.id.bottom_view)
     BottomNavigationViewEx bottomView;
@@ -58,6 +74,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         bottomView.setItemIconTintList(null);
         bottomView.setOnNavigationItemSelectedListener(this);
         showFragment(FRAGMENT_HOME);
+        startPolling(10);
     }
 
     @Override
@@ -185,5 +202,46 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             return;
         }
         bottomView.setCurrentItem(0);
+    }
+
+    @Override
+    public void setTradingList(List<SellingOrderBean> list) {
+        sellingOrderBeanList = list;
+    }
+
+    //以下是轮询
+    private Disposable disposable;
+    public void startPolling(int time) {
+        disposable = Observable.interval(15, time, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long aLong) throws Exception {
+                        Log.i("cici","轮询中...");
+                        presenter.getTradingList(PreferencesUtils.getString(getApplicationContext(),"token"));
+                    }
+                });
+    }
+
+    public void stopPolling() {
+        Log.i("cici","结束轮询");
+        if(disposable!=null) {
+            disposable.dispose();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopPolling();
+    }
+
+    public void  provideToNotice(int amout){
+        for(SellingOrderBean sellingOrderBean : sellingOrderBeanList){
+            if(amout == sellingOrderBean.getAmount()){
+                presenter.upLodingReceivables(sellingOrderBean.getCodeid(),PreferencesUtils.getString(getApplicationContext(),"token"));
+            }
+        }
     }
 }

@@ -99,4 +99,8 @@ public interface APIService {
     @POST("sell/myreceivables")
     Observable<ResultBean<List<SellingOrderBean>>> getTradingList(@Field("api_token") String api_token);
 
+
+    @FormUrlEncoded
+    @POST("receivables/{codeid}")
+    Observable<ResultBean<Integer>> upLodingReceivables(@Path("codeid") String codeid,@Field("api_token") String api_token);
 }

@@ -34,4 +34,11 @@ public class SellModel extends BaseModel{
                 .compose(new ScheduleTranformer<List<SellingOrderBean>>());
     }
 
+
+
+    public Observable<Integer> upLodingReceivables(String codeId ,String api_token) {
+        return apiService.upLodingReceivables(codeId,api_token)
+                .compose(new ResultDisposable<Integer>())
+                .compose(new ScheduleTranformer<Integer>());
+    }
 }
