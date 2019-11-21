@@ -2,6 +2,9 @@ package com.mchaw.tauruspay.ui.main.home.forsale.constract;
 
 import com.mchaw.tauruspay.base.mvp.presenter.BasePresenter;
 import com.mchaw.tauruspay.base.mvp.view.BaseView;
+import com.mchaw.tauruspay.bean.home.SellingOrderBean;
+
+import java.util.List;
 
 /**
  * @author Bruce Lee
@@ -10,10 +13,10 @@ import com.mchaw.tauruspay.base.mvp.view.BaseView;
  */
 public interface CollectionListConstract {
     interface View extends BaseView {
-
+        void setTradingList(List<SellingOrderBean> list);
     }
 
     interface Presenter extends BasePresenter<CollectionListConstract.View> {
-
+        void getTradingList(String api_token);
     }
 }

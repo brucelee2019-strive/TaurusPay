@@ -10,6 +10,8 @@ import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BaseFragment;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.base.mvp.presenter.RxPresenter;
+import com.mchaw.tauruspay.bean.home.SellingOrderBean;
+import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.main.home.forsale.adapter.CollectionListAdapter;
 import com.mchaw.tauruspay.ui.main.home.forsale.adapter.ForSaleListAdapter;
@@ -31,7 +33,9 @@ public class CollectionListFragment extends BasePresentFragment<CollectionListPr
     @BindView(R.id.rv_for_collection)
     RecyclerView rvForCollection;
 
-    private List<String> list = new ArrayList<String>();
+    private List<SellingOrderBean> list = new ArrayList<>();
+
+    private CollectionListAdapter collectionListAdapter;
 
     @Override
     protected int getContentViewId() {
@@ -45,6 +49,22 @@ public class CollectionListFragment extends BasePresentFragment<CollectionListPr
     }
 
     @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(hidden){
+
+        }else{
+            presenter.getTradingList(PreferencesUtils.getString(getContext(),"token"));
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.getTradingList(PreferencesUtils.getString(getContext(),"token"));
+    }
+
+    @Override
     public void injectFragmentComponent(ActivityComponent component) {
         super.injectFragmentComponent(component);
         component.inject(this);
@@ -53,20 +73,14 @@ public class CollectionListFragment extends BasePresentFragment<CollectionListPr
     @Override
     protected void initFragment() {
         super.initFragment();
-        list.add("成功");
-        list.add("未通过");
-        list.add("成功");
-        list.add("未通过");
-        list.add("成功");
-        list.add("未通过");
-        list.add("成功");
-        list.add("成功");
-        list.add("未通过");
-        list.add("成功");
-        list.add("成功");
-        list.add("成功");
         rvForCollection.setLayoutManager(new LinearLayoutManager(getContext()));
-        CollectionListAdapter collectionListAdapter = new CollectionListAdapter(list);
+        collectionListAdapter = new CollectionListAdapter(list);
         rvForCollection.setAdapter(collectionListAdapter);
+        presenter.getTradingList(PreferencesUtils.getString(getContext(),"token"));
+    }
+
+    @Override
+    public void setTradingList(List<SellingOrderBean> list) {
+        collectionListAdapter.setNewData(list);
     }
 }

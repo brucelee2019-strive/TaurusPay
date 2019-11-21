@@ -26,7 +26,7 @@ public class ForSaleListAdapter extends BaseQuickAdapter<QRCodeGroupBean, BaseVi
 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, QRCodeGroupBean item) {
-        helper.addOnClickListener(R.id.tv_show_order_list);
+        helper.addOnClickListener(R.id.tv_show_order_list,R.id.tv_start_sail_btn);
         helper.setText(R.id.tv_zfb_account, item.getAccount());
         helper.setText(R.id.tv_zfb_nike_name, item.getNick());
         helper.setText(R.id.tv_last_time, String.valueOf(item.getSellcount()));
@@ -40,6 +40,7 @@ public class ForSaleListAdapter extends BaseQuickAdapter<QRCodeGroupBean, BaseVi
                 setQRCodeStatus(item.getQrcodes().get(i), helper, i);
             }
         }
+        helper.setText(R.id.tv_start_sail_btn,item.getStatus()==0?"开始代售":"停止代售");
     }
 
     private void setQRCodeStatus(QRCodeStallBean.QrcodesBean qrcodesBean, BaseViewHolder helper, int tag) {

@@ -30,21 +30,6 @@ public class ForSalePresenter extends RxPresenter<ForSaleConstract.View> impleme
 
     }
 
-    @Override
-    public void getForSaleBean() {
-
-    }
-
-    @Override
-    public void getForSaleList() {
-
-    }
-
-    @Override
-    public void getCollectionList() {
-
-    }
-
     Disposable homeBeanDisposable;
     @Override
     public void getHomeDataBean(String api_token) {

@@ -11,6 +11,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BaseFragment;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
+import com.mchaw.tauruspay.bean.home.StartOrOverSellBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeStallBean;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
@@ -36,7 +37,7 @@ public class ForSaleListFragment extends BasePresentFragment<ForSaleListPresente
     @BindView(R.id.rv_for_sale_list)
     RecyclerView rvForSalelist;
 
-    private List<QRCodeGroupBean> list = new ArrayList<>();
+    private List<QRCodeGroupBean> qrCodeGroupBeanList = new ArrayList<>();
     private ForSaleListAdapter forSaleListAdapter;
     private QRCodeGroupBean qrCodeGroupBean;
     private int groupid;
@@ -62,7 +63,7 @@ public class ForSaleListFragment extends BasePresentFragment<ForSaleListPresente
     protected void initFragment() {
         super.initFragment();
         rvForSalelist.setLayoutManager(new LinearLayoutManager(getContext()));
-        forSaleListAdapter = new ForSaleListAdapter(list);
+        forSaleListAdapter = new ForSaleListAdapter(qrCodeGroupBeanList);
         forSaleListAdapter.setOnItemChildClickListener(this);
         rvForSalelist.setAdapter(forSaleListAdapter);
         presenter.getQRCodeGroupList(PreferencesUtils.getString(getContext(), "token"));
@@ -74,6 +75,7 @@ public class ForSaleListFragment extends BasePresentFragment<ForSaleListPresente
      */
     @Override
     public void setQRCodeGroupList(List<QRCodeGroupBean> list) {
+        qrCodeGroupBeanList = list;
         forSaleListAdapter.setNewData(list);
     }
 
@@ -98,16 +100,42 @@ public class ForSaleListFragment extends BasePresentFragment<ForSaleListPresente
     }
 
     @Override
+    public void setStartingOrOverSell(StartOrOverSellBean startOrOverSellBean) {
+        ToastUtils.showShortToast(getContext(),qrCodeGroupBean.getStatus()==0?"已开始代售":"已停止代售");
+        qrCodeGroupBean.setStatus(qrCodeGroupBean.getStatus()==0?1:0);
+        forSaleListAdapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
         qrCodeGroupBean = (QRCodeGroupBean) adapter.getItem(position);
+        groupid = qrCodeGroupBean.getId();
         switch (view.getId()) {
             case R.id.tv_show_order_list:
                 boolean ishow = qrCodeGroupBean.isShowItems();
                 qrCodeGroupBean.setShowItems(!ishow);
                 adapter.notifyItemChanged(position);
                 if (!ishow) {
-                    groupid = qrCodeGroupBean.getId();
                     presenter.getQRCodeStalls(String.valueOf(groupid), PreferencesUtils.getString(getContext(), "token"));
+                }
+                break;
+            case R.id.tv_start_sail_btn://点击开始代售
+                if(qrCodeGroupBean.getStatus() == 0) {
+                    //代售之前检查是否已有组正在代售 list应该是轮询的list
+                    for (QRCodeGroupBean bean : qrCodeGroupBeanList) {
+                        if (bean.getStatus() == 1) {
+                            ToastUtils.showShortToast(getContext(), "当前有在售的分组，请先关闭当前的分组");
+                            return;
+                        }
+                    }
+                    presenter.startingOrOverSell(String.valueOf(qrCodeGroupBean.getId()), 1, PreferencesUtils.getString(getContext(), "token"));
+                }else{
+                    //停止代售前 检查是否有未完成的收款
+//                    if(){
+//                        ToastUtils.showShortToast(getContext(), "当前有收款未完成，请完成后再停止代售！");
+//                        return;
+//                    }
+                    presenter.startingOrOverSell(String.valueOf(qrCodeGroupBean.getId()), 0, PreferencesUtils.getString(getContext(), "token"));
                 }
                 break;
             default:

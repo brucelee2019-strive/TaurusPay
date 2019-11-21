@@ -11,7 +11,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
-import com.mchaw.tauruspay.bean.home.ForSaleBean;
+import com.mchaw.tauruspay.bean.home.StartOrOverSellBean;
 import com.mchaw.tauruspay.bean.home.HomeDataBean;
 import com.mchaw.tauruspay.bean.home.SelledOrderBean;
 import com.mchaw.tauruspay.bean.home.SellingOrderBean;
@@ -90,21 +90,6 @@ public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> imple
     public void injectFragmentComponent(ActivityComponent component) {
         super.injectFragmentComponent(component);
         component.inject(this);
-    }
-
-    @Override
-    public void setForSaleBean(ForSaleBean forSaleBean) {
-
-    }
-
-    @Override
-    public void setForSaleList(List<SellingOrderBean> list) {
-
-    }
-
-    @Override
-    public void setCollectionlist(List<SelledOrderBean> list) {
-
     }
 
     @Override

@@ -144,9 +144,9 @@ public class RechargeFragment extends BasePresentFragment<RechargeListPresenter>
             }
         }
         rechargeAdapter.setNewData(list);
-        for(RechargeBean rechargeBean:list){
-            Log.i("cici",rechargeBean.getAmount());
-        }
+//        for(RechargeBean rechargeBean:list){
+//            Log.i("cici",rechargeBean.getAmount());
+//        }
     }
 
     //以下是轮询

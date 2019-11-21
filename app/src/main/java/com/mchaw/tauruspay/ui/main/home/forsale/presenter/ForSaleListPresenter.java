@@ -1,11 +1,13 @@
 package com.mchaw.tauruspay.ui.main.home.forsale.presenter;
 
 import com.mchaw.tauruspay.base.mvp.presenter.RxPresenter;
+import com.mchaw.tauruspay.bean.home.StartOrOverSellBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeStallBean;
 import com.mchaw.tauruspay.http.ResultObserver;
 import com.mchaw.tauruspay.ui.main.home.forsale.constract.ForSaleListConstract;
 import com.mchaw.tauruspay.ui.repository.QRCodeModel;
+import com.mchaw.tauruspay.ui.repository.SellModel;
 
 import java.util.List;
 
@@ -23,9 +25,13 @@ public class ForSaleListPresenter extends RxPresenter<ForSaleListConstract.View>
     QRCodeModel qrCodeModel;
 
     @Inject
+    SellModel sellModel;
+
+    @Inject
     public ForSaleListPresenter() {
 
     }
+
     @Override
     public void getQRCodeGroupList(String token) {
         Disposable disposable = qrCodeModel.getQRCodeGroupList(token)
@@ -50,6 +56,23 @@ public class ForSaleListPresenter extends RxPresenter<ForSaleListConstract.View>
                     @Override
                     public void onSuccess(QRCodeStallBean bean) {
                         mView.setQRCodeStalls(bean);
+                    }
+
+                    @Override
+                    public void onFail(String msg) {
+                        mView.showError(msg);
+                    }
+                });
+        addSubscribe(disposable);
+    }
+
+    @Override
+    public void startingOrOverSell(String groupid, int state, String token) {
+        Disposable disposable = sellModel.startingOrOverSell(groupid,state,token)
+                .subscribeWith(new ResultObserver<StartOrOverSellBean>() {
+                    @Override
+                    public void onSuccess(StartOrOverSellBean bean) {
+                        mView.setStartingOrOverSell(bean);
                     }
 
                     @Override
