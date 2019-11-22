@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
+import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.bean.ALiYunCodeBean;
@@ -111,7 +112,6 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
         presenter.getQRCodeGroupList(PreferencesUtils.getString(getContext(), "token"));
         Log.i("cici", PreferencesUtils.getString(getContext(), "token"));
         pageState = Constant.PAGE_NORMAL_STATE;
-        startPolling(5);
     }
 
     private int groupid;
@@ -213,7 +213,10 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
                 adapter.notifyItemChanged(position);
                 if (!ishow) {
                     groupid = qrCodeGroupBean.getId();
-                    presenter.getQRCodeStalls(String.valueOf(groupid), PreferencesUtils.getString(getContext(), "token"));
+                    //presenter.getQRCodeStalls(String.valueOf(groupid), PreferencesUtils.getString(getContext(), "token"));
+                    startPolling(10);
+                }else{
+                    stopPolling();
                 }
                 break;
             case R.id.iv_delete:
@@ -551,20 +554,21 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
     //以下是轮询
     private Disposable disposable;
     public void startPolling(int time) {
+        Log.i("cici","二维码审核 开始轮询...");
         disposable = Observable.interval(15, time, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Long>() {
                     @Override
                     public void accept(Long aLong) throws Exception {
-                        Log.i("cici","轮询中...");
-                        presenter.getQRCodeStalls(String.valueOf(groupid), PreferencesUtils.getString(getContext(), "token"));
+                        Log.i("cici","二维码审核 轮询中...");
+                        presenter.getQRCodeStalls(String.valueOf(groupid), PreferencesUtils.getString(MyFrameApplication.getInstance(), "token"));
                     }
                 });
     }
 
     public void stopPolling() {
-        Log.i("cici","结束轮询");
+        Log.i("cici","二维码审核 结束轮询");
         if(disposable!=null) {
             disposable.dispose();
         }
@@ -574,7 +578,6 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
     @Override
     public void onResume() {
         super.onResume();
-        startPolling(1);
     }
 
     @Override

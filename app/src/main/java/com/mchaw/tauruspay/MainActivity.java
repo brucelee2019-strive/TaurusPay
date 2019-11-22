@@ -74,7 +74,6 @@ public class MainActivity extends BasePresenterActivity<CollectionListPresenter>
         bottomView.setItemIconTintList(null);
         bottomView.setOnNavigationItemSelectedListener(this);
         showFragment(FRAGMENT_HOME);
-        startPolling(10);
     }
 
     @Override
@@ -212,23 +211,36 @@ public class MainActivity extends BasePresenterActivity<CollectionListPresenter>
     //以下是轮询
     private Disposable disposable;
     public void startPolling(int time) {
+        Log.i("cici","总程序交易中订单列表，开始轮询...");
         disposable = Observable.interval(15, time, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Long>() {
                     @Override
                     public void accept(Long aLong) throws Exception {
-                        Log.i("cici","轮询中...");
+                        Log.i("cici","总程序交易中订单列表，轮询中...");
                         presenter.getTradingList(PreferencesUtils.getString(getApplicationContext(),"token"));
                     }
                 });
     }
 
     public void stopPolling() {
-        Log.i("cici","结束轮询");
+        Log.i("cici","总程序交易中订单列表，结束轮询");
         if(disposable!=null) {
             disposable.dispose();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startPolling(10);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopPolling();
     }
 
     @Override

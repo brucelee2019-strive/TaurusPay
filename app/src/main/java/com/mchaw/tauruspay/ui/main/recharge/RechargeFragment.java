@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
+import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BaseFragment;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
@@ -152,21 +153,22 @@ public class RechargeFragment extends BasePresentFragment<RechargeListPresenter>
     //以下是轮询
     private Disposable disposable;
     public void startPolling(int time) {
+        Log.i("cici","充值订单列表 开始轮询...");
         disposable = Observable.interval(0, time, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Long>() {
                     @Override
                     public void accept(Long aLong) throws Exception {
-                        Log.i("cici","轮询中...");
-                        presenter.getHomeDataBean(PreferencesUtils.getString(getContext(),"token"));
-                        presenter.getRechargeUpdateList(PreferencesUtils.getString(getContext(),"token"));
+                        Log.i("cici","充值订单列表 轮询中...");
+                        presenter.getHomeDataBean(PreferencesUtils.getString(MyFrameApplication.getInstance(),"token"));
+                        presenter.getRechargeUpdateList(PreferencesUtils.getString(MyFrameApplication.getInstance(),"token"));
                     }
                 });
     }
 
     public void stopPolling() {
-        Log.i("cici","结束轮询");
+        Log.i("cici","充值订单列表 结束轮询");
         if(disposable!=null) {
             disposable.dispose();
         }
@@ -176,7 +178,7 @@ public class RechargeFragment extends BasePresentFragment<RechargeListPresenter>
     @Override
     public void onResume() {
         super.onResume();
-        startPolling(1);
+        //startPolling(1);
     }
 
     @Override

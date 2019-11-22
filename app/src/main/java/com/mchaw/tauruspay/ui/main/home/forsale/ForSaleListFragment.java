@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BaseFragment;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
@@ -66,7 +67,7 @@ public class ForSaleListFragment extends BasePresentFragment<ForSaleListPresente
         if(hidden){
             stopPolling();
         }else{
-           startPolling(10);
+           //startPolling(10);
         }
     }
 
@@ -133,7 +134,10 @@ public class ForSaleListFragment extends BasePresentFragment<ForSaleListPresente
                 qrCodeGroupBean.setShowItems(!ishow);
                 adapter.notifyItemChanged(position);
                 if (!ishow) {
-                    presenter.getQRCodeStalls(String.valueOf(groupid), PreferencesUtils.getString(getContext(), "token"));
+                    //presenter.getQRCodeStalls(String.valueOf(groupid), PreferencesUtils.getString(getContext(), "token"));
+                    startPolling(5);
+                }else{
+                    stopPolling();
                 }
                 break;
             case R.id.tv_start_sail_btn://点击开始代售
@@ -163,20 +167,21 @@ public class ForSaleListFragment extends BasePresentFragment<ForSaleListPresente
     //以下是轮询
     private Disposable disposable;
     public void startPolling(int time) {
+        Log.i("cici","开始代售组 开始轮询...");
         disposable = Observable.interval(15, time, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Long>() {
                     @Override
                     public void accept(Long aLong) throws Exception {
-                        Log.i("cici","轮询中...");
-                        presenter.getQRCodeStalls(String.valueOf(groupid), PreferencesUtils.getString(getContext(), "token"));
+                        Log.i("cici","开始代售组 轮询中...");
+                        presenter.getQRCodeStalls(String.valueOf(groupid), PreferencesUtils.getString(MyFrameApplication.getInstance(), "token"));
                     }
                 });
     }
 
     public void stopPolling() {
-        Log.i("cici","结束轮询");
+        Log.i("cici","开始代售组 结束轮询");
         if(disposable!=null) {
             disposable.dispose();
         }
@@ -185,7 +190,7 @@ public class ForSaleListFragment extends BasePresentFragment<ForSaleListPresente
     @Override
     public void onResume() {
         super.onResume();
-        startPolling(1);
+        //startPolling(1);
     }
 
     @Override
