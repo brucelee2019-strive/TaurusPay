@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -68,6 +69,7 @@ public class MainActivity extends BasePresenterActivity<CollectionListPresenter>
     @Override
     public void initActivity() {
         super.initActivity();
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         bottomView.enableAnimation(true);
         bottomView.enableShiftingMode(false);
         bottomView.enableItemShiftingMode(false);
@@ -240,7 +242,7 @@ public class MainActivity extends BasePresenterActivity<CollectionListPresenter>
     @Override
     protected void onPause() {
         super.onPause();
-        stopPolling();
+        //stopPolling();
     }
 
     @Override

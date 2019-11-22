@@ -229,9 +229,11 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
     }
 
     private void openPhotoAlbum(int tag) {
-        if (qrCodeGroupBean.getQrcodes().get(tag).getStatus() == 1) {
-            ToastUtils.showShortToast(getContext(), "审核中...，不能修改！");
-            return;
+        if(qrCodeGroupBean.getQrcodes()!=null&&qrCodeGroupBean.getQrcodes().size()>0) {
+            if (qrCodeGroupBean.getQrcodes().get(tag).getStatus() == 2) {
+                ToastUtils.showShortToast(getContext(), "审核中...，不能修改！");
+                return;
+            }
         }
         pickImageFromAlbum2();
     }
