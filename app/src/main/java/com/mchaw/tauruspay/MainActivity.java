@@ -225,7 +225,7 @@ public class MainActivity extends BasePresenterActivity<CollectionListPresenter>
     private Disposable disposable;
     public void startPolling(int time) {
         Log.i("cici","总程序交易中订单列表，开始轮询...");
-        disposable = Observable.interval(15, time, TimeUnit.SECONDS)
+        disposable = Observable.interval(0, time, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Long>() {
@@ -247,7 +247,7 @@ public class MainActivity extends BasePresenterActivity<CollectionListPresenter>
     @Override
     protected void onResume() {
         super.onResume();
-        startPolling(10);
+        startPolling(1);
     }
 
     @Override

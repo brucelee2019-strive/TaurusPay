@@ -135,7 +135,7 @@ public class ForSaleListFragment extends BasePresentFragment<ForSaleListPresente
                 adapter.notifyItemChanged(position);
                 if (!ishow) {
                     //presenter.getQRCodeStalls(String.valueOf(groupid), PreferencesUtils.getString(getContext(), "token"));
-                    startPolling(5);
+                    startPolling(1);
                 }else{
                     stopPolling();
                 }
@@ -168,7 +168,7 @@ public class ForSaleListFragment extends BasePresentFragment<ForSaleListPresente
     private Disposable disposable;
     public void startPolling(int time) {
         Log.i("cici","开始代售组 开始轮询...");
-        disposable = Observable.interval(15, time, TimeUnit.SECONDS)
+        disposable = Observable.interval(0, time, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Long>() {

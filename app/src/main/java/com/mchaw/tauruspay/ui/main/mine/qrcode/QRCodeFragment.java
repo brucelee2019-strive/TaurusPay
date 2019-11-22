@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -43,6 +45,7 @@ import com.mchaw.tauruspay.ui.main.mine.qrcode.adapter.QRCodeListAdapter;
 import com.mchaw.tauruspay.ui.main.mine.qrcode.constract.QRCodeConstract;
 import com.mchaw.tauruspay.ui.main.mine.qrcode.presenter.QRCodePresenter;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -214,7 +217,7 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
                 if (!ishow) {
                     groupid = qrCodeGroupBean.getId();
                     //presenter.getQRCodeStalls(String.valueOf(groupid), PreferencesUtils.getString(getContext(), "token"));
-                    startPolling(10);
+                    startPolling(1);
                 }else{
                     stopPolling();
                 }
@@ -427,19 +430,23 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
      */
     private void displayImage(String imagePath) {
         if (imagePath != null) {
-            BitmapFactory.Options newOpts = new BitmapFactory.Options();
-            newOpts.inJustDecodeBounds = false;
-            newOpts.inSampleSize = 8;
-            newOpts.inPreferredConfig = Bitmap.Config.RGB_565;
-            bitmap = BitmapFactory.decodeFile(imagePath, newOpts);
-            mAvatar = Base64Utils.bitmapToBase64(bitmap);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    BitmapFactory.Options newOpts = new BitmapFactory.Options();
+                    newOpts.inJustDecodeBounds = false;
+                    newOpts.inSampleSize = 8;
+                    newOpts.inPreferredConfig = Bitmap.Config.RGB_565;
+                    bitmap = BitmapFactory.decodeFile(imagePath, newOpts);
+                    mAvatar = Base64Utils.bitmapToBase64(bitmap);
+                }
+            }).start();
             //调用阿里云
             aLiYunDecode(mAvatar);
         } else {
             ToastUtils.showShortToast(getContext(), "获取图片失败!");
         }
     }
-
 
     /**
      * 通过阿里云获取图片的url
@@ -469,7 +476,9 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
                                 if (ALiYunCodeBean.getStatus() == 1) {
                                     if (!TextUtils.isEmpty(ALiYunCodeBean.getData().getRaw_text())) {
                                         qrCodeUrl = ALiYunCodeBean.getData().getRaw_text();
-                                        presenter.getUpLoadingQRCodeUrlBean(PreferencesUtils.getString(getContext(), "token"), qrCodeGroupBean.getQrcodes().get(tag).getId(), qrCodeUrl);
+                                        if(qrCodeGroupBean.getQrcodes()!=null&&qrCodeGroupBean.getQrcodes().size()>0) {
+                                            presenter.getUpLoadingQRCodeUrlBean(PreferencesUtils.getString(getContext(), "token"), qrCodeGroupBean.getQrcodes().get(tag).getId(), qrCodeUrl);
+                                        }
                                     } else {
                                         ToastUtils.showShortToast(getContext(), "null,图片解析失败！");
                                         canDone = true;
@@ -503,8 +512,10 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
     @Override
     public void setUpLoadingQRCodeUrlBean(QRCodeUrlBean qrCodeUrlBean) {
         canDone = true;
-        //qrCodeListAdapter需刷新，档口的UI为审核状态
-        qrCodeGroupBean.getQrcodes().get(tag).setStatus(1);
+        //qrCodeListAdapter需刷新，档口的UI为审核状态 status=2
+        if(qrCodeGroupBean.getQrcodes()!=null&&qrCodeGroupBean.getQrcodes().size()>0) {
+            qrCodeGroupBean.getQrcodes().get(tag).setStatus(2);
+        }
         qrCodeListAdapter.notifyDataSetChanged();
     }
 
@@ -557,7 +568,7 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
     private Disposable disposable;
     public void startPolling(int time) {
         Log.i("cici","二维码审核 开始轮询...");
-        disposable = Observable.interval(15, time, TimeUnit.SECONDS)
+        disposable = Observable.interval(0, time, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Long>() {
