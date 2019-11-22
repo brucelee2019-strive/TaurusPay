@@ -21,6 +21,7 @@ import com.mchaw.tauruspay.base.activity.BaseActivity;
 import com.mchaw.tauruspay.base.activity.BasePresenterActivity;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.bean.eventbus.LoginoutEvent;
+import com.mchaw.tauruspay.bean.eventbus.TradingBean;
 import com.mchaw.tauruspay.bean.home.SellingOrderBean;
 import com.mchaw.tauruspay.common.util.NoNullUtils;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
@@ -32,6 +33,7 @@ import com.mchaw.tauruspay.ui.main.home.forsale.presenter.CollectionListPresente
 import com.mchaw.tauruspay.ui.main.mine.MineFragment;
 import com.mchaw.tauruspay.ui.main.recharge.RechargeFragment;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
@@ -208,6 +210,15 @@ public class MainActivity extends BasePresenterActivity<CollectionListPresenter>
     @Override
     public void setTradingList(List<SellingOrderBean> list) {
         sellingOrderBeanList = list;
+        int all = 0;
+        if(list!=null&&list.size()>0) {
+            for (SellingOrderBean sellingOrderBean : list) {
+                all += sellingOrderBean.getAmount();
+            }
+        }
+        TradingBean tradingBean = new TradingBean();
+        tradingBean.setAll(all);
+        EventBus.getDefault().post(tradingBean);
     }
 
     //以下是轮询

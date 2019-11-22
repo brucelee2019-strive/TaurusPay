@@ -11,6 +11,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
+import com.mchaw.tauruspay.bean.eventbus.TradingBean;
 import com.mchaw.tauruspay.bean.home.StartOrOverSellBean;
 import com.mchaw.tauruspay.bean.home.HomeDataBean;
 import com.mchaw.tauruspay.bean.home.SelledOrderBean;
@@ -21,6 +22,8 @@ import com.mchaw.tauruspay.common.util.StringUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.main.home.forsale.constract.ForSaleConstract;
 import com.mchaw.tauruspay.ui.main.home.forsale.presenter.ForSalePresenter;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,8 +98,7 @@ public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> imple
     @Override
     public void setHomeDataBean(HomeDataBean homeDataBean) {
         tvAllCoinNum.setText(StringUtils.fenToYuan(homeDataBean.getDeposit()));
-        tvTodayIncomeNum.setText(String.valueOf(0));
-        tvSailingCoinNum.setText(String.valueOf(0));
+        tvTodayIncomeNum.setText(String.valueOf(homeDataBean.getDaydeposit()));
     }
 
     @Override
@@ -122,6 +124,13 @@ public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> imple
                 break;
             default:
                 break;
+        }
+    }
+
+    @Subscribe
+    public void tradingAmount(TradingBean event) {
+        if(event != null){
+            tvSailingCoinNum.setText(StringUtils.fenToYuan(event.getAll()));
         }
     }
 

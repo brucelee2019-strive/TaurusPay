@@ -471,7 +471,7 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
                                         qrCodeUrl = ALiYunCodeBean.getData().getRaw_text();
                                         presenter.getUpLoadingQRCodeUrlBean(PreferencesUtils.getString(getContext(), "token"), qrCodeGroupBean.getQrcodes().get(tag).getId(), qrCodeUrl);
                                     } else {
-                                        ToastUtils.showShortToast(getContext(), "图片错误,图片解析失败！");
+                                        ToastUtils.showShortToast(getContext(), "null,图片解析失败！");
                                         canDone = true;
                                     }
                                 } else {
