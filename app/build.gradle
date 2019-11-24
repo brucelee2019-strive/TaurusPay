@@ -194,4 +194,7 @@ dependencies {
     //BottomNavigationView
     implementation 'com.github.ittianyu:BottomNavigationViewEx:2.0.4'
     implementation "com.android.support:design:29.0.0"
+
+    //图片压缩
+    implementation 'id.zelory:compressor:2.1.0'
 }
