@@ -10,17 +10,22 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.bean.bill.BillBean;
 import com.mchaw.tauruspay.common.util.DensityUtils;
+import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.ScreenUtils;
 import com.mchaw.tauruspay.common.widget.Solve7PopupWindow;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
+import com.mchaw.tauruspay.ui.main.mine.bill.adapter.BillAdapter;
 import com.mchaw.tauruspay.ui.main.mine.bill.constract.BillConstract;
 import com.mchaw.tauruspay.ui.main.mine.bill.presenter.BillPresenter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -32,6 +37,11 @@ import butterknife.OnClick;
  * @description:
  */
 public class BillFragment extends BasePresentFragment<BillPresenter> implements BillConstract.View {
+    private final int ALL = 0;
+    private final int RECHARGE_SUCCEED = 1;
+    private final int ORDER_FEE = 2;
+    private final int ORDER_RETURN = 3;
+    private final int ORDER_BONUS = 4;
     /**
      * 筛选PopWindow
      */
@@ -41,11 +51,18 @@ public class BillFragment extends BasePresentFragment<BillPresenter> implements 
      */
     private int filterWidth;
 
+    private BillAdapter billAdapter;
+
+    private List<BillBean> billBeanList = new ArrayList<>();
+
     @BindView(R.id.tv_back_title)
     TextView tvTitle;
 
     @BindView(R.id.tv_filtrate)
     TextView tvFiltrate;
+
+    @BindView(R.id.rv_activate)
+    RecyclerView rvActivate;
 
     @Override
     protected int getContentViewId() {
@@ -70,6 +87,10 @@ public class BillFragment extends BasePresentFragment<BillPresenter> implements 
         filterPopWindow();
         tvTitle.setText("账单");
         tvFiltrate.setText("全部");
+        rvActivate.setLayoutManager(new LinearLayoutManager(getContext()));
+        billAdapter = new BillAdapter(billBeanList);
+        rvActivate.setAdapter(billAdapter);
+        presenter.getBillList(PreferencesUtils.getString(getContext(), "token"));
     }
 
     @OnClick({R.id.iv_back, R.id.tv_filtrate})
@@ -114,10 +135,66 @@ public class BillFragment extends BasePresentFragment<BillPresenter> implements 
         //设置外部点击关闭ppw窗口
         filterPop.setOutsideTouchable(true);
         filterPop.setFocusable(true);
+        popSkipFilter(layout, R.id.tv_all, ALL);
+        popSkipFilter(layout, R.id.tv_recharge_succeed, RECHARGE_SUCCEED);
+        popSkipFilter(layout, R.id.tv_order_fee, ORDER_FEE);
+        popSkipFilter(layout, R.id.tv_order_return, ORDER_RETURN);
+        popSkipFilter(layout, R.id.tv_order_bonus, ORDER_BONUS);
+    }
+
+    /**
+     * 跳转指筛选
+     */
+    private void popSkipFilter(View layout, int id, final int type) {
+        TextView textView = layout.findViewById(id);
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (type) {
+                    case ALL:
+                        tvFiltrate.setText("全部");
+                        break;
+                    case RECHARGE_SUCCEED:
+                        tvFiltrate.setText("充值成功");
+                        break;
+                    case ORDER_FEE:
+                        tvFiltrate.setText("接单扣费");
+                        break;
+                    case ORDER_RETURN:
+                        tvFiltrate.setText("订单退费");
+                        break;
+                    case ORDER_BONUS:
+                        tvFiltrate.setText("结单红利");
+                        break;
+                    default:
+                        break;
+                }
+                filterPop.dismiss();
+            }
+        });
     }
 
     @Override
     public void setBillList(List<BillBean> list) {
+        billBeanList = list;
+        setBilllistByType(list, ALL);
+    }
 
+    private void setBilllistByType(List<BillBean> list, int type) {
+        switch (type) {
+            case ALL:
+                billAdapter.setNewData(list);
+                break;
+            case RECHARGE_SUCCEED:
+                break;
+            case ORDER_FEE:
+                break;
+            case ORDER_RETURN:
+                break;
+            case ORDER_BONUS:
+                break;
+            default:
+                break;
+        }
     }
 }

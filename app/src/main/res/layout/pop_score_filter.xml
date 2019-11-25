@@ -27,7 +27,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tv_match"
+                    android:id="@+id/tv_all"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
                     android:gravity="center"
@@ -46,7 +46,7 @@
                     android:background="#E5E5E5" />
 
                 <TextView
-                    android:id="@+id/tv_country"
+                    android:id="@+id/tv_recharge_succeed"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
                     android:gravity="center"
@@ -65,7 +65,7 @@
                     android:background="#E5E5E5" />
 
                 <TextView
-                    android:id="@+id/tv_concede"
+                    android:id="@+id/tv_order_fee"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
                     android:gravity="center"
@@ -83,7 +83,7 @@
                     android:background="#E5E5E5" />
 
                 <TextView
-                    android:id="@+id/tv_total_score"
+                    android:id="@+id/tv_order_return"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
                     android:gravity="center"
@@ -100,6 +100,7 @@
                     android:background="#E5E5E5" />
 
                 <TextView
+                    android:id="@+id/tv_order_bonus"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
                     android:gravity="center"
