@@ -3,10 +3,12 @@ package com.mchaw.tauruspay.ui.main.mine.activate;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -53,6 +55,12 @@ public class ActivateCodeFragment extends BasePresentFragment<ActivatePresenter>
     public void injectFragmentComponent(ActivityComponent component) {
         super.injectFragmentComponent(component);
         component.inject(this);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        setUserVisibleHint(true);
+        super.onActivityCreated(savedInstanceState);
     }
 
     @Override

@@ -15,6 +15,7 @@ import com.mchaw.tauruspay.ui.login.password.PasswordFragment;
 import com.mchaw.tauruspay.ui.main.mine.about.AboutFragment;
 import com.mchaw.tauruspay.ui.main.mine.activate.ActivateCodeFragment;
 import com.mchaw.tauruspay.ui.main.mine.bank.MyBankCardFragment;
+import com.mchaw.tauruspay.ui.main.mine.bill.BillFragment;
 import com.mchaw.tauruspay.ui.main.mine.dialog.LoginOutDialog;
 import com.mchaw.tauruspay.ui.main.mine.qrcode.QRCodeFragment;
 
@@ -68,6 +69,7 @@ public class MineFragment extends BaseFragment implements LoginOutDialog.Confirm
                 LoginOutDialog.showDialog(getChildFragmentManager());
                 break;
             case R.id.cl_bill:
+                startFragment(new BillFragment());
                 break;
             case R.id.cl_bank_set:
                 startFragment(new MyBankCardFragment());

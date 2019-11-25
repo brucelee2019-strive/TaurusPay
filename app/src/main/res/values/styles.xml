@@ -29,4 +29,9 @@
         <item name="android:backgroundDimEnabled">true</item>
     </style>
 
+    <style name="PopWindowTopShow">
+        <item name="android:windowEnterAnimation">@anim/pop_show_visible</item>
+        <item name="android:windowExitAnimation">@anim/pop_show_hide</item>
+    </style>
+
 </resources>
