@@ -1,11 +1,14 @@
 package com.mchaw.tauruspay.ui.repository;
 
+import com.mchaw.tauruspay.bean.activate.ActivateCodeBean;
 import com.mchaw.tauruspay.bean.home.HomeDataBean;
 import com.mchaw.tauruspay.bean.login.LoginBean;
 import com.mchaw.tauruspay.bean.login.PasswordBean;
 import com.mchaw.tauruspay.bean.login.RegisterBean;
 import com.mchaw.tauruspay.http.ResultDisposable;
 import com.mchaw.tauruspay.http.ScheduleTranformer;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -44,5 +47,12 @@ public class LoginModel extends BaseModel{
         return apiService.getHomeDataBean(token)
                 .compose(new ResultDisposable<HomeDataBean>())
                 .compose(new ScheduleTranformer<HomeDataBean>());
+    }
+
+    //获取个人邀请码
+    public Observable<List<ActivateCodeBean>> getActiveCodeList(String api_token) {
+        return apiService.getActiveCodeList(api_token)
+                .compose(new ResultDisposable<List<ActivateCodeBean>>())
+                .compose(new ScheduleTranformer<List<ActivateCodeBean>>());
     }
 }

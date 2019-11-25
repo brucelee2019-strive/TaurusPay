@@ -7,9 +7,23 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BaseFragment;
+import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
+import com.mchaw.tauruspay.bean.activate.ActivateCodeBean;
+import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
+import com.mchaw.tauruspay.di.component.ActivityComponent;
+import com.mchaw.tauruspay.ui.main.mine.activate.adapter.ActivateCodeAdapter;
+import com.mchaw.tauruspay.ui.main.mine.activate.constract.ActivateConstract;
+import com.mchaw.tauruspay.ui.main.mine.activate.presenter.ActivatePresenter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -19,43 +33,73 @@ import butterknife.OnClick;
  * @date : 2019/11/25 10:30
  * @description:
  */
-public class ActivateCodeFragment extends BaseFragment {
+public class ActivateCodeFragment extends BasePresentFragment<ActivatePresenter> implements ActivateConstract.View, BaseQuickAdapter.OnItemChildClickListener {
 
     @BindView(R.id.tv_back_title)
     TextView tvTitle;
 
-    @BindView(R.id.tv_activate_code)
-    TextView tvActivateCode;
+    @BindView(R.id.rv_activate)
+    RecyclerView rvActivate;
+
+    private List<ActivateCodeBean> list = new ArrayList<>();
+    private ActivateCodeAdapter activateCodeAdapter;
 
     @Override
     protected int getContentViewId() {
         return R.layout.fragment_activate_code;
+    }
 
+    @Override
+    public void injectFragmentComponent(ActivityComponent component) {
+        super.injectFragmentComponent(component);
+        component.inject(this);
     }
 
     @Override
     protected void initFragment() {
+        super.initFragment();
         tvTitle.setText("激活口令");
+        rvActivate.setLayoutManager(new LinearLayoutManager(getContext()));
+        activateCodeAdapter = new ActivateCodeAdapter(list);
+        activateCodeAdapter.setOnItemChildClickListener(this);
+        rvActivate.setAdapter(activateCodeAdapter);
+        presenter.getActiveCodeList(PreferencesUtils.getString(getContext(), "token"));
     }
 
-    @OnClick({R.id.iv_back,R.id.tv_copy})
+    @OnClick(R.id.iv_back)
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.iv_back:
                 this.getActivity().finish();
                 break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void setActiveCodeList(List<ActivateCodeBean> list) {
+        activateCodeAdapter.setNewData(list);
+    }
+
+    @Override
+    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+        ActivateCodeBean activateCodeBean = (ActivateCodeBean) adapter.getItem(position);
+        switch (view.getId()) {
             case R.id.tv_copy:
                 //获取剪贴板管理器：
                 ClipboardManager cm = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
                 // 创建普通字符型ClipData
-                ClipData mClipData = ClipData.newPlainText("Label", tvActivateCode.getText());
+                ClipData mClipData = ClipData.newPlainText("Label", activateCodeBean.getCode());
                 // 将ClipData内容放到系统剪贴板里。
                 cm.setPrimaryClip(mClipData);
-                if(TextUtils.isEmpty(tvActivateCode.getText())){
+                if(TextUtils.isEmpty(activateCodeBean.getCode())){
                     ToastUtils.showShortToast(getContext(),"没有可复制的内容");
                     return;
                 }
-                ToastUtils.showShortToast(getContext(),"已复制<"+tvActivateCode.getText()+">到剪切板");
+                ToastUtils.showShortToast(getContext(),"已复制<"+activateCodeBean.getCode()+">到剪切板");
+                break;
+            default:
                 break;
         }
     }

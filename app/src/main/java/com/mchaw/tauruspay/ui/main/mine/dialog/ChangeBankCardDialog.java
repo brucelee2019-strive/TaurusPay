@@ -72,7 +72,7 @@ public class ChangeBankCardDialog extends BaseDialogFragment {
                     dialog.dismiss();
                 }
                 ConfirmListener confirmListener = (ConfirmListener) getParentFragment();
-                confirmListener.onClickComplete("狗剩儿");
+                confirmListener.onClickComplete("暂未开通此功能！");
                 break;
             default:
                 break;
