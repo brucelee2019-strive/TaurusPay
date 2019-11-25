@@ -1,5 +1,6 @@
 package com.mchaw.tauruspay.ui.repository;
 
+import com.mchaw.tauruspay.bean.bill.BillBean;
 import com.mchaw.tauruspay.bean.home.SellingOrderBean;
 import com.mchaw.tauruspay.bean.home.StartOrOverSellBean;
 import com.mchaw.tauruspay.http.ResultDisposable;
@@ -40,5 +41,11 @@ public class SellModel extends BaseModel{
         return apiService.upLodingReceivables(codeId,api_token)
                 .compose(new ResultDisposable<Integer>())
                 .compose(new ScheduleTranformer<Integer>());
+    }
+
+    public Observable<List<BillBean>> getBillList(String api_token) {
+        return apiService.getBillList(api_token)
+                .compose(new ResultDisposable<List<BillBean>>())
+                .compose(new ScheduleTranformer<List<BillBean>>());
     }
 }
