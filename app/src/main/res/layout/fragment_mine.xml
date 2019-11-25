@@ -241,7 +241,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="修改密码"
+            android:text="找回(修改)密码"
             app:layout_constraintBottom_toBottomOf="@+id/iv_change_password"
             app:layout_constraintStart_toEndOf="@+id/iv_change_password"
             app:layout_constraintTop_toTopOf="@+id/iv_change_password" />
