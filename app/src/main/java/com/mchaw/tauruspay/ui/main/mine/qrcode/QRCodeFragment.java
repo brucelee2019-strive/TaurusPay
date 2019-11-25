@@ -1,18 +1,11 @@
 package com.mchaw.tauruspay.ui.main.mine.qrcode;
 
 import android.app.Activity;
-import android.content.ContentUris;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Rect;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
@@ -47,7 +40,6 @@ import com.mchaw.tauruspay.ui.main.mine.qrcode.adapter.QRCodeListAdapter;
 import com.mchaw.tauruspay.ui.main.mine.qrcode.constract.QRCodeConstract;
 import com.mchaw.tauruspay.ui.main.mine.qrcode.presenter.QRCodePresenter;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -72,9 +64,9 @@ import okhttp3.Response;
 /**
  * @author Bruce Lee
  * @date : 2019/11/8 19:23
- * @description:
+ * @description: 二维码库Fragment
  */
-public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> implements QRCodeConstract.View, BaseQuickAdapter.OnItemChildClickListener, BaseQuickAdapter.OnItemClickListener, QRCodeGroupDialog.ConfirmListener, QRCodeGroupDeleteDialog.ConfirmListener {
+public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> implements QRCodeConstract.View, BaseQuickAdapter.OnItemChildClickListener, QRCodeGroupDialog.ConfirmListener, QRCodeGroupDeleteDialog.ConfirmListener {
     private static final int REQUEST_CODE_SELECT_PHOTO = 111;
     @BindView(R.id.rv_qr_list)
     RecyclerView rvQRList;
@@ -90,6 +82,15 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
 
     private List<QRCodeGroupBean> qrCodeGroupBeanList = new ArrayList();
     private QRCodeListAdapter qrCodeListAdapter;
+    private int groupid;//二维码组id
+    private QRCodeGroupBean qrCodeGroupBean;
+    private int tag;//二维码挡位tag
+    private boolean canDone = true;//控制二维码挡位能否点击
+
+    private Bitmap bitmap; //内存中bitmap
+    private String mAvatar; //base64码串
+    private String qrCodeUrl; //阿里转换后url
+    private File imageFile; //根据image URI 得到的 imageFile
 
     @Override
     protected int getContentViewId() {
@@ -114,17 +115,67 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
         rvQRList.setLayoutManager(new LinearLayoutManager(getContext()));
         qrCodeListAdapter = new QRCodeListAdapter(getActivity(), qrCodeGroupBeanList);
         qrCodeListAdapter.setOnItemChildClickListener(this);
-        qrCodeListAdapter.setOnItemClickListener(this);
         rvQRList.setAdapter(qrCodeListAdapter);
         presenter.getQRCodeGroupList(PreferencesUtils.getString(getContext(), "token"));
         Log.i("cici", PreferencesUtils.getString(getContext(), "token"));
         pageState = Constant.PAGE_NORMAL_STATE;
     }
 
-    private int groupid;
-    private QRCodeGroupBean qrCodeGroupBean;
-    private int tag;
-    private boolean canDone = true;
+    /**
+     * 普通与编辑状态下页面管理
+     * @param state
+     */
+    private void pageState(int state) {
+        switch (state) {
+            case Constant.PAGE_NORMAL_STATE:
+                if (qrCodeGroupBeanList != null && qrCodeGroupBeanList.size() > 0) {
+                    pageState = Constant.PAGE_DELETE_STATE;
+                    tvRight.setText("取消");
+                    ivAddItem.setVisibility(View.GONE);
+                    for (QRCodeGroupBean bean : qrCodeGroupBeanList) {
+                        bean.setCanDelete(Constant.PAGE_DELETE_STATE);
+                        bean.setShowItems(false);
+                        bean.setCanClickShowItems(true);
+                    }
+                    qrCodeListAdapter.notifyDataSetChanged();
+                } else {
+                    ToastUtils.showShortToast(getContext(), "没有请求到二维码库！");
+                }
+                break;
+            case Constant.PAGE_DELETE_STATE:
+                pageState = Constant.PAGE_NORMAL_STATE;
+                tvRight.setText("编辑");
+                ivAddItem.setVisibility(View.VISIBLE);
+                if (qrCodeGroupBeanList != null && qrCodeGroupBeanList.size() > 0) {
+                    for (QRCodeGroupBean bean : qrCodeGroupBeanList) {
+                        bean.setCanDelete(Constant.PAGE_NORMAL_STATE);
+                        bean.setShowItems(false);
+                        bean.setCanClickShowItems(false);
+                    }
+                    qrCodeListAdapter.notifyDataSetChanged();
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    @OnClick({R.id.iv_back, R.id.iv_add_item, R.id.tv_right})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.iv_back:
+                getActivity().finish();
+                break;
+            case R.id.iv_add_item:
+                QRCodeGroupDialog.showDialog(getChildFragmentManager());
+                break;
+            case R.id.tv_right:
+                pageState(pageState);
+                break;
+            default:
+                break;
+        }
+    }
 
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
@@ -235,6 +286,10 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
         }
     }
 
+    /**
+     * 调用相册预备
+     * @param tag
+     */
     private void openPhotoAlbum(int tag) {
         if (qrCodeGroupBean.getQrcodes() != null && qrCodeGroupBean.getQrcodes().size() > 0) {
             if (qrCodeGroupBean.getQrcodes().get(tag).getStatus() == 2) {
@@ -245,110 +300,15 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
         pickImageFromAlbum2();
     }
 
-    @Override
-    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-    }
-
-    @OnClick({R.id.iv_back, R.id.iv_add_item, R.id.tv_right})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.iv_back:
-                getActivity().finish();
-                break;
-            case R.id.iv_add_item:
-                QRCodeGroupDialog.showDialog(getChildFragmentManager());
-                break;
-            case R.id.tv_right:
-                pageState(pageState);
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void pageState(int state) {
-        switch (state) {
-            case Constant.PAGE_NORMAL_STATE:
-                if (qrCodeGroupBeanList != null && qrCodeGroupBeanList.size() > 0) {
-                    pageState = Constant.PAGE_DELETE_STATE;
-                    tvRight.setText("取消");
-                    ivAddItem.setVisibility(View.GONE);
-                    for (QRCodeGroupBean bean : qrCodeGroupBeanList) {
-                        bean.setCanDelete(Constant.PAGE_DELETE_STATE);
-                        bean.setShowItems(false);
-                        bean.setCanClickShowItems(true);
-                    }
-                    qrCodeListAdapter.notifyDataSetChanged();
-                } else {
-                    ToastUtils.showShortToast(getContext(), "没有请求到二维码库！");
-                }
-                break;
-            case Constant.PAGE_DELETE_STATE:
-                pageState = Constant.PAGE_NORMAL_STATE;
-                tvRight.setText("编辑");
-                ivAddItem.setVisibility(View.VISIBLE);
-                if (qrCodeGroupBeanList != null && qrCodeGroupBeanList.size() > 0) {
-                    for (QRCodeGroupBean bean : qrCodeGroupBeanList) {
-                        bean.setCanDelete(Constant.PAGE_NORMAL_STATE);
-                        bean.setShowItems(false);
-                        bean.setCanClickShowItems(false);
-                    }
-                    qrCodeListAdapter.notifyDataSetChanged();
-                }
-                break;
-            default:
-                break;
-        }
-    }
-
     /**
-     * 获取二维码库的集合
-     *
-     * @param list
+     * 调用相册
      */
-    @Override
-    public void setQRCodeGroupList(List<QRCodeGroupBean> list) {
-        qrCodeGroupBeanList = list;
-        qrCodeListAdapter.setNewData(list);
-    }
-
-    @Override
-    public void setQRCodeGroupBean(QRCodeGroupCreateBean qrCodeGroupCreateBean) {
-        if (qrCodeGroupCreateBean == null) {
-            return;
-        }
-        presenter.getQRCodeGroupList(PreferencesUtils.getString(getContext(), "token"));
-    }
-
-    @Override
-    public void onClickComplete(String code, String account, String nick) {
-        presenter.getQRCodeGroupBean(PreferencesUtils.getString(getContext(), "token"), account, nick, code);
-    }
-
-    private void getPhoneAlbum() {
-        Intent intent = new Intent();
-        intent.setType("image/*");// 开启Pictures画面Type设定为image
-        //intent.setAction(Intent.ACTION_GET_CONTENT);
-        if (Build.VERSION.SDK_INT < 19) {
-            intent.setAction(Intent.ACTION_GET_CONTENT);
-        } else {
-            intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
-        }
-        intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, REQUEST_CODE_SELECT_PHOTO);
-    }
-
     public void pickImageFromAlbum2() {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_PICK);
         intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, REQUEST_CODE_SELECT_PHOTO);
     }
-
-    private Bitmap bitmap;
-    private String mAvatar;
-    private String qrCodeUrl;
-    private File imageFile;
 
     //相机返回
     @Override
@@ -357,16 +317,8 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_CODE_SELECT_PHOTO:
-                    // 判断手机系统版本号
-//                    if (Build.VERSION.SDK_INT >= 19) {
-//                        // 4.4及以上系统使用这个方法处理图片
-//                        handleImageOnKitKat(data);
-//                    } else {
-//                        // 4.4以下系统使用这个方法处理图片
-//                        handleImageBeforeKitKat(data);
-//                    }
                     Uri uri = data.getData();
-                    imageFile = FileUtil.uriToFile(uri,getContext());
+                    imageFile = FileUtil.uriToFile(uri, getContext());
                     displayImage(imageFile);
                     break;
                 default:
@@ -378,71 +330,11 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
     }
 
     /**
-     * 4.4之前
-     * 获得图片绝对路径
-     *
-     * @param data
-     */
-    private void handleImageBeforeKitKat(Intent data) {
-        Uri uri = data.getData();
-        String imagePath = getImagePath(uri, null);
-        //得到图片
-        //displayImage(imagePath);
-    }
-
-    private String getImagePath(Uri uri, String selection) {
-        String path = null;
-        // 通过Uri和selection来获取真实的图片路径
-        Cursor cursor = getContext().getContentResolver().query(uri, null, selection, null, null);
-        if (cursor != null) {
-            if (cursor.moveToFirst()) {
-                path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
-            }
-            cursor.close();
-        }
-        return path;
-    }
-
-    /**
-     * 4.4以上版本
-     * 获得图片绝对路径
-     *
-     * @param data
-     */
-    private void handleImageOnKitKat(Intent data) {
-        String imagePath = null;
-        Uri uri = data.getData();
-        if (DocumentsContract.isDocumentUri(getContext(), uri)) {
-            // 如果是document类型的Uri，则通过document id处理
-            String docId = DocumentsContract.getDocumentId(uri);
-            if ("com.android.providers.media.documents".equals(uri.getAuthority())) {
-                String id = docId.split(":")[1]; // 解析出数字格式的id
-                String selection = MediaStore.Images.Media._ID + "=" + id;
-                imagePath = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection);
-            } else if ("com.android.providers.downloads.documents".equals(uri.getAuthority())) {
-                Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(docId));
-                imagePath = getImagePath(contentUri, null);
-            }
-        } else if ("content".equalsIgnoreCase(uri.getScheme())) {
-            // 如果是content类型的Uri，则使用普通方式处理
-            imagePath = getImagePath(uri, null);
-        } else if ("file".equalsIgnoreCase(uri.getScheme())) {
-            // 如果是file类型的Uri，直接获取图片路径即可
-            imagePath = uri.getPath();
-        }
-        //displayImage(imagePath); // 根据图片路径显示图片
-    }
-
-    /**
+     * 图片处理
      * @param imagePath
      */
     private void displayImage(File imagePath) {
         if (imagePath != null) {
-//            BitmapFactory.Options newOpts = new BitmapFactory.Options();
-//            newOpts.inJustDecodeBounds = false;
-//            newOpts.inSampleSize = 8;
-//            newOpts.inPreferredConfig = Bitmap.Config.RGB_565;
-//            bitmap = BitmapFactory.decodeFile(imagePath, newOpts);
             try {
                 bitmap = new Compressor(getContext())
                         .setMaxWidth(640)
@@ -518,6 +410,43 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
         });
     }
 
+    /**
+     * 获取二维码库的集合
+     *
+     * @param list
+     */
+    @Override
+    public void setQRCodeGroupList(List<QRCodeGroupBean> list) {
+        qrCodeGroupBeanList = list;
+        qrCodeListAdapter.setNewData(list);
+    }
+
+
+    /**
+     * 创建二维码库成功
+     *
+     * @param qrCodeGroupCreateBean
+     */
+    @Override
+    public void setQRCodeGroupBean(QRCodeGroupCreateBean qrCodeGroupCreateBean) {
+        if (qrCodeGroupCreateBean == null) {
+            return;
+        }
+        presenter.getQRCodeGroupList(PreferencesUtils.getString(getContext(), "token"));
+    }
+
+    /**
+     * 创建二维码库,dialog回调
+     *
+     * @param code
+     * @param account
+     * @param nick
+     */
+    @Override
+    public void onClickComplete(String code, String account, String nick) {
+        presenter.getQRCodeGroupBean(PreferencesUtils.getString(getContext(), "token"), account, nick, code);
+    }
+
 
     /**
      * 上传二维码url给服务器返回的结果
@@ -530,6 +459,7 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
         //qrCodeListAdapter需刷新，档口的UI为审核状态 status=2
         if (qrCodeGroupBean.getQrcodes() != null && qrCodeGroupBean.getQrcodes().size() > 0) {
             qrCodeGroupBean.getQrcodes().get(tag).setStatus(2);
+            ToastUtils.showShortToast(getContext(), "上传成功");
         }
         qrCodeListAdapter.notifyDataSetChanged();
     }

@@ -115,7 +115,7 @@ public class AppUtil {
                     MyFrameApplication.getInstance().getPackageName(), 0);
             return info.packageName;
         } catch (Exception e) {
-            return "com.runx.android";
+            return "com.mchaw.tauruspay";
         }
     }
 
@@ -135,7 +135,7 @@ public class AppUtil {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         //判断是否是AndroidN以及更高的版本
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Uri contentUri = FileProvider.getUriForFile(context, "com.runx.android.fileprovider", file);
+            Uri contentUri = FileProvider.getUriForFile(context, "com.mchaw.tauruspay.fileprovider", file);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
