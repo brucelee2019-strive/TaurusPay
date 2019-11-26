@@ -106,7 +106,7 @@ public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> imple
     public void sellInfo(SellInfoEvent event) {
         if(event != null){
             tvAllCoinNum.setText(StringUtils.fenToYuan(event.getKucun()));
-            tvTodayIncomeNum.setText(String.valueOf(event.getDangrishouyi()));
+            tvTodayIncomeNum.setText(StringUtils.fenToYuan(event.getDangrishouyi()));
         }
     }
 
