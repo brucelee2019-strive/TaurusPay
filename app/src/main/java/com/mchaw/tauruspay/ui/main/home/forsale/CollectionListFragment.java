@@ -6,6 +6,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BaseFragment;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
@@ -100,7 +101,7 @@ public class CollectionListFragment extends BasePresentFragment<CollectionListPr
     public void tradingAmount(TradingBean event) {
         if(event != null){
             if(show) {
-                presenter.getTradingList(PreferencesUtils.getString(getActivity().getApplicationContext(), "token"));
+                presenter.getTradingList(PreferencesUtils.getString(MyFrameApplication.getInstance(), "token"));
             }
         }
     }

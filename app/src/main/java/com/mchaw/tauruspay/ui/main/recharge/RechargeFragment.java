@@ -188,7 +188,7 @@ public class RechargeFragment extends BasePresentFragment<RechargeListPresenter>
     @Override
     public void onResume() {
         super.onResume();
-        //startPolling(1);
+        startPolling(1);
     }
 
     @Override
