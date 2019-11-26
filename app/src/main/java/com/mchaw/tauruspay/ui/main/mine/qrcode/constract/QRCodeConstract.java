@@ -23,6 +23,7 @@ public interface QRCodeConstract {
         void setUpLoadingQRCodeUrlBean(QRCodeUrlBean qrCodeUrlBean);
         void setQRCodeStalls(QRCodeStallBean qrCodeStallBean);
         void setDeleteQRCodeGroup(DeleteQRCodeGroupBean deleteQRCodeGroupBean);
+        void setUpLoadingQRCodeUrlBeanFail();
     }
 
     interface Presenter extends BasePresenter<QRCodeConstract.View> {

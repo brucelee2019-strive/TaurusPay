@@ -76,6 +76,7 @@ public class QRCodePresenter extends RxPresenter<QRCodeConstract.View> implement
 
                     @Override
                     public void onFail(String msg) {
+                        mView.setUpLoadingQRCodeUrlBeanFail();
                         mView.showError(msg);
                     }
                 });

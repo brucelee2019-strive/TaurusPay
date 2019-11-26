@@ -464,6 +464,13 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
         qrCodeListAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * 传二维码url给服务器返回失败
+     */
+    @Override
+    public void setUpLoadingQRCodeUrlBeanFail() {
+        canDone = true;
+    }
 
     /**
      * 获取分组的二维码档口返回的结果
@@ -539,6 +546,7 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
     @Override
     public void onResume() {
         super.onResume();
+        //startPolling(1);
     }
 
     @Override

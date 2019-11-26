@@ -47,6 +47,8 @@ public class TransferAccountsFragment extends BasePresentFragment<TransferAccoun
     @BindView(R.id.tv_all_cost)
     TextView tvAllCost;
 
+    private String allKuCun;
+
 
     @Override
     protected int getContentViewId() {
@@ -97,10 +99,11 @@ public class TransferAccountsFragment extends BasePresentFragment<TransferAccoun
     public void sellInfo(SellInfoEvent event) {
         if(event != null){
             tvAllCost.setText(StringUtils.fenToYuan(event.getKucun()));
+            allKuCun = StringUtils.fenToYuan(event.getKucun());
         }
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_transfer_account_sure})
+    @OnClick({R.id.iv_back, R.id.tv_transfer_account_sure,R.id.tv_all_repertory})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -112,6 +115,9 @@ public class TransferAccountsFragment extends BasePresentFragment<TransferAccoun
                         etName.getText().toString(),
                         etAmout.getText().toString());
                 LoadingDialog.showDialog(getChildFragmentManager());
+                break;
+            case R.id.tv_all_repertory:
+                etAmout.setText(allKuCun);
                 break;
             default:
                 break;

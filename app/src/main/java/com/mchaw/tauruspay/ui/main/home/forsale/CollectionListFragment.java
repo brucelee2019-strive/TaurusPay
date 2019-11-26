@@ -62,14 +62,21 @@ public class CollectionListFragment extends BasePresentFragment<CollectionListPr
             show = false;
         }else{
             show = true;
-            //presenter.getTradingList(PreferencesUtils.getString(getContext(),"token"));
+            presenter.getTradingList(PreferencesUtils.getString(getContext(),"token"));
         }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        //presenter.getTradingList(PreferencesUtils.getString(getContext(),"token"));
+        presenter.getTradingList(PreferencesUtils.getString(getContext(),"token"));
+        show = true;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        show = false;
     }
 
     @Override
@@ -84,7 +91,7 @@ public class CollectionListFragment extends BasePresentFragment<CollectionListPr
         rvForCollection.setLayoutManager(new LinearLayoutManager(getContext()));
         collectionListAdapter = new CollectionListAdapter(list);
         rvForCollection.setAdapter(collectionListAdapter);
-        presenter.getTradingList(PreferencesUtils.getString(getContext(),"token"));
+        presenter.getTradingList(PreferencesUtils.getString(MyFrameApplication.getInstance(),"token"));
     }
 
     @Override
