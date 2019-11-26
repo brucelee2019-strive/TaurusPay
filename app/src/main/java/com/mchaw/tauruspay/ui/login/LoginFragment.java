@@ -70,10 +70,6 @@ public class LoginFragment extends BasePresentFragment<LoginPresenter> implement
         PreferencesUtils.putString(getContext(),"token",loginBean.getToken());
         PreferencesUtils.putString(getContext(),"name",loginBean.getName());
         PreferencesUtils.putString(getContext(),"payname",loginBean.getPayname());
-        PreferencesUtils.putString(getContext(),"sellamount",String.valueOf(loginBean.getSellamount()));
-        PreferencesUtils.putString(getContext(),"sellcount",String.valueOf(loginBean.getSellcount()));
-        PreferencesUtils.putString(getContext(),"point",String.valueOf(loginBean.getPoint()));
-        PreferencesUtils.putString(getContext(),"deposit",String.valueOf(loginBean.getDeposit()));
         getActivity().finish();
     }
 

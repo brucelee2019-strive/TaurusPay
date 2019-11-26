@@ -19,6 +19,8 @@ import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BaseFragment;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
+import com.mchaw.tauruspay.bean.eventbus.SellInfoEvent;
+import com.mchaw.tauruspay.bean.eventbus.TradingBean;
 import com.mchaw.tauruspay.bean.home.HomeDataBean;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.StringUtils;
@@ -28,6 +30,8 @@ import com.mchaw.tauruspay.ui.main.home.constract.HomeConstract;
 import com.mchaw.tauruspay.ui.main.home.forsale.ForSaleFragment;
 import com.mchaw.tauruspay.ui.main.home.presenter.HomePresenter;
 import com.mchaw.tauruspay.ui.main.home.transferaccounts.TransferAccountsFragment;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -92,7 +96,7 @@ public class HomeFragment extends BasePresentFragment<HomePresenter> implements 
         if(hidden){
 
         }else{
-            presenter.getHomeDataBean(PreferencesUtils.getString(getContext(),"token"));
+            //presenter.getHomeDataBean(PreferencesUtils.getString(getContext(),"token"));
         }
     }
 
@@ -129,7 +133,7 @@ public class HomeFragment extends BasePresentFragment<HomePresenter> implements 
     @Override
     public void onResume() {
         super.onResume();
-        presenter.getHomeDataBean(PreferencesUtils.getString(getContext(),"token"));
+        //presenter.getHomeDataBean(PreferencesUtils.getString(getContext(),"token"));
     }
 
     @OnClick({R.id.tv_transfer_btn, R.id.tv_start_sail})
@@ -153,5 +157,16 @@ public class HomeFragment extends BasePresentFragment<HomePresenter> implements 
         tvTodayMoneyForSale.setText(StringUtils.fenToYuan(homeDataBean.getDayamount()));
         tvTodayTimeForSale.setText(StringUtils.fenToYuan(homeDataBean.getDaycount()));
         tvAlreadyIncome.setText(StringUtils.fenToYuan(homeDataBean.getDaydeposit()));
+    }
+
+    @Subscribe
+    public void sellInfo(SellInfoEvent event) {
+        if(event != null){
+            tvRepertory.setText(StringUtils.fenToYuan(event.getKucun()));
+            tvTodayAgencyIncome.setText(StringUtils.fenToYuan(event.getDangrishouyi()));
+            tvTodayMoneyForSale.setText(StringUtils.fenToYuan(event.getDangrikeshouedu()));
+            tvTodayTimeForSale.setText(StringUtils.fenToYuan(event.getDangrikeshoudanshu()));
+            tvAlreadyIncome.setText(StringUtils.fenToYuan(event.getDangriyishouedu()));
+        }
     }
 }

@@ -11,6 +11,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
+import com.mchaw.tauruspay.bean.eventbus.SellInfoEvent;
 import com.mchaw.tauruspay.bean.eventbus.TradingBean;
 import com.mchaw.tauruspay.bean.home.StartOrOverSellBean;
 import com.mchaw.tauruspay.bean.home.HomeDataBean;
@@ -86,7 +87,7 @@ public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> imple
         tabLayout.setViewPager(viewPage, saleTabs);
         tabLayout.onPageSelected(currentPage);
         viewPage.addOnPageChangeListener(this);
-        presenter.getHomeDataBean(PreferencesUtils.getString(getContext(),"token"));
+        //presenter.getHomeDataBean(PreferencesUtils.getString(getContext(),"token"));
     }
 
     @Override
@@ -99,6 +100,14 @@ public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> imple
     public void setHomeDataBean(HomeDataBean homeDataBean) {
         tvAllCoinNum.setText(StringUtils.fenToYuan(homeDataBean.getDeposit()));
         tvTodayIncomeNum.setText(String.valueOf(homeDataBean.getDaydeposit()));
+    }
+
+    @Subscribe
+    public void sellInfo(SellInfoEvent event) {
+        if(event != null){
+            tvAllCoinNum.setText(StringUtils.fenToYuan(event.getKucun()));
+            tvTodayIncomeNum.setText(String.valueOf(event.getDangrishouyi()));
+        }
     }
 
     @Override
@@ -131,6 +140,8 @@ public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> imple
     public void tradingAmount(TradingBean event) {
         if(event != null){
             tvSailingCoinNum.setText(StringUtils.fenToYuan(event.getAll()));
+            //小红点
+
         }
     }
 

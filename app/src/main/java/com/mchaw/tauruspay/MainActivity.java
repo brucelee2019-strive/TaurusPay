@@ -21,7 +21,9 @@ import com.mchaw.tauruspay.base.activity.BaseActivity;
 import com.mchaw.tauruspay.base.activity.BasePresenterActivity;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.bean.eventbus.LoginoutEvent;
+import com.mchaw.tauruspay.bean.eventbus.SellInfoEvent;
 import com.mchaw.tauruspay.bean.eventbus.TradingBean;
+import com.mchaw.tauruspay.bean.home.HomeDataBean;
 import com.mchaw.tauruspay.bean.home.SellingOrderBean;
 import com.mchaw.tauruspay.common.util.NoNullUtils;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
@@ -221,6 +223,20 @@ public class MainActivity extends BasePresenterActivity<CollectionListPresenter>
         EventBus.getDefault().post(tradingBean);
     }
 
+    @Override
+    public void setHomeDataBean(HomeDataBean homeDataBean) {
+        if(homeDataBean == null){
+            return;
+        }
+        SellInfoEvent sellInfoEvent = new SellInfoEvent();
+        sellInfoEvent.setKucun(homeDataBean.getDeposit());
+        sellInfoEvent.setDangrikeshouedu(homeDataBean.getDayamount());
+        sellInfoEvent.setDangrikeshoudanshu(homeDataBean.getDaycount());
+        sellInfoEvent.setDangrishouyi(homeDataBean.getDaypoint());
+        sellInfoEvent.setDangriyishouedu(homeDataBean.getDaydeposit());
+        EventBus.getDefault().post(sellInfoEvent);
+    }
+
     //以下是轮询
     private Disposable disposable;
     public void startPolling(int time) {
@@ -233,6 +249,7 @@ public class MainActivity extends BasePresenterActivity<CollectionListPresenter>
                     public void accept(Long aLong) throws Exception {
                         Log.i("cici","总程序交易中订单列表，轮询中...");
                         presenter.getTradingList(PreferencesUtils.getString(getApplicationContext(),"token"));
+                        presenter.getHomeDataBean(PreferencesUtils.getString(getApplicationContext(),"token"));
                     }
                 });
     }

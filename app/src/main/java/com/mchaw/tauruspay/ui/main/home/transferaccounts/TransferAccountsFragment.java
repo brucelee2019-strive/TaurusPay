@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
+import com.mchaw.tauruspay.bean.eventbus.SellInfoEvent;
 import com.mchaw.tauruspay.bean.home.HomeDataBean;
 import com.mchaw.tauruspay.bean.home.TransferAccountsBean;
 import com.mchaw.tauruspay.common.dialog.LoadingDialog;
@@ -18,6 +19,8 @@ import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.main.home.transferaccounts.constract.TransferAccountsConstract;
 import com.mchaw.tauruspay.ui.main.home.transferaccounts.presenter.TransferAccountsPresenter;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -60,7 +63,7 @@ public class TransferAccountsFragment extends BasePresentFragment<TransferAccoun
     protected void initFragment() {
         super.initFragment();
         tvBackTitle.setText("转账");
-        presenter.getHomeDataBean(PreferencesUtils.getString(getContext(),"token"));
+        //presenter.getHomeDataBean(PreferencesUtils.getString(getContext(),"token"));
     }
 
     @Override
@@ -90,6 +93,13 @@ public class TransferAccountsFragment extends BasePresentFragment<TransferAccoun
         tvAllCost.setText(StringUtils.fenToYuan(homeDataBean.getDeposit()));
     }
 
+    @Subscribe
+    public void sellInfo(SellInfoEvent event) {
+        if(event != null){
+            tvAllCost.setText(StringUtils.fenToYuan(event.getKucun()));
+        }
+    }
+
     @OnClick({R.id.iv_back, R.id.tv_transfer_account_sure})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -107,6 +117,7 @@ public class TransferAccountsFragment extends BasePresentFragment<TransferAccoun
                 break;
         }
     }
+
 
 
 }

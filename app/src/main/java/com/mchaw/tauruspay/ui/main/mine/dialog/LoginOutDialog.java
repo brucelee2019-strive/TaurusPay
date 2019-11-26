@@ -76,10 +76,6 @@ public class LoginOutDialog extends BaseDialogFragment {
                 PreferencesUtils.putString(getContext(),"token","");
                 PreferencesUtils.putString(getContext(),"name","");
                 PreferencesUtils.putString(getContext(),"payname","");
-                PreferencesUtils.putString(getContext(),"sellamount","");
-                PreferencesUtils.putString(getContext(),"sellcount","");
-                PreferencesUtils.putString(getContext(),"point","");
-                PreferencesUtils.putString(getContext(),"deposit","");
                 LoginOutDialog.ConfirmListener confirmListener = (LoginOutDialog.ConfirmListener) getParentFragment();
                 confirmListener.onClickComplete();
                 EventBus.getDefault().post(new LoginoutEvent());

@@ -10,6 +10,8 @@ import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BaseFragment;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.base.mvp.presenter.RxPresenter;
+import com.mchaw.tauruspay.bean.eventbus.TradingBean;
+import com.mchaw.tauruspay.bean.home.HomeDataBean;
 import com.mchaw.tauruspay.bean.home.SellingOrderBean;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
@@ -17,6 +19,8 @@ import com.mchaw.tauruspay.ui.main.home.forsale.adapter.CollectionListAdapter;
 import com.mchaw.tauruspay.ui.main.home.forsale.adapter.ForSaleListAdapter;
 import com.mchaw.tauruspay.ui.main.home.forsale.constract.CollectionListConstract;
 import com.mchaw.tauruspay.ui.main.home.forsale.presenter.CollectionListPresenter;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +41,8 @@ public class CollectionListFragment extends BasePresentFragment<CollectionListPr
 
     private CollectionListAdapter collectionListAdapter;
 
+    private boolean show = false;
+
     @Override
     protected int getContentViewId() {
         return R.layout.fragment_for_collection_list;
@@ -52,16 +58,17 @@ public class CollectionListFragment extends BasePresentFragment<CollectionListPr
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if(hidden){
-
+            show = false;
         }else{
-            presenter.getTradingList(PreferencesUtils.getString(getContext(),"token"));
+            show = true;
+            //presenter.getTradingList(PreferencesUtils.getString(getContext(),"token"));
         }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        presenter.getTradingList(PreferencesUtils.getString(getContext(),"token"));
+        //presenter.getTradingList(PreferencesUtils.getString(getContext(),"token"));
     }
 
     @Override
@@ -82,5 +89,19 @@ public class CollectionListFragment extends BasePresentFragment<CollectionListPr
     @Override
     public void setTradingList(List<SellingOrderBean> list) {
         collectionListAdapter.setNewData(list);
+    }
+
+    @Override
+    public void setHomeDataBean(HomeDataBean homeDataBean) {
+
+    }
+
+    @Subscribe
+    public void tradingAmount(TradingBean event) {
+        if(event != null){
+            if(show) {
+                presenter.getTradingList(PreferencesUtils.getString(getActivity().getApplicationContext(), "token"));
+            }
+        }
     }
 }

@@ -16,6 +16,7 @@ import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BaseFragment;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
+import com.mchaw.tauruspay.bean.eventbus.SellInfoEvent;
 import com.mchaw.tauruspay.bean.home.HomeDataBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeBean;
 import com.mchaw.tauruspay.common.Constant;
@@ -25,6 +26,8 @@ import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.main.recharge.constract.RechargeListConstract;
 import com.mchaw.tauruspay.ui.main.recharge.presenter.RechargeListPresenter;
 import com.mchaw.tauruspay.ui.main.recharge.record.RecordMainFragment;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -135,6 +138,13 @@ public class RechargeFragment extends BasePresentFragment<RechargeListPresenter>
         tvRepertoryMoney.setText(StringUtils.fenToYuan(homeDataBean.getDeposit()));
     }
 
+    @Subscribe
+    public void sellInfo(SellInfoEvent event) {
+        if(event != null){
+            tvRepertoryMoney.setText(StringUtils.fenToYuan(event.getKucun()));
+        }
+    }
+
     @Override
     public void setRechargeUpdateList(List<RechargeBean> list) {
         for (int i = 0; i < rechargeBeanList.size(); i++) {
@@ -161,7 +171,7 @@ public class RechargeFragment extends BasePresentFragment<RechargeListPresenter>
                     @Override
                     public void accept(Long aLong) throws Exception {
                         Log.i("cici","充值订单列表 轮询中...");
-                        presenter.getHomeDataBean(PreferencesUtils.getString(MyFrameApplication.getInstance(),"token"));
+                        //presenter.getHomeDataBean(PreferencesUtils.getString(MyFrameApplication.getInstance(),"token"));
                         presenter.getRechargeUpdateList(PreferencesUtils.getString(MyFrameApplication.getInstance(),"token"));
                     }
                 });
