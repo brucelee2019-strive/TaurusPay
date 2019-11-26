@@ -24,6 +24,7 @@ public class BillAdapter extends BaseQuickAdapter<BillBean, BaseViewHolder> {
 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, BillBean item) {
-
+        helper.setText(R.id.tv_order_code,item.getOrderid());
+        helper.setText(R.id.tv_order_time,item.getUpdate());
     }
 }
