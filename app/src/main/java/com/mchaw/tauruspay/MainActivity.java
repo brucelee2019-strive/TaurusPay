@@ -25,8 +25,10 @@ import com.mchaw.tauruspay.bean.eventbus.SellInfoEvent;
 import com.mchaw.tauruspay.bean.eventbus.TradingBean;
 import com.mchaw.tauruspay.bean.home.HomeDataBean;
 import com.mchaw.tauruspay.bean.home.SellingOrderBean;
+import com.mchaw.tauruspay.common.Constant;
 import com.mchaw.tauruspay.common.util.NoNullUtils;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
+import com.mchaw.tauruspay.common.util.WarningToneUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.main.besure.BesureFragment;
 import com.mchaw.tauruspay.ui.main.home.HomeFragment;
@@ -211,9 +213,12 @@ public class MainActivity extends BasePresenterActivity<CollectionListPresenter>
 
     @Override
     public void setTradingList(List<SellingOrderBean> list) {
-        sellingOrderBeanList = list;
         int all = 0;
         if(list!=null&&list.size()>0) {
+            if(list.size() > sellingOrderBeanList.size()){
+                waringTone();
+            }
+            sellingOrderBeanList = list;
             for (SellingOrderBean sellingOrderBean : list) {
                 all += sellingOrderBean.getAmount();
             }
@@ -277,6 +282,12 @@ public class MainActivity extends BasePresenterActivity<CollectionListPresenter>
     protected void onDestroy() {
         super.onDestroy();
         stopPolling();
+    }
+
+    private void waringTone(){
+        if (PreferencesUtils.getBoolean(MainActivity.this, Constant.WARNING_TONE, true)) {
+            WarningToneUtils.getInstance().playSound();
+        }
     }
 
     public void  provideToNotice(int amout){

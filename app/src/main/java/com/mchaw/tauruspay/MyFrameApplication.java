@@ -5,6 +5,7 @@ import android.widget.ScrollView;
 
 import com.mchaw.tauruspay.common.Constant;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
+import com.mchaw.tauruspay.common.util.WarningToneUtils;
 import com.mchaw.tauruspay.di.component.AppComponent;
 import com.mchaw.tauruspay.di.component.DaggerAppComponent;
 import com.mchaw.tauruspay.di.module.ApiServiceModule;
@@ -30,6 +31,7 @@ public class MyFrameApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mInstance = this;
+        WarningToneUtils.getInstance().init();
         //现在需要创建AppComponent，因为这是全局的Component，
         // 自然是在Application中创建了
         appComponent = DaggerAppComponent.builder()

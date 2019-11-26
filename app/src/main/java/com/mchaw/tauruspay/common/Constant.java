@@ -81,4 +81,9 @@ public class Constant {
     public static final int PAGE_NORMAL_STATE = 101;
     public static final int PAGE_DELETE_STATE = 102;
 
+    /**
+     * 提示音状态
+     */
+    public static final String WARNING_TONE = "warning_tone";
+
 }
