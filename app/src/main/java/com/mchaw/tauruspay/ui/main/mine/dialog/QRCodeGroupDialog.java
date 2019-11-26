@@ -139,7 +139,7 @@ public class QRCodeGroupDialog extends BaseDialogFragment {
      */
     private void filterPopWindow() {
         final LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View layout = inflater.inflate(R.layout.pop_score_filter, null);
+        final View layout = inflater.inflate(R.layout.pop_pay_filter, null);
         filterWidth = ScreenUtils.getWidgetWidth(layout);
         filterPop = new Solve7PopupWindow(layout, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         // 设置SelectPicPopupWindow弹出窗体可点击
