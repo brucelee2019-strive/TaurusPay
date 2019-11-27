@@ -57,19 +57,6 @@ public class Constant {
     public static final String INTENT_ISEMOJI = "isEmoji";
     public static final String INTENT_SEND = "send";
     public static final String INTENT_TAG = "tag";
-
-    /**
-     * 比分比赛状态-进行中
-     */
-    public static final int SCORE_MATCH_STATUE_DOING = 0;
-    /**
-     * 比分比赛状态-未开始
-     */
-    public static final int SCORE_MATCH_STATUE_DNS = 1;
-    /**
-     * 比分比赛状态-已完成
-     */
-    public static final int SCORE_MATCH_STATUE_DONE = 2;
     /**
      * ActivityForResult 返回值
      */
