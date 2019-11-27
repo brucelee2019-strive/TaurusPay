@@ -1,7 +1,13 @@
 package com.mchaw.tauruspay.ui;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Handler;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.mchaw.tauruspay.MainActivity;
 import com.mchaw.tauruspay.R;
@@ -22,13 +28,13 @@ public class SplashActivity extends BaseActivity {
     @Override
     public void initActivity() {
         super.initActivity();
-        new Handler().postDelayed(new Runnable(){
-            public void run(){
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
                 Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                 startActivity(intent);
                 SplashActivity.this.finish();
             }
-        },1000);
+        }, 1000);
     }
 
     @Override

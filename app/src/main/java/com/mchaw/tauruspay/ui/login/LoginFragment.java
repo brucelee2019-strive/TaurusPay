@@ -1,6 +1,9 @@
 package com.mchaw.tauruspay.ui.login;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -9,6 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.mchaw.tauruspay.MainActivity;
 import com.mchaw.tauruspay.R;
@@ -18,6 +23,7 @@ import com.mchaw.tauruspay.common.dialog.LoadingDialog;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
+import com.mchaw.tauruspay.ui.SplashActivity;
 import com.mchaw.tauruspay.ui.login.constract.LoginConstract;
 import com.mchaw.tauruspay.ui.login.password.PasswordFragment;
 import com.mchaw.tauruspay.ui.login.presenter.LoginPresenter;

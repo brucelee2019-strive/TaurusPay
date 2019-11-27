@@ -75,9 +75,7 @@ public class HomeFragment extends BasePresentFragment<HomePresenter> implements 
     private String strPre = "*开始代售前，请保持<font color='#FF9600'>金牛话费</font>与<font color='#00aaef'>支付宝</font>在线";
     private String strAfter = "*开始代售时，请及时查询确认收款";
 
-    private static String[] PERMISSIONS_STORAGE = {
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
 
     @Override
     protected int getContentViewId() {
@@ -111,19 +109,6 @@ public class HomeFragment extends BasePresentFragment<HomePresenter> implements 
         super.initFragment();
         if(TextUtils.isEmpty(MyFrameApplication.getInstance().tokenStr)){
             startFragment(new LoginFragment());
-        }else{
-            //动态权限申请
-            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
-                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                }
-                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-                }
-//            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-//                ActivityCompat.requestPermissions(this, PERMISSIONS_STORAGE, 1);
-//            }
-            }
         }
         tvNotiveText.setSelected(true);
         tvPreSaleTxt.setText(Html.fromHtml(strPre));

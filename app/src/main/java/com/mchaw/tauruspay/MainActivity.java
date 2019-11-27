@@ -30,6 +30,7 @@ import com.mchaw.tauruspay.common.util.NoNullUtils;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.WarningToneUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
+import com.mchaw.tauruspay.ui.SplashActivity;
 import com.mchaw.tauruspay.ui.main.besure.BesureFragment;
 import com.mchaw.tauruspay.ui.main.home.HomeFragment;
 import com.mchaw.tauruspay.ui.main.home.forsale.constract.CollectionListConstract;
@@ -82,6 +83,12 @@ public class MainActivity extends BasePresenterActivity<CollectionListPresenter>
         bottomView.setItemIconTintList(null);
         bottomView.setOnNavigationItemSelectedListener(this);
         showFragment(FRAGMENT_HOME);
+        //动态权限申请
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+            if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+            }
+        }
     }
 
     @Override
@@ -255,8 +262,10 @@ public class MainActivity extends BasePresenterActivity<CollectionListPresenter>
                     @Override
                     public void accept(Long aLong) throws Exception {
                         Log.i("cici", "总程序交易中订单列表，轮询中...");
-                        presenter.getTradingList(PreferencesUtils.getString(getApplicationContext(), "token"));
-                        presenter.getHomeDataBean(PreferencesUtils.getString(getApplicationContext(), "token"));
+                        if(!TextUtils.isEmpty(MyFrameApplication.getInstance().tokenStr)) {
+                            presenter.getTradingList(PreferencesUtils.getString(getApplicationContext(), "token"));
+                            presenter.getHomeDataBean(PreferencesUtils.getString(getApplicationContext(), "token"));
+                        }
                     }
                 });
     }
