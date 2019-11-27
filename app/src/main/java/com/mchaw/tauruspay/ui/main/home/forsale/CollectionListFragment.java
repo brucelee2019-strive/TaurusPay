@@ -1,6 +1,8 @@
 package com.mchaw.tauruspay.ui.main.home.forsale;
 
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -89,14 +91,36 @@ public class CollectionListFragment extends BasePresentFragment<CollectionListPr
     protected void initFragment() {
         super.initFragment();
         rvForCollection.setLayoutManager(new LinearLayoutManager(getContext()));
+        notDataView = getLayoutInflater().inflate(R.layout.empty_view, (ViewGroup) rvForCollection.getParent(), false);
+        notDataView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRefresh();
+            }
+        });
+        errorView = getLayoutInflater().inflate(R.layout.error_view, (ViewGroup) rvForCollection.getParent(), false);
+        errorView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRefresh();
+            }
+        });
         collectionListAdapter = new CollectionListAdapter(list);
         rvForCollection.setAdapter(collectionListAdapter);
         presenter.getTradingList(PreferencesUtils.getString(MyFrameApplication.getInstance(),"token"));
     }
 
+    private void onRefresh() {
+        presenter.getTradingList(PreferencesUtils.getString(MyFrameApplication.getInstance(),"token"));
+    }
+
     @Override
     public void setTradingList(List<SellingOrderBean> list) {
-        collectionListAdapter.setNewData(list);
+        if(list!=null && list.size()>0) {
+            collectionListAdapter.setNewData(list);
+        }else{
+            collectionListAdapter.setEmptyView(notDataView);
+        }
     }
 
     @Override

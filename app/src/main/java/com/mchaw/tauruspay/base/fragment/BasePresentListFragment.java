@@ -1,7 +1,10 @@
 package com.mchaw.tauruspay.base.fragment;
 
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+
+import androidx.annotation.Nullable;
 
 import com.mchaw.tauruspay.base.mvp.presenter.BasePresenter;
 import com.mchaw.tauruspay.base.mvp.view.BaseView;
@@ -11,12 +14,10 @@ import javax.inject.Inject;
 
 /**
  * @author : Bruce Lee
+ * @date : 2019/11/27 0027 21:17
  * @description :
- * @date : 2019/10/30 0030 11:18
  */
-public abstract class BasePresentFragment<T extends BasePresenter> extends BaseFragment implements BaseView {
-    protected View notDataView;
-    protected View errorView;
+public abstract class BasePresentListFragment<T extends BasePresenter> extends BaseFragment implements BaseView {
 
     @Inject
     protected T presenter;
@@ -26,6 +27,7 @@ public abstract class BasePresentFragment<T extends BasePresenter> extends BaseF
         if (presenter != null) {
             presenter.attachView(this);
         }
+
     }
 
     @Override
