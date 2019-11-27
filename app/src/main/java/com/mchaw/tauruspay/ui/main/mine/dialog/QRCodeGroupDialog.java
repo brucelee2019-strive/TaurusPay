@@ -88,7 +88,7 @@ public class QRCodeGroupDialog extends BaseDialogFragment {
         }
     }
 
-    @OnClick({R.id.tv_cancel, R.id.tv_sure, R.id.iv_choice})
+    @OnClick({R.id.tv_cancel, R.id.tv_sure, R.id.iv_choice,R.id.tv_pay_type})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_cancel:
@@ -112,6 +112,7 @@ public class QRCodeGroupDialog extends BaseDialogFragment {
                 confirmListener.onClickComplete(String.valueOf(payType), etIncomeAccount.getText().toString(), etIncomeNick.getText().toString());
                 break;
             case R.id.iv_choice:
+            case R.id.tv_pay_type:
                 if (filterPop.isShowing()) {
                     filterPop.dismiss();
                 } else {

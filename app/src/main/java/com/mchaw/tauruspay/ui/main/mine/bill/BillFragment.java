@@ -93,13 +93,14 @@ public class BillFragment extends BasePresentFragment<BillPresenter> implements 
         presenter.getBillList(PreferencesUtils.getString(getContext(), "token"));
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_filtrate})
+    @OnClick({R.id.iv_back, R.id.tv_filtrate,R.id.iv_filtrate})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
                 this.getActivity().finish();
                 break;
             case R.id.tv_filtrate:
+            case R.id.iv_filtrate:
                 if (filterPop.isShowing()) {
                     filterPop.dismiss();
                 } else {

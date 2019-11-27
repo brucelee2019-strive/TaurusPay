@@ -83,9 +83,11 @@ public class QRCodePresenter extends RxPresenter<QRCodeConstract.View> implement
         addSubscribe(disposable);
     }
 
+    Disposable qrCodeStallsDisposable;
     @Override
     public void getQRCodeStalls(String groupid, String api_token) {
-        Disposable disposable = qrCodeModel.getQRCodeStalls(groupid,api_token)
+        removeSubscribe(qrCodeStallsDisposable);
+        qrCodeStallsDisposable = qrCodeModel.getQRCodeStalls(groupid,api_token)
                 .subscribeWith(new ResultObserver<QRCodeStallBean>() {
                     @Override
                     public void onSuccess(QRCodeStallBean bean) {
@@ -97,7 +99,7 @@ public class QRCodePresenter extends RxPresenter<QRCodeConstract.View> implement
                         mView.showError(msg);
                     }
                 });
-        addSubscribe(disposable);
+        addSubscribe(qrCodeStallsDisposable);
     }
 
     @Override

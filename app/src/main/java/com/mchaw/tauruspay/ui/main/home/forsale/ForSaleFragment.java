@@ -2,6 +2,7 @@ package com.mchaw.tauruspay.ui.main.home.forsale;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -9,15 +10,12 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.flyco.tablayout.SlidingTabLayout;
-import com.flyco.tablayout.widget.MsgView;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.bean.eventbus.SellInfoEvent;
 import com.mchaw.tauruspay.bean.eventbus.TradingBean;
-import com.mchaw.tauruspay.bean.home.StartOrOverSellBean;
 import com.mchaw.tauruspay.bean.home.HomeDataBean;
-import com.mchaw.tauruspay.bean.home.SelledOrderBean;
-import com.mchaw.tauruspay.bean.home.SellingOrderBean;
+import com.mchaw.tauruspay.common.Constant;
 import com.mchaw.tauruspay.common.adapter.TabPageAdapter;
 import com.mchaw.tauruspay.common.util.DensityUtils;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
@@ -30,7 +28,6 @@ import com.mchaw.tauruspay.ui.main.home.forsale.presenter.ForSalePresenter;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindArray;
 import butterknife.BindView;
@@ -58,6 +55,9 @@ public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> imple
     SlidingTabLayout tabLayout;
     @BindView(R.id.view_page)
     ViewPager viewPage;
+
+    @BindView(R.id.iv_yinxiao)
+    ImageView ivYinXiao;
 
     @BindArray(R.array.sale_list_choise)
     String[] saleTabs;
@@ -90,6 +90,11 @@ public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> imple
         tabLayout.setViewPager(viewPage, saleTabs);
         tabLayout.onPageSelected(currentPage);
         viewPage.addOnPageChangeListener(this);
+        if (PreferencesUtils.getBoolean(getContext(), Constant.WARNING_TONE, true)) {
+            ivYinXiao.setImageResource(R.drawable.ds_yinxiao_on);
+        }else {
+            ivYinXiao.setImageResource(R.drawable.ds_yinxiao_off);
+        }
         //presenter.getHomeDataBean(PreferencesUtils.getString(getContext(),"token"));
     }
 
@@ -128,11 +133,21 @@ public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> imple
 
     }
 
-    @OnClick(R.id.iv_back)
+    @OnClick({R.id.iv_back,R.id.iv_yinxiao,R.id.tv_yinxiao})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
                 getActivity().finish();
+                break;
+            case R.id.iv_yinxiao:
+            case R.id.tv_yinxiao:
+                if (PreferencesUtils.getBoolean(getContext(), Constant.WARNING_TONE, true)) {
+                    PreferencesUtils.putBoolean(getContext(),Constant.WARNING_TONE,false);
+                    ivYinXiao.setImageResource(R.drawable.ds_yinxiao_off);
+                }else {
+                    PreferencesUtils.putBoolean(getContext(),Constant.WARNING_TONE,true);
+                    ivYinXiao.setImageResource(R.drawable.ds_yinxiao_on);
+                }
                 break;
             default:
                 break;

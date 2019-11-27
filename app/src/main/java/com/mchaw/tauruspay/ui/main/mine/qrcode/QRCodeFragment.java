@@ -514,7 +514,7 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
             ToastUtils.showShortToast(getContext(), "服务器错误，删除失败！");
         }
         ToastUtils.showShortToast(getContext(), "删除成功！");
-        presenter.getQRCodeGroupList(PreferencesUtils.getString(getContext(), "token"));
+        presenter.getQRCodeGroupList(PreferencesUtils.getString(MyFrameApplication.getInstance(), "token"));
         pageState(Constant.PAGE_DELETE_STATE);
     }
 

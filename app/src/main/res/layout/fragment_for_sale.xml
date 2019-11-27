@@ -23,6 +23,7 @@
             app:srcCompat="@drawable/white_back_icon" />
 
         <TextView
+            android:id="@+id/textView43"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/white"
@@ -40,6 +41,28 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iv_back"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_yinxiao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/textView43"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ds_yinxiao_on" />
+
+        <TextView
+            android:id="@+id/tv_yinxiao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="音效"
+            android:textColor="@color/white"
+            android:textSize="26sp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_yinxiao"
+            app:layout_constraintEnd_toStartOf="@+id/iv_yinxiao"
+            app:layout_constraintTop_toTopOf="@+id/iv_yinxiao" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <include layout="@layout/layout_notice_text"/>
