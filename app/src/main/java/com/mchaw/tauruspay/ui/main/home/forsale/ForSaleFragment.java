@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.flyco.tablayout.SlidingTabLayout;
+import com.flyco.tablayout.widget.MsgView;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.bean.eventbus.SellInfoEvent;
@@ -18,7 +19,9 @@ import com.mchaw.tauruspay.bean.home.HomeDataBean;
 import com.mchaw.tauruspay.bean.home.SelledOrderBean;
 import com.mchaw.tauruspay.bean.home.SellingOrderBean;
 import com.mchaw.tauruspay.common.adapter.TabPageAdapter;
+import com.mchaw.tauruspay.common.util.DensityUtils;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
+import com.mchaw.tauruspay.common.util.ScreenUtils;
 import com.mchaw.tauruspay.common.util.StringUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.main.home.forsale.constract.ForSaleConstract;
@@ -143,6 +146,7 @@ public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> imple
             //小红点
             if (event.getRedPoint() > 0) {
                 tabLayout.showMsg(1, event.getRedPoint());
+                tabLayout.setMsgMargin(1, (float) (ScreenUtils.getScreenWidth(getActivity())/3)- DensityUtils.dp2px(getActivity(), 16),0);
             } else {
                 tabLayout.hideMsg(1);
             }
