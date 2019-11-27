@@ -7,6 +7,15 @@ package com.mchaw.tauruspay.bean.eventbus;
  */
 public class TradingBean {
     private int all;
+    private int redPoint;
+
+    public int getRedPoint() {
+        return redPoint;
+    }
+
+    public void setRedPoint(int redPoint) {
+        this.redPoint = redPoint;
+    }
 
     public int getAll() {
         return all;

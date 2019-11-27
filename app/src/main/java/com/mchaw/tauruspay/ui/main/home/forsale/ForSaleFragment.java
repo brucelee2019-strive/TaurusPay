@@ -38,7 +38,7 @@ import butterknife.OnClick;
  * @date : 2019/11/7 10:30
  * @description:代售Fragment
  */
-public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> implements ForSaleConstract.View,ViewPager.OnPageChangeListener{
+public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> implements ForSaleConstract.View, ViewPager.OnPageChangeListener {
 
     @BindView(R.id.tv_all_coin_num)
     TextView tvAllCoinNum;
@@ -104,7 +104,7 @@ public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> imple
 
     @Subscribe
     public void sellInfo(SellInfoEvent event) {
-        if(event != null){
+        if (event != null) {
             tvAllCoinNum.setText(StringUtils.fenToYuan(event.getKucun()));
             tvTodayIncomeNum.setText(StringUtils.fenToYuan(event.getDangrishouyi()));
         }
@@ -138,11 +138,16 @@ public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> imple
 
     @Subscribe
     public void tradingAmount(TradingBean event) {
-        if(event != null){
+        if (event != null) {
             tvSailingCoinNum.setText(StringUtils.fenToYuan(event.getAll()));
             //小红点
-
+            if (event.getRedPoint() > 0) {
+                tabLayout.showMsg(1, event.getRedPoint());
+            } else {
+                tabLayout.hideMsg(1);
+            }
         }
     }
+
 
 }

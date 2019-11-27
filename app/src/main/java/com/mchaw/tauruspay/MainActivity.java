@@ -50,7 +50,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-public class MainActivity extends BasePresenterActivity<CollectionListPresenter> implements CollectionListConstract.View,BottomNavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BasePresenterActivity<CollectionListPresenter> implements CollectionListConstract.View, BottomNavigationView.OnNavigationItemSelectedListener {
 
     public static final int FRAGMENT_HOME = 0;
     public static final int FRAGMENT_RECHARGE = 1;
@@ -214,8 +214,8 @@ public class MainActivity extends BasePresenterActivity<CollectionListPresenter>
     @Override
     public void setTradingList(List<SellingOrderBean> list) {
         int all = 0;
-        if(list!=null&&list.size()>0) {
-            if(list.size() > sellingOrderBeanList.size()){
+        if (list != null && list.size() > 0) {
+            if (list.size() > sellingOrderBeanList.size()) {
                 waringTone();
             }
             sellingOrderBeanList = list;
@@ -225,12 +225,13 @@ public class MainActivity extends BasePresenterActivity<CollectionListPresenter>
         }
         TradingBean tradingBean = new TradingBean();
         tradingBean.setAll(all);
+        tradingBean.setRedPoint(list.size());
         EventBus.getDefault().post(tradingBean);
     }
 
     @Override
     public void setHomeDataBean(HomeDataBean homeDataBean) {
-        if(homeDataBean == null){
+        if (homeDataBean == null) {
             return;
         }
         SellInfoEvent sellInfoEvent = new SellInfoEvent();
@@ -244,24 +245,25 @@ public class MainActivity extends BasePresenterActivity<CollectionListPresenter>
 
     //以下是轮询
     private Disposable disposable;
+
     public void startPolling(int time) {
-        Log.i("cici","总程序交易中订单列表，开始轮询...");
+        Log.i("cici", "总程序交易中订单列表，开始轮询...");
         disposable = Observable.interval(0, time, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Long>() {
                     @Override
                     public void accept(Long aLong) throws Exception {
-                        Log.i("cici","总程序交易中订单列表，轮询中...");
-                        presenter.getTradingList(PreferencesUtils.getString(getApplicationContext(),"token"));
-                        presenter.getHomeDataBean(PreferencesUtils.getString(getApplicationContext(),"token"));
+                        Log.i("cici", "总程序交易中订单列表，轮询中...");
+                        presenter.getTradingList(PreferencesUtils.getString(getApplicationContext(), "token"));
+                        presenter.getHomeDataBean(PreferencesUtils.getString(getApplicationContext(), "token"));
                     }
                 });
     }
 
     public void stopPolling() {
-        Log.i("cici","总程序交易中订单列表，结束轮询");
-        if(disposable!=null) {
+        Log.i("cici", "总程序交易中订单列表，结束轮询");
+        if (disposable != null) {
             disposable.dispose();
         }
     }
@@ -284,16 +286,16 @@ public class MainActivity extends BasePresenterActivity<CollectionListPresenter>
         stopPolling();
     }
 
-    private void waringTone(){
+    private void waringTone() {
         if (PreferencesUtils.getBoolean(MainActivity.this, Constant.WARNING_TONE, true)) {
             WarningToneUtils.getInstance().playSound();
         }
     }
 
-    public void  provideToNotice(int amout){
-        for(SellingOrderBean sellingOrderBean : sellingOrderBeanList){
-            if(amout == sellingOrderBean.getAmount()){
-                presenter.upLodingReceivables(sellingOrderBean.getCodeid(),PreferencesUtils.getString(getApplicationContext(),"token"));
+    public void provideToNotice(int amout) {
+        for (SellingOrderBean sellingOrderBean : sellingOrderBeanList) {
+            if (amout == sellingOrderBean.getAmount()) {
+                presenter.upLodingReceivables(sellingOrderBean.getCodeid(), PreferencesUtils.getString(getApplicationContext(), "token"));
             }
         }
     }
