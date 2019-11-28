@@ -212,7 +212,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
         if (AntiShake.check(view.getId())) {    //判断是否多次点击
-            ToastUtils.showShortToast(getContext(),"客官，请不要点击太快！");
+            ToastUtils.showShortToast(getContext(),"客官，请慢点点击！");
             return;
         }
         qrCodeGroupBean = (QRCodeGroupBean) adapter.getItem(position);
