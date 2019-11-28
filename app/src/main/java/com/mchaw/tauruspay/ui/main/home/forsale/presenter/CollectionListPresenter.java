@@ -19,7 +19,7 @@ import io.reactivex.disposables.Disposable;
  * @date : 2019/11/21 9:56
  * @description:
  */
-public class CollectionListPresenter extends RxPresenter<CollectionListConstract.View> implements CollectionListConstract.Presenter{
+public class CollectionListPresenter extends RxPresenter<CollectionListConstract.View> implements CollectionListConstract.Presenter {
 
     @Inject
     SellModel sellModel;
@@ -33,6 +33,7 @@ public class CollectionListPresenter extends RxPresenter<CollectionListConstract
     }
 
     Disposable TradingListDisposable;
+
     @Override
     public void getTradingList(String api_token) {
         removeSubscribe(TradingListDisposable);
@@ -40,11 +41,14 @@ public class CollectionListPresenter extends RxPresenter<CollectionListConstract
                 .subscribeWith(new ResultObserver<List<SellingOrderBean>>() {
                     @Override
                     public void onSuccess(List<SellingOrderBean> list) {
-                        mView.setTradingList(list);
+                        if (mView != null) {
+                            mView.setTradingList(list);
+                        }
                     }
 
                     @Override
                     public void onFail(String msg) {
+                        mView.setTradingListFail();
                         mView.showError(msg);
                     }
                 });
@@ -53,7 +57,7 @@ public class CollectionListPresenter extends RxPresenter<CollectionListConstract
 
     @Override
     public void upLodingReceivables(String codeId, String api_token) {
-        Disposable disposable = sellModel.upLodingReceivables(codeId,api_token)
+        Disposable disposable = sellModel.upLodingReceivables(codeId, api_token)
                 .subscribeWith(new ResultObserver<Integer>() {
                     @Override
                     public void onSuccess(Integer secceed) {
@@ -69,6 +73,7 @@ public class CollectionListPresenter extends RxPresenter<CollectionListConstract
     }
 
     Disposable homeBeanDisposable;
+
     @Override
     public void getHomeDataBean(String api_token) {
         removeSubscribe(homeBeanDisposable);
@@ -76,7 +81,7 @@ public class CollectionListPresenter extends RxPresenter<CollectionListConstract
                 .subscribeWith(new ResultObserver<HomeDataBean>() {
                     @Override
                     public void onSuccess(HomeDataBean homeDataBean) {
-                        if(mView==null){
+                        if (mView == null) {
                             return;
                         }
                         mView.setHomeDataBean(homeDataBean);
@@ -84,7 +89,7 @@ public class CollectionListPresenter extends RxPresenter<CollectionListConstract
 
                     @Override
                     public void onFail(String msg) {
-                        if(mView==null){
+                        if (mView == null) {
                             return;
                         }
                         mView.showError(msg);

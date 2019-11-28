@@ -237,6 +237,11 @@ public class MainActivity extends BasePresenterActivity<CollectionListPresenter>
     }
 
     @Override
+    public void setTradingListFail() {
+
+    }
+
+    @Override
     public void setHomeDataBean(HomeDataBean homeDataBean) {
         if (homeDataBean == null) {
             return;

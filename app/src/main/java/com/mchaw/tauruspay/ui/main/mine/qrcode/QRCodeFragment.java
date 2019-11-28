@@ -10,6 +10,7 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ import com.google.gson.Gson;
 import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
+import com.mchaw.tauruspay.base.fragment.BasePresentListFragment;
 import com.mchaw.tauruspay.bean.ALiYunCodeBean;
 import com.mchaw.tauruspay.bean.qrcode.DeleteQRCodeGroupBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupBean;
@@ -66,7 +68,7 @@ import okhttp3.Response;
  * @date : 2019/11/8 19:23
  * @description: 二维码库Fragment
  */
-public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> implements QRCodeConstract.View, BaseQuickAdapter.OnItemChildClickListener, QRCodeGroupDialog.ConfirmListener, QRCodeGroupDeleteDialog.ConfirmListener {
+public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> implements QRCodeConstract.View, BaseQuickAdapter.OnItemChildClickListener, QRCodeGroupDialog.ConfirmListener, QRCodeGroupDeleteDialog.ConfirmListener {
     private static final int REQUEST_CODE_SELECT_PHOTO = 111;
     @BindView(R.id.rv_qr_list)
     RecyclerView rvQRList;
@@ -116,13 +118,39 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
         qrCodeListAdapter = new QRCodeListAdapter(getActivity(), qrCodeGroupBeanList);
         qrCodeListAdapter.setOnItemChildClickListener(this);
         rvQRList.setAdapter(qrCodeListAdapter);
-        presenter.getQRCodeGroupList(PreferencesUtils.getString(getContext(), "token"));
+        onRefresh();
         Log.i("cici", PreferencesUtils.getString(getContext(), "token"));
         pageState = Constant.PAGE_NORMAL_STATE;
     }
 
+    @Override
+    protected void initHintViews() {
+        loadingView = getLayoutInflater().inflate(R.layout.loading_view, (ViewGroup) rvQRList.getParent(), false);
+        notDataView = getLayoutInflater().inflate(R.layout.empty_view, (ViewGroup) rvQRList.getParent(), false);
+        notDataView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRefresh();
+            }
+        });
+        errorView = getLayoutInflater().inflate(R.layout.error_view, (ViewGroup) rvQRList.getParent(), false);
+        errorView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRefresh();
+            }
+        });
+    }
+
+    @Override
+    protected void onRefresh() {
+        qrCodeListAdapter.setEmptyView(loadingView);
+        presenter.getQRCodeGroupList(PreferencesUtils.getString(getContext(), "token"));
+    }
+
     /**
      * 普通与编辑状态下页面管理
+     *
      * @param state
      */
     private void pageState(int state) {
@@ -288,6 +316,7 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
 
     /**
      * 调用相册预备
+     *
      * @param tag
      */
     private void openPhotoAlbum(int tag) {
@@ -331,6 +360,7 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
 
     /**
      * 图片处理
+     *
      * @param imagePath
      */
     private void displayImage(File imagePath) {
@@ -418,7 +448,16 @@ public class QRCodeFragment extends BasePresentFragment<QRCodePresenter> impleme
     @Override
     public void setQRCodeGroupList(List<QRCodeGroupBean> list) {
         qrCodeGroupBeanList = list;
-        qrCodeListAdapter.setNewData(list);
+        if (list != null && list.size() > 0) {
+            qrCodeListAdapter.setNewData(list);
+        } else {
+            qrCodeListAdapter.setEmptyView(notDataView);
+        }
+    }
+
+    @Override
+    public void setQRCodeGroupListFail() {
+        qrCodeListAdapter.setEmptyView(errorView);
     }
 
 

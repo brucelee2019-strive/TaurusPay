@@ -15,6 +15,7 @@ import java.util.List;
 public interface RechargeListConstract {
     interface View extends BaseView {
         void setRechargeList(List<RechargeBean> list);
+        void setRecaargeListFail();
 
         void setHomeDataBean(HomeDataBean homeDataBean);
 

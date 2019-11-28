@@ -15,8 +15,6 @@ import javax.inject.Inject;
  * @date : 2019/10/30 0030 11:18
  */
 public abstract class BasePresentFragment<T extends BasePresenter> extends BaseFragment implements BaseView {
-    protected View notDataView;
-    protected View errorView;
 
     @Inject
     protected T presenter;

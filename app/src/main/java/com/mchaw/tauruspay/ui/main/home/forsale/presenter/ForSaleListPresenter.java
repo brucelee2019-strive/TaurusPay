@@ -43,6 +43,7 @@ public class ForSaleListPresenter extends RxPresenter<ForSaleListConstract.View>
 
                     @Override
                     public void onFail(String msg) {
+                        mView.setQRCodeGroupListFail();
                         mView.showError(msg);
                     }
                 });

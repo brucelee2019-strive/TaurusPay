@@ -42,6 +42,7 @@ public class QRCodePresenter extends RxPresenter<QRCodeConstract.View> implement
 
                     @Override
                     public void onFail(String msg) {
+                        mView.setQRCodeGroupListFail();
                         mView.showError(msg);
                     }
                 });

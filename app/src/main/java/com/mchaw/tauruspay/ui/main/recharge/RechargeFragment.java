@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -16,6 +17,7 @@ import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BaseFragment;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
+import com.mchaw.tauruspay.base.fragment.BasePresentListFragment;
 import com.mchaw.tauruspay.bean.eventbus.SellInfoEvent;
 import com.mchaw.tauruspay.bean.home.HomeDataBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeBean;
@@ -46,7 +48,7 @@ import io.reactivex.schedulers.Schedulers;
  * @date : 2019/11/3 0003 21:07
  * @description :
  */
-public class RechargeFragment extends BasePresentFragment<RechargeListPresenter> implements RechargeListConstract.View {
+public class RechargeFragment extends BasePresentListFragment<RechargeListPresenter> implements RechargeListConstract.View {
 
     @BindView(R.id.rv_income_record)
     RecyclerView rvIncomeRecoed;
@@ -71,10 +73,10 @@ public class RechargeFragment extends BasePresentFragment<RechargeListPresenter>
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if(hidden){
+        if (hidden) {
             //结束轮询
             stopPolling();
-        }else{
+        } else {
             //presenter.getRechargeList(PreferencesUtils.getString(getContext(),"token"));
             //presenter.getHomeDataBean(PreferencesUtils.getString(getContext(),"token"));
             //开启轮询
@@ -94,12 +96,37 @@ public class RechargeFragment extends BasePresentFragment<RechargeListPresenter>
         rvIncomeRecoed.setLayoutManager(new LinearLayoutManager(getContext()));
         rechargeAdapter = new RechargeAdapter(rechargeBeanList);
         rvIncomeRecoed.setAdapter(rechargeAdapter);
-        presenter.getRechargeList(PreferencesUtils.getString(getContext(),"token"));
+        onRefresh();
         //presenter.getHomeDataBean(PreferencesUtils.getString(getContext(),"token"));
-        Log.i("cici",PreferencesUtils.getString(getContext(),"token"));
+        Log.i("cici", PreferencesUtils.getString(getContext(), "token"));
     }
 
-    @OnClick({R.id.tv_recharge_btn,R.id.tv_record})
+    @Override
+    protected void initHintViews() {
+        loadingView = getLayoutInflater().inflate(R.layout.loading_view, (ViewGroup) rvIncomeRecoed.getParent(), false);
+        notDataView = getLayoutInflater().inflate(R.layout.empty_view, (ViewGroup) rvIncomeRecoed.getParent(), false);
+        notDataView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRefresh();
+            }
+        });
+        errorView = getLayoutInflater().inflate(R.layout.error_view, (ViewGroup) rvIncomeRecoed.getParent(), false);
+        errorView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRefresh();
+            }
+        });
+    }
+
+    @Override
+    protected void onRefresh() {
+        rechargeAdapter.setEmptyView(loadingView);
+        presenter.getRechargeList(PreferencesUtils.getString(getContext(), "token"));
+    }
+
+    @OnClick({R.id.tv_recharge_btn, R.id.tv_record})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_recharge_btn:
@@ -130,7 +157,16 @@ public class RechargeFragment extends BasePresentFragment<RechargeListPresenter>
     @Override
     public void setRechargeList(List<RechargeBean> list) {
         rechargeBeanList = list;
-        rechargeAdapter.setNewData(list);
+        if (list != null && list.size() > 0) {
+            rechargeAdapter.setNewData(list);
+        } else {
+            rechargeAdapter.setEmptyView(notDataView);
+        }
+    }
+
+    @Override
+    public void setRecaargeListFail() {
+        rechargeAdapter.setEmptyView(errorView);
     }
 
     @Override
@@ -140,7 +176,7 @@ public class RechargeFragment extends BasePresentFragment<RechargeListPresenter>
 
     @Subscribe
     public void sellInfo(SellInfoEvent event) {
-        if(event != null){
+        if (event != null) {
             tvRepertoryMoney.setText(StringUtils.fenToYuan(event.getKucun()));
         }
     }
@@ -162,24 +198,25 @@ public class RechargeFragment extends BasePresentFragment<RechargeListPresenter>
 
     //以下是轮询
     private Disposable disposable;
+
     public void startPolling(int time) {
-        Log.i("cici","充值订单列表 开始轮询...");
+        Log.i("cici", "充值订单列表 开始轮询...");
         disposable = Observable.interval(0, time, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Long>() {
                     @Override
                     public void accept(Long aLong) throws Exception {
-                        Log.i("cici","充值订单列表 轮询中...");
+                        Log.i("cici", "充值订单列表 轮询中...");
                         //presenter.getHomeDataBean(PreferencesUtils.getString(MyFrameApplication.getInstance(),"token"));
-                        presenter.getRechargeUpdateList(PreferencesUtils.getString(MyFrameApplication.getInstance(),"token"));
+                        presenter.getRechargeUpdateList(PreferencesUtils.getString(MyFrameApplication.getInstance(), "token"));
                     }
                 });
     }
 
     public void stopPolling() {
-        Log.i("cici","充值订单列表 结束轮询");
-        if(disposable!=null) {
+        Log.i("cici", "充值订单列表 结束轮询");
+        if (disposable != null) {
             disposable.dispose();
         }
     }

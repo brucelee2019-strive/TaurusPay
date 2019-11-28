@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
+import com.mchaw.tauruspay.base.fragment.BasePresentListFragment;
 import com.mchaw.tauruspay.bean.bill.BillBean;
 import com.mchaw.tauruspay.common.util.DensityUtils;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
@@ -36,7 +37,7 @@ import butterknife.OnClick;
  * @date : 2019/11/25 18:29
  * @description:
  */
-public class BillFragment extends BasePresentFragment<BillPresenter> implements BillConstract.View {
+public class BillFragment extends BasePresentListFragment<BillPresenter> implements BillConstract.View {
     private final int ALL = 0;
     private final int RECHARGE_SUCCEED = 1;
     private final int ORDER_FEE = 2;
@@ -90,10 +91,35 @@ public class BillFragment extends BasePresentFragment<BillPresenter> implements 
         rvActivate.setLayoutManager(new LinearLayoutManager(getContext()));
         billAdapter = new BillAdapter(billBeanList);
         rvActivate.setAdapter(billAdapter);
+        onRefresh();
+    }
+
+    @Override
+    protected void initHintViews() {
+        loadingView = getLayoutInflater().inflate(R.layout.loading_view, (ViewGroup) rvActivate.getParent(), false);
+        notDataView = getLayoutInflater().inflate(R.layout.empty_view, (ViewGroup) rvActivate.getParent(), false);
+        notDataView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRefresh();
+            }
+        });
+        errorView = getLayoutInflater().inflate(R.layout.error_view, (ViewGroup) rvActivate.getParent(), false);
+        errorView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRefresh();
+            }
+        });
+    }
+
+    @Override
+    protected void onRefresh() {
+        billAdapter.setEmptyView(loadingView);
         presenter.getBillList(PreferencesUtils.getString(getContext(), "token"));
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_filtrate,R.id.iv_filtrate})
+    @OnClick({R.id.iv_back, R.id.tv_filtrate, R.id.iv_filtrate})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -178,7 +204,16 @@ public class BillFragment extends BasePresentFragment<BillPresenter> implements 
     @Override
     public void setBillList(List<BillBean> list) {
         billBeanList = list;
-        setBilllistByType(list, ALL);
+        if (list != null && list.size() > 0) {
+            setBilllistByType(list, ALL);
+        } else {
+            billAdapter.setEmptyView(notDataView);
+        }
+    }
+
+    @Override
+    public void setBillListFail() {
+        billAdapter.setEmptyView(errorView);
     }
 
     private void setBilllistByType(List<BillBean> list, int type) {

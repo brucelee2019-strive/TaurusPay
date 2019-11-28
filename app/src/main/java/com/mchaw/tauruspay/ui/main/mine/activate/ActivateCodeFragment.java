@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -16,6 +17,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BaseFragment;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
+import com.mchaw.tauruspay.base.fragment.BasePresentListFragment;
 import com.mchaw.tauruspay.bean.activate.ActivateCodeBean;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
@@ -35,7 +37,7 @@ import butterknife.OnClick;
  * @date : 2019/11/25 10:30
  * @description:
  */
-public class ActivateCodeFragment extends BasePresentFragment<ActivatePresenter> implements ActivateConstract.View, BaseQuickAdapter.OnItemChildClickListener {
+public class ActivateCodeFragment extends BasePresentListFragment<ActivatePresenter> implements ActivateConstract.View, BaseQuickAdapter.OnItemChildClickListener {
 
     @BindView(R.id.tv_back_title)
     TextView tvTitle;
@@ -71,6 +73,31 @@ public class ActivateCodeFragment extends BasePresentFragment<ActivatePresenter>
         activateCodeAdapter = new ActivateCodeAdapter(list);
         activateCodeAdapter.setOnItemChildClickListener(this);
         rvActivate.setAdapter(activateCodeAdapter);
+        onRefresh();
+    }
+
+    @Override
+    protected void initHintViews() {
+        loadingView = getLayoutInflater().inflate(R.layout.loading_view,(ViewGroup) rvActivate.getParent(),false);
+        notDataView = getLayoutInflater().inflate(R.layout.empty_view, (ViewGroup) rvActivate.getParent(), false);
+        notDataView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRefresh();
+            }
+        });
+        errorView = getLayoutInflater().inflate(R.layout.error_view, (ViewGroup) rvActivate.getParent(), false);
+        errorView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRefresh();
+            }
+        });
+    }
+
+    @Override
+    protected void onRefresh() {
+        activateCodeAdapter.setEmptyView(loadingView);
         presenter.getActiveCodeList(PreferencesUtils.getString(getContext(), "token"));
     }
 
@@ -87,7 +114,16 @@ public class ActivateCodeFragment extends BasePresentFragment<ActivatePresenter>
 
     @Override
     public void setActiveCodeList(List<ActivateCodeBean> list) {
-        activateCodeAdapter.setNewData(list);
+        if(list!=null&&list.size()>0) {
+            activateCodeAdapter.setNewData(list);
+        }else{
+            activateCodeAdapter.setEmptyView(notDataView);
+        }
+    }
+
+    @Override
+    public void setActiveCodeListFail() {
+        activateCodeAdapter.setEmptyView(errorView);
     }
 
     @Override

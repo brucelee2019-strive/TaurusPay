@@ -18,6 +18,9 @@ import javax.inject.Inject;
  * @description :
  */
 public abstract class BasePresentListFragment<T extends BasePresenter> extends BaseFragment implements BaseView {
+    protected View loadingView;
+    protected View notDataView;
+    protected View errorView;
 
     @Inject
     protected T presenter;
@@ -27,7 +30,7 @@ public abstract class BasePresentListFragment<T extends BasePresenter> extends B
         if (presenter != null) {
             presenter.attachView(this);
         }
-
+        initHintViews();
     }
 
     @Override
@@ -46,4 +49,8 @@ public abstract class BasePresentListFragment<T extends BasePresenter> extends B
             }
         }
     }
+
+    protected abstract void initHintViews();
+
+    protected abstract void onRefresh();
 }

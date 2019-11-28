@@ -14,6 +14,7 @@ import java.util.List;
 public interface ActivateConstract {
     interface View extends BaseView {
         void setActiveCodeList(List<ActivateCodeBean> list);
+        void setActiveCodeListFail();
     }
     interface Presenter extends BasePresenter<ActivateConstract.View> {
         void getActiveCodeList(String api_token);

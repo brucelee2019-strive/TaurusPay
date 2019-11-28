@@ -3,6 +3,7 @@ package com.mchaw.tauruspay.ui.main.home.forsale;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,6 +14,7 @@ import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BaseFragment;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
+import com.mchaw.tauruspay.base.fragment.BasePresentListFragment;
 import com.mchaw.tauruspay.bean.home.StartOrOverSellBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeStallBean;
@@ -40,7 +42,7 @@ import io.reactivex.schedulers.Schedulers;
  * @date : 2019/11/7 11:56
  * @description:待售列表Fragment
  */
-public class ForSaleListFragment extends BasePresentFragment<ForSaleListPresenter> implements ForSaleListConstract.View, BaseQuickAdapter.OnItemChildClickListener {
+public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPresenter> implements ForSaleListConstract.View, BaseQuickAdapter.OnItemChildClickListener {
 
     @BindView(R.id.rv_for_sale_list)
     RecyclerView rvForSalelist;
@@ -64,10 +66,10 @@ public class ForSaleListFragment extends BasePresentFragment<ForSaleListPresente
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if(hidden){
+        if (hidden) {
             stopPolling();
-        }else{
-           //startPolling(10);
+        } else {
+            //startPolling(10);
         }
     }
 
@@ -84,21 +86,57 @@ public class ForSaleListFragment extends BasePresentFragment<ForSaleListPresente
         forSaleListAdapter = new ForSaleListAdapter(qrCodeGroupBeanList);
         forSaleListAdapter.setOnItemChildClickListener(this);
         rvForSalelist.setAdapter(forSaleListAdapter);
+        onRefresh();
+    }
+
+    @Override
+    protected void initHintViews() {
+        loadingView = getLayoutInflater().inflate(R.layout.loading_view,(ViewGroup) rvForSalelist.getParent(),false);
+        notDataView = getLayoutInflater().inflate(R.layout.empty_view, (ViewGroup) rvForSalelist.getParent(), false);
+        notDataView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRefresh();
+            }
+        });
+        errorView = getLayoutInflater().inflate(R.layout.error_view, (ViewGroup) rvForSalelist.getParent(), false);
+        errorView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRefresh();
+            }
+        });
+    }
+
+    @Override
+    protected void onRefresh() {
+        forSaleListAdapter.setEmptyView(loadingView);
         presenter.getQRCodeGroupList(PreferencesUtils.getString(getContext(), "token"));
     }
 
     /**
      * 代售分组
+     *
      * @param list
      */
     @Override
     public void setQRCodeGroupList(List<QRCodeGroupBean> list) {
         qrCodeGroupBeanList = list;
-        forSaleListAdapter.setNewData(list);
+        if (list != null && list.size() > 0) {
+            forSaleListAdapter.setNewData(list);
+        }else{
+            forSaleListAdapter.setEmptyView(notDataView);
+        }
+    }
+
+    @Override
+    public void setQRCodeGroupListFail() {
+        forSaleListAdapter.setEmptyView(errorView);
     }
 
     /**
      * 代售分组详细信息
+     *
      * @param bean
      */
     @Override
@@ -119,8 +157,8 @@ public class ForSaleListFragment extends BasePresentFragment<ForSaleListPresente
 
     @Override
     public void setStartingOrOverSell(StartOrOverSellBean startOrOverSellBean) {
-        ToastUtils.showShortToast(getContext(),qrCodeGroupBean.getStatus()==0?"已开始代售":"已停止代售");
-        qrCodeGroupBean.setStatus(qrCodeGroupBean.getStatus()==0?1:0);
+        ToastUtils.showShortToast(getContext(), qrCodeGroupBean.getStatus() == 0 ? "已开始代售" : "已停止代售");
+        qrCodeGroupBean.setStatus(qrCodeGroupBean.getStatus() == 0 ? 1 : 0);
         forSaleListAdapter.notifyDataSetChanged();
     }
 
@@ -136,12 +174,12 @@ public class ForSaleListFragment extends BasePresentFragment<ForSaleListPresente
                 if (!ishow) {
                     //presenter.getQRCodeStalls(String.valueOf(groupid), PreferencesUtils.getString(getContext(), "token"));
                     startPolling(1);
-                }else{
+                } else {
                     stopPolling();
                 }
                 break;
             case R.id.tv_start_sail_btn://点击开始代售
-                if(qrCodeGroupBean.getStatus() == 0) {
+                if (qrCodeGroupBean.getStatus() == 0) {
                     //代售之前检查是否已有组正在代售 list应该是轮询的list
                     for (QRCodeGroupBean bean : qrCodeGroupBeanList) {
                         if (bean.getStatus() == 1) {
@@ -150,7 +188,7 @@ public class ForSaleListFragment extends BasePresentFragment<ForSaleListPresente
                         }
                     }
                     presenter.startingOrOverSell(String.valueOf(qrCodeGroupBean.getId()), 1, PreferencesUtils.getString(getContext(), "token"));
-                }else{
+                } else {
                     //停止代售前 检查是否有未完成的收款
 //                    if(){
 //                        ToastUtils.showShortToast(getContext(), "当前有收款未完成，请完成后再停止代售！");
@@ -166,23 +204,24 @@ public class ForSaleListFragment extends BasePresentFragment<ForSaleListPresente
 
     //以下是轮询
     private Disposable disposable;
+
     public void startPolling(int time) {
-        Log.i("cici","开始代售组 开始轮询...");
+        Log.i("cici", "开始代售组 开始轮询...");
         disposable = Observable.interval(0, time, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Long>() {
                     @Override
                     public void accept(Long aLong) throws Exception {
-                        Log.i("cici","开始代售组 轮询中...");
+                        Log.i("cici", "开始代售组 轮询中...");
                         presenter.getQRCodeStalls(String.valueOf(groupid), PreferencesUtils.getString(MyFrameApplication.getInstance(), "token"));
                     }
                 });
     }
 
     public void stopPolling() {
-        Log.i("cici","开始代售组 结束轮询");
-        if(disposable!=null) {
+        Log.i("cici", "开始代售组 结束轮询");
+        if (disposable != null) {
             disposable.dispose();
         }
     }

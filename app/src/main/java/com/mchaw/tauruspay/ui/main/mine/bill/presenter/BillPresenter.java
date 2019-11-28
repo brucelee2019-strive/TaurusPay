@@ -39,6 +39,7 @@ public class BillPresenter extends RxPresenter<BillConstract.View> implements Bi
 
                     @Override
                     public void onFail(String msg) {
+                        mView.setBillListFail();
                         mView.showError(msg);
                     }
                 });

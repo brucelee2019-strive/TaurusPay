@@ -19,6 +19,7 @@ import java.util.List;
 public interface QRCodeConstract {
     interface View extends BaseView {
         void setQRCodeGroupList(List<QRCodeGroupBean> list);
+        void setQRCodeGroupListFail();
         void setQRCodeGroupBean(QRCodeGroupCreateBean qrCodeGroupCreateBean);
         void setUpLoadingQRCodeUrlBean(QRCodeUrlBean qrCodeUrlBean);
         void setQRCodeStalls(QRCodeStallBean qrCodeStallBean);

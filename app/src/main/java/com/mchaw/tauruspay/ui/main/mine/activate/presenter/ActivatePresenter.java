@@ -38,6 +38,7 @@ public class ActivatePresenter extends RxPresenter<ActivateConstract.View> imple
 
                     @Override
                     public void onFail(String msg) {
+                        mView.setActiveCodeListFail();
                         mView.showError(msg);
                     }
                 });

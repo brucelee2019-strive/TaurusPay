@@ -14,6 +14,7 @@ import java.util.List;
 public interface BillConstract {
     interface View extends BaseView {
         void setBillList(List<BillBean> list);
+        void setBillListFail();
     }
     interface Presenter extends BasePresenter<BillConstract.View> {
         void getBillList(String api_token);

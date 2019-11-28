@@ -12,6 +12,7 @@ import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BaseFragment;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
+import com.mchaw.tauruspay.base.fragment.BasePresentListFragment;
 import com.mchaw.tauruspay.base.mvp.presenter.RxPresenter;
 import com.mchaw.tauruspay.bean.eventbus.TradingBean;
 import com.mchaw.tauruspay.bean.home.HomeDataBean;
@@ -35,7 +36,7 @@ import butterknife.BindView;
  * @date : 2019/11/7 11:58
  * @description:收款Fragment
  */
-public class CollectionListFragment extends BasePresentFragment<CollectionListPresenter> implements CollectionListConstract.View {
+public class CollectionListFragment extends BasePresentListFragment<CollectionListPresenter> implements CollectionListConstract.View {
 
     @BindView(R.id.rv_for_collection)
     RecyclerView rvForCollection;
@@ -91,6 +92,14 @@ public class CollectionListFragment extends BasePresentFragment<CollectionListPr
     protected void initFragment() {
         super.initFragment();
         rvForCollection.setLayoutManager(new LinearLayoutManager(getContext()));
+        collectionListAdapter = new CollectionListAdapter(list);
+        rvForCollection.setAdapter(collectionListAdapter);
+        onRefresh();
+    }
+
+    @Override
+    protected void initHintViews() {
+        loadingView = getLayoutInflater().inflate(R.layout.loading_view,(ViewGroup) rvForCollection.getParent(),false);
         notDataView = getLayoutInflater().inflate(R.layout.empty_view, (ViewGroup) rvForCollection.getParent(), false);
         notDataView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,12 +114,11 @@ public class CollectionListFragment extends BasePresentFragment<CollectionListPr
                 onRefresh();
             }
         });
-        collectionListAdapter = new CollectionListAdapter(list);
-        rvForCollection.setAdapter(collectionListAdapter);
-        presenter.getTradingList(PreferencesUtils.getString(MyFrameApplication.getInstance(),"token"));
     }
 
-    private void onRefresh() {
+    @Override
+    protected void onRefresh() {
+        collectionListAdapter.setEmptyView(loadingView);
         presenter.getTradingList(PreferencesUtils.getString(MyFrameApplication.getInstance(),"token"));
     }
 
@@ -121,6 +129,11 @@ public class CollectionListFragment extends BasePresentFragment<CollectionListPr
         }else{
             collectionListAdapter.setEmptyView(notDataView);
         }
+    }
+
+    @Override
+    public void setTradingListFail() {
+        collectionListAdapter.setEmptyView(errorView);
     }
 
     @Override

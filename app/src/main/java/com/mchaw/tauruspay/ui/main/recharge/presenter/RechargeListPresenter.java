@@ -46,6 +46,7 @@ public class RechargeListPresenter extends RxPresenter<RechargeListConstract.Vie
 
                     @Override
                     public void onFail(String msg) {
+                        mView.setRecaargeListFail();
                         mView.showError(msg);
                     }
                 });

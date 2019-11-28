@@ -16,6 +16,7 @@ import java.util.List;
 public interface ForSaleListConstract {
     interface View extends BaseView {
         void setQRCodeGroupList(List<QRCodeGroupBean> list);
+        void setQRCodeGroupListFail();
         void setQRCodeStalls(QRCodeStallBean qrCodeStallBean);
         void setStartingOrOverSell(StartOrOverSellBean startOrOverSellBean);
     }
