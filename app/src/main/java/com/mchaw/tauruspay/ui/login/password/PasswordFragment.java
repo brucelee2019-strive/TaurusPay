@@ -12,6 +12,7 @@ import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.bean.login.PasswordBean;
 import com.mchaw.tauruspay.common.dialog.LoadingDialog;
+import com.mchaw.tauruspay.common.util.OneClick.AntiShake;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
@@ -86,6 +87,9 @@ public class PasswordFragment extends BasePresentFragment<PasswordPresenter> imp
 
     @OnClick({R.id.tv_get_auth_code, R.id.tv_reset_btn,R.id.iv_back})
     public void onClick(View view) {
+        if (AntiShake.check(view.getId())) {    //判断是否多次点击
+            return;
+        }
         switch (view.getId()) {
             case R.id.tv_get_auth_code:
                 break;

@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BaseFragment;
+import com.mchaw.tauruspay.common.util.OneClick.AntiShake;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.ui.login.LoginFragment;
@@ -27,7 +28,7 @@ import butterknife.OnClick;
  * @date : 2019/11/3 0003 21:11
  * @description :
  */
-public class MineFragment extends BaseFragment implements LoginOutDialog.ConfirmListener{
+public class MineFragment extends BaseFragment implements LoginOutDialog.ConfirmListener {
 
     @BindView(R.id.tv_user_nickname)
     TextView tvUserNickname;
@@ -48,22 +49,25 @@ public class MineFragment extends BaseFragment implements LoginOutDialog.Confirm
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if(hidden){
+        if (hidden) {
 
-        }else{
-            tvUserNickname.setText(PreferencesUtils.getString(getContext(),"name"));
-            tvPayName.setText(PreferencesUtils.getString(getContext(),"payname"));
+        } else {
+            tvUserNickname.setText(PreferencesUtils.getString(getContext(), "name"));
+            tvPayName.setText(PreferencesUtils.getString(getContext(), "payname"));
         }
     }
 
     @Override
     protected void initFragment() {
-        tvUserNickname.setText(PreferencesUtils.getString(getContext(),"name"));
-        tvPayName.setText(PreferencesUtils.getString(getContext(),"payname"));
+        tvUserNickname.setText(PreferencesUtils.getString(getContext(), "name"));
+        tvPayName.setText(PreferencesUtils.getString(getContext(), "payname"));
     }
 
-    @OnClick({R.id.tv_login_out,R.id.cl_bill,R.id.cl_bank_set,R.id.cl_qr_code,R.id.cl_activate_word,R.id.cl_change_password,R.id.cl_about})
+    @OnClick({R.id.tv_login_out, R.id.cl_bill, R.id.cl_bank_set, R.id.cl_qr_code, R.id.cl_activate_word, R.id.cl_change_password, R.id.cl_about})
     public void onClick(View view) {
+        if (AntiShake.check(view.getId())) {    //判断是否多次点击
+            return;
+        }
         switch (view.getId()) {
             case R.id.tv_login_out:
                 LoginOutDialog.showDialog(getChildFragmentManager());
@@ -92,6 +96,6 @@ public class MineFragment extends BaseFragment implements LoginOutDialog.Confirm
     @Override
     public void onClickComplete() {
         startFragment(new LoginFragment());
-        ToastUtils.showShortToast(getContext(),"退出成功！");
+        ToastUtils.showShortToast(getContext(), "退出成功！");
     }
 }

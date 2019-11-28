@@ -12,6 +12,7 @@ import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.bean.login.RegisterBean;
 import com.mchaw.tauruspay.common.dialog.LoadingDialog;
+import com.mchaw.tauruspay.common.util.OneClick.AntiShake;
 import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.login.register.constract.RegisterConstract;
@@ -89,6 +90,9 @@ public class RegisterFragment extends BasePresentFragment<RegisterPresenter> imp
 
     @OnClick({R.id.tv_get_auth_code, R.id.tv_register_btn,R.id.iv_back})
     public void onClick(View view) {
+        if (AntiShake.check(view.getId())) {    //判断是否多次点击
+            return;
+        }
         switch (view.getId()) {
             case R.id.tv_get_auth_code:
                 break;

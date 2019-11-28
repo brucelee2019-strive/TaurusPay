@@ -1,6 +1,7 @@
 package com.mchaw.tauruspay.ui.main.home.forsale;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.mchaw.tauruspay.base.fragment.BasePresentListFragment;
 import com.mchaw.tauruspay.bean.home.StartOrOverSellBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeStallBean;
+import com.mchaw.tauruspay.common.util.OneClick.AntiShake;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
@@ -164,6 +166,10 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
 
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+        if (AntiShake.check(view.getId())) {    //判断是否多次点击
+            ToastUtils.showShortToast(getContext(),"客官，请慢点点击！");
+            return;
+        }
         qrCodeGroupBean = (QRCodeGroupBean) adapter.getItem(position);
         groupid = qrCodeGroupBean.getId();
         switch (view.getId()) {

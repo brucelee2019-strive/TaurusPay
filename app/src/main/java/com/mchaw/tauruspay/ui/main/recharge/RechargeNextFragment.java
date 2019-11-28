@@ -28,6 +28,7 @@ import com.mchaw.tauruspay.bean.recharge.RechargeSureBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeTraBean;
 import com.mchaw.tauruspay.common.Constant;
 import com.mchaw.tauruspay.common.dialog.LoadingDialog;
+import com.mchaw.tauruspay.common.util.OneClick.AntiShake;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.StringUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
@@ -125,6 +126,9 @@ public class RechargeNextFragment extends BasePresentFragment<RechargeNextPresen
 
     @OnClick({R.id.iv_back, R.id.tv_remittance_btn})
     public void onClick(View view) {
+        if (AntiShake.check(view.getId())) {    //判断是否多次点击
+            return;
+        }
         switch (view.getId()) {
             case R.id.iv_back:
                 getActivity().finish();

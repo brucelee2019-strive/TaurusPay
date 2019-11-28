@@ -33,6 +33,7 @@ import com.mchaw.tauruspay.bean.qrcode.QRCodeUrlBean;
 import com.mchaw.tauruspay.common.Constant;
 import com.mchaw.tauruspay.common.util.Base64Utils;
 import com.mchaw.tauruspay.common.util.FileUtil;
+import com.mchaw.tauruspay.common.util.OneClick.AntiShake;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
@@ -190,6 +191,9 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
 
     @OnClick({R.id.iv_back, R.id.iv_add_item, R.id.tv_right})
     public void onClick(View view) {
+        if (AntiShake.check(view.getId())) {    //判断是否多次点击
+            return;
+        }
         switch (view.getId()) {
             case R.id.iv_back:
                 getActivity().finish();
@@ -207,6 +211,10 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
 
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+        if (AntiShake.check(view.getId())) {    //判断是否多次点击
+            ToastUtils.showShortToast(getContext(),"客官，请不要点击太快！");
+            return;
+        }
         qrCodeGroupBean = (QRCodeGroupBean) adapter.getItem(position);
         switch (view.getId()) {
             case R.id.cl_303:

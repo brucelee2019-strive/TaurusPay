@@ -22,8 +22,10 @@ import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.bean.eventbus.SellInfoEvent;
 import com.mchaw.tauruspay.bean.eventbus.TradingBean;
 import com.mchaw.tauruspay.bean.home.HomeDataBean;
+import com.mchaw.tauruspay.common.util.OneClick.AntiShake;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.StringUtils;
+import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.login.LoginFragment;
 import com.mchaw.tauruspay.ui.main.home.constract.HomeConstract;
@@ -123,6 +125,9 @@ public class HomeFragment extends BasePresentFragment<HomePresenter> implements 
 
     @OnClick({R.id.tv_transfer_btn, R.id.tv_start_sail})
     public void onClick(View view) {
+        if (AntiShake.check(view.getId())) {    //判断是否多次点击
+            return;
+        }
         switch (view.getId()) {
             case R.id.tv_transfer_btn:
                 startFragment(new TransferAccountsFragment());
