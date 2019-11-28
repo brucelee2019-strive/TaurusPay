@@ -41,13 +41,17 @@ public class CollectionListPresenter extends RxPresenter<CollectionListConstract
                 .subscribeWith(new ResultObserver<List<SellingOrderBean>>() {
                     @Override
                     public void onSuccess(List<SellingOrderBean> list) {
-                        if (mView != null) {
-                            mView.setTradingList(list);
+                        if (mView == null) {
+                            return;
                         }
+                            mView.setTradingList(list);
                     }
 
                     @Override
                     public void onFail(String msg) {
+                        if (mView == null) {
+                            return;
+                        }
                         mView.setTradingListFail();
                         mView.showError(msg);
                     }

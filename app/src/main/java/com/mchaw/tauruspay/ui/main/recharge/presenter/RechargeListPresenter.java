@@ -86,11 +86,17 @@ public class RechargeListPresenter extends RxPresenter<RechargeListConstract.Vie
                 .subscribeWith(new ResultObserver<List<RechargeBean>>() {
                     @Override
                     public void onSuccess(List<RechargeBean> list) {
+                        if(mView == null){
+                            return;
+                        }
                         mView.setRechargeUpdateList(list);
                     }
 
                     @Override
                     public void onFail(String msg) {
+                        if(mView == null){
+                            return;
+                        }
                         mView.showError(msg);
                     }
                 });

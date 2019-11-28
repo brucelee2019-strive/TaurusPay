@@ -21,7 +21,7 @@ import io.reactivex.disposables.Disposable;
  * @date : 2019/11/13 11:20
  * @description:
  */
-public class QRCodePresenter extends RxPresenter<QRCodeConstract.View> implements QRCodeConstract.Presenter{
+public class QRCodePresenter extends RxPresenter<QRCodeConstract.View> implements QRCodeConstract.Presenter {
 
     @Inject
     QRCodeModel qrCodeModel;
@@ -51,7 +51,7 @@ public class QRCodePresenter extends RxPresenter<QRCodeConstract.View> implement
 
     @Override
     public void getQRCodeGroupBean(String token, String account, String nick, String paytype) {
-        Disposable disposable = qrCodeModel.getQRCodeGroupBean(token,account,nick,paytype)
+        Disposable disposable = qrCodeModel.getQRCodeGroupBean(token, account, nick, paytype)
                 .subscribeWith(new ResultObserver<QRCodeGroupCreateBean>() {
                     @Override
                     public void onSuccess(QRCodeGroupCreateBean qrCodeGroupCreateBean) {
@@ -67,12 +67,12 @@ public class QRCodePresenter extends RxPresenter<QRCodeConstract.View> implement
     }
 
     @Override
-    public void getUpLoadingQRCodeUrlBean(String token,String codeid,String url) {
-        Disposable disposable = qrCodeModel.getUpLoadingQRCodeUrlBean(token,codeid,url)
+    public void getUpLoadingQRCodeUrlBean(String token, String codeid, String url) {
+        Disposable disposable = qrCodeModel.getUpLoadingQRCodeUrlBean(token, codeid, url)
                 .subscribeWith(new ResultObserver<QRCodeUrlBean>() {
                     @Override
                     public void onSuccess(QRCodeUrlBean bean) {
-                       mView.setUpLoadingQRCodeUrlBean(bean);
+                        mView.setUpLoadingQRCodeUrlBean(bean);
                     }
 
                     @Override
@@ -85,18 +85,25 @@ public class QRCodePresenter extends RxPresenter<QRCodeConstract.View> implement
     }
 
     Disposable qrCodeStallsDisposable;
+
     @Override
     public void getQRCodeStalls(String groupid, String api_token) {
         removeSubscribe(qrCodeStallsDisposable);
-        qrCodeStallsDisposable = qrCodeModel.getQRCodeStalls(groupid,api_token)
+        qrCodeStallsDisposable = qrCodeModel.getQRCodeStalls(groupid, api_token)
                 .subscribeWith(new ResultObserver<QRCodeStallBean>() {
                     @Override
                     public void onSuccess(QRCodeStallBean bean) {
+                        if (mView == null) {
+                            return;
+                        }
                         mView.setQRCodeStalls(bean);
                     }
 
                     @Override
                     public void onFail(String msg) {
+                        if (mView == null) {
+                            return;
+                        }
                         mView.showError(msg);
                     }
                 });
@@ -105,7 +112,7 @@ public class QRCodePresenter extends RxPresenter<QRCodeConstract.View> implement
 
     @Override
     public void deleteQRCodeGroup(String groupid, String api_token) {
-        Disposable disposable = qrCodeModel.deleteQRCodeGroup(groupid,api_token)
+        Disposable disposable = qrCodeModel.deleteQRCodeGroup(groupid, api_token)
                 .subscribeWith(new ResultObserver<DeleteQRCodeGroupBean>() {
                     @Override
                     public void onSuccess(DeleteQRCodeGroupBean bean) {

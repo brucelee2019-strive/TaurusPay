@@ -50,21 +50,29 @@ public class ForSaleListPresenter extends RxPresenter<ForSaleListConstract.View>
         addSubscribe(disposable);
     }
 
+    Disposable qrCodeStallsDisposable;
     @Override
     public void getQRCodeStalls(String groupid, String api_token) {
-        Disposable disposable = qrCodeModel.getQRCodeStalls(groupid,api_token)
+        removeSubscribe(qrCodeStallsDisposable);
+        qrCodeStallsDisposable = qrCodeModel.getQRCodeStalls(groupid,api_token)
                 .subscribeWith(new ResultObserver<QRCodeStallBean>() {
                     @Override
                     public void onSuccess(QRCodeStallBean bean) {
+                        if (mView == null) {
+                            return;
+                        }
                         mView.setQRCodeStalls(bean);
                     }
 
                     @Override
                     public void onFail(String msg) {
+                        if (mView == null) {
+                            return;
+                        }
                         mView.showError(msg);
                     }
                 });
-        addSubscribe(disposable);
+        addSubscribe(qrCodeStallsDisposable);
     }
 
     @Override
