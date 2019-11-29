@@ -1,31 +1,20 @@
 package com.mchaw.tauruspay.ui.main.home;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import com.mchaw.tauruspay.MainActivity;
 import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
-import com.mchaw.tauruspay.base.fragment.BaseFragment;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.bean.eventbus.SellInfoEvent;
-import com.mchaw.tauruspay.bean.eventbus.TradingBean;
 import com.mchaw.tauruspay.bean.home.HomeDataBean;
 import com.mchaw.tauruspay.common.util.OneClick.AntiShake;
-import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.StringUtils;
-import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.login.LoginFragment;
 import com.mchaw.tauruspay.ui.main.home.constract.HomeConstract;
@@ -123,16 +112,16 @@ public class HomeFragment extends BasePresentFragment<HomePresenter> implements 
         //presenter.getHomeDataBean(PreferencesUtils.getString(getContext(),"token"));
     }
 
-    @OnClick({R.id.tv_transfer_btn, R.id.tv_start_sail})
+    @OnClick({R.id.btn_transfer_btn, R.id.btn_start_sail})
     public void onClick(View view) {
         if (AntiShake.check(view.getId())) {    //判断是否多次点击
             return;
         }
         switch (view.getId()) {
-            case R.id.tv_transfer_btn:
+            case R.id.btn_transfer_btn:
                 startFragment(new TransferAccountsFragment());
                 break;
-            case R.id.tv_start_sail:
+            case R.id.btn_start_sail:
                 startFragment(new ForSaleFragment());
                 break;
             default:

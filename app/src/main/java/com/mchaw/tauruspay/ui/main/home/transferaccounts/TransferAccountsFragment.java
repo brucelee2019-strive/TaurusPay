@@ -30,7 +30,7 @@ import butterknife.OnClick;
  * @date : 2019/11/6 16:41
  * @description:
  */
-public class TransferAccountsFragment extends BasePresentFragment<TransferAccountsPresenter> implements TransferAccountsConstract.View{
+public class TransferAccountsFragment extends BasePresentFragment<TransferAccountsPresenter> implements TransferAccountsConstract.View {
 
     @BindView(R.id.tv_back_title)
     TextView tvBackTitle;
@@ -77,11 +77,11 @@ public class TransferAccountsFragment extends BasePresentFragment<TransferAccoun
     @Override
     public void setTransferAccountsBean(TransferAccountsBean transferAccountsBean) {
         LoadingDialog.dismissDailog();
-        if(transferAccountsBean == null){
-            ToastUtils.showShortToast(getContext(),"服务器返回数据为空！");
+        if (transferAccountsBean == null) {
+            ToastUtils.showShortToast(getContext(), "服务器返回数据为空！");
             return;
         }
-        ToastUtils.showShortToast(getContext(),"转账成功");
+        ToastUtils.showShortToast(getContext(), "转账成功");
         getActivity().finish();
     }
 
@@ -97,33 +97,36 @@ public class TransferAccountsFragment extends BasePresentFragment<TransferAccoun
 
     @Subscribe
     public void sellInfo(SellInfoEvent event) {
-        if(event != null){
+        if (event != null) {
             tvAllCost.setText(StringUtils.fenToYuan(event.getKucun()));
             allKuCun = StringUtils.fenToYuan(event.getKucun());
         }
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_transfer_account_sure,R.id.tv_all_repertory})
+    @OnClick({R.id.iv_back, R.id.tv_transfer_account_sure, R.id.tv_all_repertory})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
                 getActivity().finish();
                 break;
             case R.id.tv_transfer_account_sure:
-                presenter.getTransferAccountsBean(PreferencesUtils.getString(getContext(),"token"),etCode.getText().toString(),
+                presenter.getTransferAccountsBean(PreferencesUtils.getString(getContext(), "token"), etCode.getText().toString(),
                         etAccount.getText().toString(),
                         etName.getText().toString(),
                         etAmout.getText().toString());
                 LoadingDialog.showDialog(getChildFragmentManager());
                 break;
             case R.id.tv_all_repertory:
+                if (allKuCun.equals("0")) {
+                    ToastUtils.showShortToast(getContext(),"亲，木有话费");
+                    return;
+                }
                 etAmout.setText(allKuCun);
                 break;
             default:
                 break;
         }
     }
-
 
 
 }

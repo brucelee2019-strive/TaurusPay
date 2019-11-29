@@ -60,19 +60,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_used_account" />
 
-    <TextView
-        android:id="@+id/tv_copy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <Button
+        android:id="@+id/btn_copy"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
         android:layout_marginTop="8dp"
         android:text="复制"
+        android:gravity="center"
         android:textColor="@color/color_black_0"
         android:textSize="18sp"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:background="@drawable/bg_text_active"
+        android:background="@drawable/touch_bg"
         app:layout_constraintBottom_toTopOf="@+id/tv_time"
         app:layout_constraintEnd_toEndOf="@+id/tv_time"
         app:layout_constraintTop_toTopOf="parent" />

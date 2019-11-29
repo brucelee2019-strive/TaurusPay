@@ -85,15 +85,15 @@ public class PasswordFragment extends BasePresentFragment<PasswordPresenter> imp
     }
 
 
-    @OnClick({R.id.tv_get_auth_code, R.id.tv_reset_btn,R.id.iv_back})
+    @OnClick({R.id.btn_get_auth_code, R.id.btn_reset_btn,R.id.iv_back})
     public void onClick(View view) {
         if (AntiShake.check(view.getId())) {    //判断是否多次点击
             return;
         }
         switch (view.getId()) {
-            case R.id.tv_get_auth_code:
+            case R.id.btn_get_auth_code:
                 break;
-            case R.id.tv_reset_btn:
+            case R.id.btn_reset_btn:
                 resetPasswd(PreferencesUtils.getString(getContext(),"token"),etAuthCode.getText().toString(),etPasswd.getText().toString(),etPasswdSure.getText().toString());
                 break;
             case R.id.iv_back:

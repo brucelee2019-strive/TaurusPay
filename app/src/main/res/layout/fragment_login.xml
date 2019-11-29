@@ -104,21 +104,19 @@
         android:layout_height="0dp"
         android:layout_weight="2">
 
-        <TextView
+        <Button
             app:layout_constraintVertical_chainStyle="spread"
-            android:id="@+id/tv_login_btn"
+            android:id="@+id/btn_login_btn"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="34dp"
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"
             android:text="登录"
             android:textStyle="bold"
             android:textSize="20sp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
             android:gravity="center"
             android:textColor="@color/white"
-            android:background="@drawable/bg_text_btn"
+            android:background="@drawable/touch_btn_bg"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -132,9 +130,9 @@
             android:textSize="24sp"
             android:textColor="@color/color_black_0"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/tv_login_btn"
-            app:layout_constraintStart_toStartOf="@+id/tv_login_btn"
-            app:layout_constraintTop_toBottomOf="@+id/tv_login_btn" />
+            app:layout_constraintEnd_toEndOf="@+id/btn_login_btn"
+            app:layout_constraintStart_toStartOf="@+id/btn_login_btn"
+            app:layout_constraintTop_toBottomOf="@+id/btn_login_btn" />
 
         <TextView
             android:id="@+id/tv_register"

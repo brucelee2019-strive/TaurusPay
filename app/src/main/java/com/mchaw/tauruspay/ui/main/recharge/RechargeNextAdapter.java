@@ -22,7 +22,7 @@ public class RechargeNextAdapter extends BaseQuickAdapter<RechargeTraBean, BaseV
 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, RechargeTraBean item) {
-        helper.addOnClickListener(R.id.tv_copy_btn);
+        helper.addOnClickListener(R.id.btn_copy_btn);
         helper.setText(R.id.tv_income_coin,item.getTitle());
         helper.setText(R.id.tv_income_num,item.getContent());
     }

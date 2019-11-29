@@ -1,21 +1,12 @@
 package com.mchaw.tauruspay.ui.login;
 
-import android.Manifest;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import com.mchaw.tauruspay.MainActivity;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.bean.login.LoginBean;
@@ -24,7 +15,6 @@ import com.mchaw.tauruspay.common.util.OneClick.AntiShake;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
-import com.mchaw.tauruspay.ui.SplashActivity;
 import com.mchaw.tauruspay.ui.login.constract.LoginConstract;
 import com.mchaw.tauruspay.ui.login.password.PasswordFragment;
 import com.mchaw.tauruspay.ui.login.presenter.LoginPresenter;
@@ -86,13 +76,13 @@ public class LoginFragment extends BasePresentFragment<LoginPresenter> implement
         ToastUtils.showShortToast(getContext(),"未知错误！");
     }
 
-    @OnClick({R.id.tv_login_btn, R.id.tv_register, R.id.tv_find_password})
+    @OnClick({R.id.btn_login_btn, R.id.tv_register, R.id.tv_find_password})
     public void onClick(View view) {
         if (AntiShake.check(view.getId())) {    //判断是否多次点击
             return;
         }
         switch (view.getId()) {
-            case R.id.tv_login_btn:
+            case R.id.btn_login_btn:
                 login(etUserName.getText().toString(), "1234", etPasswd.getText().toString());
                 break;
             case R.id.tv_register:

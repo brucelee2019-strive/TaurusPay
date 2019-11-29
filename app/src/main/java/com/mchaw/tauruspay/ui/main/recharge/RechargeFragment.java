@@ -12,11 +12,8 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
 import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
-import com.mchaw.tauruspay.base.fragment.BaseFragment;
-import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.base.fragment.BasePresentListFragment;
 import com.mchaw.tauruspay.bean.eventbus.SellInfoEvent;
 import com.mchaw.tauruspay.bean.home.HomeDataBean;
@@ -127,13 +124,13 @@ public class RechargeFragment extends BasePresentListFragment<RechargeListPresen
         presenter.getRechargeList(PreferencesUtils.getString(getContext(), "token"));
     }
 
-    @OnClick({R.id.tv_recharge_btn, R.id.tv_record})
+    @OnClick({R.id.btn_recharge_btn, R.id.tv_record})
     public void onClick(View view) {
         if (AntiShake.check(view.getId())) {    //判断是否多次点击
             return;
         }
         switch (view.getId()) {
-            case R.id.tv_recharge_btn:
+            case R.id.btn_recharge_btn:
                 startFragmentForResult(new RechargeNextFragment(), Constant.RECHARGE_NEXT_FRAGMENT_BACK);
                 break;
             case R.id.tv_record:

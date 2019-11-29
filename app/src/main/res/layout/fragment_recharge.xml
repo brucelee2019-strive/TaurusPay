@@ -63,21 +63,19 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
-        <TextView
-            android:id="@+id/tv_recharge_btn"
+        <Button
+            android:id="@+id/btn_recharge_btn"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:background="@drawable/bg_text_btn"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
+            android:background="@drawable/touch_btn_bg"
             android:layout_marginLeft="32dp"
             android:layout_marginRight="32dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="34dp"
             android:text="充值"
             android:textStyle="bold"
             android:textColor="@color/white"
-            android:textSize="20sp"></TextView>
+            android:textSize="20sp"></Button>
     </RelativeLayout>
 
 </LinearLayout>

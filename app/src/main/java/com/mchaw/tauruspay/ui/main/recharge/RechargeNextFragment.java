@@ -21,7 +21,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.mchaw.tauruspay.R;
-import com.mchaw.tauruspay.base.fragment.BaseFragment;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.bean.recharge.RechargeNextBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeSureBean;
@@ -37,9 +36,7 @@ import com.mchaw.tauruspay.ui.main.recharge.constract.RechargeNextConstract;
 import com.mchaw.tauruspay.ui.main.recharge.presenter.RechargeNextPresenter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -52,7 +49,7 @@ import butterknife.OnClick;
 public class RechargeNextFragment extends BasePresentFragment<RechargeNextPresenter> implements RechargeNextConstract.View, BaseQuickAdapter.OnItemChildClickListener {
     @BindView(R.id.tv_back_title)
     TextView tvBackTitle;
-    @BindView(R.id.tv_remittance_btn)
+    @BindView(R.id.btn_remittance_btn)
     TextView tvRemittanceBtn;
     @BindView(R.id.tv_remittance_notice)
     TextView tvRemittanceNotice;
@@ -103,7 +100,7 @@ public class RechargeNextFragment extends BasePresentFragment<RechargeNextPresen
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                tvIncomeNum.setText(s.toString()+".00");
+                tvIncomeNum.setText(s.toString());
                 outToNum = s.toString();
             }
 
@@ -124,7 +121,7 @@ public class RechargeNextFragment extends BasePresentFragment<RechargeNextPresen
         component.inject(this);
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_remittance_btn})
+    @OnClick({R.id.iv_back, R.id.btn_remittance_btn,R.id.btn_copy_btn})
     public void onClick(View view) {
         if (AntiShake.check(view.getId())) {    //判断是否多次点击
             return;
@@ -133,7 +130,7 @@ public class RechargeNextFragment extends BasePresentFragment<RechargeNextPresen
             case R.id.iv_back:
                 getActivity().finish();
                 break;
-            case R.id.tv_remittance_btn:
+            case R.id.btn_remittance_btn:
                 if (state == RECHARGEING) {
                     LoadingDialog.showDialog(getChildFragmentManager());
                     //服务器要的单位是分
@@ -146,6 +143,22 @@ public class RechargeNextFragment extends BasePresentFragment<RechargeNextPresen
                     LoadingDialog.showDialog(getChildFragmentManager());
                     presenter.getRechargeSureBean(orderNum, PreferencesUtils.getString(getContext(), "token"));
                 }
+                break;
+            case R.id.btn_copy_btn:
+                if(TextUtils.isEmpty(tvIncomeNum.getText())){
+                    return;
+                }
+                //获取剪贴板管理器：
+                ClipboardManager cm = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                // 创建普通字符型ClipData
+                ClipData mClipData = ClipData.newPlainText("Label", tvIncomeNum.getText());
+                // 将ClipData内容放到系统剪贴板里。
+                cm.setPrimaryClip(mClipData);
+                if(TextUtils.isEmpty(tvIncomeNum.getText())){
+                    ToastUtils.showShortToast(getContext(),"没有可复制的内容");
+                    return;
+                }
+                ToastUtils.showShortToast(getContext(),"已复制<"+tvIncomeNum.getText()+">到剪切板");
                 break;
             default:
                 break;
@@ -226,7 +239,7 @@ public class RechargeNextFragment extends BasePresentFragment<RechargeNextPresen
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
         RechargeTraBean rechargeTraBean = (RechargeTraBean) adapter.getItem(position);
         switch (view.getId()) {
-            case R.id.tv_copy_btn:
+            case R.id.btn_copy_btn:
                 //获取剪贴板管理器：
                 ClipboardManager cm = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
                 // 创建普通字符型ClipData

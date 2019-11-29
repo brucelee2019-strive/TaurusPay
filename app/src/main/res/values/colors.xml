@@ -238,4 +238,6 @@
 
     <color name="bg">#F0F0F0</color>
     <color name="txt_color">#48495F</color>
+    <color name="item_bg">#FFFFFF</color>
+    <color name="gray_color">#4b4b58</color>
 </resources>

@@ -88,15 +88,15 @@ public class RegisterFragment extends BasePresentFragment<RegisterPresenter> imp
         LoadingDialog.dismissDailog();
     }
 
-    @OnClick({R.id.tv_get_auth_code, R.id.tv_register_btn,R.id.iv_back})
+    @OnClick({R.id.btn_get_auth_code, R.id.btn_register_btn,R.id.iv_back})
     public void onClick(View view) {
         if (AntiShake.check(view.getId())) {    //判断是否多次点击
             return;
         }
         switch (view.getId()) {
-            case R.id.tv_get_auth_code:
+            case R.id.btn_get_auth_code:
                 break;
-            case R.id.tv_register_btn:
+            case R.id.btn_register_btn:
                 register(etAccount.getText().toString(),etPhoneNumber.getText().toString(),etAuthCode.getText().toString(),
                         etPasswd.getText().toString(),etPasswdSure.getText().toString(),etRealName.getText().toString(),etActiveCode.getText().toString());
                 break;

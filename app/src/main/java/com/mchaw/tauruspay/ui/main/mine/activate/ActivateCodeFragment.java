@@ -15,8 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.mchaw.tauruspay.R;
-import com.mchaw.tauruspay.base.fragment.BaseFragment;
-import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.base.fragment.BasePresentListFragment;
 import com.mchaw.tauruspay.bean.activate.ActivateCodeBean;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
@@ -130,7 +128,7 @@ public class ActivateCodeFragment extends BasePresentListFragment<ActivatePresen
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
         ActivateCodeBean activateCodeBean = (ActivateCodeBean) adapter.getItem(position);
         switch (view.getId()) {
-            case R.id.tv_copy:
+            case R.id.btn_copy:
                 //获取剪贴板管理器：
                 ClipboardManager cm = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
                 // 创建普通字符型ClipData
