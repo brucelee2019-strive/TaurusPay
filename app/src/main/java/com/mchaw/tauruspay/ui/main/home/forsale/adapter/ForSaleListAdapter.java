@@ -43,6 +43,7 @@ public class ForSaleListAdapter extends BaseQuickAdapter<QRCodeGroupBean, BaseVi
             }
         }
         helper.setText(R.id.tv_start_sail_btn,item.getStatus()==0?"开始代售":"停止代售");
+        helper.setTextColor(R.id.tv_start_sail_btn,ContextCompat.getColor(mContext,item.getStatus()==0?R.color.white:R.color.color_match_win));
     }
 
     private void setQRCodeStatus(QRCodeStallBean.QrcodesBean qrcodesBean, BaseViewHolder helper, int tag) {

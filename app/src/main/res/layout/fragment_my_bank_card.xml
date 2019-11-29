@@ -6,12 +6,11 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_my_bank_card"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@drawable/ds_ds_bg">
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="150dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/wdyhk_bd"></androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>
