@@ -38,11 +38,17 @@ public class ForSaleListPresenter extends RxPresenter<ForSaleListConstract.View>
                 .subscribeWith(new ResultObserver<List<QRCodeGroupBean>>() {
                     @Override
                     public void onSuccess(List<QRCodeGroupBean> list) {
+                        if (mView == null) {
+                            return;
+                        }
                         mView.setQRCodeGroupList(list);
                     }
 
                     @Override
                     public void onFail(String msg) {
+                        if (mView == null) {
+                            return;
+                        }
                         mView.setQRCodeGroupListFail();
                         mView.showError(msg);
                     }
@@ -81,11 +87,17 @@ public class ForSaleListPresenter extends RxPresenter<ForSaleListConstract.View>
                 .subscribeWith(new ResultObserver<StartOrOverSellBean>() {
                     @Override
                     public void onSuccess(StartOrOverSellBean bean) {
+                        if (mView == null) {
+                            return;
+                        }
                         mView.setStartingOrOverSell(bean);
                     }
 
                     @Override
                     public void onFail(String msg) {
+                        if (mView == null) {
+                            return;
+                        }
                         mView.showError(msg);
                     }
                 });

@@ -33,11 +33,17 @@ public class ActivatePresenter extends RxPresenter<ActivateConstract.View> imple
                 .subscribeWith(new ResultObserver<List<ActivateCodeBean>>() {
                     @Override
                     public void onSuccess(List<ActivateCodeBean> list) {
+                        if (mView == null) {
+                            return;
+                        }
                         mView.setActiveCodeList(list);
                     }
 
                     @Override
                     public void onFail(String msg) {
+                        if (mView == null) {
+                            return;
+                        }
                         mView.setActiveCodeListFail();
                         mView.showError(msg);
                     }

@@ -33,11 +33,17 @@ public class RechargeNextPresenter extends RxPresenter<RechargeNextConstract.Vie
                 .subscribeWith(new ResultObserver<RechargeNextBean>() {
                     @Override
                     public void onSuccess(RechargeNextBean rechargeNextBean) {
+                        if (mView == null) {
+                            return;
+                        }
                         mView.setRechargeNextBean(rechargeNextBean);
                     }
 
                     @Override
                     public void onFail(String msg) {
+                        if (mView == null) {
+                            return;
+                        }
                         mView.setRechargeNextFail();
                         mView.showError(msg);
                     }
@@ -51,11 +57,17 @@ public class RechargeNextPresenter extends RxPresenter<RechargeNextConstract.Vie
                 .subscribeWith(new ResultObserver<RechargeSureBean>() {
                     @Override
                     public void onSuccess(RechargeSureBean rechargeSureBean) {
+                        if (mView == null) {
+                            return;
+                        }
                         mView.setRechargeSureBean(rechargeSureBean);
                     }
 
                     @Override
                     public void onFail(String msg) {
+                        if (mView == null) {
+                            return;
+                        }
                         mView.setRechargeNextFail();
                         mView.showError(msg);
                     }

@@ -62,11 +62,17 @@ public class TransferAccountsPresenter extends RxPresenter<TransferAccountsConst
                 .subscribeWith(new ResultObserver<TransferAccountsBean>() {
                     @Override
                     public void onSuccess(TransferAccountsBean transferAccountsBean) {
+                        if (mView == null) {
+                            return;
+                        }
                         mView.setTransferAccountsBean(transferAccountsBean);
                     }
 
                     @Override
                     public void onFail(String msg) {
+                        if (mView == null) {
+                            return;
+                        }
                         mView.setTransferAccountsFail();
                         mView.showError(msg);
                     }

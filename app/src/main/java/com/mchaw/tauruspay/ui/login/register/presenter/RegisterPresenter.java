@@ -30,11 +30,17 @@ public class RegisterPresenter extends RxPresenter<RegisterConstract.View> imple
                 .subscribeWith(new ResultObserver<RegisterBean>() {
                     @Override
                     public void onSuccess(RegisterBean registerBean) {
+                        if (mView == null) {
+                            return;
+                        }
                         mView.setRegisterBean(registerBean);
                     }
 
                     @Override
                     public void onFail(String msg) {
+                        if (mView == null) {
+                            return;
+                        }
                         mView.showError(msg);
                         mView.setRegisterFail();
                     }

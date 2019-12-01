@@ -1,9 +1,12 @@
 package com.mchaw.tauruspay.ui.main.mine.qrcode;
 
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Path;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -11,6 +14,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
+import com.mchaw.tauruspay.MainActivity;
 import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
@@ -189,6 +195,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
         }
     }
 
+    private Animation animation;
     @OnClick({R.id.iv_back, R.id.iv_add_item, R.id.tv_right})
     public void onClick(View view) {
         if (AntiShake.check(view.getId())) {    //判断是否多次点击
@@ -199,6 +206,8 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
                 getActivity().finish();
                 break;
             case R.id.iv_add_item:
+                animation = AnimationUtils.loadAnimation(getContext(), R.anim.btn_normal_to_large);
+                ivAddItem.startAnimation(animation);
                 QRCodeGroupDialog.showDialog(getChildFragmentManager());
                 break;
             case R.id.tv_right:
@@ -617,6 +626,9 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if(animation!=null) {
+            animation.cancel();
+        }
         stopPolling();
     }
 }

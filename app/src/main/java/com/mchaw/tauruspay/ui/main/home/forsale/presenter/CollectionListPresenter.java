@@ -70,6 +70,9 @@ public class CollectionListPresenter extends RxPresenter<CollectionListConstract
 
                     @Override
                     public void onFail(String msg) {
+                        if (mView == null) {
+                            return;
+                        }
                         mView.showError(msg);
                     }
                 });

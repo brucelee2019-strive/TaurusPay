@@ -37,11 +37,17 @@ public class QRCodePresenter extends RxPresenter<QRCodeConstract.View> implement
                 .subscribeWith(new ResultObserver<List<QRCodeGroupBean>>() {
                     @Override
                     public void onSuccess(List<QRCodeGroupBean> list) {
+                        if (mView == null) {
+                            return;
+                        }
                         mView.setQRCodeGroupList(list);
                     }
 
                     @Override
                     public void onFail(String msg) {
+                        if (mView == null) {
+                            return;
+                        }
                         mView.setQRCodeGroupListFail();
                         mView.showError(msg);
                     }
@@ -55,11 +61,17 @@ public class QRCodePresenter extends RxPresenter<QRCodeConstract.View> implement
                 .subscribeWith(new ResultObserver<QRCodeGroupCreateBean>() {
                     @Override
                     public void onSuccess(QRCodeGroupCreateBean qrCodeGroupCreateBean) {
+                        if (mView == null) {
+                            return;
+                        }
                         mView.setQRCodeGroupBean(qrCodeGroupCreateBean);
                     }
 
                     @Override
                     public void onFail(String msg) {
+                        if (mView == null) {
+                            return;
+                        }
                         mView.showError(msg);
                     }
                 });
@@ -72,11 +84,17 @@ public class QRCodePresenter extends RxPresenter<QRCodeConstract.View> implement
                 .subscribeWith(new ResultObserver<QRCodeUrlBean>() {
                     @Override
                     public void onSuccess(QRCodeUrlBean bean) {
+                        if (mView == null) {
+                            return;
+                        }
                         mView.setUpLoadingQRCodeUrlBean(bean);
                     }
 
                     @Override
                     public void onFail(String msg) {
+                        if (mView == null) {
+                            return;
+                        }
                         mView.setUpLoadingQRCodeUrlBeanFail();
                         mView.showError(msg);
                     }
@@ -116,11 +134,17 @@ public class QRCodePresenter extends RxPresenter<QRCodeConstract.View> implement
                 .subscribeWith(new ResultObserver<DeleteQRCodeGroupBean>() {
                     @Override
                     public void onSuccess(DeleteQRCodeGroupBean bean) {
+                        if (mView == null) {
+                            return;
+                        }
                         mView.setDeleteQRCodeGroup(bean);
                     }
 
                     @Override
                     public void onFail(String msg) {
+                        if (mView == null) {
+                            return;
+                        }
                         mView.showError(msg);
                     }
                 });

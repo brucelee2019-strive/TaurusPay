@@ -34,11 +34,17 @@ public class BillPresenter extends RxPresenter<BillConstract.View> implements Bi
                 .subscribeWith(new ResultObserver<List<BillBean>>() {
                     @Override
                     public void onSuccess(List<BillBean> list) {
+                        if (mView == null) {
+                            return;
+                        }
                         mView.setBillList(list);
                     }
 
                     @Override
                     public void onFail(String msg) {
+                        if (mView == null) {
+                            return;
+                        }
                         mView.setBillListFail();
                         mView.showError(msg);
                     }

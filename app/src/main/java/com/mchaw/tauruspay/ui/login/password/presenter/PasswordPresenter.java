@@ -30,11 +30,17 @@ public class PasswordPresenter extends RxPresenter<PasswordConstract.View> imple
                 .subscribeWith(new ResultObserver<PasswordBean>() {
                     @Override
                     public void onSuccess(PasswordBean passwordBean) {
+                        if (mView == null) {
+                            return;
+                        }
                         mView.setPasswordBean(passwordBean);
                     }
 
                     @Override
                     public void onFail(String msg) {
+                        if (mView == null) {
+                            return;
+                        }
                         mView.setPasswordFail();
                         mView.showError(msg);
                     }

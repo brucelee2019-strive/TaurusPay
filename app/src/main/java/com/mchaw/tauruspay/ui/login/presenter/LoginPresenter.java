@@ -30,11 +30,17 @@ public class LoginPresenter extends RxPresenter<LoginConstract.View> implements 
                 .subscribeWith(new ResultObserver<LoginBean>() {
                     @Override
                     public void onSuccess(LoginBean loginBean) {
+                        if (mView == null) {
+                            return;
+                        }
                         mView.setLoginBean(loginBean);
                     }
 
                     @Override
                     public void onFail(String msg) {
+                        if (mView == null) {
+                            return;
+                        }
                         mView.setLoginFail();
                         mView.showError(msg);
                     }
