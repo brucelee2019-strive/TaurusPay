@@ -17,12 +17,11 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
-import com.mchaw.tauruspay.base.activity.BaseActivity;
 import com.mchaw.tauruspay.base.activity.BasePresenterActivity;
-import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.bean.eventbus.LoginoutEvent;
 import com.mchaw.tauruspay.bean.eventbus.SellInfoEvent;
-import com.mchaw.tauruspay.bean.eventbus.TradingBean;
+import com.mchaw.tauruspay.bean.eventbus.TradedBeanEvent;
+import com.mchaw.tauruspay.bean.eventbus.TradingBeanEvent;
 import com.mchaw.tauruspay.bean.home.HomeDataBean;
 import com.mchaw.tauruspay.bean.home.SellingOrderBean;
 import com.mchaw.tauruspay.common.Constant;
@@ -30,7 +29,6 @@ import com.mchaw.tauruspay.common.util.NoNullUtils;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.WarningToneUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
-import com.mchaw.tauruspay.ui.SplashActivity;
 import com.mchaw.tauruspay.ui.main.besure.BesureFragment;
 import com.mchaw.tauruspay.ui.main.home.HomeFragment;
 import com.mchaw.tauruspay.ui.main.home.forsale.constract.CollectionListConstract;
@@ -41,6 +39,7 @@ import com.mchaw.tauruspay.ui.main.recharge.RechargeFragment;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -63,7 +62,7 @@ public class MainActivity extends BasePresenterActivity<CollectionListPresenter>
     private BesureFragment besureFragment;
     private MineFragment mineFragment;
 
-    private static List<SellingOrderBean> sellingOrderBeanList;
+    private static List<SellingOrderBean> sellingOrderBeanList = new ArrayList<>();
 
     @BindView(R.id.bottom_view)
     BottomNavigationViewEx bottomView;
@@ -221,24 +220,38 @@ public class MainActivity extends BasePresenterActivity<CollectionListPresenter>
     @Override
     public void setTradingList(List<SellingOrderBean> list) {
         int all = 0;
+        TradingBeanEvent tradingBeanEvent = new TradingBeanEvent();
         if (list != null && list.size() > 0) {
-            if (list.size() > sellingOrderBeanList.size()) {
+            if(sellingOrderBeanList!=null && sellingOrderBeanList.size()>0) {
+                if (list.size() > sellingOrderBeanList.size()) {
+                    waringTone();
+                }
+            }else{
                 waringTone();
             }
-            sellingOrderBeanList = list;
             for (SellingOrderBean sellingOrderBean : list) {
                 all += sellingOrderBean.getAmount();
             }
+            tradingBeanEvent.setAll(all);
+            tradingBeanEvent.setRedPoint(list.size());
+        }else{
+            tradingBeanEvent.setAll(all);
+            tradingBeanEvent.setRedPoint(0);
         }
-        TradingBean tradingBean = new TradingBean();
-        tradingBean.setAll(all);
-        tradingBean.setRedPoint(list.size());
-        EventBus.getDefault().post(tradingBean);
+        sellingOrderBeanList = list;
+        EventBus.getDefault().post(tradingBeanEvent);
     }
 
     @Override
     public void setTradingListFail() {
 
+    }
+
+    @Override
+    public void setUpLodingReceivables() {
+        //更新收款列表
+        TradedBeanEvent tradedBeanEvent = new TradedBeanEvent();
+        EventBus.getDefault().post(tradedBeanEvent);
     }
 
     @Override

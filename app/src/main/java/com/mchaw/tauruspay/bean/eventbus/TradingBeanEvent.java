@@ -5,7 +5,7 @@ package com.mchaw.tauruspay.bean.eventbus;
  * @date : 2019/11/22 15:00
  * @description:
  */
-public class TradingBean {
+public class TradingBeanEvent {
     private int all;
     private int redPoint;
 

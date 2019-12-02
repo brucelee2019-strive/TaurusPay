@@ -65,7 +65,10 @@ public class CollectionListPresenter extends RxPresenter<CollectionListConstract
                 .subscribeWith(new ResultObserver<Integer>() {
                     @Override
                     public void onSuccess(Integer secceed) {
-
+                        if (mView == null) {
+                            return;
+                        }
+                        mView.setUpLodingReceivables();
                     }
 
                     @Override

@@ -10,17 +10,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
-import com.mchaw.tauruspay.base.fragment.BaseFragment;
-import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.base.fragment.BasePresentListFragment;
-import com.mchaw.tauruspay.base.mvp.presenter.RxPresenter;
-import com.mchaw.tauruspay.bean.eventbus.TradingBean;
+import com.mchaw.tauruspay.bean.eventbus.TradedBeanEvent;
+import com.mchaw.tauruspay.bean.eventbus.TradingBeanEvent;
 import com.mchaw.tauruspay.bean.home.HomeDataBean;
 import com.mchaw.tauruspay.bean.home.SellingOrderBean;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.main.home.forsale.adapter.CollectionListAdapter;
-import com.mchaw.tauruspay.ui.main.home.forsale.adapter.ForSaleListAdapter;
 import com.mchaw.tauruspay.ui.main.home.forsale.constract.CollectionListConstract;
 import com.mchaw.tauruspay.ui.main.home.forsale.presenter.CollectionListPresenter;
 
@@ -137,12 +134,26 @@ public class CollectionListFragment extends BasePresentListFragment<CollectionLi
     }
 
     @Override
+    public void setUpLodingReceivables() {
+
+    }
+
+    @Override
     public void setHomeDataBean(HomeDataBean homeDataBean) {
 
     }
 
     @Subscribe
-    public void tradingAmount(TradingBean event) {
+    public void tradingAmount(TradingBeanEvent event) {
+        if(event != null){
+            if(show) {
+                presenter.getTradingList(PreferencesUtils.getString(MyFrameApplication.getInstance(), "token"));
+            }
+        }
+    }
+
+    @Subscribe
+    public void tradedAmount(TradedBeanEvent event) {
         if(event != null){
             if(show) {
                 presenter.getTradingList(PreferencesUtils.getString(MyFrameApplication.getInstance(), "token"));

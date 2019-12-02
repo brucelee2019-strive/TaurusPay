@@ -16,7 +16,7 @@ public interface CollectionListConstract {
     interface View extends BaseView {
         void setTradingList(List<SellingOrderBean> list);
         void setTradingListFail();
-        //void setUpLodingReceivables(int succeed);
+        void setUpLodingReceivables();
 
         void setHomeDataBean(HomeDataBean homeDataBean);
     }
