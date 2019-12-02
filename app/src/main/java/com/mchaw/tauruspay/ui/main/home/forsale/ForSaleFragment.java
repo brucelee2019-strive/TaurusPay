@@ -159,7 +159,7 @@ public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> imple
             //小红点
             if (event.getRedPoint() > 0) {
                 tabLayout.showMsg(1, event.getRedPoint());
-                //tabLayout.setMsgMargin(1, (float) (ScreenUtils.getScreenWidth(getActivity())/3)- DensityUtils.dp2px(getActivity(), 16),0);
+                tabLayout.setMsgMargin(1, 80,0);
             } else {
                 tabLayout.hideMsg(1);
             }
