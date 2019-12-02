@@ -322,7 +322,7 @@ public class MainActivity extends BasePresenterActivity<CollectionListPresenter>
     public void provideToNotice(int amout) {
         for (SellingOrderBean sellingOrderBean : sellingOrderBeanList) {
             if (amout == sellingOrderBean.getAmount()) {
-                presenter.upLodingReceivables(sellingOrderBean.getCodeid(), PreferencesUtils.getString(getApplicationContext(), "token"));
+                presenter.upLodingReceivables(String.valueOf(sellingOrderBean.getId()), PreferencesUtils.getString(getApplicationContext(), "token"));
             }
         }
     }
