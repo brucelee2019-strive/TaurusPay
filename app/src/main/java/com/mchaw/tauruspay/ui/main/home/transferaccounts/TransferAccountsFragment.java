@@ -1,5 +1,7 @@
 package com.mchaw.tauruspay.ui.main.home.transferaccounts;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -7,20 +9,29 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.bean.eventbus.SellInfoEvent;
 import com.mchaw.tauruspay.bean.home.HomeDataBean;
 import com.mchaw.tauruspay.bean.home.TransferAccountsBean;
+import com.mchaw.tauruspay.bean.home.TransferUsedAccountsBean;
+import com.mchaw.tauruspay.common.Constant;
 import com.mchaw.tauruspay.common.dialog.LoadingDialog;
+import com.mchaw.tauruspay.common.util.GsonUtils;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.StringUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.main.home.transferaccounts.constract.TransferAccountsConstract;
+import com.mchaw.tauruspay.ui.main.home.transferaccounts.dialog.TransferAccountDialog;
 import com.mchaw.tauruspay.ui.main.home.transferaccounts.presenter.TransferAccountsPresenter;
+import com.mchaw.tauruspay.ui.main.mine.dialog.ChangeBankCardDialog;
 
 import org.greenrobot.eventbus.Subscribe;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -30,7 +41,7 @@ import butterknife.OnClick;
  * @date : 2019/11/6 16:41
  * @description:
  */
-public class TransferAccountsFragment extends BasePresentFragment<TransferAccountsPresenter> implements TransferAccountsConstract.View {
+public class TransferAccountsFragment extends BasePresentFragment<TransferAccountsPresenter> implements TransferAccountsConstract.View, TransferAccountDialog.ConfirmListener {
 
     @BindView(R.id.tv_back_title)
     TextView tvBackTitle;
@@ -49,6 +60,13 @@ public class TransferAccountsFragment extends BasePresentFragment<TransferAccoun
 
     private String allKuCun;
 
+    private List<TransferUsedAccountsBean> transferUsedAccountsBeanList = new ArrayList<>();
+
+    @Override
+    protected void getIntentData() {
+        super.getIntentData();
+        transferUsedAccountsBeanList = GsonUtils.parseListFromJson(PreferencesUtils.getString(getActivity(), Constant.USED_ACCOUNT), TransferUsedAccountsBean.class);
+    }
 
     @Override
     protected int getContentViewId() {
@@ -81,13 +99,22 @@ public class TransferAccountsFragment extends BasePresentFragment<TransferAccoun
             ToastUtils.showShortToast(getContext(), "服务器返回数据为空！");
             return;
         }
-        ToastUtils.showShortToast(getContext(), "转账成功");
+        TransferUsedAccountsBean transferUsedAccountsBean = new TransferUsedAccountsBean();
+        transferUsedAccountsBean.setAccount(etAccount.getText().toString());
+        transferUsedAccountsBean.setName(etName.getText().toString());
+        if (transferUsedAccountsBeanList == null) {
+            transferUsedAccountsBeanList = new ArrayList<>();
+        }
+        transferUsedAccountsBeanList.add(transferUsedAccountsBean);
+        PreferencesUtils.putString(getActivity(), Constant.USED_ACCOUNT, GsonUtils.parserListToJson(transferUsedAccountsBeanList));
+        ToastUtils.showShortToast(getContext(), "转账成功！");
         getActivity().finish();
     }
 
     @Override
     public void setTransferAccountsFail() {
         LoadingDialog.dismissDailog();
+        ToastUtils.showShortToast(getContext(), "转账失败！");
     }
 
     @Override
@@ -103,18 +130,14 @@ public class TransferAccountsFragment extends BasePresentFragment<TransferAccoun
         }
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_transfer_account_sure, R.id.tv_all_repertory})
+    @OnClick({R.id.iv_back, R.id.tv_transfer_account_sure, R.id.tv_all_repertory,R.id.iv_account})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
                 getActivity().finish();
                 break;
             case R.id.tv_transfer_account_sure:
-                presenter.getTransferAccountsBean(PreferencesUtils.getString(getContext(), "token"), etCode.getText().toString(),
-                        etAccount.getText().toString(),
-                        etName.getText().toString(),
-                        etAmout.getText().toString());
-                LoadingDialog.showDialog(getChildFragmentManager());
+                TransferAccountDialog.showDialog(getChildFragmentManager());
                 break;
             case R.id.tv_all_repertory:
                 if (allKuCun.equals("0")) {
@@ -123,10 +146,37 @@ public class TransferAccountsFragment extends BasePresentFragment<TransferAccoun
                 }
                 etAmout.setText(allKuCun);
                 break;
+            case R.id.iv_account:
+                startFragmentForResult(new UsedAccountFragment(), Constant.USED_ACCOUNT_BACK);
+                break;
             default:
                 break;
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case Constant.USED_ACCOUNT_BACK:
+                    String account = data.getStringExtra(Constant.INTENT_ACCOUNT);
+                    String name = data.getStringExtra(Constant.INTENT_NAME);
+                    etAccount.setText(account);
+                    etName.setText(name);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 
+    @Override
+    public void onClickComplete() {
+        presenter.getTransferAccountsBean(PreferencesUtils.getString(getContext(), "token"), etCode.getText().toString(),
+                etAccount.getText().toString(),
+                etName.getText().toString(),
+                etAmout.getText().toString());
+        LoadingDialog.showDialog(getChildFragmentManager());
+    }
 }

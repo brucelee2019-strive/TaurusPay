@@ -26,6 +26,7 @@ public class Constant {
      * Intent常量
      */
     public static final String INTENT_ID = "id";
+    public static final String INTENT_ACCOUNT = "account";
     public static final String INTENT_NAME = "name";
     public static final String INTENT_URL = "url";
     public static final String INTENT_STATUE = "statue";
@@ -61,7 +62,7 @@ public class Constant {
      * ActivityForResult 返回值
      */
     public static final int RECHARGE_NEXT_FRAGMENT_BACK = 100;
-
+    public static final int USED_ACCOUNT_BACK = 103;
     /**
      * 二维码库界面状态值
      */
@@ -72,5 +73,10 @@ public class Constant {
      * 提示音状态
      */
     public static final String WARNING_TONE = "warning_tone";
+
+    /**
+     * 常用转账账户
+     */
+    public static final String USED_ACCOUNT = "used_account";
 
 }
