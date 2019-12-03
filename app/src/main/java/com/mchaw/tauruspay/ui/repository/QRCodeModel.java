@@ -1,10 +1,9 @@
 package com.mchaw.tauruspay.ui.repository;
 
-import com.mchaw.tauruspay.bean.ALiYunCodeBean;
 import com.mchaw.tauruspay.bean.qrcode.DeleteQRCodeGroupBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupCreateBean;
-import com.mchaw.tauruspay.bean.qrcode.QRCodeStallBean;
+import com.mchaw.tauruspay.bean.qrcode.GroupinfoBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeUrlBean;
 import com.mchaw.tauruspay.http.ResultDisposable;
 import com.mchaw.tauruspay.http.ScheduleTranformer;
@@ -48,10 +47,10 @@ public class QRCodeModel extends BaseModel{
     }
 
     //获取分组二维码信息
-    public Observable<QRCodeStallBean> getQRCodeStalls(String groupid, String api_token) {
+    public Observable<GroupinfoBean> getQRCodeStalls(String groupid, String api_token) {
         return apiService.getQRCodeStalls(groupid,api_token)
-                .compose(new ResultDisposable<QRCodeStallBean>())
-                .compose(new ScheduleTranformer<QRCodeStallBean>());
+                .compose(new ResultDisposable<GroupinfoBean>())
+                .compose(new ScheduleTranformer<GroupinfoBean>());
     }
 
     //删除二维码分组

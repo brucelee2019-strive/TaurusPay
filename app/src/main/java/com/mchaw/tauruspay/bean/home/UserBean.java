@@ -5,7 +5,7 @@ package com.mchaw.tauruspay.bean.home;
  * @date : 2019/11/12 16:46
  * @description:
  */
-public class HomeDataBean {
+public class UserBean {
 
 
     /**
@@ -21,6 +21,16 @@ public class HomeDataBean {
     private long daycount;
     private long daypoint;
     private long daydeposit;
+    private long dayonsale;
+    private int state;
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
 
     public long getDeposit() {
         return deposit;
@@ -60,5 +70,13 @@ public class HomeDataBean {
 
     public void setDaydeposit(long daydeposit) {
         this.daydeposit = daydeposit;
+    }
+
+    public long getDayonsale() {
+        return dayonsale;
+    }
+
+    public void setDayonsale(long dayonsale) {
+        this.dayonsale = dayonsale;
     }
 }

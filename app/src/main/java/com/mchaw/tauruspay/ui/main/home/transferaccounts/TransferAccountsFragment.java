@@ -9,11 +9,9 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
-import com.mchaw.tauruspay.bean.eventbus.SellInfoEvent;
-import com.mchaw.tauruspay.bean.home.HomeDataBean;
+import com.mchaw.tauruspay.bean.home.UserBean;
 import com.mchaw.tauruspay.bean.home.TransferAccountsBean;
 import com.mchaw.tauruspay.bean.home.TransferUsedAccountsBean;
 import com.mchaw.tauruspay.common.Constant;
@@ -26,7 +24,6 @@ import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.main.home.transferaccounts.constract.TransferAccountsConstract;
 import com.mchaw.tauruspay.ui.main.home.transferaccounts.dialog.TransferAccountDialog;
 import com.mchaw.tauruspay.ui.main.home.transferaccounts.presenter.TransferAccountsPresenter;
-import com.mchaw.tauruspay.ui.main.mine.dialog.ChangeBankCardDialog;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -118,8 +115,8 @@ public class TransferAccountsFragment extends BasePresentFragment<TransferAccoun
     }
 
     @Override
-    public void setHomeDataBean(HomeDataBean homeDataBean) {
-        tvAllCost.setText(StringUtils.fenToYuan(homeDataBean.getDeposit()));
+    public void setHomeDataBean(UserBean userBean) {
+        tvAllCost.setText(StringUtils.fenToYuan(userBean.getDeposit()));
     }
 
     @Subscribe
@@ -140,7 +137,7 @@ public class TransferAccountsFragment extends BasePresentFragment<TransferAccoun
                 TransferAccountDialog.showDialog(getChildFragmentManager());
                 break;
             case R.id.tv_all_repertory:
-                if (allKuCun.equals("0")) {
+                if ("0".equals(allKuCun)) {
                     ToastUtils.showShortToast(getContext(),"亲，木有话费");
                     return;
                 }

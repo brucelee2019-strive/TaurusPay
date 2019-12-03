@@ -2,7 +2,7 @@ package com.mchaw.tauruspay.ui.main.home.constract;
 
 import com.mchaw.tauruspay.base.mvp.presenter.BasePresenter;
 import com.mchaw.tauruspay.base.mvp.view.BaseView;
-import com.mchaw.tauruspay.bean.home.HomeDataBean;
+import com.mchaw.tauruspay.bean.home.UserBean;
 
 /**
  * @author Bruce Lee
@@ -11,7 +11,7 @@ import com.mchaw.tauruspay.bean.home.HomeDataBean;
  */
 public interface HomeConstract {
     interface View extends BaseView {
-        void setHomeDataBean(HomeDataBean homeDataBean);
+        void setHomeDataBean(UserBean userBean);
     }
     interface Presenter extends BasePresenter<HomeConstract.View> {
         void getHomeDataBean(String api_token);

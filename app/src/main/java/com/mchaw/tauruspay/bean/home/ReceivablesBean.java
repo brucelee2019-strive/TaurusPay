@@ -5,18 +5,9 @@ package com.mchaw.tauruspay.bean.home;
  * @date : 2019/11/7 14:31
  * @description:
  */
-public class SellingOrderBean {
-
-    /**
-     * id : 2
-     * timeout : 300
-     * time : 1574320705
-     * amount : 30300
-     * codeid : 2
-     * status : 0
-     */
-
+public class ReceivablesBean {
     private int id;
+    private String orderid;
     private int timeout;
     private int time;
     private int amount;
@@ -29,6 +20,14 @@ public class SellingOrderBean {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getOrderid() {
+        return orderid;
+    }
+
+    public void setOrderid(String orderid) {
+        this.orderid = orderid;
     }
 
     public int getTimeout() {

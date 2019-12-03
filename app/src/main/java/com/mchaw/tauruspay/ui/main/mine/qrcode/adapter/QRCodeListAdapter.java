@@ -9,7 +9,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupBean;
-import com.mchaw.tauruspay.bean.qrcode.QRCodeStallBean;
+import com.mchaw.tauruspay.bean.qrcode.GroupinfoBean;
 import com.mchaw.tauruspay.common.Constant;
 import com.mchaw.tauruspay.common.util.StringUtils;
 
@@ -50,7 +50,7 @@ public class QRCodeListAdapter extends BaseQuickAdapter<QRCodeGroupBean, BaseVie
         helper.setGone(R.id.tv_show_order_list,!item.isCanClickShowItems());
     }
 
-    private void setQRCodeStatus(QRCodeStallBean.QrcodesBean qrcodesBean,BaseViewHolder helper,int tag,int type) {
+    private void setQRCodeStatus(GroupinfoBean.QrcodesBean qrcodesBean, BaseViewHolder helper, int tag, int type) {
         switch (tag) {
             case 0:
                 helper.setImageResource(R.id.iv_303,qrcodesBean.getStatus()==2?(type==1?R.drawable.qrcode_auditing:R.drawable.qrcode_auditing_wx):(qrcodesBean.getStatus()==1?(type==1?R.drawable.qrcode_change:R.drawable.qrcode_change_wx):(type==1?R.drawable.qrcode_add:R.drawable.qrcode_add_wx)));

@@ -3,10 +3,9 @@ package com.mchaw.tauruspay.bean.eventbus;
 /**
  * @author Bruce Lee
  * @date : 2019/11/22 15:00
- * @description:
+ * @description: 小红点通知
  */
 public class TradingBeanEvent {
-    private int all;
     private int redPoint;
 
     public int getRedPoint() {
@@ -15,13 +14,5 @@ public class TradingBeanEvent {
 
     public void setRedPoint(int redPoint) {
         this.redPoint = redPoint;
-    }
-
-    public int getAll() {
-        return all;
-    }
-
-    public void setAll(int all) {
-        this.all = all;
     }
 }

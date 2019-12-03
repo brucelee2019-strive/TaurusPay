@@ -4,7 +4,7 @@ import com.mchaw.tauruspay.base.mvp.presenter.RxPresenter;
 import com.mchaw.tauruspay.bean.qrcode.DeleteQRCodeGroupBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupCreateBean;
-import com.mchaw.tauruspay.bean.qrcode.QRCodeStallBean;
+import com.mchaw.tauruspay.bean.qrcode.GroupinfoBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeUrlBean;
 import com.mchaw.tauruspay.http.ResultObserver;
 import com.mchaw.tauruspay.ui.main.mine.qrcode.constract.QRCodeConstract;
@@ -108,9 +108,9 @@ public class QRCodePresenter extends RxPresenter<QRCodeConstract.View> implement
     public void getQRCodeStalls(String groupid, String api_token) {
         removeSubscribe(qrCodeStallsDisposable);
         qrCodeStallsDisposable = qrCodeModel.getQRCodeStalls(groupid, api_token)
-                .subscribeWith(new ResultObserver<QRCodeStallBean>() {
+                .subscribeWith(new ResultObserver<GroupinfoBean>() {
                     @Override
-                    public void onSuccess(QRCodeStallBean bean) {
+                    public void onSuccess(GroupinfoBean bean) {
                         if (mView == null) {
                             return;
                         }

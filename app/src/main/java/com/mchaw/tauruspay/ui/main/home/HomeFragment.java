@@ -11,8 +11,9 @@ import androidx.annotation.Nullable;
 import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
-import com.mchaw.tauruspay.bean.eventbus.SellInfoEvent;
-import com.mchaw.tauruspay.bean.home.HomeDataBean;
+import com.mchaw.tauruspay.bean.eventbus.LoginSucceedEvent;
+import com.mchaw.tauruspay.bean.eventbus.mainpolling.MainPollingUserEvent;
+import com.mchaw.tauruspay.bean.home.UserBean;
 import com.mchaw.tauruspay.common.util.OneClick.AntiShake;
 import com.mchaw.tauruspay.common.util.StringUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
@@ -85,7 +86,9 @@ public class HomeFragment extends BasePresentFragment<HomePresenter> implements 
         if(hidden){
 
         }else{
-            //presenter.getHomeDataBean(PreferencesUtils.getString(getContext(),"token"));
+            if(!TextUtils.isEmpty(MyFrameApplication.getInstance().tokenStr)) {
+                presenter.getHomeDataBean(MyFrameApplication.getInstance().tokenStr);
+            }
         }
     }
 
@@ -109,7 +112,9 @@ public class HomeFragment extends BasePresentFragment<HomePresenter> implements 
     @Override
     public void onResume() {
         super.onResume();
-        //presenter.getHomeDataBean(PreferencesUtils.getString(getContext(),"token"));
+        if(!TextUtils.isEmpty(MyFrameApplication.getInstance().tokenStr)) {
+            presenter.getHomeDataBean(MyFrameApplication.getInstance().tokenStr);
+        }
     }
 
     @OnClick({R.id.btn_transfer_btn, R.id.btn_start_sail})
@@ -130,22 +135,32 @@ public class HomeFragment extends BasePresentFragment<HomePresenter> implements 
     }
 
     @Override
-    public void setHomeDataBean(HomeDataBean homeDataBean) {
-        tvRepertory.setText(StringUtils.fenToYuan(homeDataBean.getDeposit()));
-        tvTodayAgencyIncome.setText(StringUtils.fenToYuan(homeDataBean.getDaypoint()));
-        tvTodayMoneyForSale.setText(StringUtils.fenToYuan(homeDataBean.getDayamount()));
-        tvTodayTimeForSale.setText(StringUtils.fenToYuan(homeDataBean.getDaycount()));
-        tvAlreadyIncome.setText(StringUtils.fenToYuan(homeDataBean.getDaydeposit()));
+    public void setHomeDataBean(UserBean userBean) {
+        tvRepertory.setText(StringUtils.fenToYuan(userBean.getDeposit()));
+        tvTodayAgencyIncome.setText(StringUtils.fenToYuan(userBean.getDaypoint()));
+        tvTodayMoneyForSale.setText(StringUtils.fenToYuan(userBean.getDayamount()));
+        tvTodayTimeForSale.setText(StringUtils.fenToYuan(userBean.getDaycount()));
+        tvAlreadyIncome.setText(StringUtils.fenToYuan(userBean.getDaydeposit()));
     }
 
     @Subscribe
-    public void sellInfo(SellInfoEvent event) {
+    public void sellInfo(MainPollingUserEvent event) {
         if(event != null){
             tvRepertory.setText(StringUtils.fenToYuan(event.getKucun()));
             tvTodayAgencyIncome.setText(StringUtils.fenToYuan(event.getDangrishouyi()));
             tvTodayMoneyForSale.setText(StringUtils.fenToYuan(event.getDangrikeshouedu()));
             tvTodayTimeForSale.setText(StringUtils.fenToYuan(event.getDangrikeshoudanshu()));
             tvAlreadyIncome.setText(StringUtils.fenToYuan(event.getDangriyishouedu()));
+        }
+    }
+
+    @Subscribe
+    public void loginSucceed(LoginSucceedEvent event) {
+        if (event == null) {
+            return;
+        }
+        if(!TextUtils.isEmpty(MyFrameApplication.getInstance().tokenStr)) {
+            presenter.getHomeDataBean(MyFrameApplication.getInstance().tokenStr);
         }
     }
 }

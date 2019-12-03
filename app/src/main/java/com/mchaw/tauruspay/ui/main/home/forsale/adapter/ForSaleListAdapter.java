@@ -8,7 +8,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupBean;
-import com.mchaw.tauruspay.bean.qrcode.QRCodeStallBean;
+import com.mchaw.tauruspay.bean.qrcode.GroupinfoBean;
 import com.mchaw.tauruspay.common.util.StringUtils;
 
 import java.util.List;
@@ -46,7 +46,7 @@ public class ForSaleListAdapter extends BaseQuickAdapter<QRCodeGroupBean, BaseVi
         helper.setTextColor(R.id.tv_start_sail_btn,ContextCompat.getColor(mContext,item.getStatus()==0?R.color.white:R.color.color_match_win));
     }
 
-    private void setQRCodeStatus(QRCodeStallBean.QrcodesBean qrcodesBean, BaseViewHolder helper, int tag) {
+    private void setQRCodeStatus(GroupinfoBean.QrcodesBean qrcodesBean, BaseViewHolder helper, int tag) {
         switch (tag) {
             case 0:
                 helper.setText(R.id.tv_up_303, StringUtils.fenToYuanInt(qrcodesBean.getQuota()));

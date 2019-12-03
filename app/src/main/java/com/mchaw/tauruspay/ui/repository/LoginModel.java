@@ -1,7 +1,8 @@
 package com.mchaw.tauruspay.ui.repository;
 
+import com.mchaw.tauruspay.bean.MainPollingBean;
 import com.mchaw.tauruspay.bean.activate.ActivateCodeBean;
-import com.mchaw.tauruspay.bean.home.HomeDataBean;
+import com.mchaw.tauruspay.bean.home.UserBean;
 import com.mchaw.tauruspay.bean.login.LoginBean;
 import com.mchaw.tauruspay.bean.login.PasswordBean;
 import com.mchaw.tauruspay.bean.login.RegisterBean;
@@ -43,10 +44,10 @@ public class LoginModel extends BaseModel{
                 .compose(new ScheduleTranformer<PasswordBean>());
     }
     //获取个人信息
-    public Observable<HomeDataBean> getHomeDataBean(String token) {
+    public Observable<UserBean> getHomeDataBean(String token) {
         return apiService.getHomeDataBean(token)
-                .compose(new ResultDisposable<HomeDataBean>())
-                .compose(new ScheduleTranformer<HomeDataBean>());
+                .compose(new ResultDisposable<UserBean>())
+                .compose(new ScheduleTranformer<UserBean>());
     }
 
     //获取个人邀请码
@@ -54,5 +55,12 @@ public class LoginModel extends BaseModel{
         return apiService.getActiveCodeList(api_token)
                 .compose(new ResultDisposable<List<ActivateCodeBean>>())
                 .compose(new ScheduleTranformer<List<ActivateCodeBean>>());
+    }
+
+    //大轮询
+    public Observable<MainPollingBean> getMainPollingBean(String api_token, String groupid) {
+        return apiService.getMainPollingBean(api_token,groupid)
+                .compose(new ResultDisposable<MainPollingBean>())
+                .compose(new ScheduleTranformer<MainPollingBean>());
     }
 }

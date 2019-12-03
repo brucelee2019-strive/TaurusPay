@@ -2,12 +2,7 @@ package com.mchaw.tauruspay.ui.main.home.forsale.constract;
 
 import com.mchaw.tauruspay.base.mvp.presenter.BasePresenter;
 import com.mchaw.tauruspay.base.mvp.view.BaseView;
-import com.mchaw.tauruspay.bean.home.StartOrOverSellBean;
-import com.mchaw.tauruspay.bean.home.HomeDataBean;
-import com.mchaw.tauruspay.bean.home.SelledOrderBean;
-import com.mchaw.tauruspay.bean.home.SellingOrderBean;
-
-import java.util.List;
+import com.mchaw.tauruspay.bean.home.UserBean;
 
 /**
  * @author Bruce Lee
@@ -16,7 +11,7 @@ import java.util.List;
  */
 public interface ForSaleConstract {
     interface View extends BaseView {
-        void setHomeDataBean(HomeDataBean homeDataBean);
+        void setHomeDataBean(UserBean userBean);
     }
     interface Presenter extends BasePresenter<View> {
         void getHomeDataBean(String api_token);

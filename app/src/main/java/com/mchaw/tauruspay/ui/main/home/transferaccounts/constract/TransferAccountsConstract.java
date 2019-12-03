@@ -2,7 +2,7 @@ package com.mchaw.tauruspay.ui.main.home.transferaccounts.constract;
 
 import com.mchaw.tauruspay.base.mvp.presenter.BasePresenter;
 import com.mchaw.tauruspay.base.mvp.view.BaseView;
-import com.mchaw.tauruspay.bean.home.HomeDataBean;
+import com.mchaw.tauruspay.bean.home.UserBean;
 import com.mchaw.tauruspay.bean.home.TransferAccountsBean;
 
 /**
@@ -14,7 +14,7 @@ public interface TransferAccountsConstract {
     interface View extends BaseView {
         void setTransferAccountsBean(TransferAccountsBean transferAccountsBean);
         void setTransferAccountsFail();
-        void setHomeDataBean(HomeDataBean homeDataBean);
+        void setHomeDataBean(UserBean userBean);
     }
     interface Presenter extends BasePresenter<TransferAccountsConstract.View> {
         void getTransferAccountsBean(String token,String code,String account,String payname,String amount);

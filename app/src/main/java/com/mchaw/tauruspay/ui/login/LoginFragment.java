@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
+import com.mchaw.tauruspay.bean.eventbus.LoginSucceedEvent;
 import com.mchaw.tauruspay.bean.login.LoginBean;
 import com.mchaw.tauruspay.common.dialog.LoadingDialog;
 import com.mchaw.tauruspay.common.util.OneClick.AntiShake;
@@ -19,6 +20,8 @@ import com.mchaw.tauruspay.ui.login.constract.LoginConstract;
 import com.mchaw.tauruspay.ui.login.password.PasswordFragment;
 import com.mchaw.tauruspay.ui.login.presenter.LoginPresenter;
 import com.mchaw.tauruspay.ui.login.register.RegisterFragment;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -67,6 +70,7 @@ public class LoginFragment extends BasePresentFragment<LoginPresenter> implement
         PreferencesUtils.putString(getContext(),"token",loginBean.getToken());
         PreferencesUtils.putString(getContext(),"name",loginBean.getName());
         PreferencesUtils.putString(getContext(),"payname",loginBean.getPayname());
+        EventBus.getDefault().post(new LoginSucceedEvent());
         getActivity().finish();
     }
 

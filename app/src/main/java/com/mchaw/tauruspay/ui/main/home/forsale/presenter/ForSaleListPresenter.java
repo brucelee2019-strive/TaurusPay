@@ -3,7 +3,7 @@ package com.mchaw.tauruspay.ui.main.home.forsale.presenter;
 import com.mchaw.tauruspay.base.mvp.presenter.RxPresenter;
 import com.mchaw.tauruspay.bean.home.StartOrOverSellBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupBean;
-import com.mchaw.tauruspay.bean.qrcode.QRCodeStallBean;
+import com.mchaw.tauruspay.bean.qrcode.GroupinfoBean;
 import com.mchaw.tauruspay.http.ResultObserver;
 import com.mchaw.tauruspay.ui.main.home.forsale.constract.ForSaleListConstract;
 import com.mchaw.tauruspay.ui.repository.QRCodeModel;
@@ -61,9 +61,9 @@ public class ForSaleListPresenter extends RxPresenter<ForSaleListConstract.View>
     public void getQRCodeStalls(String groupid, String api_token) {
         removeSubscribe(qrCodeStallsDisposable);
         qrCodeStallsDisposable = qrCodeModel.getQRCodeStalls(groupid,api_token)
-                .subscribeWith(new ResultObserver<QRCodeStallBean>() {
+                .subscribeWith(new ResultObserver<GroupinfoBean>() {
                     @Override
-                    public void onSuccess(QRCodeStallBean bean) {
+                    public void onSuccess(GroupinfoBean bean) {
                         if (mView == null) {
                             return;
                         }

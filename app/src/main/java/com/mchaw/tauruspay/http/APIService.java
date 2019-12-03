@@ -1,11 +1,12 @@
 package com.mchaw.tauruspay.http;
 
 
+import com.mchaw.tauruspay.bean.MainPollingBean;
 import com.mchaw.tauruspay.bean.ResultBean;
 import com.mchaw.tauruspay.bean.activate.ActivateCodeBean;
 import com.mchaw.tauruspay.bean.bill.BillBean;
-import com.mchaw.tauruspay.bean.home.HomeDataBean;
-import com.mchaw.tauruspay.bean.home.SellingOrderBean;
+import com.mchaw.tauruspay.bean.home.UserBean;
+import com.mchaw.tauruspay.bean.home.ReceivablesBean;
 import com.mchaw.tauruspay.bean.home.StartOrOverSellBean;
 import com.mchaw.tauruspay.bean.home.TransferAccountsBean;
 import com.mchaw.tauruspay.bean.login.LoginBean;
@@ -14,7 +15,7 @@ import com.mchaw.tauruspay.bean.login.RegisterBean;
 import com.mchaw.tauruspay.bean.qrcode.DeleteQRCodeGroupBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupCreateBean;
-import com.mchaw.tauruspay.bean.qrcode.QRCodeStallBean;
+import com.mchaw.tauruspay.bean.qrcode.GroupinfoBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeUrlBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeNextBean;
@@ -67,7 +68,7 @@ public interface APIService {
     Observable<ResultBean<List<RechargeBean>>> getRechargeList(@Field("api_token") String api_token);
 
     @GET("my/sellinfo")
-    Observable<ResultBean<HomeDataBean>> getHomeDataBean(@Query("api_token") String api_token);
+    Observable<ResultBean<UserBean>> getHomeDataBean(@Query("api_token") String api_token);
 
     @FormUrlEncoded
     @POST("sell/mygroup")
@@ -83,7 +84,7 @@ public interface APIService {
 
     @FormUrlEncoded
     @POST("sell/groupinfo/{groupid}")
-    Observable<ResultBean<QRCodeStallBean>> getQRCodeStalls(@Path("groupid") String groupid, @Field("api_token") String api_token);
+    Observable<ResultBean<GroupinfoBean>> getQRCodeStalls(@Path("groupid") String groupid, @Field("api_token") String api_token);
 
     @FormUrlEncoded
     @POST("sell/deletegroup/{groupid}")
@@ -99,7 +100,7 @@ public interface APIService {
 
     @FormUrlEncoded
     @POST("sell/myreceivables")
-    Observable<ResultBean<List<SellingOrderBean>>> getTradingList(@Field("api_token") String api_token);
+    Observable<ResultBean<List<ReceivablesBean>>> getTradingList(@Field("api_token") String api_token);
 
 
     @FormUrlEncoded
@@ -113,5 +114,10 @@ public interface APIService {
     @FormUrlEncoded
     @POST("my/selllog")
     Observable<ResultBean<List<BillBean>>> getBillList(@Field("api_token") String api_token);
+
+    @FormUrlEncoded
+    @POST("my/polling")
+    Observable<ResultBean<MainPollingBean>> getMainPollingBean(@Field("api_token") String api_token,@Field("groupid") String groupid);
+
 
 }

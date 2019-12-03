@@ -1,12 +1,9 @@
 package com.mchaw.tauruspay.ui.main.mine.qrcode;
 
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Path;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -25,16 +22,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
-import com.mchaw.tauruspay.MainActivity;
 import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
-import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.base.fragment.BasePresentListFragment;
 import com.mchaw.tauruspay.bean.ALiYunCodeBean;
 import com.mchaw.tauruspay.bean.qrcode.DeleteQRCodeGroupBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupCreateBean;
-import com.mchaw.tauruspay.bean.qrcode.QRCodeStallBean;
+import com.mchaw.tauruspay.bean.qrcode.GroupinfoBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeUrlBean;
 import com.mchaw.tauruspay.common.Constant;
 import com.mchaw.tauruspay.common.util.Base64Utils;
@@ -317,7 +312,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
                 if (!ishow) {
                     groupid = qrCodeGroupBean.getId();
                     //presenter.getQRCodeStalls(String.valueOf(groupid), PreferencesUtils.getString(getContext(), "token"));
-                    startPolling(1);
+                    startPolling(10);
                 } else {
                     stopPolling();
                 }
@@ -534,7 +529,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
      * @param bean
      */
     @Override
-    public void setQRCodeStalls(QRCodeStallBean bean) {
+    public void setQRCodeStalls(GroupinfoBean bean) {
         //组装数据给qrCodeListAdapter
         if (bean == null) {
             ToastUtils.showShortToast(getContext(), "服务器返回数据为null!");

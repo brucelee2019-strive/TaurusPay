@@ -31,7 +31,7 @@ public class QRCodeGroupBean {
     private boolean showItems = false;
 
     //QrcodesBean的list
-    private List<QRCodeStallBean.QrcodesBean> qrcodes;
+    private List<GroupinfoBean.QrcodesBean> qrcodes;
 
     //控制删除按钮是否显示
     private int canDelete;
@@ -55,11 +55,11 @@ public class QRCodeGroupBean {
         this.canDelete = canDelete;
     }
 
-    public List<QRCodeStallBean.QrcodesBean> getQrcodes() {
+    public List<GroupinfoBean.QrcodesBean> getQrcodes() {
         return qrcodes;
     }
 
-    public void setQrcodes(List<QRCodeStallBean.QrcodesBean> qrcodes) {
+    public void setQrcodes(List<GroupinfoBean.QrcodesBean> qrcodes) {
         this.qrcodes = qrcodes;
     }
 

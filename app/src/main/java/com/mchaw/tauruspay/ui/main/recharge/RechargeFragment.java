@@ -15,8 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BasePresentListFragment;
-import com.mchaw.tauruspay.bean.eventbus.SellInfoEvent;
-import com.mchaw.tauruspay.bean.home.HomeDataBean;
+import com.mchaw.tauruspay.bean.home.UserBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeBean;
 import com.mchaw.tauruspay.common.Constant;
 import com.mchaw.tauruspay.common.util.OneClick.AntiShake;
@@ -171,8 +170,8 @@ public class RechargeFragment extends BasePresentListFragment<RechargeListPresen
     }
 
     @Override
-    public void setHomeDataBean(HomeDataBean homeDataBean) {
-        tvRepertoryMoney.setText(StringUtils.fenToYuan(homeDataBean.getDeposit()));
+    public void setHomeDataBean(UserBean userBean) {
+        tvRepertoryMoney.setText(StringUtils.fenToYuan(userBean.getDeposit()));
     }
 
     @Subscribe

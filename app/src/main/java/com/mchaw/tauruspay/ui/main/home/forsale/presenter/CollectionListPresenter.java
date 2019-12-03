@@ -1,8 +1,8 @@
 package com.mchaw.tauruspay.ui.main.home.forsale.presenter;
 
 import com.mchaw.tauruspay.base.mvp.presenter.RxPresenter;
-import com.mchaw.tauruspay.bean.home.HomeDataBean;
-import com.mchaw.tauruspay.bean.home.SellingOrderBean;
+import com.mchaw.tauruspay.bean.home.UserBean;
+import com.mchaw.tauruspay.bean.home.ReceivablesBean;
 import com.mchaw.tauruspay.http.ResultObserver;
 import com.mchaw.tauruspay.ui.main.home.forsale.constract.CollectionListConstract;
 import com.mchaw.tauruspay.ui.repository.LoginModel;
@@ -38,9 +38,9 @@ public class CollectionListPresenter extends RxPresenter<CollectionListConstract
     public void getTradingList(String api_token) {
         removeSubscribe(TradingListDisposable);
         TradingListDisposable = sellModel.getTradingList(api_token)
-                .subscribeWith(new ResultObserver<List<SellingOrderBean>>() {
+                .subscribeWith(new ResultObserver<List<ReceivablesBean>>() {
                     @Override
-                    public void onSuccess(List<SellingOrderBean> list) {
+                    public void onSuccess(List<ReceivablesBean> list) {
                         if (mView == null) {
                             return;
                         }
@@ -59,28 +59,7 @@ public class CollectionListPresenter extends RxPresenter<CollectionListConstract
         addSubscribe(TradingListDisposable);
     }
 
-    @Override
-    public void upLodingReceivables(String codeId, String api_token) {
-        Disposable disposable = sellModel.upLodingReceivables(codeId, api_token)
-                .subscribeWith(new ResultObserver<Integer>() {
-                    @Override
-                    public void onSuccess(Integer secceed) {
-                        if (mView == null) {
-                            return;
-                        }
-                        mView.setUpLodingReceivables();
-                    }
 
-                    @Override
-                    public void onFail(String msg) {
-                        if (mView == null) {
-                            return;
-                        }
-                        mView.showError(msg);
-                    }
-                });
-        addSubscribe(disposable);
-    }
 
     Disposable homeBeanDisposable;
 
@@ -88,13 +67,13 @@ public class CollectionListPresenter extends RxPresenter<CollectionListConstract
     public void getHomeDataBean(String api_token) {
         removeSubscribe(homeBeanDisposable);
         homeBeanDisposable = loginModel.getHomeDataBean(api_token)
-                .subscribeWith(new ResultObserver<HomeDataBean>() {
+                .subscribeWith(new ResultObserver<UserBean>() {
                     @Override
-                    public void onSuccess(HomeDataBean homeDataBean) {
+                    public void onSuccess(UserBean userBean) {
                         if (mView == null) {
                             return;
                         }
-                        mView.setHomeDataBean(homeDataBean);
+                        mView.setHomeDataBean(userBean);
                     }
 
                     @Override

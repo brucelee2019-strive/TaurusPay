@@ -1,7 +1,6 @@
 package com.mchaw.tauruspay.ui.main.home.forsale;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
-import com.mchaw.tauruspay.base.fragment.BaseFragment;
-import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.base.fragment.BasePresentListFragment;
 import com.mchaw.tauruspay.bean.home.StartOrOverSellBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupBean;
-import com.mchaw.tauruspay.bean.qrcode.QRCodeStallBean;
+import com.mchaw.tauruspay.bean.qrcode.GroupinfoBean;
 import com.mchaw.tauruspay.common.util.OneClick.AntiShake;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
@@ -26,7 +23,6 @@ import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.main.home.forsale.adapter.ForSaleListAdapter;
 import com.mchaw.tauruspay.ui.main.home.forsale.constract.ForSaleListConstract;
 import com.mchaw.tauruspay.ui.main.home.forsale.presenter.ForSaleListPresenter;
-import com.mchaw.tauruspay.ui.main.recharge.RechargeAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -142,7 +138,7 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
      * @param bean
      */
     @Override
-    public void setQRCodeStalls(QRCodeStallBean bean) {
+    public void setQRCodeStalls(GroupinfoBean bean) {
         //组装数据给qrCodeListAdapter
         if (bean == null) {
             ToastUtils.showShortToast(getContext(), "服务器返回数据为null!");

@@ -2,8 +2,8 @@ package com.mchaw.tauruspay.ui.main.home.forsale.constract;
 
 import com.mchaw.tauruspay.base.mvp.presenter.BasePresenter;
 import com.mchaw.tauruspay.base.mvp.view.BaseView;
-import com.mchaw.tauruspay.bean.home.HomeDataBean;
-import com.mchaw.tauruspay.bean.home.SellingOrderBean;
+import com.mchaw.tauruspay.bean.home.UserBean;
+import com.mchaw.tauruspay.bean.home.ReceivablesBean;
 
 import java.util.List;
 
@@ -14,17 +14,13 @@ import java.util.List;
  */
 public interface CollectionListConstract {
     interface View extends BaseView {
-        void setTradingList(List<SellingOrderBean> list);
+        void setTradingList(List<ReceivablesBean> list);
         void setTradingListFail();
-        void setUpLodingReceivables();
-
-        void setHomeDataBean(HomeDataBean homeDataBean);
+        void setHomeDataBean(UserBean userBean);
     }
 
     interface Presenter extends BasePresenter<CollectionListConstract.View> {
         void getTradingList(String api_token);
-        void upLodingReceivables(String codeId,String api_token);
-
         void getHomeDataBean(String api_token);
     }
 }

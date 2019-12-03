@@ -1,4 +1,4 @@
-package com.mchaw.tauruspay;
+package com.mchaw.tauruspay.main;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -17,22 +17,29 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+import com.mchaw.tauruspay.MyFrameApplication;
+import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.activity.BasePresenterActivity;
+import com.mchaw.tauruspay.bean.MainPollingBean;
+import com.mchaw.tauruspay.bean.eventbus.LoginSucceedEvent;
 import com.mchaw.tauruspay.bean.eventbus.LoginoutEvent;
-import com.mchaw.tauruspay.bean.eventbus.SellInfoEvent;
 import com.mchaw.tauruspay.bean.eventbus.TradedBeanEvent;
 import com.mchaw.tauruspay.bean.eventbus.TradingBeanEvent;
-import com.mchaw.tauruspay.bean.home.HomeDataBean;
-import com.mchaw.tauruspay.bean.home.SellingOrderBean;
+import com.mchaw.tauruspay.bean.eventbus.mainpolling.MainPollingGroupInfoEvent;
+import com.mchaw.tauruspay.bean.eventbus.mainpolling.MainPollingReceivablesEvent;
+import com.mchaw.tauruspay.bean.eventbus.mainpolling.MainPollingRechargeEvent;
+import com.mchaw.tauruspay.bean.eventbus.mainpolling.MainPollingUserEvent;
+import com.mchaw.tauruspay.bean.home.ReceivablesBean;
+import com.mchaw.tauruspay.bean.qrcode.GroupinfoBean;
 import com.mchaw.tauruspay.common.Constant;
 import com.mchaw.tauruspay.common.util.NoNullUtils;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.WarningToneUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
+import com.mchaw.tauruspay.main.constract.MainConstract;
+import com.mchaw.tauruspay.main.presenter.MainPresenter;
 import com.mchaw.tauruspay.ui.main.besure.BesureFragment;
 import com.mchaw.tauruspay.ui.main.home.HomeFragment;
-import com.mchaw.tauruspay.ui.main.home.forsale.constract.CollectionListConstract;
-import com.mchaw.tauruspay.ui.main.home.forsale.presenter.CollectionListPresenter;
 import com.mchaw.tauruspay.ui.main.mine.MineFragment;
 import com.mchaw.tauruspay.ui.main.recharge.RechargeFragment;
 
@@ -50,7 +57,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-public class MainActivity extends BasePresenterActivity<CollectionListPresenter> implements CollectionListConstract.View, BottomNavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BasePresenterActivity<MainPresenter> implements MainConstract.View, BottomNavigationView.OnNavigationItemSelectedListener {
 
     public static final int FRAGMENT_HOME = 0;
     public static final int FRAGMENT_RECHARGE = 1;
@@ -62,7 +69,7 @@ public class MainActivity extends BasePresenterActivity<CollectionListPresenter>
     private BesureFragment besureFragment;
     private MineFragment mineFragment;
 
-    private static List<SellingOrderBean> sellingOrderBeanList = new ArrayList<>();
+    private static List<ReceivablesBean> receivablesBeanList = new ArrayList<>();
 
     @BindView(R.id.bottom_view)
     BottomNavigationViewEx bottomView;
@@ -217,72 +224,89 @@ public class MainActivity extends BasePresenterActivity<CollectionListPresenter>
         bottomView.setCurrentItem(0);
     }
 
-    @Override
-    public void setTradingList(List<SellingOrderBean> list) {
-        int all = 0;
-        TradingBeanEvent tradingBeanEvent = new TradingBeanEvent();
-        if (list != null && list.size() > 0) {
-            if(sellingOrderBeanList!=null && sellingOrderBeanList.size()>0) {
-                if (list.size() > sellingOrderBeanList.size()) {
-                    waringTone();
-                }
-            }else{
-                waringTone();
-            }
-            for (SellingOrderBean sellingOrderBean : list) {
-                all += sellingOrderBean.getAmount();
-            }
-            tradingBeanEvent.setAll(all);
-            tradingBeanEvent.setRedPoint(list.size());
-        }else{
-            tradingBeanEvent.setAll(all);
-            tradingBeanEvent.setRedPoint(0);
+    @Subscribe
+    public void loginSucceed(LoginSucceedEvent event) {
+        if (event == null) {
+            return;
         }
-        sellingOrderBeanList = list;
-        EventBus.getDefault().post(tradingBeanEvent);
+
     }
 
     @Override
-    public void setTradingListFail() {
+    public void setMainPollingBean(MainPollingBean bean) {
+        //大轮询成功后
+        if (bean == null) {
+            return;
+        }
+        //个人信息
+        if (bean.getUser() != null) {
+            MainPollingUserEvent mainPollingUserEvent = new MainPollingUserEvent();
+            mainPollingUserEvent.setKucun(bean.getUser().getDeposit());
+            mainPollingUserEvent.setDangrikeshouedu(bean.getUser().getDayamount());
+            mainPollingUserEvent.setDangrikeshoudanshu(bean.getUser().getDaycount());
+            mainPollingUserEvent.setDangrishouyi(bean.getUser().getDaypoint());
+            mainPollingUserEvent.setDangriyishouedu(bean.getUser().getDaydeposit());
+            mainPollingUserEvent.setZaishouzhong(bean.getUser().getDayonsale());
+            EventBus.getDefault().post(new MainPollingUserEvent());
+        }
+        //在售二维码组
+        if (bean.getGroupinfo() != null) {
+            List<GroupinfoBean.QrcodesBean> qrcodesBeanList = bean.getGroupinfo().getQrcodes();
+            if (qrcodesBeanList != null && qrcodesBeanList.size() > 0) {
+                EventBus.getDefault().post(new MainPollingGroupInfoEvent());
+            }
+        }
+        //充值
+        if (bean.getRecharge() != null && bean.getRecharge().size() > 0) {
+            EventBus.getDefault().post(new MainPollingRechargeEvent());
+        }
+        //交易中订单
+        EventBus.getDefault().post(new MainPollingReceivablesEvent());
+        //专用作小红点与提示音
+        redPointAndTone(bean);
+    }
 
+    private void redPointAndTone(MainPollingBean bean){
+        TradingBeanEvent tradingBeanEvent = new TradingBeanEvent();
+        List<ReceivablesBean> list = bean.getReceivables();
+        if (list != null && list.size() > 0) {
+            if (receivablesBeanList != null && receivablesBeanList.size() > 0) {
+                if (list.size() > receivablesBeanList.size()) {
+                    waringTone();
+                }
+            } else {
+                waringTone();
+            }
+            tradingBeanEvent.setRedPoint(list.size());
+        } else {
+            tradingBeanEvent.setRedPoint(0);
+        }
+        receivablesBeanList = list;
+        EventBus.getDefault().post(tradingBeanEvent);
     }
 
     @Override
     public void setUpLodingReceivables() {
         //更新收款列表
-        TradedBeanEvent tradedBeanEvent = new TradedBeanEvent();
-        EventBus.getDefault().post(tradedBeanEvent);
-    }
-
-    @Override
-    public void setHomeDataBean(HomeDataBean homeDataBean) {
-        if (homeDataBean == null) {
-            return;
-        }
-        SellInfoEvent sellInfoEvent = new SellInfoEvent();
-        sellInfoEvent.setKucun(homeDataBean.getDeposit());
-        sellInfoEvent.setDangrikeshouedu(homeDataBean.getDayamount());
-        sellInfoEvent.setDangrikeshoudanshu(homeDataBean.getDaycount());
-        sellInfoEvent.setDangrishouyi(homeDataBean.getDaypoint());
-        sellInfoEvent.setDangriyishouedu(homeDataBean.getDaydeposit());
-        EventBus.getDefault().post(sellInfoEvent);
+        EventBus.getDefault().post(new TradedBeanEvent());
     }
 
     //以下是轮询
     private Disposable disposable;
 
-    public void startPolling(int time) {
+    public void startPolling(int start, int time) {
         Log.i("cici", "总程序交易中订单列表，开始轮询...");
-        disposable = Observable.interval(0, time, TimeUnit.SECONDS)
+        disposable = Observable.interval(start, time, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Long>() {
                     @Override
                     public void accept(Long aLong) throws Exception {
                         Log.i("cici", "总程序交易中订单列表，轮询中...");
-                        if(!TextUtils.isEmpty(MyFrameApplication.getInstance().tokenStr)) {
-                            presenter.getTradingList(PreferencesUtils.getString(getApplicationContext(), "token"));
-                            presenter.getHomeDataBean(PreferencesUtils.getString(getApplicationContext(), "token"));
+                        if (!TextUtils.isEmpty(MyFrameApplication.getInstance().tokenStr)) {
+                            //presenter.getTradingList(PreferencesUtils.getString(getApplicationContext(), "token"));
+                            //presenter.getHomeDataBean(PreferencesUtils.getString(getApplicationContext(), "token"));
+                            presenter.getMainPollingBean(MyFrameApplication.getInstance().tokenStr, String.valueOf(0));
                         }
                     }
                 });
@@ -298,7 +322,7 @@ public class MainActivity extends BasePresenterActivity<CollectionListPresenter>
     @Override
     protected void onResume() {
         super.onResume();
-        startPolling(1);
+        startPolling(5, 5);
     }
 
     @Override
@@ -320,9 +344,9 @@ public class MainActivity extends BasePresenterActivity<CollectionListPresenter>
     }
 
     public void provideToNotice(int amout) {
-        for (SellingOrderBean sellingOrderBean : sellingOrderBeanList) {
-            if (amout == sellingOrderBean.getAmount()) {
-                presenter.upLodingReceivables(String.valueOf(sellingOrderBean.getId()), PreferencesUtils.getString(getApplicationContext(), "token"));
+        for (ReceivablesBean receivablesBean : receivablesBeanList) {
+            if (amout == receivablesBean.getAmount()) {
+                presenter.upLodingReceivables(String.valueOf(receivablesBean.getId()), PreferencesUtils.getString(getApplicationContext(), "token"));
             }
         }
     }

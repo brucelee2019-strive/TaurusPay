@@ -1,7 +1,7 @@
 package com.mchaw.tauruspay.di.component;
 
 import com.mchaw.tauruspay.base.activity.BaseActivity;
-import com.mchaw.tauruspay.MainActivity;
+import com.mchaw.tauruspay.main.MainActivity;
 import com.mchaw.tauruspay.di.ActivityScoped;
 import com.mchaw.tauruspay.ui.SplashActivity;
 import com.mchaw.tauruspay.ui.login.LoginFragment;
