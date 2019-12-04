@@ -9,8 +9,10 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
+import com.mchaw.tauruspay.bean.eventbus.mainpolling.MainPollingUserEvent;
 import com.mchaw.tauruspay.bean.home.UserBean;
 import com.mchaw.tauruspay.bean.home.TransferAccountsBean;
 import com.mchaw.tauruspay.bean.home.TransferUsedAccountsBean;
@@ -81,6 +83,14 @@ public class TransferAccountsFragment extends BasePresentFragment<TransferAccoun
         super.initFragment();
         tvBackTitle.setText("转账");
         //presenter.getHomeDataBean(PreferencesUtils.getString(getContext(),"token"));
+        //进入转账界面关闭待售
+        MyFrameApplication.groupid = 0;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.getHomeDataBean(PreferencesUtils.getString(getContext(),"token"));
     }
 
     @Override
@@ -117,10 +127,11 @@ public class TransferAccountsFragment extends BasePresentFragment<TransferAccoun
     @Override
     public void setHomeDataBean(UserBean userBean) {
         tvAllCost.setText(StringUtils.fenToYuan(userBean.getDeposit()));
+        allKuCun = StringUtils.fenToYuan(userBean.getDeposit());
     }
 
     @Subscribe
-    public void sellInfo(SellInfoEvent event) {
+    public void sellInfo(MainPollingUserEvent event) {
         if (event != null) {
             tvAllCost.setText(StringUtils.fenToYuan(event.getKucun()));
             allKuCun = StringUtils.fenToYuan(event.getKucun());

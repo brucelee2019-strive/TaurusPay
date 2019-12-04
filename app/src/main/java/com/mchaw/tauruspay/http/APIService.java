@@ -117,7 +117,7 @@ public interface APIService {
 
     @FormUrlEncoded
     @POST("my/polling")
-    Observable<ResultBean<MainPollingBean>> getMainPollingBean(@Field("api_token") String api_token,@Field("groupid") String groupid);
+    Observable<ResultBean<MainPollingBean>> getMainPollingBean(@Field("api_token") String api_token,@Field("groupid") int groupid);
 
 
 }

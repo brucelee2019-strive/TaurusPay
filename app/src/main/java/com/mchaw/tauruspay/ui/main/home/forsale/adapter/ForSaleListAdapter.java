@@ -31,7 +31,7 @@ public class ForSaleListAdapter extends BaseQuickAdapter<QRCodeGroupBean, BaseVi
         helper.setText(R.id.tv_position,String.valueOf((helper.getPosition()+1)));
         helper.setText(R.id.tv_zfb_account, item.getAccount());
         helper.setText(R.id.tv_zfb_nike_name, item.getNick());
-        helper.setText(R.id.tv_last_time, String.valueOf(item.getSellcount()));
+        helper.setText(R.id.tv_last_time, String.valueOf(item.getDaycount()));
         helper.setGone(R.id.ll_1, item.isShowItems());
         helper.setGone(R.id.ll_2, item.isShowItems());
         helper.setGone(R.id.ll_3, item.isShowItems());

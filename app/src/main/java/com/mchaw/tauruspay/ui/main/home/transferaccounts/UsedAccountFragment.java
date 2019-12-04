@@ -29,7 +29,7 @@ import butterknife.OnClick;
 /**
  * @author Bruce Lee
  * @date : 2019/12/2 9:27
- * @description:
+ * @description:常用转账账户记录
  */
 public class UsedAccountFragment extends BaseFragment implements BaseQuickAdapter.OnItemClickListener {
     @BindView(R.id.tv_back_title)

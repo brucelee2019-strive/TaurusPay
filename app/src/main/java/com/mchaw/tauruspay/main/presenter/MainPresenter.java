@@ -30,7 +30,7 @@ public class MainPresenter extends RxPresenter<MainConstract.View> implements Ma
     }
 
     @Override
-    public void getMainPollingBean(String api_token, String groupid) {
+    public void getMainPollingBean(String api_token, int groupid) {
         Disposable disposable = loginModel.getMainPollingBean(api_token,groupid)
                 .subscribeWith(new ResultObserver<MainPollingBean>() {
                     @Override

@@ -229,7 +229,6 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
         if (event == null) {
             return;
         }
-
     }
 
     @Override
@@ -247,21 +246,24 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
             mainPollingUserEvent.setDangrishouyi(bean.getUser().getDaypoint());
             mainPollingUserEvent.setDangriyishouedu(bean.getUser().getDaydeposit());
             mainPollingUserEvent.setZaishouzhong(bean.getUser().getDayonsale());
-            EventBus.getDefault().post(new MainPollingUserEvent());
+            EventBus.getDefault().post(mainPollingUserEvent);
         }
         //在售二维码组
         if (bean.getGroupinfo() != null) {
-            List<GroupinfoBean.QrcodesBean> qrcodesBeanList = bean.getGroupinfo().getQrcodes();
-            if (qrcodesBeanList != null && qrcodesBeanList.size() > 0) {
-                EventBus.getDefault().post(new MainPollingGroupInfoEvent());
-            }
+            MainPollingGroupInfoEvent mainPollingGroupInfoEvent = new MainPollingGroupInfoEvent();
+            mainPollingGroupInfoEvent.setGroupinfo(bean.getGroupinfo());
+            EventBus.getDefault().post(mainPollingGroupInfoEvent);
         }
         //充值
         if (bean.getRecharge() != null && bean.getRecharge().size() > 0) {
-            EventBus.getDefault().post(new MainPollingRechargeEvent());
+            MainPollingRechargeEvent mainPollingRechargeEvent = new MainPollingRechargeEvent();
+            mainPollingRechargeEvent.setList(bean.getRecharge());
+            EventBus.getDefault().post(mainPollingRechargeEvent);
         }
         //交易中订单
-        EventBus.getDefault().post(new MainPollingReceivablesEvent());
+        MainPollingReceivablesEvent mainPollingReceivablesEvent = new MainPollingReceivablesEvent();
+        mainPollingReceivablesEvent.setReceivables(bean.getReceivables());
+        EventBus.getDefault().post(mainPollingReceivablesEvent);
         //专用作小红点与提示音
         redPointAndTone(bean);
     }
@@ -306,7 +308,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
                         if (!TextUtils.isEmpty(MyFrameApplication.getInstance().tokenStr)) {
                             //presenter.getTradingList(PreferencesUtils.getString(getApplicationContext(), "token"));
                             //presenter.getHomeDataBean(PreferencesUtils.getString(getApplicationContext(), "token"));
-                            presenter.getMainPollingBean(MyFrameApplication.getInstance().tokenStr, String.valueOf(0));
+                            presenter.getMainPollingBean(MyFrameApplication.getInstance().tokenStr, MyFrameApplication.groupid);
                         }
                     }
                 });

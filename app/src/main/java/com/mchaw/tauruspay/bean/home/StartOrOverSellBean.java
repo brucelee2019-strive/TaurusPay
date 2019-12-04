@@ -6,18 +6,13 @@ package com.mchaw.tauruspay.bean.home;
  * @description:
  */
 public class StartOrOverSellBean {
+    private int status;
 
-    /**
-     * time : 1574308693
-     */
-
-    private int time;
-
-    public int getTime() {
-        return time;
+    public int getStatus() {
+        return status;
     }
 
-    public void setTime(int time) {
-        this.time = time;
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

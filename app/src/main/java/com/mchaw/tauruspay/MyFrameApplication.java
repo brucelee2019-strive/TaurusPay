@@ -49,4 +49,6 @@ public class MyFrameApplication extends Application {
     public String getSessionKey() {
         return PreferencesUtils.getString(this, Constant.PRE_SESSION_KEY);
     }
+
+    public static int groupid = 0;
 }

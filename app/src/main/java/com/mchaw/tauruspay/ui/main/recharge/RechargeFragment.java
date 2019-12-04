@@ -15,6 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BasePresentListFragment;
+import com.mchaw.tauruspay.bean.eventbus.LoginSucceedEvent;
+import com.mchaw.tauruspay.bean.eventbus.mainpolling.MainPollingRechargeEvent;
+import com.mchaw.tauruspay.bean.eventbus.mainpolling.MainPollingUserEvent;
 import com.mchaw.tauruspay.bean.home.UserBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeBean;
 import com.mchaw.tauruspay.common.Constant;
@@ -29,6 +32,7 @@ import com.mchaw.tauruspay.ui.main.recharge.record.RecordMainFragment;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -74,10 +78,9 @@ public class RechargeFragment extends BasePresentListFragment<RechargeListPresen
             //结束轮询
             stopPolling();
         } else {
-            //presenter.getRechargeList(PreferencesUtils.getString(getContext(),"token"));
-            //presenter.getHomeDataBean(PreferencesUtils.getString(getContext(),"token"));
+            onRefresh();
             //开启轮询
-            startPolling(1);
+            //startPolling(1);
         }
     }
 
@@ -93,7 +96,7 @@ public class RechargeFragment extends BasePresentListFragment<RechargeListPresen
         rvIncomeRecoed.setLayoutManager(new LinearLayoutManager(getContext()));
         rechargeAdapter = new RechargeAdapter(rechargeBeanList);
         rvIncomeRecoed.setAdapter(rechargeAdapter);
-        onRefresh();
+        //onRefresh();
         //presenter.getHomeDataBean(PreferencesUtils.getString(getContext(),"token"));
         Log.i("cici", PreferencesUtils.getString(getContext(), "token"));
     }
@@ -121,6 +124,7 @@ public class RechargeFragment extends BasePresentListFragment<RechargeListPresen
     protected void onRefresh() {
         rechargeAdapter.setEmptyView(loadingView);
         presenter.getRechargeList(PreferencesUtils.getString(getContext(), "token"));
+        presenter.getHomeDataBean(PreferencesUtils.getString(getContext(),"token"));
     }
 
     @OnClick({R.id.btn_recharge_btn, R.id.tv_record})
@@ -146,7 +150,7 @@ public class RechargeFragment extends BasePresentListFragment<RechargeListPresen
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case Constant.RECHARGE_NEXT_FRAGMENT_BACK:
-                    //presenter.getRechargeList(PreferencesUtils.getString(getContext(),"token"));
+                    presenter.getRechargeList(PreferencesUtils.getString(getContext(),"token"));
                     break;
                 default:
                     break;
@@ -175,7 +179,7 @@ public class RechargeFragment extends BasePresentListFragment<RechargeListPresen
     }
 
     @Subscribe
-    public void sellInfo(SellInfoEvent event) {
+    public void sellInfo(MainPollingUserEvent event) {
         if (event != null) {
             tvRepertoryMoney.setText(StringUtils.fenToYuan(event.getKucun()));
         }
@@ -196,6 +200,28 @@ public class RechargeFragment extends BasePresentListFragment<RechargeListPresen
 //        }
     }
 
+    @Subscribe
+    public void rechargeUpdateList(MainPollingRechargeEvent event) {
+        if (event == null) {
+            return;
+        }
+        List <RechargeBean> list = event.getList();
+        if(list == null || list.size()<=0) {
+            return;
+        }
+        Iterator<RechargeBean> iter = list.iterator();
+        while (iter.hasNext()){
+            RechargeBean rechargeBean = (RechargeBean) iter.next();
+            for(RechargeBean bean:rechargeBeanList){
+                if(rechargeBean.getOrderid() == bean.getOrderid()){
+                    list.remove(rechargeBean);
+                }
+            }
+        }
+        list.addAll(rechargeBeanList);
+        rechargeAdapter.setNewData(list);
+    }
+
     //以下是轮询
     private Disposable disposable;
 
@@ -209,7 +235,7 @@ public class RechargeFragment extends BasePresentListFragment<RechargeListPresen
                     public void accept(Long aLong) throws Exception {
                         Log.i("cici", "充值订单列表 轮询中...");
                         //presenter.getHomeDataBean(PreferencesUtils.getString(MyFrameApplication.getInstance(),"token"));
-                        presenter.getRechargeUpdateList(PreferencesUtils.getString(MyFrameApplication.getInstance(), "token"));
+                        //presenter.getRechargeUpdateList(PreferencesUtils.getString(MyFrameApplication.getInstance(), "token"));
                     }
                 });
     }
@@ -225,7 +251,8 @@ public class RechargeFragment extends BasePresentListFragment<RechargeListPresen
     @Override
     public void onResume() {
         super.onResume();
-        startPolling(1);
+        onRefresh();
+        //startPolling(1);
     }
 
     @Override

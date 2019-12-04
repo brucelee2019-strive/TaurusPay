@@ -58,7 +58,7 @@ public class LoginModel extends BaseModel{
     }
 
     //大轮询
-    public Observable<MainPollingBean> getMainPollingBean(String api_token, String groupid) {
+    public Observable<MainPollingBean> getMainPollingBean(String api_token, int groupid) {
         return apiService.getMainPollingBean(api_token,groupid)
                 .compose(new ResultDisposable<MainPollingBean>())
                 .compose(new ScheduleTranformer<MainPollingBean>());

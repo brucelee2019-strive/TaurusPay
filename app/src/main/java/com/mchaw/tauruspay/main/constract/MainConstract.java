@@ -16,7 +16,7 @@ public interface MainConstract {
     }
 
     interface Presenter extends BasePresenter<MainConstract.View> {
-        void getMainPollingBean(String api_token,String groupid);
+        void getMainPollingBean(String api_token,int groupid);
         void upLodingReceivables(String codeId,String api_token);
     }
 }

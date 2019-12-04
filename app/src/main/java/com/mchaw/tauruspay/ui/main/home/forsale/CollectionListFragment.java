@@ -12,8 +12,10 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BasePresentListFragment;
+import com.mchaw.tauruspay.bean.eventbus.LoginSucceedEvent;
 import com.mchaw.tauruspay.bean.eventbus.TradedBeanEvent;
 import com.mchaw.tauruspay.bean.eventbus.TradingBeanEvent;
+import com.mchaw.tauruspay.bean.eventbus.mainpolling.MainPollingReceivablesEvent;
 import com.mchaw.tauruspay.bean.home.UserBean;
 import com.mchaw.tauruspay.bean.home.ReceivablesBean;
 import com.mchaw.tauruspay.common.util.OneClick.AntiShake;
@@ -159,6 +161,14 @@ public class CollectionListFragment extends BasePresentListFragment<CollectionLi
         }
     }
 
+    @Subscribe
+    public void pollingReceivablesEvent(MainPollingReceivablesEvent event) {
+        if (event == null) {
+            return;
+        }
+        collectionListAdapter.setNewData(event.getReceivables());
+    }
+
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
         if (AntiShake.check(view.getId())) {
@@ -166,7 +176,7 @@ public class CollectionListFragment extends BasePresentListFragment<CollectionLi
         }
         switch (view.getId()) {
             case R.id.btn_sure:
-                ((ForSaleFragment)getParentFragment()).noticeOfCollection();
+                ((ForSaleFragment) getParentFragment()).noticeOfCollection();
                 break;
             default:
                 break;

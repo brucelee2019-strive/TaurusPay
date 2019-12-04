@@ -13,7 +13,7 @@ public class GroupinfoBean {
     private String paytype;
     private String account;
     private String nick;
-    private String status;
+    private int status;
     private String dayamount;
     private String daycount;
     private List<GroupinfoBean.QrcodesBean> qrcodes;
@@ -50,11 +50,11 @@ public class GroupinfoBean {
         this.nick = nick;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 

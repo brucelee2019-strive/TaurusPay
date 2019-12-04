@@ -24,6 +24,8 @@ public class QRCodeGroupBean {
     private String account;
     private String nick;
     private int status;
+    private String dayamount;
+    private String daycount;
     private int sellamount;
     private int sellcount;
 
@@ -125,5 +127,21 @@ public class QRCodeGroupBean {
 
     public void setSellcount(int sellcount) {
         this.sellcount = sellcount;
+    }
+
+    public String getDayamount() {
+        return dayamount;
+    }
+
+    public void setDayamount(String dayamount) {
+        this.dayamount = dayamount;
+    }
+
+    public String getDaycount() {
+        return daycount;
+    }
+
+    public void setDaycount(String daycount) {
+        this.daycount = daycount;
     }
 }
