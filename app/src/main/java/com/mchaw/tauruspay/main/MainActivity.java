@@ -244,6 +244,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
             mainPollingUserEvent.setDangrishouyi(bean.getUser().getDaypoint());
             mainPollingUserEvent.setDangriyishouedu(bean.getUser().getDaydeposit());
             mainPollingUserEvent.setZaishouzhong(bean.getUser().getDayonsale());
+            MyFrameApplication.groupid = bean.getUser().getGroupid();
             EventBus.getDefault().post(mainPollingUserEvent);
         }
         //在售二维码组

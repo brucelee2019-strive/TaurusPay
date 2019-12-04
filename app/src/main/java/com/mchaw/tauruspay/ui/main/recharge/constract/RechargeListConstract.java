@@ -18,15 +18,11 @@ public interface RechargeListConstract {
         void setRecaargeListFail();
 
         void setHomeDataBean(UserBean userBean);
-
-        void setRechargeUpdateList(List<RechargeBean> list);
     }
 
     interface Presenter extends BasePresenter<RechargeListConstract.View> {
         void getRechargeList(String token);
 
         void getHomeDataBean(String api_token);
-
-        void getRechargeUpdateList(String api_token);
     }
 }

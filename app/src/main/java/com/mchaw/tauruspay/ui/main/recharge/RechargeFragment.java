@@ -75,12 +75,9 @@ public class RechargeFragment extends BasePresentListFragment<RechargeListPresen
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (hidden) {
-            //结束轮询
-            stopPolling();
+
         } else {
             onRefresh();
-            //开启轮询
-            //startPolling(1);
         }
     }
 
@@ -185,21 +182,6 @@ public class RechargeFragment extends BasePresentListFragment<RechargeListPresen
         }
     }
 
-    @Override
-    public void setRechargeUpdateList(List<RechargeBean> list) {
-        for (int i = 0; i < rechargeBeanList.size(); i++) {
-            // 判断listTemp集合中是否包含list中的元素
-            if (!list.contains(rechargeBeanList.get(i))) {
-                // 将未包含的元素添加进listTemp集合中
-                list.add(rechargeBeanList.get(i));
-            }
-        }
-        rechargeAdapter.setNewData(list);
-//        for(RechargeBean rechargeBean:list){
-//            Log.i("cici",rechargeBean.getAmount());
-//        }
-    }
-
     @Subscribe
     public void rechargeUpdateList(MainPollingRechargeEvent event) {
         if (event == null) {
@@ -222,60 +204,10 @@ public class RechargeFragment extends BasePresentListFragment<RechargeListPresen
         rechargeAdapter.setNewData(list);
     }
 
-    //以下是轮询
-    private Disposable disposable;
-
-    public void startPolling(int time) {
-        Log.i("cici", "充值订单列表 开始轮询...");
-        disposable = Observable.interval(0, time, TimeUnit.SECONDS)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Long>() {
-                    @Override
-                    public void accept(Long aLong) throws Exception {
-                        Log.i("cici", "充值订单列表 轮询中...");
-                        //presenter.getHomeDataBean(PreferencesUtils.getString(MyFrameApplication.getInstance(),"token"));
-                        //presenter.getRechargeUpdateList(PreferencesUtils.getString(MyFrameApplication.getInstance(), "token"));
-                    }
-                });
-    }
-
-    public void stopPolling() {
-        Log.i("cici", "充值订单列表 结束轮询");
-        if (disposable != null) {
-            disposable.dispose();
-        }
-    }
-
     //生命周期管理
     @Override
     public void onResume() {
         super.onResume();
         onRefresh();
-        //startPolling(1);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        stopPolling();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        stopPolling();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        stopPolling();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        stopPolling();
     }
 }

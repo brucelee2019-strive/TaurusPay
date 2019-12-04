@@ -122,6 +122,8 @@ public class MineFragment extends BasePresentFragment<LoginPresenter> implements
 
     @Override
     public void setLoginOutBean(LoginOutBean loginOutBean) {
+        MyFrameApplication.tokenStr = "";
+        MyFrameApplication.groupid = 0;
         PreferencesUtils.putString(getContext(),"token","");
         PreferencesUtils.putString(getContext(),"name","");
         PreferencesUtils.putString(getContext(),"payname","");

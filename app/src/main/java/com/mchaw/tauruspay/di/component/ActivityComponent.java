@@ -18,6 +18,8 @@ import com.mchaw.tauruspay.ui.main.mine.bill.BillFragment;
 import com.mchaw.tauruspay.ui.main.mine.qrcode.QRCodeFragment;
 import com.mchaw.tauruspay.ui.main.recharge.RechargeFragment;
 import com.mchaw.tauruspay.ui.main.recharge.RechargeNextFragment;
+import com.mchaw.tauruspay.ui.main.recharge.record.RecordFailedFragment;
+import com.mchaw.tauruspay.ui.main.recharge.record.RecordSucceedFragment;
 
 import dagger.Component;
 
@@ -66,4 +68,8 @@ public interface ActivityComponent {
     void inject(BillFragment billFragment);
 
     void inject(MineFragment mineFragment);
+
+    void inject(RecordFailedFragment recordFailedFragment);
+
+    void inject(RecordSucceedFragment recordSucceedFragment);
 }

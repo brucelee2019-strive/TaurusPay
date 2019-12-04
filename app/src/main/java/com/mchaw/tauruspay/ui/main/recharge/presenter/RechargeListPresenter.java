@@ -82,29 +82,4 @@ public class RechargeListPresenter extends RxPresenter<RechargeListConstract.Vie
                 });
         addSubscribe(homeBeanDisposable);
     }
-
-    Disposable reChargeUpdateListDisposable;
-    @Override
-    public void getRechargeUpdateList(String api_token) {
-        removeSubscribe(reChargeUpdateListDisposable);
-        reChargeUpdateListDisposable = fundModel.getRechargeUpdateList(api_token)
-                .subscribeWith(new ResultObserver<List<RechargeBean>>() {
-                    @Override
-                    public void onSuccess(List<RechargeBean> list) {
-                        if(mView == null){
-                            return;
-                        }
-                        mView.setRechargeUpdateList(list);
-                    }
-
-                    @Override
-                    public void onFail(String msg) {
-                        if(mView == null){
-                            return;
-                        }
-                        mView.showError(msg);
-                    }
-                });
-        addSubscribe(reChargeUpdateListDisposable);
-    }
 }

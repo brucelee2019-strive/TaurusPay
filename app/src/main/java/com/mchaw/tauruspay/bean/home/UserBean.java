@@ -23,6 +23,15 @@ public class UserBean {
     private long daydeposit;
     private long dayonsale;
     private int state;
+    private int groupid;
+
+    public int getGroupid() {
+        return groupid;
+    }
+
+    public void setGroupid(int groupid) {
+        this.groupid = groupid;
+    }
 
     public int getState() {
         return state;
