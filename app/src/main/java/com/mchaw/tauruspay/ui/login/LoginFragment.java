@@ -12,6 +12,7 @@ import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.bean.eventbus.LoginSucceedEvent;
 import com.mchaw.tauruspay.bean.login.LoginBean;
+import com.mchaw.tauruspay.bean.login.LoginOutBean;
 import com.mchaw.tauruspay.common.dialog.LoadingDialog;
 import com.mchaw.tauruspay.common.util.OneClick.AntiShake;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
@@ -74,6 +75,11 @@ public class LoginFragment extends BasePresentFragment<LoginPresenter> implement
         PreferencesUtils.putString(getContext(),"payname",loginBean.getPayname());
         EventBus.getDefault().post(new LoginSucceedEvent());
         getActivity().finish();
+    }
+
+    @Override
+    public void setLoginOutBean(LoginOutBean loginOutBean) {
+
     }
 
     @Override

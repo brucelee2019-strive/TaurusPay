@@ -6,19 +6,29 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BaseFragment;
+import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
+import com.mchaw.tauruspay.bean.eventbus.LoginoutEvent;
+import com.mchaw.tauruspay.bean.login.LoginBean;
+import com.mchaw.tauruspay.bean.login.LoginOutBean;
 import com.mchaw.tauruspay.common.util.OneClick.AntiShake;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
+import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.login.LoginFragment;
+import com.mchaw.tauruspay.ui.login.constract.LoginConstract;
 import com.mchaw.tauruspay.ui.login.password.PasswordFragment;
+import com.mchaw.tauruspay.ui.login.presenter.LoginPresenter;
 import com.mchaw.tauruspay.ui.main.mine.about.AboutFragment;
 import com.mchaw.tauruspay.ui.main.mine.activate.ActivateCodeFragment;
 import com.mchaw.tauruspay.ui.main.mine.bank.MyBankCardFragment;
 import com.mchaw.tauruspay.ui.main.mine.bill.BillFragment;
 import com.mchaw.tauruspay.ui.main.mine.dialog.LoginOutDialog;
 import com.mchaw.tauruspay.ui.main.mine.qrcode.QRCodeFragment;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -28,7 +38,7 @@ import butterknife.OnClick;
  * @date : 2019/11/3 0003 21:11
  * @description :
  */
-public class MineFragment extends BaseFragment implements LoginOutDialog.ConfirmListener {
+public class MineFragment extends BasePresentFragment<LoginPresenter> implements LoginConstract.View,LoginOutDialog.ConfirmListener {
 
     @BindView(R.id.tv_user_nickname)
     TextView tvUserNickname;
@@ -59,8 +69,15 @@ public class MineFragment extends BaseFragment implements LoginOutDialog.Confirm
 
     @Override
     protected void initFragment() {
+        super.initFragment();
         tvUserNickname.setText(PreferencesUtils.getString(getContext(), "name"));
         tvPayName.setText(PreferencesUtils.getString(getContext(), "payname"));
+    }
+
+    @Override
+    public void injectFragmentComponent(ActivityComponent component) {
+        super.injectFragmentComponent(component);
+        component.inject(this);
     }
 
     @OnClick({R.id.tv_login_out, R.id.cl_bill, R.id.cl_bank_set, R.id.cl_qr_code, R.id.cl_activate_word, R.id.cl_change_password, R.id.cl_about})
@@ -95,7 +112,26 @@ public class MineFragment extends BaseFragment implements LoginOutDialog.Confirm
 
     @Override
     public void onClickComplete() {
+        presenter.getLoginOutBean(MyFrameApplication.tokenStr);
+    }
+
+    @Override
+    public void setLoginBean(LoginBean loginBean) {
+
+    }
+
+    @Override
+    public void setLoginOutBean(LoginOutBean loginOutBean) {
+        PreferencesUtils.putString(getContext(),"token","");
+        PreferencesUtils.putString(getContext(),"name","");
+        PreferencesUtils.putString(getContext(),"payname","");
+        EventBus.getDefault().post(new LoginoutEvent());
         startFragment(new LoginFragment());
         ToastUtils.showShortToast(getContext(), "退出成功！");
+    }
+
+    @Override
+    public void setLoginFail() {
+
     }
 }

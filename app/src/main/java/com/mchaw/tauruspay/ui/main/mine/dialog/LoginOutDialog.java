@@ -73,12 +73,8 @@ public class LoginOutDialog extends BaseDialogFragment {
                 if (dialog != null) {
                     dialog.dismiss();
                 }
-                PreferencesUtils.putString(getContext(),"token","");
-                PreferencesUtils.putString(getContext(),"name","");
-                PreferencesUtils.putString(getContext(),"payname","");
                 LoginOutDialog.ConfirmListener confirmListener = (LoginOutDialog.ConfirmListener) getParentFragment();
                 confirmListener.onClickComplete();
-                EventBus.getDefault().post(new LoginoutEvent());
                 break;
             default:
                 break;

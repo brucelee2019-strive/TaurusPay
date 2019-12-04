@@ -207,6 +207,10 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
             case R.id.tv_show_order_list:
                 boolean ishow = qrCodeGroupBean.isShowItems();
                 qrCodeGroupBean.setShowItems(!ishow);
+                groupid = qrCodeGroupBean.getId();
+                if(qrCodeGroupBean.isShowItems()){
+                    presenter.getQRCodeStalls(String.valueOf(groupid),MyFrameApplication.tokenStr);
+                }
                 adapter.notifyItemChanged(position);
                 break;
             case R.id.tv_start_sail_btn://点击开始代售

@@ -10,6 +10,7 @@ import com.mchaw.tauruspay.bean.home.ReceivablesBean;
 import com.mchaw.tauruspay.bean.home.StartOrOverSellBean;
 import com.mchaw.tauruspay.bean.home.TransferAccountsBean;
 import com.mchaw.tauruspay.bean.login.LoginBean;
+import com.mchaw.tauruspay.bean.login.LoginOutBean;
 import com.mchaw.tauruspay.bean.login.PasswordBean;
 import com.mchaw.tauruspay.bean.login.RegisterBean;
 import com.mchaw.tauruspay.bean.qrcode.DeleteQRCodeGroupBean;
@@ -120,4 +121,7 @@ public interface APIService {
     Observable<ResultBean<MainPollingBean>> getMainPollingBean(@Field("api_token") String api_token,@Field("groupid") int groupid);
 
 
+    @FormUrlEncoded
+    @POST("logout")
+    Observable<ResultBean<LoginOutBean>> getLoginOutBean(@Field("api_token") String api_token);
 }

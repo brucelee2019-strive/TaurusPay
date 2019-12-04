@@ -2,6 +2,7 @@ package com.mchaw.tauruspay.ui.login.presenter;
 
 import com.mchaw.tauruspay.base.mvp.presenter.RxPresenter;
 import com.mchaw.tauruspay.bean.login.LoginBean;
+import com.mchaw.tauruspay.bean.login.LoginOutBean;
 import com.mchaw.tauruspay.http.ResultObserver;
 import com.mchaw.tauruspay.ui.login.constract.LoginConstract;
 import com.mchaw.tauruspay.ui.repository.LoginModel;
@@ -34,6 +35,30 @@ public class LoginPresenter extends RxPresenter<LoginConstract.View> implements 
                             return;
                         }
                         mView.setLoginBean(loginBean);
+                    }
+
+                    @Override
+                    public void onFail(String msg) {
+                        if (mView == null) {
+                            return;
+                        }
+                        mView.setLoginFail();
+                        mView.showError(msg);
+                    }
+                });
+        addSubscribe(disposable);
+    }
+
+    @Override
+    public void getLoginOutBean(String api_token) {
+        Disposable disposable = loginModel.getLoginOutBean(api_token)
+                .subscribeWith(new ResultObserver<LoginOutBean>() {
+                    @Override
+                    public void onSuccess(LoginOutBean loginOutBean) {
+                        if (mView == null) {
+                            return;
+                        }
+                        mView.setLoginOutBean(loginOutBean);
                     }
 
                     @Override

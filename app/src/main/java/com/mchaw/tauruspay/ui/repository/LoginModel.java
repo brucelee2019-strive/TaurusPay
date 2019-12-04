@@ -4,6 +4,7 @@ import com.mchaw.tauruspay.bean.MainPollingBean;
 import com.mchaw.tauruspay.bean.activate.ActivateCodeBean;
 import com.mchaw.tauruspay.bean.home.UserBean;
 import com.mchaw.tauruspay.bean.login.LoginBean;
+import com.mchaw.tauruspay.bean.login.LoginOutBean;
 import com.mchaw.tauruspay.bean.login.PasswordBean;
 import com.mchaw.tauruspay.bean.login.RegisterBean;
 import com.mchaw.tauruspay.http.ResultDisposable;
@@ -30,6 +31,13 @@ public class LoginModel extends BaseModel{
         return apiService.getLoginBean(username,code,passwd)
                 .compose(new ResultDisposable<LoginBean>())
                 .compose(new ScheduleTranformer<LoginBean>());
+    }
+
+    //退出登录
+    public Observable<LoginOutBean> getLoginOutBean(String api_token) {
+        return apiService.getLoginOutBean(api_token)
+                .compose(new ResultDisposable<LoginOutBean>())
+                .compose(new ScheduleTranformer<LoginOutBean>());
     }
     //注册
     public Observable<RegisterBean> getRegisterBean(String account, String mobile, String code, String passwd, String passwd_confirmation, String payaccount, String activecode) {
