@@ -156,9 +156,6 @@ public class HomeFragment extends BasePresentFragment<HomePresenter> implements 
 
     @Subscribe
     public void loginSucceed(LoginSucceedEvent event) {
-        if (event == null) {
-            return;
-        }
         if(!TextUtils.isEmpty(MyFrameApplication.getInstance().tokenStr)) {
             presenter.getHomeDataBean(MyFrameApplication.getInstance().tokenStr);
         }

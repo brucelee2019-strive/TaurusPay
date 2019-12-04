@@ -226,9 +226,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
 
     @Subscribe
     public void loginSucceed(LoginSucceedEvent event) {
-        if (event == null) {
-            return;
-        }
+       startPolling(5,5);
     }
 
     @Override

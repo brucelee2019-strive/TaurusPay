@@ -7,6 +7,7 @@ import android.widget.EditText;
 
 import androidx.annotation.Nullable;
 
+import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.bean.eventbus.LoginSucceedEvent;
@@ -67,6 +68,7 @@ public class LoginFragment extends BasePresentFragment<LoginPresenter> implement
         if(loginBean == null){
             return;
         }
+        MyFrameApplication.tokenStr = loginBean.getToken();
         PreferencesUtils.putString(getContext(),"token",loginBean.getToken());
         PreferencesUtils.putString(getContext(),"name",loginBean.getName());
         PreferencesUtils.putString(getContext(),"payname",loginBean.getPayname());

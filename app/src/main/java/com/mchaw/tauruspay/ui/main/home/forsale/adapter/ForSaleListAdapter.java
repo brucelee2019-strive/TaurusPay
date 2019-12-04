@@ -1,5 +1,7 @@
 package com.mchaw.tauruspay.ui.main.home.forsale.adapter;
 
+import android.text.TextUtils;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -31,7 +33,7 @@ public class ForSaleListAdapter extends BaseQuickAdapter<QRCodeGroupBean, BaseVi
         helper.setText(R.id.tv_position,String.valueOf((helper.getPosition()+1)));
         helper.setText(R.id.tv_zfb_account, item.getAccount());
         helper.setText(R.id.tv_zfb_nike_name, item.getNick());
-        helper.setText(R.id.tv_last_time, String.valueOf(item.getDaycount()));
+        helper.setText(R.id.tv_last_time, TextUtils.isEmpty(item.getDaycount())?"16":item.getDaycount());
         helper.setGone(R.id.ll_1, item.isShowItems());
         helper.setGone(R.id.ll_2, item.isShowItems());
         helper.setGone(R.id.ll_3, item.isShowItems());

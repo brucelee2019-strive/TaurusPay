@@ -39,6 +39,7 @@ public class RechargeAdapter extends BaseQuickAdapter<RechargeBean, BaseViewHold
                 helper.setImageResource(R.id.iv_recharge_state,R.drawable.cz_icon_cg);
                 break;
             case 2:
+            case 4:
                 helper.setText(R.id.tv_recharge_result,"成功");
                 helper.setTextColor(R.id.tv_recharge_result, ContextCompat.getColor(mContext,R.color.color_special));
                 helper.setImageResource(R.id.iv_recharge_state,R.drawable.cz_icon_cg);

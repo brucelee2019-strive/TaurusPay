@@ -124,7 +124,7 @@ public class RechargeFragment extends BasePresentListFragment<RechargeListPresen
     protected void onRefresh() {
         rechargeAdapter.setEmptyView(loadingView);
         presenter.getRechargeList(PreferencesUtils.getString(getContext(), "token"));
-        presenter.getHomeDataBean(PreferencesUtils.getString(getContext(),"token"));
+        presenter.getHomeDataBean(PreferencesUtils.getString(getContext(), "token"));
     }
 
     @OnClick({R.id.btn_recharge_btn, R.id.tv_record})
@@ -150,7 +150,7 @@ public class RechargeFragment extends BasePresentListFragment<RechargeListPresen
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case Constant.RECHARGE_NEXT_FRAGMENT_BACK:
-                    presenter.getRechargeList(PreferencesUtils.getString(getContext(),"token"));
+                    presenter.getRechargeList(PreferencesUtils.getString(getContext(), "token"));
                     break;
                 default:
                     break;
@@ -205,16 +205,16 @@ public class RechargeFragment extends BasePresentListFragment<RechargeListPresen
         if (event == null) {
             return;
         }
-        List <RechargeBean> list = event.getList();
-        if(list == null || list.size()<=0) {
+        List<RechargeBean> list = event.getList();
+        if (list == null || list.size() <= 0) {
             return;
         }
-        Iterator<RechargeBean> iter = list.iterator();
-        while (iter.hasNext()){
-            RechargeBean rechargeBean = (RechargeBean) iter.next();
-            for(RechargeBean bean:rechargeBeanList){
-                if(rechargeBean.getOrderid() == bean.getOrderid()){
-                    list.remove(rechargeBean);
+        for (RechargeBean rechargeBean : list) {
+            Iterator<RechargeBean> iter = rechargeBeanList.iterator();
+            while (iter.hasNext()) {
+                RechargeBean bean = (RechargeBean) iter.next();
+                if(rechargeBean.getOrderid().equals(bean.getOrderid())){
+                    iter.remove();
                 }
             }
         }

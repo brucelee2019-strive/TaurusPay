@@ -52,6 +52,7 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
     private List<QRCodeGroupBean> qrCodeGroupBeanList = new ArrayList<>();
     private ForSaleListAdapter forSaleListAdapter;
     private QRCodeGroupBean qrCodeGroupBean;
+    private int groupid;
 
     @Override
     protected int getContentViewId() {
@@ -151,7 +152,7 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
             ToastUtils.showShortToast(getContext(), "服务器返回数据为null!");
             return;
         }
-        if (MyFrameApplication.groupid == bean.getGroupid()) {//确保同一组
+        if (groupid == bean.getGroupid()) {//确保同一组
             //赋值 list(12个二维码档口id)
             qrCodeGroupBean.setQrcodes(bean.getQrcodes());
         }
@@ -189,7 +190,9 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
     public void setStartingOrOverSell(StartOrOverSellBean startOrOverSellBean) {
         ToastUtils.showShortToast(getContext(), qrCodeGroupBean.getStatus() == 0 ? "已开始代售" : "已停止代售");
         qrCodeGroupBean.setStatus(qrCodeGroupBean.getStatus() == 0 ? 1 : 0);
-        MyFrameApplication.groupid = (startOrOverSellBean.getStatus() == 1)?qrCodeGroupBean.getId():0;
+        groupid = qrCodeGroupBean.getId();
+        MyFrameApplication.groupid = (startOrOverSellBean.getStatus() == 1)?groupid:0;
+        presenter.getQRCodeStalls(String.valueOf(groupid),MyFrameApplication.tokenStr);
         forSaleListAdapter.notifyDataSetChanged();
     }
 
