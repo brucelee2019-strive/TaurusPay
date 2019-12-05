@@ -24,6 +24,7 @@ import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.main.home.forsale.adapter.ForSaleListAdapter;
 import com.mchaw.tauruspay.ui.main.home.forsale.constract.ForSaleListConstract;
+import com.mchaw.tauruspay.ui.main.home.forsale.dialog.CollectionListDialog;
 import com.mchaw.tauruspay.ui.main.home.forsale.presenter.ForSaleListPresenter;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -44,7 +45,7 @@ import io.reactivex.schedulers.Schedulers;
  * @date : 2019/11/7 11:56
  * @description:待售列表Fragment
  */
-public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPresenter> implements ForSaleListConstract.View, BaseQuickAdapter.OnItemChildClickListener {
+public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPresenter> implements ForSaleListConstract.View, BaseQuickAdapter.OnItemChildClickListener, CollectionListDialog.ConfirmListener {
 
     @BindView(R.id.rv_for_sale_list)
     RecyclerView rvForSalelist;
@@ -93,7 +94,7 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
 
     @Override
     protected void initHintViews() {
-        loadingView = getLayoutInflater().inflate(R.layout.loading_view,(ViewGroup) rvForSalelist.getParent(),false);
+        loadingView = getLayoutInflater().inflate(R.layout.loading_view, (ViewGroup) rvForSalelist.getParent(), false);
         notDataView = getLayoutInflater().inflate(R.layout.empty_view, (ViewGroup) rvForSalelist.getParent(), false);
         notDataView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,7 +127,7 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
         qrCodeGroupBeanList = list;
         if (list != null && list.size() > 0) {
             forSaleListAdapter.setNewData(list);
-        }else{
+        } else {
             forSaleListAdapter.setEmptyView(notDataView);
         }
     }
@@ -167,10 +168,12 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
         if (event.getGroupinfo() == null) {
             return;
         }
-        if(event.getGroupinfo().getStatus() == 0){
+        if (event.getGroupinfo().getStatus() == 0) {
             if (MyFrameApplication.groupid == event.getGroupinfo().getGroupid()) {//确保同一组
                 //赋值 list(12个二维码档口id)
-                qrCodeGroupBean.setQrcodes(event.getGroupinfo().getQrcodes());
+                if (qrCodeGroupBean != null) {
+                    qrCodeGroupBean.setQrcodes(event.getGroupinfo().getQrcodes());
+                }
             }
             MyFrameApplication.groupid = 0;
             forSaleListAdapter.notifyDataSetChanged();
@@ -181,7 +184,9 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
         }
         if (MyFrameApplication.groupid == event.getGroupinfo().getGroupid()) {//确保同一组
             //赋值 list(12个二维码档口id)
-            qrCodeGroupBean.setQrcodes(event.getGroupinfo().getQrcodes());
+            if (qrCodeGroupBean != null) {
+                qrCodeGroupBean.setQrcodes(event.getGroupinfo().getQrcodes());
+            }
         }
         forSaleListAdapter.notifyDataSetChanged();
     }
@@ -191,15 +196,15 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
         ToastUtils.showShortToast(getContext(), qrCodeGroupBean.getStatus() == 0 ? "已开始代售" : "已停止代售");
         qrCodeGroupBean.setStatus(qrCodeGroupBean.getStatus() == 0 ? 1 : 0);
         groupid = qrCodeGroupBean.getId();
-        MyFrameApplication.groupid = (startOrOverSellBean.getStatus() == 1)?groupid:0;
-        presenter.getQRCodeStalls(String.valueOf(groupid),MyFrameApplication.tokenStr);
+        MyFrameApplication.groupid = (startOrOverSellBean.getStatus() == 1) ? groupid : 0;
+        presenter.getQRCodeStalls(String.valueOf(groupid), MyFrameApplication.tokenStr);
         forSaleListAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
         if (AntiShake.check(view.getId())) {    //判断是否多次点击
-            ToastUtils.showShortToast(getContext(),"客官，请慢点点击！");
+            ToastUtils.showShortToast(getContext(), "客官，请慢点点击！");
             return;
         }
         qrCodeGroupBean = (QRCodeGroupBean) adapter.getItem(position);
@@ -208,8 +213,8 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
                 boolean ishow = qrCodeGroupBean.isShowItems();
                 qrCodeGroupBean.setShowItems(!ishow);
                 groupid = qrCodeGroupBean.getId();
-                if(qrCodeGroupBean.isShowItems()){
-                    presenter.getQRCodeStalls(String.valueOf(groupid),MyFrameApplication.tokenStr);
+                if (qrCodeGroupBean.isShowItems()) {
+                    presenter.getQRCodeStalls(String.valueOf(groupid), MyFrameApplication.tokenStr);
                 }
                 adapter.notifyItemChanged(position);
                 break;
@@ -235,5 +240,10 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onClickComplete() {
+
     }
 }

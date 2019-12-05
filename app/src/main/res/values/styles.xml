@@ -47,4 +47,10 @@
         <item name="android:layout_marginBottom">10dp</item>
     </style>
 
+    <!--签到弹出动画-->
+    <style name="SignDialogAnim">
+        <item name="android:windowEnterAnimation">@anim/scale_in_anim</item>
+        <item name="android:windowExitAnimation">@anim/scale_out_anim</item>
+    </style>
+
 </resources>

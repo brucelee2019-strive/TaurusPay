@@ -86,4 +86,27 @@ public class CollectionListPresenter extends RxPresenter<CollectionListConstract
                 });
         addSubscribe(homeBeanDisposable);
     }
+
+    @Override
+    public void upLodingReceivables(String codeId, String api_token) {
+        Disposable disposable = sellModel.upLodingReceivables(codeId, api_token)
+                .subscribeWith(new ResultObserver<Integer>() {
+                    @Override
+                    public void onSuccess(Integer secceed) {
+                        if (mView == null) {
+                            return;
+                        }
+                        mView.setUpLodingReceivables();
+                    }
+
+                    @Override
+                    public void onFail(String msg) {
+                        if (mView == null) {
+                            return;
+                        }
+                        mView.showError(msg);
+                    }
+                });
+        addSubscribe(disposable);
+    }
 }

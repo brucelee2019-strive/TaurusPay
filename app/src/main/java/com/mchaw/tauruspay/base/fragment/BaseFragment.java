@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.base.activity.BaseActivity;
@@ -183,5 +184,9 @@ public abstract class BaseFragment extends Fragment implements FragmentStartHelp
 
     @Subscribe
     public void onEmpty(EmptyEvent event) {
+    }
+
+    public FragmentManager getSupportFragmentManager() {
+        return getChildFragmentManager();
     }
 }

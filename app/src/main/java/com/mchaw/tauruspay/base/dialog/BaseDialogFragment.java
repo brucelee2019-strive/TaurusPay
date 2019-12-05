@@ -26,7 +26,11 @@ import butterknife.Unbinder;
  * @date : 2019/11/8 16:16
  * @description:
  */
-public abstract class BaseDialogFragment extends DialogFragment {
+public abstract class BaseDialogFragment extends DialogFragment implements DialogInterface.OnKeyListener, DialogInterface.OnCancelListener{
+    //确认
+    public static final int DIALOG_CONFIRM = 5;
+    //取消
+    public static final int DIALOG_CANCEL = 6;
 
     protected Dialog dialog;
 
@@ -68,7 +72,10 @@ public abstract class BaseDialogFragment extends DialogFragment {
         super.onStart();
         dialog = getDialog();
         if(dialog != null){
-            dialog.setOnCancelListener(this);dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialog.setOnKeyListener(this);
+            dialog.setOnCancelListener(this);
+            dialog.setOnCancelListener(this);
+            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.setCancelable(setCancelable());
             if (showBottomAnim()) {
@@ -95,6 +102,19 @@ public abstract class BaseDialogFragment extends DialogFragment {
     }
 
     @Override
+    public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK
+                && event.getAction() == KeyEvent.ACTION_DOWN
+                && dialog != null) {
+            dialog.dismiss();
+            if (mDismissListener != null) {
+                mDismissListener.onDismiss();
+            }
+        }
+        return false;
+    }
+
+    @Override
     public void onCancel(DialogInterface dialog) {
         if (mDismissListener != null) {
             mDismissListener.onDismiss();
@@ -108,4 +128,5 @@ public abstract class BaseDialogFragment extends DialogFragment {
     public interface OnDismissListener{
         void onDismiss();
     }
+
 }

@@ -1,15 +1,17 @@
 package com.mchaw.tauruspay.ui.main.home.forsale.dialog;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.CountDownTimer;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
-
-import androidx.annotation.UiThread;
 import androidx.fragment.app.FragmentManager;
 
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.dialog.BaseDialogFragment;
-import com.mchaw.tauruspay.ui.main.mine.dialog.ChangeBankCardDialog;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -40,22 +42,39 @@ public class CollectionListDialog extends BaseDialogFragment {
     @Override
     protected void initDialogFragment(View view) {
         tvContext.setText("请确定收到此订单的付款!\n确认后话费将直接进入对方账户，将无法追回!");
-        tvSure.setClickable(false);
-        new CountDownTimer(4*1000, 1000) {
-            public void onTick(long millisUntilFinished) {
-                if(tvCountDown!=null) {
-                    tvCountDown.setText("" + millisUntilFinished / 1000);
-                }
-            }
-            public void onFinish() {
-                if(tvCountDown!=null) {
-                    tvCountDown.setText("0");
-                }
-                if(tvSure!=null) {
-                    tvSure.setClickable(true);
-                }
-            }
-        }.start();
+//        tvSure.setClickable(false);
+//        new CountDownTimer(4*1000, 1000) {
+//            public void onTick(long millisUntilFinished) {
+//                if(tvCountDown!=null) {
+//                    tvCountDown.setText("" + millisUntilFinished / 1000);
+//                }
+//            }
+//            public void onFinish() {
+//                if(tvCountDown!=null) {
+//                    tvCountDown.setText("0");
+//                }
+//                if(tvSure!=null) {
+//                    tvSure.setClickable(true);
+//                }
+//            }
+//        }.start();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        dialog = getDialog();
+        if (dialog != null) {
+            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.setCancelable(true);
+
+            Window window = dialog.getWindow();
+            //window.setWindowAnimations(R.style.SignDialogAnim);
+            WindowManager.LayoutParams wl = window.getAttributes();
+            window.setAttributes(wl);
+            dialog.setCanceledOnTouchOutside(true);
+        }
     }
 
     @OnClick({R.id.tv_cancel, R.id.tv_sure})
@@ -70,7 +89,7 @@ public class CollectionListDialog extends BaseDialogFragment {
                 if (dialog != null) {
                     dialog.dismiss();
                 }
-                CollectionListDialog.ConfirmListener confirmListener = (CollectionListDialog.ConfirmListener) getParentFragment();
+                ConfirmListener confirmListener = (ConfirmListener) getParentFragment();
                 confirmListener.onClickComplete();
                 break;
             default:

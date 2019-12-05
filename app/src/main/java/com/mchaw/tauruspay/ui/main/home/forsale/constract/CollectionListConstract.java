@@ -17,10 +17,12 @@ public interface CollectionListConstract {
         void setTradingList(List<ReceivablesBean> list);
         void setTradingListFail();
         void setHomeDataBean(UserBean userBean);
+        void setUpLodingReceivables();
     }
 
     interface Presenter extends BasePresenter<CollectionListConstract.View> {
         void getTradingList(String api_token);
         void getHomeDataBean(String api_token);
+        void upLodingReceivables(String codeId,String api_token);
     }
 }
