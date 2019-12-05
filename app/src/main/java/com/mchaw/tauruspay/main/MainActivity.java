@@ -228,7 +228,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
 
     @Subscribe
     public void loginSucceed(LoginSucceedEvent event) {
-       //startPolling(5,5);
+        //startPolling(5,5);
     }
 
     @Override
@@ -250,11 +250,9 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
             EventBus.getDefault().post(mainPollingUserEvent);
         }
         //在售二维码组
-        if (bean.getGroupinfo() != null) {
-            MainPollingGroupInfoEvent mainPollingGroupInfoEvent = new MainPollingGroupInfoEvent();
-            mainPollingGroupInfoEvent.setGroupinfo(bean.getGroupinfo());
-            EventBus.getDefault().post(mainPollingGroupInfoEvent);
-        }
+        MainPollingGroupInfoEvent mainPollingGroupInfoEvent = new MainPollingGroupInfoEvent();
+        mainPollingGroupInfoEvent.setGroupinfo(bean.getGroupinfo());
+        EventBus.getDefault().post(mainPollingGroupInfoEvent);
         //充值
         if (bean.getRecharge() != null && bean.getRecharge().size() > 0) {
             MainPollingRechargeEvent mainPollingRechargeEvent = new MainPollingRechargeEvent();
@@ -269,7 +267,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
         redPointAndTone(bean);
     }
 
-    private void redPointAndTone(MainPollingBean bean){
+    private void redPointAndTone(MainPollingBean bean) {
         TradingBeanEvent tradingBeanEvent = new TradingBeanEvent();
         List<ReceivablesBean> list = bean.getReceivables();
         if (list != null && list.size() > 0) {
