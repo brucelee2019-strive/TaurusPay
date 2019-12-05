@@ -157,12 +157,18 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
             return;
         }
         if (event.getGroupinfo() == null) {
+            for(GroupinfoBean qrCodeGroupBean:qrCodeGroupBeanList){
+                qrCodeGroupBean.setStatus(0);
+            }
+            forSaleListAdapter.notifyDataSetChanged();
             return;
         }
         if (event.getGroupinfo().getStatus() == 0) {
             if (MyFrameApplication.groupid == event.getGroupinfo().getGroupid()) {//确保同一组
                 //赋值 list(12个二维码档口id)
                 if (qrCodeGroupBean != null) {
+                    qrCodeGroupBean.setDaycount(event.getGroupinfo().getDaycount());
+                    qrCodeGroupBean.setStatus(event.getGroupinfo().getStatus());
                     qrCodeGroupBean.setQrcodes(event.getGroupinfo().getQrcodes());
                 }
             }
@@ -176,6 +182,8 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
         if (MyFrameApplication.groupid == event.getGroupinfo().getGroupid()) {//确保同一组
             //赋值 list(12个二维码档口id)
             if (qrCodeGroupBean != null) {
+                qrCodeGroupBean.setDaycount(event.getGroupinfo().getDaycount());
+                qrCodeGroupBean.setStatus(event.getGroupinfo().getStatus());
                 qrCodeGroupBean.setQrcodes(event.getGroupinfo().getQrcodes());
             }
         }

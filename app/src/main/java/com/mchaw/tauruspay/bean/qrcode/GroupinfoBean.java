@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * @author Bruce Lee
  * @date : 2019/11/15 18:41
- * @description:
+ * @description: 二维码组Item
  */
 public class GroupinfoBean {
 

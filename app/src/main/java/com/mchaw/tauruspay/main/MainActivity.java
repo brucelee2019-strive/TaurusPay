@@ -325,7 +325,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
     @Override
     protected void onResume() {
         super.onResume();
-        startPolling(30, 30);
+        startPolling(0, 5);
     }
 
     @Override
