@@ -1,7 +1,6 @@
 package com.mchaw.tauruspay.ui.main.home.forsale;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -13,10 +12,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BasePresentListFragment;
-import com.mchaw.tauruspay.bean.eventbus.LoginSucceedEvent;
 import com.mchaw.tauruspay.bean.eventbus.mainpolling.MainPollingGroupInfoEvent;
 import com.mchaw.tauruspay.bean.home.StartOrOverSellBean;
-import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupBean;
 import com.mchaw.tauruspay.bean.qrcode.GroupinfoBean;
 import com.mchaw.tauruspay.common.util.OneClick.AntiShake;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
@@ -31,14 +28,8 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * @author Bruce Lee
@@ -50,9 +41,9 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
     @BindView(R.id.rv_for_sale_list)
     RecyclerView rvForSalelist;
 
-    private List<QRCodeGroupBean> qrCodeGroupBeanList = new ArrayList<>();
+    private List<GroupinfoBean> qrCodeGroupBeanList = new ArrayList<>();
     private ForSaleListAdapter forSaleListAdapter;
-    private QRCodeGroupBean qrCodeGroupBean;
+    private GroupinfoBean qrCodeGroupBean;
     private int groupid;
 
     @Override
@@ -72,7 +63,7 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
         if (hidden) {
 
         } else {
-            //startPolling(10);
+
         }
     }
 
@@ -123,7 +114,7 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
      * @param list
      */
     @Override
-    public void setQRCodeGroupList(List<QRCodeGroupBean> list) {
+    public void setQRCodeGroupList(List<GroupinfoBean> list) {
         qrCodeGroupBeanList = list;
         if (list != null && list.size() > 0) {
             forSaleListAdapter.setNewData(list);
@@ -195,7 +186,7 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
     public void setStartingOrOverSell(StartOrOverSellBean startOrOverSellBean) {
         ToastUtils.showShortToast(getContext(), qrCodeGroupBean.getStatus() == 0 ? "已开始代售" : "已停止代售");
         qrCodeGroupBean.setStatus(qrCodeGroupBean.getStatus() == 0 ? 1 : 0);
-        groupid = qrCodeGroupBean.getId();
+        groupid = qrCodeGroupBean.getGroupid();
         MyFrameApplication.groupid = (startOrOverSellBean.getStatus() == 1) ? groupid : 0;
         presenter.getQRCodeStalls(String.valueOf(groupid), MyFrameApplication.tokenStr);
         forSaleListAdapter.notifyDataSetChanged();
@@ -207,12 +198,12 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
             ToastUtils.showShortToast(getContext(), "客官，请慢点点击！");
             return;
         }
-        qrCodeGroupBean = (QRCodeGroupBean) adapter.getItem(position);
+        qrCodeGroupBean = (GroupinfoBean) adapter.getItem(position);
         switch (view.getId()) {
             case R.id.tv_show_order_list:
                 boolean ishow = qrCodeGroupBean.isShowItems();
                 qrCodeGroupBean.setShowItems(!ishow);
-                groupid = qrCodeGroupBean.getId();
+                groupid = qrCodeGroupBean.getGroupid();
                 if (qrCodeGroupBean.isShowItems()) {
                     presenter.getQRCodeStalls(String.valueOf(groupid), MyFrameApplication.tokenStr);
                 }
@@ -221,20 +212,20 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
             case R.id.tv_start_sail_btn://点击开始代售
                 if (qrCodeGroupBean.getStatus() == 0) {
                     //代售之前检查是否已有组正在代售 list应该是轮询的list
-                    for (QRCodeGroupBean bean : qrCodeGroupBeanList) {
+                    for (GroupinfoBean bean : qrCodeGroupBeanList) {
                         if (bean.getStatus() == 1) {
                             ToastUtils.showShortToast(getContext(), "当前有在售的分组，请先关闭当前的分组");
                             return;
                         }
                     }
-                    presenter.startingOrOverSell(String.valueOf(qrCodeGroupBean.getId()), 1, PreferencesUtils.getString(getContext(), "token"));
+                    presenter.startingOrOverSell(String.valueOf(qrCodeGroupBean.getGroupid()), 1, PreferencesUtils.getString(getContext(), "token"));
                 } else {
                     //停止代售前 检查是否有未完成的收款
 //                    if(){
 //                        ToastUtils.showShortToast(getContext(), "当前有收款未完成，请完成后再停止代售！");
 //                        return;
 //                    }
-                    presenter.startingOrOverSell(String.valueOf(qrCodeGroupBean.getId()), 0, PreferencesUtils.getString(getContext(), "token"));
+                    presenter.startingOrOverSell(String.valueOf(qrCodeGroupBean.getGroupid()), 0, PreferencesUtils.getString(getContext(), "token"));
                 }
                 break;
             default:

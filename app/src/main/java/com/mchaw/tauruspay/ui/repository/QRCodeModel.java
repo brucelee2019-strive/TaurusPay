@@ -1,7 +1,6 @@
 package com.mchaw.tauruspay.ui.repository;
 
 import com.mchaw.tauruspay.bean.qrcode.DeleteQRCodeGroupBean;
-import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupCreateBean;
 import com.mchaw.tauruspay.bean.qrcode.GroupinfoBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeUrlBean;
@@ -26,10 +25,10 @@ public class QRCodeModel extends BaseModel{
     }
 
     //二维码组列表
-    public Observable<List<QRCodeGroupBean>> getQRCodeGroupList(String api_token) {
+    public Observable<List<GroupinfoBean>> getQRCodeGroupList(String api_token) {
         return apiService.getQRCodeGroupList(api_token)
-                .compose(new ResultDisposable<List<QRCodeGroupBean>>())
-                .compose(new ScheduleTranformer<List<QRCodeGroupBean>>());
+                .compose(new ResultDisposable<List<GroupinfoBean>>())
+                .compose(new ScheduleTranformer<List<GroupinfoBean>>());
     }
 
     //创建二维码组

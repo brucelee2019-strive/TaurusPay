@@ -14,7 +14,6 @@ import com.mchaw.tauruspay.bean.login.LoginOutBean;
 import com.mchaw.tauruspay.bean.login.PasswordBean;
 import com.mchaw.tauruspay.bean.login.RegisterBean;
 import com.mchaw.tauruspay.bean.qrcode.DeleteQRCodeGroupBean;
-import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupCreateBean;
 import com.mchaw.tauruspay.bean.qrcode.GroupinfoBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeUrlBean;
@@ -73,7 +72,7 @@ public interface APIService {
 
     @FormUrlEncoded
     @POST("sell/mygroup")
-    Observable<ResultBean<List<QRCodeGroupBean>>> getQRCodeGroupList(@Field("api_token") String api_token);
+    Observable<ResultBean<List<GroupinfoBean>>> getQRCodeGroupList(@Field("api_token") String api_token);
 
     @FormUrlEncoded
     @POST("sell/creategroup")

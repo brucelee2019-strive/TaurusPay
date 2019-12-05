@@ -9,7 +9,6 @@ import androidx.core.content.ContextCompat;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.mchaw.tauruspay.R;
-import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupBean;
 import com.mchaw.tauruspay.bean.qrcode.GroupinfoBean;
 import com.mchaw.tauruspay.common.util.StringUtils;
 
@@ -20,14 +19,14 @@ import java.util.List;
  * @date : 2019/11/7 16:16
  * @description:
  */
-public class ForSaleListAdapter extends BaseQuickAdapter<QRCodeGroupBean, BaseViewHolder> {
+public class ForSaleListAdapter extends BaseQuickAdapter<GroupinfoBean, BaseViewHolder> {
 
-    public ForSaleListAdapter(@Nullable List<QRCodeGroupBean> data) {
+    public ForSaleListAdapter(@Nullable List<GroupinfoBean> data) {
         super(R.layout.item_for_sale_list, data);
     }
 
     @Override
-    protected void convert(@NonNull BaseViewHolder helper, QRCodeGroupBean item) {
+    protected void convert(@NonNull BaseViewHolder helper, GroupinfoBean item) {
         helper.addOnClickListener(R.id.tv_show_order_list,R.id.tv_start_sail_btn);
         helper.setImageResource(R.id.iv_ds_icon,item.getPaytype()==1?R.drawable.ds_icon_zfb:R.drawable.ds_icon_wx);
         helper.setText(R.id.tv_position,String.valueOf((helper.getPosition()+1)));

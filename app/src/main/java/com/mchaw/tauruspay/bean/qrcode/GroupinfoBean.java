@@ -10,13 +10,46 @@ import java.util.List;
 public class GroupinfoBean {
 
     private int groupid;
-    private String paytype;
+    private int paytype;
     private String account;
     private String nick;
     private int status;
     private String dayamount;
     private String daycount;
     private List<GroupinfoBean.QrcodesBean> qrcodes;
+
+    //用来操控展开，收紧按钮。和作为请求二维码档口的判断依据
+    private boolean showItems = false;
+
+    //控制删除按钮是否显示
+    private int canDelete;
+
+    //用来操控展开，收紧按钮,能否被点击
+    private boolean canClickShowItems = false;
+
+    public boolean isShowItems() {
+        return showItems;
+    }
+
+    public void setShowItems(boolean showItems) {
+        this.showItems = showItems;
+    }
+
+    public int getCanDelete() {
+        return canDelete;
+    }
+
+    public void setCanDelete(int canDelete) {
+        this.canDelete = canDelete;
+    }
+
+    public boolean isCanClickShowItems() {
+        return canClickShowItems;
+    }
+
+    public void setCanClickShowItems(boolean canClickShowItems) {
+        this.canClickShowItems = canClickShowItems;
+    }
 
     public int getGroupid() {
         return groupid;
@@ -26,11 +59,11 @@ public class GroupinfoBean {
         this.groupid = groupid;
     }
 
-    public String getPaytype() {
+    public int getPaytype() {
         return paytype;
     }
 
-    public void setPaytype(String paytype) {
+    public void setPaytype(int paytype) {
         this.paytype = paytype;
     }
 

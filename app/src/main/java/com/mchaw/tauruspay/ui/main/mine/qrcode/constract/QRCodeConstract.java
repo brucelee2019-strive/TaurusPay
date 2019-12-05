@@ -3,7 +3,6 @@ package com.mchaw.tauruspay.ui.main.mine.qrcode.constract;
 import com.mchaw.tauruspay.base.mvp.presenter.BasePresenter;
 import com.mchaw.tauruspay.base.mvp.view.BaseView;
 import com.mchaw.tauruspay.bean.qrcode.DeleteQRCodeGroupBean;
-import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupCreateBean;
 import com.mchaw.tauruspay.bean.qrcode.GroupinfoBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeUrlBean;
@@ -17,7 +16,7 @@ import java.util.List;
  */
 public interface QRCodeConstract {
     interface View extends BaseView {
-        void setQRCodeGroupList(List<QRCodeGroupBean> list);
+        void setQRCodeGroupList(List<GroupinfoBean> list);
         void setQRCodeGroupListFail();
         void setQRCodeGroupBean(QRCodeGroupCreateBean qrCodeGroupCreateBean);
         void setUpLoadingQRCodeUrlBean(QRCodeUrlBean qrCodeUrlBean);

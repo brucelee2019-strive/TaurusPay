@@ -228,7 +228,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
 
     @Subscribe
     public void loginSucceed(LoginSucceedEvent event) {
-       startPolling(5,5);
+       //startPolling(5,5);
     }
 
     @Override
@@ -325,7 +325,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
     @Override
     protected void onResume() {
         super.onResume();
-        startPolling(5, 5);
+        startPolling(30, 30);
     }
 
     @Override
