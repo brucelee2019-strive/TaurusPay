@@ -20,7 +20,6 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.activity.BasePresenterActivity;
-import com.mchaw.tauruspay.base.fragment.helper.FragmentStartHelper;
 import com.mchaw.tauruspay.bean.MainPollingBean;
 import com.mchaw.tauruspay.bean.eventbus.LoginSucceedEvent;
 import com.mchaw.tauruspay.bean.eventbus.LoginoutEvent;
@@ -31,7 +30,6 @@ import com.mchaw.tauruspay.bean.eventbus.mainpolling.MainPollingReceivablesEvent
 import com.mchaw.tauruspay.bean.eventbus.mainpolling.MainPollingRechargeEvent;
 import com.mchaw.tauruspay.bean.eventbus.mainpolling.MainPollingUserEvent;
 import com.mchaw.tauruspay.bean.home.ReceivablesBean;
-import com.mchaw.tauruspay.bean.qrcode.GroupinfoBean;
 import com.mchaw.tauruspay.common.Constant;
 import com.mchaw.tauruspay.common.util.NoNullUtils;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
@@ -39,7 +37,6 @@ import com.mchaw.tauruspay.common.util.WarningToneUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.main.constract.MainConstract;
 import com.mchaw.tauruspay.main.presenter.MainPresenter;
-import com.mchaw.tauruspay.ui.login.LoginFragment;
 import com.mchaw.tauruspay.ui.main.besure.BesureFragment;
 import com.mchaw.tauruspay.ui.main.home.HomeFragment;
 import com.mchaw.tauruspay.ui.main.mine.MineFragment;
@@ -246,7 +243,6 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
             mainPollingUserEvent.setDangrishouyi(bean.getUser().getDaypoint());
             mainPollingUserEvent.setDangriyishouedu(bean.getUser().getDaydeposit());
             mainPollingUserEvent.setZaishouzhong(bean.getUser().getDayonsale());
-            MyFrameApplication.groupid = bean.getUser().getGroupid();
             EventBus.getDefault().post(mainPollingUserEvent);
         }
         //在售二维码组

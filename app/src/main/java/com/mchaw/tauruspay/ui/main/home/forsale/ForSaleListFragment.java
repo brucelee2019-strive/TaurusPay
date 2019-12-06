@@ -44,7 +44,8 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
     private List<GroupinfoBean> qrCodeGroupBeanList = new ArrayList<>();
     private ForSaleListAdapter forSaleListAdapter;
     private GroupinfoBean qrCodeGroupBean;
-    private int groupid;
+    private int recordGroupid;
+    private int recordPosition;//记录点击条目位置
 
     @Override
     protected int getContentViewId() {
@@ -144,11 +145,11 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
             ToastUtils.showShortToast(getContext(), "服务器返回数据为null!");
             return;
         }
-        if (groupid == bean.getGroupid()) {//确保同一组
+        if (recordGroupid == bean.getGroupid()) {//确保同一组
             //赋值 list(12个二维码档口id)
             qrCodeGroupBean.setQrcodes(bean.getQrcodes());
         }
-        forSaleListAdapter.notifyDataSetChanged();
+        forSaleListAdapter.notifyItemChanged(recordPosition);
     }
 
     @Subscribe
@@ -156,6 +157,7 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
         if (event == null) {
             return;
         }
+        //Groupinfo为null 所有分组置为待售状态
         if (event.getGroupinfo() == null) {
             for(GroupinfoBean qrCodeGroupBean:qrCodeGroupBeanList){
                 qrCodeGroupBean.setStatus(0);
@@ -163,22 +165,10 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
             forSaleListAdapter.notifyDataSetChanged();
             return;
         }
-        if (event.getGroupinfo().getStatus() == 0) {
-            if (MyFrameApplication.groupid == event.getGroupinfo().getGroupid()) {//确保同一组
-                //赋值 list(12个二维码档口id)
-                if (qrCodeGroupBean != null) {
-                    qrCodeGroupBean.setDaycount(event.getGroupinfo().getDaycount());
-                    qrCodeGroupBean.setStatus(event.getGroupinfo().getStatus());
-                    qrCodeGroupBean.setQrcodes(event.getGroupinfo().getQrcodes());
-                }
-            }
-            MyFrameApplication.groupid = 0;
-            forSaleListAdapter.notifyDataSetChanged();
-            return;
-        }
         if (event.getGroupinfo().getQrcodes() == null || event.getGroupinfo().getQrcodes().size() <= 0) {
             return;
         }
+        //status为0 表示停售状态
         if (MyFrameApplication.groupid == event.getGroupinfo().getGroupid()) {//确保同一组
             //赋值 list(12个二维码档口id)
             if (qrCodeGroupBean != null) {
@@ -190,14 +180,17 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
         forSaleListAdapter.notifyDataSetChanged();
     }
 
+    //点击开始待售成功
     @Override
     public void setStartingOrOverSell(StartOrOverSellBean startOrOverSellBean) {
-        ToastUtils.showShortToast(getContext(), qrCodeGroupBean.getStatus() == 0 ? "已开始代售" : "已停止代售");
-        qrCodeGroupBean.setStatus(qrCodeGroupBean.getStatus() == 0 ? 1 : 0);
-        groupid = qrCodeGroupBean.getGroupid();
-        MyFrameApplication.groupid = (startOrOverSellBean.getStatus() == 1) ? groupid : 0;
-        presenter.getQRCodeStalls(String.valueOf(groupid), MyFrameApplication.tokenStr);
-        forSaleListAdapter.notifyDataSetChanged();
+        //ToastUtils.showShortToast(getContext(), qrCodeGroupBean.getStatus() == 0 ? "已开始代售" : "已停止代售");
+        //startOrOverSellBean.setStatus(qrCodeGroupBean.getStatus() == 0 ? 1 : 0);
+        startOrOverSellBean.setStatus(startOrOverSellBean.getStatus());
+        MyFrameApplication.groupid = (startOrOverSellBean.getStatus() == 1) ? qrCodeGroupBean.getGroupid() : 0;
+        recordGroupid = qrCodeGroupBean.getGroupid();
+        presenter.getQRCodeStalls(String.valueOf(qrCodeGroupBean.getGroupid()), MyFrameApplication.tokenStr);
+        forSaleListAdapter.notifyItemChanged(recordPosition);
+        ToastUtils.showShortToast(getContext(), startOrOverSellBean.getStatus() == 1 ? "已开始代售" : "已停止代售");
     }
 
     @Override
@@ -207,13 +200,14 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
             return;
         }
         qrCodeGroupBean = (GroupinfoBean) adapter.getItem(position);
+        recordGroupid = qrCodeGroupBean.getGroupid();
+        recordPosition = position;
         switch (view.getId()) {
             case R.id.tv_show_order_list:
                 boolean ishow = qrCodeGroupBean.isShowItems();
                 qrCodeGroupBean.setShowItems(!ishow);
-                groupid = qrCodeGroupBean.getGroupid();
                 if (qrCodeGroupBean.isShowItems()) {
-                    presenter.getQRCodeStalls(String.valueOf(groupid), MyFrameApplication.tokenStr);
+                    presenter.getQRCodeStalls(String.valueOf(qrCodeGroupBean.getGroupid()), MyFrameApplication.tokenStr);
                 }
                 adapter.notifyItemChanged(position);
                 break;

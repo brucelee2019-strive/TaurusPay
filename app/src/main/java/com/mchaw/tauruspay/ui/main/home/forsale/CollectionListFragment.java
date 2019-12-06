@@ -110,12 +110,12 @@ public class CollectionListFragment extends BasePresentListFragment<CollectionLi
     protected void initHintViews() {
         loadingView = getLayoutInflater().inflate(R.layout.loading_view, (ViewGroup) rvForCollection.getParent(), false);
         notDataView = getLayoutInflater().inflate(R.layout.empty_view, (ViewGroup) rvForCollection.getParent(), false);
-        notDataView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onRefresh();
-            }
-        });
+//        notDataView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onRefresh();
+//            }
+//        });
         errorView = getLayoutInflater().inflate(R.layout.error_view, (ViewGroup) rvForCollection.getParent(), false);
         errorView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,7 +128,7 @@ public class CollectionListFragment extends BasePresentListFragment<CollectionLi
     @Override
     protected void onRefresh() {
         collectionListAdapter.setEmptyView(loadingView);
-        presenter.getTradingList(PreferencesUtils.getString(MyFrameApplication.getInstance(), "token"));
+        presenter.getTradingList(MyFrameApplication.tokenStr);
     }
 
     @Override
