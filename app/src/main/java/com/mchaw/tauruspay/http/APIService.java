@@ -5,6 +5,7 @@ import com.mchaw.tauruspay.bean.MainPollingBean;
 import com.mchaw.tauruspay.bean.ResultBean;
 import com.mchaw.tauruspay.bean.activate.ActivateCodeBean;
 import com.mchaw.tauruspay.bean.bill.BillBean;
+import com.mchaw.tauruspay.bean.bill.TradingBean;
 import com.mchaw.tauruspay.bean.home.UserBean;
 import com.mchaw.tauruspay.bean.home.ReceivablesBean;
 import com.mchaw.tauruspay.bean.home.StartOrOverSellBean;
@@ -105,7 +106,7 @@ public interface APIService {
 
     @FormUrlEncoded
     @POST("sell/receivables/{codeid}")
-    Observable<ResultBean<Integer>> upLodingReceivables(@Path("codeid") String codeid,@Field("api_token") String api_token);
+    Observable<ResultBean<TradingBean>> upLodingReceivables(@Path("codeid") String codeid, @Field("api_token") String api_token);
 
     @FormUrlEncoded
     @POST("my/activecode")

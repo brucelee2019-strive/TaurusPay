@@ -1,6 +1,7 @@
 package com.mchaw.tauruspay.ui.main.home.forsale.presenter;
 
 import com.mchaw.tauruspay.base.mvp.presenter.RxPresenter;
+import com.mchaw.tauruspay.bean.bill.TradingBean;
 import com.mchaw.tauruspay.bean.home.UserBean;
 import com.mchaw.tauruspay.bean.home.ReceivablesBean;
 import com.mchaw.tauruspay.http.ResultObserver;
@@ -90,9 +91,9 @@ public class CollectionListPresenter extends RxPresenter<CollectionListConstract
     @Override
     public void upLodingReceivables(String codeId, String api_token) {
         Disposable disposable = sellModel.upLodingReceivables(codeId, api_token)
-                .subscribeWith(new ResultObserver<Integer>() {
+                .subscribeWith(new ResultObserver<TradingBean>() {
                     @Override
-                    public void onSuccess(Integer secceed) {
+                    public void onSuccess(TradingBean bean) {
                         if (mView == null) {
                             return;
                         }
