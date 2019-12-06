@@ -183,9 +183,7 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
     //点击开始待售成功
     @Override
     public void setStartingOrOverSell(StartOrOverSellBean startOrOverSellBean) {
-        //ToastUtils.showShortToast(getContext(), qrCodeGroupBean.getStatus() == 0 ? "已开始代售" : "已停止代售");
-        //startOrOverSellBean.setStatus(qrCodeGroupBean.getStatus() == 0 ? 1 : 0);
-        startOrOverSellBean.setStatus(startOrOverSellBean.getStatus());
+        qrCodeGroupBean.setStatus(startOrOverSellBean.getStatus());
         MyFrameApplication.groupid = (startOrOverSellBean.getStatus() == 1) ? qrCodeGroupBean.getGroupid() : 0;
         recordGroupid = qrCodeGroupBean.getGroupid();
         presenter.getQRCodeStalls(String.valueOf(qrCodeGroupBean.getGroupid()), MyFrameApplication.tokenStr);

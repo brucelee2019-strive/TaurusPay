@@ -112,7 +112,7 @@ public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> imple
     @Override
     public void setHomeDataBean(UserBean userBean) {
         tvAllCoinNum.setText(StringUtils.fenToYuan(userBean.getDeposit()));
-        tvTodayIncomeNum.setText(String.valueOf(userBean.getDaydeposit()));
+        tvTodayIncomeNum.setText(StringUtils.fenToYuan(userBean.getDaypoint()));
         tvSailingCoinNum.setText(StringUtils.fenToYuan(userBean.getDayonsale()));
     }
 
