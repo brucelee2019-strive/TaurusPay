@@ -2,6 +2,7 @@ package com.mchaw.tauruspay.ui.main.home.forsale;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -136,7 +137,8 @@ public class CollectionListFragment extends BasePresentListFragment<CollectionLi
         if (list != null && list.size() > 0) {
             collectionListAdapter.setNewData(list);
         } else {
-            collectionListAdapter.setEmptyView(notDataView);
+            //collectionListAdapter.setEmptyView(notDataView);
+            collectionListAdapter.setNewData(null);
         }
     }
 
@@ -153,9 +155,10 @@ public class CollectionListFragment extends BasePresentListFragment<CollectionLi
     @Override
     public void setUpLodingReceivables() {
         //更新收款列表
-        if (show) {
-            onRefresh();
-        }
+//        if (show) {
+//            onRefresh();
+//        }
+        onRefresh();
     }
 
     @Subscribe
