@@ -130,7 +130,7 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
     }
 
     /**
-     * 代售分组详细信息
+     * 设置代售分组详细信息
      *
      * @param bean
      */
@@ -152,6 +152,7 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
         forSaleListAdapter.notifyItemChanged(recordPosition);
     }
 
+    //来自大轮询
     @Subscribe
     public void setQRCodeStallsEvent(MainPollingGroupInfoEvent event) {
         if (event == null) {
@@ -159,9 +160,10 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
         }
         //Groupinfo为null 所有分组置为待售状态
         if (event.getGroupinfo() == null) {
-            for(GroupinfoBean qrCodeGroupBean:qrCodeGroupBeanList){
+            for (GroupinfoBean qrCodeGroupBean : qrCodeGroupBeanList) {
                 qrCodeGroupBean.setStatus(0);
             }
+            MyFrameApplication.startingPosition = -1;
             forSaleListAdapter.notifyDataSetChanged();
             return;
         }
@@ -171,18 +173,33 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
         //status为0 表示停售状态
         if (MyFrameApplication.groupid == event.getGroupinfo().getGroupid()) {//确保同一组
             //赋值 list(12个二维码档口id)
-            if (qrCodeGroupBean != null) {
-                qrCodeGroupBean.setDaycount(event.getGroupinfo().getDaycount());
-                qrCodeGroupBean.setStatus(event.getGroupinfo().getStatus());
-                qrCodeGroupBean.setQrcodes(event.getGroupinfo().getQrcodes());
+//            if (qrCodeGroupBean != null) {
+//                qrCodeGroupBean.setDaycount(event.getGroupinfo().getDaycount());
+//                qrCodeGroupBean.setStatus(event.getGroupinfo().getStatus());
+//                qrCodeGroupBean.setQrcodes(event.getGroupinfo().getQrcodes());
+//            }
+            if (qrCodeGroupBeanList != null && qrCodeGroupBeanList.size() > 0) {
+                if (MyFrameApplication.startingPosition == -1) {
+                    return;
+                }
+                GroupinfoBean startingGroupinfoBean = qrCodeGroupBeanList.get(MyFrameApplication.startingPosition);
+                if (startingGroupinfoBean != null) {
+                    startingGroupinfoBean.setDaycount(event.getGroupinfo().getDaycount());
+                    startingGroupinfoBean.setStatus(event.getGroupinfo().getStatus());
+                    startingGroupinfoBean.setQrcodes(event.getGroupinfo().getQrcodes());
+                }
+                //forSaleListAdapter.notifyItemChanged(MyFrameApplication.startingPosition);
+                forSaleListAdapter.notifyDataSetChanged();
             }
         }
-        forSaleListAdapter.notifyDataSetChanged();
+
     }
 
     //点击开始待售成功
     @Override
     public void setStartingOrOverSell(StartOrOverSellBean startOrOverSellBean) {
+        //开始待售的订单位置
+        MyFrameApplication.startingPosition = (startOrOverSellBean.getStatus() == 1)?recordPosition:-1;
         qrCodeGroupBean.setStatus(startOrOverSellBean.getStatus());
         MyFrameApplication.groupid = (startOrOverSellBean.getStatus() == 1) ? qrCodeGroupBean.getGroupid() : 0;
         recordGroupid = qrCodeGroupBean.getGroupid();
@@ -201,7 +218,7 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
         recordGroupid = qrCodeGroupBean.getGroupid();
         recordPosition = position;
         switch (view.getId()) {
-            case R.id.tv_show_order_list:
+            case R.id.tv_show_order_list://点击收缩按钮
                 boolean ishow = qrCodeGroupBean.isShowItems();
                 qrCodeGroupBean.setShowItems(!ishow);
                 if (qrCodeGroupBean.isShowItems()) {

@@ -3,6 +3,7 @@ package com.mchaw.tauruspay;
 import android.app.Application;
 import android.widget.ScrollView;
 
+import com.mchaw.tauruspay.bean.qrcode.GroupinfoBean;
 import com.mchaw.tauruspay.common.Constant;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.WarningToneUtils;
@@ -51,4 +52,6 @@ public class MyFrameApplication extends Application {
     }
 
     public static int groupid = 0;
+    //开始待售组独自拥有
+    public static  int startingPosition = -1 ;
 }

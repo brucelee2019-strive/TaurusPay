@@ -80,14 +80,14 @@ public class CollectionListFragment extends BasePresentListFragment<CollectionLi
     @Override
     public void onResume() {
         super.onResume();
-        onRefresh();
-        show = true;
+        //onRefresh();
+        //show = true;
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        show = false;
+        //show = false;
     }
 
     @Override
@@ -103,7 +103,7 @@ public class CollectionListFragment extends BasePresentListFragment<CollectionLi
         collectionListAdapter = new CollectionListAdapter(list);
         collectionListAdapter.setOnItemChildClickListener(this);
         rvForCollection.setAdapter(collectionListAdapter);
-        onRefresh();
+        //onRefresh();
     }
 
     @Override
@@ -162,7 +162,7 @@ public class CollectionListFragment extends BasePresentListFragment<CollectionLi
     public void tradingAmount(TradingBeanEvent event) {
         if (event != null) {
             if (show) {
-                onRefresh();
+                //onRefresh();
             }
         }
     }

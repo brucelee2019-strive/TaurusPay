@@ -85,6 +85,7 @@ public class TransferAccountsFragment extends BasePresentFragment<TransferAccoun
         //presenter.getHomeDataBean(PreferencesUtils.getString(getContext(),"token"));
         //进入转账界面关闭待售
         MyFrameApplication.groupid = 0;
+        MyFrameApplication.startingPosition = -1;
     }
 
     @Override
