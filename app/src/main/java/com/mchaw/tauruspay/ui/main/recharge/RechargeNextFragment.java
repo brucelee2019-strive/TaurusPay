@@ -123,11 +123,11 @@ public class RechargeNextFragment extends BasePresentFragment<RechargeNextPresen
 
     @OnClick({R.id.iv_back, R.id.btn_remittance_btn,R.id.btn_copy_btn})
     public void onClick(View view) {
-        if (AntiShake.check(view.getId())) {    //判断是否多次点击
-            return;
-        }
         switch (view.getId()) {
             case R.id.iv_back:
+                if (AntiShake.check(view.getId())) {    //判断是否多次点击
+                    return;
+                }
                 getActivity().finish();
                 break;
             case R.id.btn_remittance_btn:

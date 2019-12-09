@@ -83,9 +83,9 @@ public class TransferAccountsFragment extends BasePresentFragment<TransferAccoun
         super.initFragment();
         tvBackTitle.setText("转账");
         //presenter.getHomeDataBean(PreferencesUtils.getString(getContext(),"token"));
-        //进入转账界面关闭待售
-        MyFrameApplication.groupid = 0;
-        MyFrameApplication.startingPosition = -1;
+        //进入转账界面关闭待售(先不要胡来，让服务器处理)
+        //MyFrameApplication.groupid = 0;
+        //MyFrameApplication.startingPosition = -1;
     }
 
     @Override

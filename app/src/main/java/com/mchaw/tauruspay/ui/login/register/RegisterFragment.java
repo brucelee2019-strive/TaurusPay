@@ -60,6 +60,8 @@ public class RegisterFragment extends BasePresentFragment<RegisterPresenter> imp
     protected void initFragment() {
         super.initFragment();
         tvTitle.setText("注册");
+        etAuthCode.setText("1234");
+        etAuthCode.setFocusable(false);
     }
 
     @Override
@@ -97,7 +99,7 @@ public class RegisterFragment extends BasePresentFragment<RegisterPresenter> imp
             case R.id.btn_get_auth_code:
                 break;
             case R.id.btn_register_btn:
-                register(etAccount.getText().toString(),etPhoneNumber.getText().toString(),etAuthCode.getText().toString(),
+                register(etAccount.getText().toString(),etPhoneNumber.getText().toString(),"1234",
                         etPasswd.getText().toString(),etPasswdSure.getText().toString(),etRealName.getText().toString(),etActiveCode.getText().toString());
                 break;
             case R.id.iv_back:
