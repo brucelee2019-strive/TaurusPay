@@ -120,6 +120,7 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
         if (list != null && list.size() > 0) {
             forSaleListAdapter.setNewData(list);
         } else {
+            forSaleListAdapter.setNewData(null);
             forSaleListAdapter.setEmptyView(notDataView);
         }
     }

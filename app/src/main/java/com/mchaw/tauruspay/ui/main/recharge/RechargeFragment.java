@@ -161,6 +161,7 @@ public class RechargeFragment extends BasePresentListFragment<RechargeListPresen
         if (list != null && list.size() > 0) {
             rechargeAdapter.setNewData(list);
         } else {
+            rechargeAdapter.setNewData(null);
             rechargeAdapter.setEmptyView(notDataView);
         }
     }

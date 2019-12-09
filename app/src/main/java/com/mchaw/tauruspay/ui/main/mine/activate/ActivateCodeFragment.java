@@ -115,6 +115,7 @@ public class ActivateCodeFragment extends BasePresentListFragment<ActivatePresen
         if(list!=null&&list.size()>0) {
             activateCodeAdapter.setNewData(list);
         }else{
+            activateCodeAdapter.setNewData(null);
             activateCodeAdapter.setEmptyView(notDataView);
         }
     }

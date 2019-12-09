@@ -207,6 +207,7 @@ public class BillFragment extends BasePresentListFragment<BillPresenter> impleme
         if (list != null && list.size() > 0) {
             setBilllistByType(list, ALL);
         } else {
+            billAdapter.setNewData(null);
             billAdapter.setEmptyView(notDataView);
         }
     }

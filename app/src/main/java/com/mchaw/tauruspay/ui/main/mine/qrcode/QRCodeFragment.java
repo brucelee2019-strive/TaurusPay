@@ -462,6 +462,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
         if (list != null && list.size() > 0) {
             qrCodeListAdapter.setNewData(list);
         } else {
+            qrCodeListAdapter.setNewData(null);
             qrCodeListAdapter.setEmptyView(notDataView);
         }
     }

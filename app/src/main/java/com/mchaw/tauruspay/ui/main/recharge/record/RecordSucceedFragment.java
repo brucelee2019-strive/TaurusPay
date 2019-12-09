@@ -95,11 +95,13 @@ public class RecordSucceedFragment extends BasePresentListFragment<RechargeListP
         if (list != null && list.size() > 0) {
             List<RechargeBean> reList = filtrateList(list);
             if(reList == null || list.size()<=0){
+                rechargeAdapter.setNewData(null);
                 rechargeAdapter.setEmptyView(notDataView);
                 return;
             }
             rechargeAdapter.setNewData(reList);
         } else {
+            rechargeAdapter.setNewData(null);
             rechargeAdapter.setEmptyView(notDataView);
         }
     }

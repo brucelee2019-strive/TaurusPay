@@ -137,8 +137,8 @@ public class CollectionListFragment extends BasePresentListFragment<CollectionLi
         if (list != null && list.size() > 0) {
             collectionListAdapter.setNewData(list);
         } else {
-            //collectionListAdapter.setEmptyView(notDataView);
             collectionListAdapter.setNewData(null);
+            collectionListAdapter.setEmptyView(notDataView);
         }
     }
 
