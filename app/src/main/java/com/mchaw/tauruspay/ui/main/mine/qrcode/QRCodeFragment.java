@@ -313,7 +313,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
                     //presenter.getQRCodeStalls(String.valueOf(groupid), PreferencesUtils.getString(getContext(), "token"));
                     startPolling(10);
                 } else {
-                    stopPolling();
+                    //stopPolling();
                 }
                 break;
             case R.id.iv_delete:
@@ -597,7 +597,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
     @Override
     public void onResume() {
         super.onResume();
-        //startPolling(1);
+        startPolling(10);
     }
 
     @Override
