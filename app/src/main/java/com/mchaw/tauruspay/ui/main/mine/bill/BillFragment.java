@@ -1,25 +1,32 @@
 package com.mchaw.tauruspay.ui.main.mine.bill;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.base.fragment.BasePresentListFragment;
 import com.mchaw.tauruspay.bean.bill.BillBean;
+import com.mchaw.tauruspay.bean.bill.BillTotalBean;
 import com.mchaw.tauruspay.common.util.DensityUtils;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.ScreenUtils;
+import com.mchaw.tauruspay.common.util.StringUtils;
 import com.mchaw.tauruspay.common.widget.Solve7PopupWindow;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.main.mine.bill.adapter.BillAdapter;
@@ -38,11 +45,14 @@ import butterknife.OnClick;
  * @description:
  */
 public class BillFragment extends BasePresentListFragment<BillPresenter> implements BillConstract.View {
+    private static final int PAGE_SIZE = 10;
+
     private final int ALL = 0;
     private final int RECHARGE_SUCCEED = 1;
     private final int ORDER_FEE = 2;
     private final int ORDER_RETURN = 3;
     private final int ORDER_BONUS = 4;
+    private final int ORDER_TRANSFER = 5;
     /**
      * 筛选PopWindow
      */
@@ -64,6 +74,18 @@ public class BillFragment extends BasePresentListFragment<BillPresenter> impleme
 
     @BindView(R.id.rv_activate)
     RecyclerView rvActivate;
+
+    @BindView(R.id.tv_for_sail)
+    TextView tvForSail;
+
+    @BindView(R.id.tv_income)
+    TextView tvIncome;
+
+    @BindView(R.id.swipeLayout)
+    SwipeRefreshLayout swipeRefreshLayout;
+
+    private int status = ALL;
+    private int page = 1;
 
     @Override
     protected int getContentViewId() {
@@ -90,20 +112,30 @@ public class BillFragment extends BasePresentListFragment<BillPresenter> impleme
         tvFiltrate.setText("全部");
         rvActivate.setLayoutManager(new LinearLayoutManager(getContext()));
         billAdapter = new BillAdapter(billBeanList);
+        billAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                loadMore();
+            }
+        });
         rvActivate.setAdapter(billAdapter);
         onRefresh();
+        swipeRefreshLayout.setColorSchemeColors(Color.parseColor("#f0a300"));
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(true);
+                billAdapter.setEnableLoadMore(false);
+                page = 1;
+                presenter.getBillList(PreferencesUtils.getString(getContext(), "token"), status, page);
+            }
+        });
     }
 
     @Override
     protected void initHintViews() {
         loadingView = getLayoutInflater().inflate(R.layout.loading_view, (ViewGroup) rvActivate.getParent(), false);
         notDataView = getLayoutInflater().inflate(R.layout.empty_view, (ViewGroup) rvActivate.getParent(), false);
-        notDataView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onRefresh();
-            }
-        });
         errorView = getLayoutInflater().inflate(R.layout.error_view, (ViewGroup) rvActivate.getParent(), false);
         errorView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,10 +145,18 @@ public class BillFragment extends BasePresentListFragment<BillPresenter> impleme
         });
     }
 
+    //刷新
     @Override
     protected void onRefresh() {
         billAdapter.setEmptyView(loadingView);
-        presenter.getBillList(PreferencesUtils.getString(getContext(), "token"));
+        billAdapter.setEnableLoadMore(false);
+        page = 1;
+        presenter.getBillList(PreferencesUtils.getString(getContext(), "token"), status, page);
+    }
+
+    //加载更多
+    private void loadMore() {
+        presenter.getBillList(PreferencesUtils.getString(getContext(), "token"), status, page);
     }
 
     @OnClick({R.id.iv_back, R.id.tv_filtrate, R.id.iv_filtrate})
@@ -167,6 +207,7 @@ public class BillFragment extends BasePresentListFragment<BillPresenter> impleme
         popSkipFilter(layout, R.id.tv_order_fee, ORDER_FEE);
         popSkipFilter(layout, R.id.tv_order_return, ORDER_RETURN);
         popSkipFilter(layout, R.id.tv_order_bonus, ORDER_BONUS);
+        popSkipFilter(layout, R.id.tv_order_transfer, ORDER_TRANSFER);
     }
 
     /**
@@ -180,19 +221,39 @@ public class BillFragment extends BasePresentListFragment<BillPresenter> impleme
                 switch (type) {
                     case ALL:
                         tvFiltrate.setText("全部");
+                        status = ALL;
+                        page = 1;
+                        onRefresh();
                         break;
                     case RECHARGE_SUCCEED:
                         tvFiltrate.setText("充值成功");
+                        status = RECHARGE_SUCCEED;
+                        page = 1;
+                        onRefresh();
                         break;
                     case ORDER_FEE:
                         tvFiltrate.setText("接单扣费");
+                        status = ORDER_FEE;
+                        page = 1;
+                        onRefresh();
                         break;
                     case ORDER_RETURN:
                         tvFiltrate.setText("订单退费");
+                        status = ORDER_RETURN;
+                        page = 1;
+                        onRefresh();
                         break;
                     case ORDER_BONUS:
                         tvFiltrate.setText("结单红利");
+                        status = ORDER_BONUS;
+                        page = 1;
+                        onRefresh();
                         break;
+                    case ORDER_TRANSFER:
+                        tvFiltrate.setText("转账");
+                        status = ORDER_TRANSFER;
+                        page = 1;
+                        onRefresh();
                     default:
                         break;
                 }
@@ -202,36 +263,52 @@ public class BillFragment extends BasePresentListFragment<BillPresenter> impleme
     }
 
     @Override
-    public void setBillList(List<BillBean> list) {
-        billBeanList = list;
-        if (list != null && list.size() > 0) {
-            setBilllistByType(list, ALL);
+    public void setBillList(BillTotalBean billTotalBean) {
+        swipeRefreshLayout.setRefreshing(false);
+        billBeanList = billTotalBean.getList();
+        if (!TextUtils.isEmpty(billTotalBean.getForsale())) {
+            tvForSail.setText(StringUtils.fenToYuan(billTotalBean.getForsale()));
+        }
+        if (!TextUtils.isEmpty(billTotalBean.getProfit())) {
+            tvIncome.setText(StringUtils.fenToYuan(billTotalBean.getProfit()));
+        }
+        if (billBeanList != null && billBeanList.size() > 0) {
+            boolean isRefresh = page == 1;
+            setBilllistByType(isRefresh, billBeanList);
         } else {
-            billAdapter.setNewData(null);
-            billAdapter.setEmptyView(notDataView);
+            if (page == 1) {
+                billAdapter.setNewData(null);
+                billAdapter.setEmptyView(notDataView);
+            } else {
+                billAdapter.loadMoreComplete();
+            }
         }
     }
 
     @Override
     public void setBillListFail() {
-        billAdapter.setEmptyView(errorView);
+        if(page == 1){
+            billAdapter.setEmptyView(errorView);
+        }
+        swipeRefreshLayout.setRefreshing(false);
+        billAdapter.loadMoreComplete();
     }
 
-    private void setBilllistByType(List<BillBean> list, int type) {
-        switch (type) {
-            case ALL:
-                billAdapter.setNewData(list);
-                break;
-            case RECHARGE_SUCCEED:
-                break;
-            case ORDER_FEE:
-                break;
-            case ORDER_RETURN:
-                break;
-            case ORDER_BONUS:
-                break;
-            default:
-                break;
+    private void setBilllistByType(boolean isRefresh, List<BillBean> list) {
+        page++;
+        final int size = list == null ? 0 : list.size();
+        if (isRefresh) {
+            billAdapter.setNewData(list);
+        } else {
+            if (size > 0) {
+                billAdapter.addData(list);
+            }
+        }
+        if (size < PAGE_SIZE) {
+            //第一页如果不够一页就不显示没有更多数据布局
+            billAdapter.loadMoreEnd(isRefresh);
+        } else {
+            billAdapter.loadMoreComplete();
         }
     }
 }

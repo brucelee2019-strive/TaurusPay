@@ -2,6 +2,7 @@ package com.mchaw.tauruspay.ui.main.mine.bill.presenter;
 
 import com.mchaw.tauruspay.base.mvp.presenter.RxPresenter;
 import com.mchaw.tauruspay.bean.bill.BillBean;
+import com.mchaw.tauruspay.bean.bill.BillTotalBean;
 import com.mchaw.tauruspay.http.ResultObserver;
 import com.mchaw.tauruspay.ui.main.mine.bill.constract.BillConstract;
 import com.mchaw.tauruspay.ui.repository.LoginModel;
@@ -29,15 +30,15 @@ public class BillPresenter extends RxPresenter<BillConstract.View> implements Bi
     }
 
     @Override
-    public void getBillList(String api_token) {
-        Disposable disposable = sellModel.getBillList(api_token)
-                .subscribeWith(new ResultObserver<List<BillBean>>() {
+    public void getBillList(String api_token,int status,int page) {
+        Disposable disposable = sellModel.getBillList(api_token,status,page)
+                .subscribeWith(new ResultObserver<BillTotalBean>() {
                     @Override
-                    public void onSuccess(List<BillBean> list) {
+                    public void onSuccess(BillTotalBean billTotalBean) {
                         if (mView == null) {
                             return;
                         }
-                        mView.setBillList(list);
+                        mView.setBillList(billTotalBean);
                     }
 
                     @Override

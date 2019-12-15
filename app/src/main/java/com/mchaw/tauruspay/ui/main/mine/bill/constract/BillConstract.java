@@ -3,6 +3,7 @@ package com.mchaw.tauruspay.ui.main.mine.bill.constract;
 import com.mchaw.tauruspay.base.mvp.presenter.BasePresenter;
 import com.mchaw.tauruspay.base.mvp.view.BaseView;
 import com.mchaw.tauruspay.bean.bill.BillBean;
+import com.mchaw.tauruspay.bean.bill.BillTotalBean;
 
 import java.util.List;
 
@@ -13,10 +14,10 @@ import java.util.List;
  */
 public interface BillConstract {
     interface View extends BaseView {
-        void setBillList(List<BillBean> list);
+        void setBillList(BillTotalBean billTotalBean);
         void setBillListFail();
     }
     interface Presenter extends BasePresenter<BillConstract.View> {
-        void getBillList(String api_token);
+        void getBillList(String api_token,int status,int page);
     }
 }

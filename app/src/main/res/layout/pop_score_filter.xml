@@ -109,6 +109,23 @@
                     android:text="结单红利"
                     android:textColor="#333333"
                     android:textSize="14sp" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="#E5E5E5" />
+
+                <TextView
+                    android:id="@+id/tv_order_transfer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:gravity="center"
+                    android:paddingLeft="19dp"
+                    android:paddingRight="19dp"
+                    android:text="转账"
+                    android:textColor="#333333"
+                    android:textSize="14sp" />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>

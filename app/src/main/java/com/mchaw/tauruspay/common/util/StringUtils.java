@@ -8,6 +8,17 @@ import java.text.DecimalFormat;
  * @description:
  */
 public class StringUtils {
+    public static String fenToYuan(int f){
+        String fen = String.valueOf(f);
+        if( fen.length() < 3 ){
+            return fen;
+        }
+        String strm = fen.substring(0,fen.length()-2);   //截掉后两位
+        String strh = fen.substring(fen.length() -2,fen.length());   //截取后两位
+        String yuan = strm+"."+strh;
+        return yuan;
+    }
+
     public static String fenToYuan(long f){
         String fen = String.valueOf(f);
         if( fen.length() < 3 ){

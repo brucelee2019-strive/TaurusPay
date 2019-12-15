@@ -85,7 +85,7 @@ public class LoginFragment extends BasePresentFragment<LoginPresenter> implement
     @Override
     public void setLoginFail() {
         LoadingDialog.dismissDailog();
-        ToastUtils.showShortToast(getContext(),"未知错误！");
+        //ToastUtils.showShortToast(getContext(),"未知错误！");
     }
 
     @OnClick({R.id.btn_login_btn, R.id.tv_register, R.id.tv_find_password})

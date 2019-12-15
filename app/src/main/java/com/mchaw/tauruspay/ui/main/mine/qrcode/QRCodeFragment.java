@@ -190,6 +190,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
     }
 
     private Animation animation;
+
     @OnClick({R.id.iv_back, R.id.iv_add_item, R.id.tv_right})
     public void onClick(View view) {
         if (AntiShake.check(view.getId())) {    //判断是否多次点击
@@ -215,7 +216,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
         if (AntiShake.check(view.getId())) {    //判断是否多次点击
-            ToastUtils.showShortToast(getContext(),"客官，请慢点点击！");
+            ToastUtils.showShortToast(getContext(), "客官，请慢点点击！");
             return;
         }
         qrCodeGroupBean = (GroupinfoBean) adapter.getItem(position);
@@ -532,14 +533,18 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
     public void setQRCodeStalls(GroupinfoBean bean) {
         //组装数据给qrCodeListAdapter
         if (bean == null) {
-            ToastUtils.showShortToast(getContext(), "服务器返回数据为null!");
+            //ToastUtils.showShortToast(getContext(), "服务器返回数据为null!");
+            return;
         }
         if (bean.getQrcodes() == null || bean.getQrcodes().size() <= 0) {
-            ToastUtils.showShortToast(getContext(), "服务器返回数据为null!");
+            //ToastUtils.showShortToast(getContext(), "服务器返回数据为null!");
+            return;
         }
         if (groupid == bean.getGroupid()) {//确保同一组
             //赋值 list(12个二维码档口id)
-            qrCodeGroupBean.setQrcodes(bean.getQrcodes());
+            if (qrCodeGroupBean != null) {
+                qrCodeGroupBean.setQrcodes(bean.getQrcodes());
+            }
         }
         qrCodeListAdapter.notifyDataSetChanged();
     }
@@ -621,7 +626,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(animation!=null) {
+        if (animation != null) {
             animation.cancel();
         }
         stopPolling();

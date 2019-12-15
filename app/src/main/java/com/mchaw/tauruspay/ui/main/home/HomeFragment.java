@@ -139,7 +139,7 @@ public class HomeFragment extends BasePresentFragment<HomePresenter> implements 
         tvRepertory.setText(StringUtils.fenToYuan(userBean.getDeposit()));
         tvTodayAgencyIncome.setText(StringUtils.fenToYuan(userBean.getDaypoint()));
         tvTodayMoneyForSale.setText(StringUtils.fenToYuan(userBean.getDayamount()));
-        tvTodayTimeForSale.setText(StringUtils.fenToYuan(userBean.getDaycount()));
+        tvTodayTimeForSale.setText(String.valueOf(userBean.getDaycount()));
         tvAlreadyIncome.setText(StringUtils.fenToYuan(userBean.getDaydeposit()));
     }
 
@@ -149,7 +149,7 @@ public class HomeFragment extends BasePresentFragment<HomePresenter> implements 
             tvRepertory.setText(StringUtils.fenToYuan(event.getKucun()));
             tvTodayAgencyIncome.setText(StringUtils.fenToYuan(event.getDangrishouyi()));
             tvTodayMoneyForSale.setText(StringUtils.fenToYuan(event.getDangrikeshouedu()));
-            tvTodayTimeForSale.setText(StringUtils.fenToYuan(event.getDangrikeshoudanshu()));
+            tvTodayTimeForSale.setText(String.valueOf(event.getDangrikeshoudanshu()));
             tvAlreadyIncome.setText(StringUtils.fenToYuan(event.getDangriyishouedu()));
         }
     }

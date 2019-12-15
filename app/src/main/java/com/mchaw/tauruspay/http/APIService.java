@@ -5,6 +5,7 @@ import com.mchaw.tauruspay.bean.MainPollingBean;
 import com.mchaw.tauruspay.bean.ResultBean;
 import com.mchaw.tauruspay.bean.activate.ActivateCodeBean;
 import com.mchaw.tauruspay.bean.bill.BillBean;
+import com.mchaw.tauruspay.bean.bill.BillTotalBean;
 import com.mchaw.tauruspay.bean.bill.TradingBean;
 import com.mchaw.tauruspay.bean.home.UserBean;
 import com.mchaw.tauruspay.bean.home.ReceivablesBean;
@@ -114,7 +115,7 @@ public interface APIService {
 
     @FormUrlEncoded
     @POST("my/selllog")
-    Observable<ResultBean<List<BillBean>>> getBillList(@Field("api_token") String api_token);
+    Observable<ResultBean<BillTotalBean>> getBillList(@Field("api_token") String api_token, @Field("status") int status, @Field("page") int page);
 
     @FormUrlEncoded
     @POST("my/polling")

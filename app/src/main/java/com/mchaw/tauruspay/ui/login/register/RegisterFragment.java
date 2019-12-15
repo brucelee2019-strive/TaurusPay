@@ -60,7 +60,6 @@ public class RegisterFragment extends BasePresentFragment<RegisterPresenter> imp
     protected void initFragment() {
         super.initFragment();
         tvTitle.setText("注册");
-        etAuthCode.setText("1234");
         etAuthCode.setFocusable(false);
     }
 
