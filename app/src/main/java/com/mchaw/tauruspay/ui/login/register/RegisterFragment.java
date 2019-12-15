@@ -34,8 +34,6 @@ public class RegisterFragment extends BasePresentFragment<RegisterPresenter> imp
     EditText etAccount;
     @BindView(R.id.et_phone_number)
     EditText etPhoneNumber;
-    @BindView(R.id.et_auth_code)
-    EditText etAuthCode;
     @BindView(R.id.et_passwd)
     EditText etPasswd;
     @BindView(R.id.et_passwd_sure)
@@ -60,7 +58,6 @@ public class RegisterFragment extends BasePresentFragment<RegisterPresenter> imp
     protected void initFragment() {
         super.initFragment();
         tvTitle.setText("注册");
-        etAuthCode.setFocusable(false);
     }
 
     @Override
@@ -89,14 +86,12 @@ public class RegisterFragment extends BasePresentFragment<RegisterPresenter> imp
         LoadingDialog.dismissDailog();
     }
 
-    @OnClick({R.id.btn_get_auth_code, R.id.btn_register_btn,R.id.iv_back})
+    @OnClick({R.id.btn_register_btn,R.id.iv_back})
     public void onClick(View view) {
         if (AntiShake.check(view.getId())) {    //判断是否多次点击
             return;
         }
         switch (view.getId()) {
-            case R.id.btn_get_auth_code:
-                break;
             case R.id.btn_register_btn:
                 register(etAccount.getText().toString(),etPhoneNumber.getText().toString(),"1234",
                         etPasswd.getText().toString(),etPasswdSure.getText().toString(),etRealName.getText().toString(),etActiveCode.getText().toString());
