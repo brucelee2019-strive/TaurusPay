@@ -73,6 +73,10 @@
 }
 -keep enum org.greenrobot.eventbus.ThreadMode { *; }
 
+#update
+-keep public class * extends android.app.Activity
+-keep public class * extends android.app.Service
+
 # Only required if you use AsyncExecutor
 -keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
     <init>(java.lang.Throwable);
