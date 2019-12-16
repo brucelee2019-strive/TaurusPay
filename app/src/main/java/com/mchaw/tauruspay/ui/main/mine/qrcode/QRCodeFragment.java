@@ -416,6 +416,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
             aLiYunDecode(mAvatar);
         } else {
             ToastUtils.showShortToast(getContext(), "获取图片失败!");
+            canDone = true;
         }
     }
 
