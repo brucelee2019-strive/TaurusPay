@@ -2,6 +2,7 @@ package com.mchaw.tauruspay.ui.main.mine.qrcode;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,11 +39,16 @@ import com.mchaw.tauruspay.common.util.OneClick.AntiShake;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
+import com.mchaw.tauruspay.glide.GlideImageEngine;
 import com.mchaw.tauruspay.ui.main.mine.dialog.QRCodeGroupDeleteDialog;
 import com.mchaw.tauruspay.ui.main.mine.dialog.QRCodeGroupDialog;
 import com.mchaw.tauruspay.ui.main.mine.qrcode.adapter.QRCodeListAdapter;
 import com.mchaw.tauruspay.ui.main.mine.qrcode.constract.QRCodeConstract;
 import com.mchaw.tauruspay.ui.main.mine.qrcode.presenter.QRCodePresenter;
+import com.zhihu.matisse.Matisse;
+import com.zhihu.matisse.MimeType;
+import com.zhihu.matisse.engine.impl.GlideEngine;
+import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import java.io.File;
 import java.io.IOException;
@@ -191,13 +198,14 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
 
     private Animation animation;
 
-    @OnClick({R.id.iv_back, R.id.iv_add_item, R.id.tv_right})
+    @OnClick({R.id.iv_back, R.id.tv_back_title, R.id.iv_add_item, R.id.tv_right})
     public void onClick(View view) {
         if (AntiShake.check(view.getId())) {    //判断是否多次点击
             return;
         }
         switch (view.getId()) {
             case R.id.iv_back:
+            case R.id.tv_back_title:
                 getActivity().finish();
                 break;
             case R.id.iv_add_item:
@@ -345,26 +353,40 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
      * 调用相册
      */
     public void pickImageFromAlbum2() {
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_PICK);
-        intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, REQUEST_CODE_SELECT_PHOTO);
+        Matisse.from(getActivity())
+                //选择图片
+                .choose(MimeType.ofImage())
+                //是否只显示选择的类型的缩略图，就不会把所有图片视频都放在一起，而是需要什么展示什么
+                .showSingleMediaType(true)
+                //这两行要连用 是否在选择图片中展示照相 和适配安卓7.0 FileProvider
+                .capture(true)
+                .captureStrategy(new CaptureStrategy(true, "PhotoPicker"))
+                //有序选择图片 123456...
+                .countable(true)
+                //最大选择数量为9
+                .maxSelectable(1)
+                //选择方向
+                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+                //界面中缩略图的质量
+                .thumbnailScale(0.8f)
+                //黑色主题
+                .theme(R.style.Matisse_Dracula)
+                //Glide加载方式
+                .imageEngine(new GlideImageEngine())
+                //请求码
+                .forResult(REQUEST_CODE_SELECT_PHOTO);
     }
 
     //相机返回
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
-            switch (requestCode) {
-                case REQUEST_CODE_SELECT_PHOTO:
-                    Uri uri = data.getData();
-                    imageFile = FileUtil.uriToFile(uri, getContext());
-                    displayImage(imageFile);
-                    break;
-                default:
-                    break;
-            }
+        if (requestCode == REQUEST_CODE_SELECT_PHOTO && resultCode == Activity.RESULT_OK) {
+            //图片路径 同样视频地址也是这个 根据requestCode
+            List<Uri> pathList = Matisse.obtainResult(data);
+            Uri uri = pathList.get(0);
+            imageFile = FileUtil.uriToFile(uri, getContext());
+            displayImage(imageFile);
         } else {
             canDone = true;
         }

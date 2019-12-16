@@ -35,19 +35,25 @@ public class RechargeAdapter extends BaseQuickAdapter<RechargeBean, BaseViewHold
             case 0:
             case 1:
                 helper.setText(R.id.tv_recharge_result, "创建");
-                helper.setTextColor(R.id.tv_recharge_result, ContextCompat.getColor(mContext,R.color.color_special));
+                helper.setTextColor(R.id.tv_recharge_result, ContextCompat.getColor(mContext,R.color.color_user_experience));
                 helper.setImageResource(R.id.iv_recharge_state,R.drawable.cz_icon_cg);
+                helper.setGone(R.id.iv_recharge_state,false);
+                helper.setTextColor(R.id.tv_sale_money,ContextCompat.getColor(mContext,R.color.color_black_9));
                 break;
             case 2:
             case 4:
                 helper.setText(R.id.tv_recharge_result,"成功");
                 helper.setTextColor(R.id.tv_recharge_result, ContextCompat.getColor(mContext,R.color.color_special));
                 helper.setImageResource(R.id.iv_recharge_state,R.drawable.cz_icon_cg);
+                helper.setGone(R.id.iv_recharge_state,true);
+                helper.setTextColor(R.id.tv_sale_money,ContextCompat.getColor(mContext,R.color.color_news_stick));
                 break;
             case 3:
                 helper.setText(R.id.tv_recharge_result, "未通过");
                 helper.setTextColor(R.id.tv_recharge_result, ContextCompat.getColor(mContext,R.color.color_news_stick));
                 helper.setImageResource(R.id.iv_recharge_state,R.drawable.cz_icon_jz);
+                helper.setGone(R.id.iv_recharge_state,true);
+                helper.setTextColor(R.id.tv_sale_money,ContextCompat.getColor(mContext,R.color.color_black_9));
                 break;
         }
     }

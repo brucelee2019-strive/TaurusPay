@@ -76,7 +76,7 @@ public class ActivateCodeFragment extends BasePresentListFragment<ActivatePresen
 
     @Override
     protected void initHintViews() {
-        loadingView = getLayoutInflater().inflate(R.layout.loading_view,(ViewGroup) rvActivate.getParent(),false);
+        loadingView = getLayoutInflater().inflate(R.layout.loading_view, (ViewGroup) rvActivate.getParent(), false);
         notDataView = getLayoutInflater().inflate(R.layout.empty_view, (ViewGroup) rvActivate.getParent(), false);
         notDataView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,10 +99,11 @@ public class ActivateCodeFragment extends BasePresentListFragment<ActivatePresen
         presenter.getActiveCodeList(PreferencesUtils.getString(getContext(), "token"));
     }
 
-    @OnClick(R.id.iv_back)
+    @OnClick({R.id.iv_back, R.id.tv_back_title})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
+            case R.id.tv_back_title:
                 this.getActivity().finish();
                 break;
             default:
@@ -112,9 +113,9 @@ public class ActivateCodeFragment extends BasePresentListFragment<ActivatePresen
 
     @Override
     public void setActiveCodeList(List<ActivateCodeBean> list) {
-        if(list!=null&&list.size()>0) {
+        if (list != null && list.size() > 0) {
             activateCodeAdapter.setNewData(list);
-        }else{
+        } else {
             activateCodeAdapter.setNewData(null);
             activateCodeAdapter.setEmptyView(notDataView);
         }
@@ -136,11 +137,11 @@ public class ActivateCodeFragment extends BasePresentListFragment<ActivatePresen
                 ClipData mClipData = ClipData.newPlainText("Label", activateCodeBean.getCode());
                 // 将ClipData内容放到系统剪贴板里。
                 cm.setPrimaryClip(mClipData);
-                if(TextUtils.isEmpty(activateCodeBean.getCode())){
-                    ToastUtils.showShortToast(getContext(),"没有可复制的内容");
+                if (TextUtils.isEmpty(activateCodeBean.getCode())) {
+                    ToastUtils.showShortToast(getContext(), "没有可复制的内容");
                     return;
                 }
-                ToastUtils.showShortToast(getContext(),"已复制<"+activateCodeBean.getCode()+">到剪切板");
+                ToastUtils.showShortToast(getContext(), "已复制<" + activateCodeBean.getCode() + ">到剪切板");
                 break;
             default:
                 break;

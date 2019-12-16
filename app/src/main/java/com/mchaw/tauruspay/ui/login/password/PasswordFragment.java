@@ -27,7 +27,7 @@ import butterknife.OnClick;
  * @date : 2019/11/6 10:23
  * @description:
  */
-public class PasswordFragment extends BasePresentFragment<PasswordPresenter> implements PasswordConstract.View{
+public class PasswordFragment extends BasePresentFragment<PasswordPresenter> implements PasswordConstract.View {
 
     @BindView(R.id.tv_back_title)
     TextView tvTitle;
@@ -66,15 +66,15 @@ public class PasswordFragment extends BasePresentFragment<PasswordPresenter> imp
     @Override
     public void setPasswordBean(PasswordBean passwordBean) {
         LoadingDialog.dismissDailog();
-        if(passwordBean == null) {
-            ToastUtils.showShortToast(getContext(),"密码重置失败！");
+        if (passwordBean == null) {
+            ToastUtils.showShortToast(getContext(), "密码重置失败！");
             return;
         }
-        if(TextUtils.isEmpty(passwordBean.getApi_token())){
-            ToastUtils.showShortToast(getContext(),"密码重置失败！");
-        }else {
+        if (TextUtils.isEmpty(passwordBean.getApi_token())) {
+            ToastUtils.showShortToast(getContext(), "密码重置失败！");
+        } else {
             ToastUtils.showShortToast(getContext(), "密码重置成功！");
-            PreferencesUtils.putString(getContext(),"token",passwordBean.getApi_token());
+            PreferencesUtils.putString(getContext(), "token", passwordBean.getApi_token());
             getActivity().finish();
         }
     }
@@ -85,7 +85,7 @@ public class PasswordFragment extends BasePresentFragment<PasswordPresenter> imp
     }
 
 
-    @OnClick({R.id.btn_get_auth_code, R.id.btn_reset_btn,R.id.iv_back})
+    @OnClick({R.id.btn_get_auth_code, R.id.btn_reset_btn, R.id.iv_back, R.id.tv_back_title})
     public void onClick(View view) {
         if (AntiShake.check(view.getId())) {    //判断是否多次点击
             return;
@@ -94,9 +94,10 @@ public class PasswordFragment extends BasePresentFragment<PasswordPresenter> imp
             case R.id.btn_get_auth_code:
                 break;
             case R.id.btn_reset_btn:
-                resetPasswd(PreferencesUtils.getString(getContext(),"token"),etAuthCode.getText().toString(),etPasswd.getText().toString(),etPasswdSure.getText().toString());
+                resetPasswd(PreferencesUtils.getString(getContext(), "token"), etAuthCode.getText().toString(), etPasswd.getText().toString(), etPasswdSure.getText().toString());
                 break;
             case R.id.iv_back:
+            case R.id.tv_back_title:
                 getActivity().finish();
                 break;
             default:
@@ -104,28 +105,28 @@ public class PasswordFragment extends BasePresentFragment<PasswordPresenter> imp
         }
     }
 
-    private void resetPasswd(String token,String code,String passwd,String passwdConfirmation){
-        if(TextUtils.isEmpty(token)){
-            ToastUtils.showShortToast(getContext(),"token无效!(查看是否登录或注册)");
+    private void resetPasswd(String token, String code, String passwd, String passwdConfirmation) {
+        if (TextUtils.isEmpty(token)) {
+            ToastUtils.showShortToast(getContext(), "token无效!(查看是否登录或注册)");
             return;
         }
-        if(TextUtils.isEmpty(code)){
-            ToastUtils.showShortToast(getContext(),"验证码不能为空！");
+        if (TextUtils.isEmpty(code)) {
+            ToastUtils.showShortToast(getContext(), "验证码不能为空！");
             return;
         }
-        if(TextUtils.isEmpty(passwd)){
-            ToastUtils.showShortToast(getContext(),"登录密码不能为空！");
+        if (TextUtils.isEmpty(passwd)) {
+            ToastUtils.showShortToast(getContext(), "登录密码不能为空！");
             return;
         }
-        if(TextUtils.isEmpty(passwdConfirmation)){
-            ToastUtils.showShortToast(getContext(),"确认密码不能为空！");
+        if (TextUtils.isEmpty(passwdConfirmation)) {
+            ToastUtils.showShortToast(getContext(), "确认密码不能为空！");
             return;
         }
-        if(!passwd.equals(passwdConfirmation)){
-            ToastUtils.showShortToast(getContext(),"密码与确认密码必须一致");
+        if (!passwd.equals(passwdConfirmation)) {
+            ToastUtils.showShortToast(getContext(), "密码与确认密码必须一致");
             return;
         }
-        presenter.getPasswordBean(token,code,passwd,passwdConfirmation);
+        presenter.getPasswordBean(token, code, passwd, passwdConfirmation);
         LoadingDialog.showDialog(getChildFragmentManager());
     }
 }

@@ -159,10 +159,11 @@ public class BillFragment extends BasePresentListFragment<BillPresenter> impleme
         presenter.getBillList(PreferencesUtils.getString(getContext(), "token"), status, page);
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_filtrate, R.id.iv_filtrate})
+    @OnClick({R.id.iv_back, R.id.tv_back_title,R.id.tv_filtrate, R.id.iv_filtrate})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
+            case R.id.tv_back_title:
                 this.getActivity().finish();
                 break;
             case R.id.tv_filtrate:

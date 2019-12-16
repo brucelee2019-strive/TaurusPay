@@ -92,7 +92,7 @@ public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> imple
         viewPage.addOnPageChangeListener(this);
         if (PreferencesUtils.getBoolean(getContext(), Constant.WARNING_TONE, true)) {
             ivYinXiao.setImageResource(R.drawable.ds_yinxiao_on);
-        }else {
+        } else {
             ivYinXiao.setImageResource(R.drawable.ds_yinxiao_off);
         }
     }
@@ -100,7 +100,7 @@ public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> imple
     @Override
     public void onResume() {
         super.onResume();
-        presenter.getHomeDataBean(PreferencesUtils.getString(getContext(),"token"));
+        presenter.getHomeDataBean(PreferencesUtils.getString(getContext(), "token"));
     }
 
     @Override
@@ -117,7 +117,7 @@ public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> imple
     }
 
     @Subscribe
-        public void sellInfo(MainPollingUserEvent event) {
+    public void sellInfo(MainPollingUserEvent event) {
         if (event != null) {
             tvAllCoinNum.setText(StringUtils.fenToYuan(event.getKucun()));
             tvTodayIncomeNum.setText(StringUtils.fenToYuan(event.getDangrishouyi()));
@@ -140,19 +140,20 @@ public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> imple
 
     }
 
-    @OnClick({R.id.iv_back,R.id.iv_yinxiao,R.id.tv_yinxiao})
+    @OnClick({R.id.iv_back, R.id.tv_back_title, R.id.iv_yinxiao, R.id.tv_yinxiao})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
+            case R.id.tv_back_title:
                 getActivity().finish();
                 break;
             case R.id.iv_yinxiao:
             case R.id.tv_yinxiao:
                 if (PreferencesUtils.getBoolean(getContext(), Constant.WARNING_TONE, true)) {
-                    PreferencesUtils.putBoolean(getContext(),Constant.WARNING_TONE,false);
+                    PreferencesUtils.putBoolean(getContext(), Constant.WARNING_TONE, false);
                     ivYinXiao.setImageResource(R.drawable.ds_yinxiao_off);
-                }else {
-                    PreferencesUtils.putBoolean(getContext(),Constant.WARNING_TONE,true);
+                } else {
+                    PreferencesUtils.putBoolean(getContext(), Constant.WARNING_TONE, true);
                     ivYinXiao.setImageResource(R.drawable.ds_yinxiao_on);
                 }
                 break;
@@ -167,14 +168,14 @@ public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> imple
             //小红点
             if (event.getRedPoint() > 0) {
                 tabLayout.showMsg(1, event.getRedPoint());
-                tabLayout.setMsgMargin(1, 80,0);
+                tabLayout.setMsgMargin(1, 80, 0);
             } else {
                 tabLayout.hideMsg(1);
             }
         }
     }
 
-    public void noticeOfCollection(){
+    public void noticeOfCollection() {
         CollectionListDialog.showDialog(getChildFragmentManager());
     }
 }

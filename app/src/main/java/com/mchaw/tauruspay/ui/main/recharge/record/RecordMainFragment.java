@@ -24,7 +24,7 @@ import butterknife.OnClick;
  * @date : 2019/11/4 10:35
  * @description:
  */
-public class RecordMainFragment extends BaseFragment implements ViewPager.OnPageChangeListener{
+public class RecordMainFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
     @BindView(R.id.tv_back_title)
     TextView tvBackTitle;
     @BindView(R.id.tab_layout)
@@ -63,9 +63,16 @@ public class RecordMainFragment extends BaseFragment implements ViewPager.OnPage
         viewPage.addOnPageChangeListener(this);
     }
 
-    @OnClick(R.id.iv_back)
-    public void onClick(View view){
-        getActivity().finish();
+    @OnClick({R.id.iv_back, R.id.tv_back_title})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.iv_back:
+            case R.id.tv_back_title:
+                getActivity().finish();
+                break;
+            default:
+                break;
+        }
     }
 
     @Override

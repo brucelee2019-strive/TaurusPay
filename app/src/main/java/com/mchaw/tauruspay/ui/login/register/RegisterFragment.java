@@ -69,15 +69,15 @@ public class RegisterFragment extends BasePresentFragment<RegisterPresenter> imp
     @Override
     public void setRegisterBean(RegisterBean registerBean) {
         LoadingDialog.dismissDailog();
-        if(registerBean==null){
-            ToastUtils.showShortToast(getContext(),"异常,注册失败！请重新尝试");
+        if (registerBean == null) {
+            ToastUtils.showShortToast(getContext(), "异常,注册失败！请重新尝试");
             return;
         }
-        if(!TextUtils.isEmpty(registerBean.getTime())) {
+        if (!TextUtils.isEmpty(registerBean.getTime())) {
             ToastUtils.showShortToast(getContext(), "注册成功！");
             getActivity().finish();
-        }else{
-            ToastUtils.showShortToast(getContext(),"异常,注册失败！请重新尝试");
+        } else {
+            ToastUtils.showShortToast(getContext(), "异常,注册失败！请重新尝试");
         }
     }
 
@@ -86,17 +86,18 @@ public class RegisterFragment extends BasePresentFragment<RegisterPresenter> imp
         LoadingDialog.dismissDailog();
     }
 
-    @OnClick({R.id.btn_register_btn,R.id.iv_back})
+    @OnClick({R.id.btn_register_btn, R.id.iv_back, R.id.tv_back_title})
     public void onClick(View view) {
         if (AntiShake.check(view.getId())) {    //判断是否多次点击
             return;
         }
         switch (view.getId()) {
             case R.id.btn_register_btn:
-                register(etAccount.getText().toString(),etPhoneNumber.getText().toString(),"1234",
-                        etPasswd.getText().toString(),etPasswdSure.getText().toString(),etRealName.getText().toString(),etActiveCode.getText().toString());
+                register(etAccount.getText().toString(), etPhoneNumber.getText().toString(), "1234",
+                        etPasswd.getText().toString(), etPasswdSure.getText().toString(), etRealName.getText().toString(), etActiveCode.getText().toString());
                 break;
             case R.id.iv_back:
+            case R.id.tv_back_title:
                 getActivity().finish();
                 break;
             default:
@@ -104,40 +105,40 @@ public class RegisterFragment extends BasePresentFragment<RegisterPresenter> imp
         }
     }
 
-    private void register(String account,String phoneNumber,String authCode,String passwd,String passwdSure,String realName,String activeCode){
-        if(TextUtils.isEmpty(account)){
-            ToastUtils.showShortToast(getContext(),"用户账号不能为空！");
+    private void register(String account, String phoneNumber, String authCode, String passwd, String passwdSure, String realName, String activeCode) {
+        if (TextUtils.isEmpty(account)) {
+            ToastUtils.showShortToast(getContext(), "用户账号不能为空！");
             return;
         }
-        if(TextUtils.isEmpty(phoneNumber)){
-            ToastUtils.showShortToast(getContext(),"手机号不能为空！");
+        if (TextUtils.isEmpty(phoneNumber)) {
+            ToastUtils.showShortToast(getContext(), "手机号不能为空！");
             return;
         }
-        if(TextUtils.isEmpty(authCode)){
-            ToastUtils.showShortToast(getContext(),"验证码不能为空！");
+        if (TextUtils.isEmpty(authCode)) {
+            ToastUtils.showShortToast(getContext(), "验证码不能为空！");
             return;
         }
-        if(TextUtils.isEmpty(passwd)){
-            ToastUtils.showShortToast(getContext(),"登录密码不能为空！");
+        if (TextUtils.isEmpty(passwd)) {
+            ToastUtils.showShortToast(getContext(), "登录密码不能为空！");
             return;
         }
-        if(TextUtils.isEmpty(passwdSure)){
-            ToastUtils.showShortToast(getContext(),"确认密码不能为空！");
+        if (TextUtils.isEmpty(passwdSure)) {
+            ToastUtils.showShortToast(getContext(), "确认密码不能为空！");
             return;
         }
-        if(!passwd.equals(passwdSure)){
-            ToastUtils.showShortToast(getContext(),"密码与确认密码必须一致");
+        if (!passwd.equals(passwdSure)) {
+            ToastUtils.showShortToast(getContext(), "密码与确认密码必须一致");
             return;
         }
-        if(TextUtils.isEmpty(realName)){
-            ToastUtils.showShortToast(getContext(),"付款人姓名不能为空！");
+        if (TextUtils.isEmpty(realName)) {
+            ToastUtils.showShortToast(getContext(), "付款人姓名不能为空！");
             return;
         }
-        if(TextUtils.isEmpty(activeCode)){
-            ToastUtils.showShortToast(getContext(),"激活口令不能为空！");
+        if (TextUtils.isEmpty(activeCode)) {
+            ToastUtils.showShortToast(getContext(), "激活口令不能为空！");
             return;
         }
-        presenter.getRegisterBean(account,phoneNumber,authCode,passwd,passwdSure,realName,activeCode);
+        presenter.getRegisterBean(account, phoneNumber, authCode, passwd, passwdSure, realName, activeCode);
         LoadingDialog.showDialog(getChildFragmentManager());
     }
 }

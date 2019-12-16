@@ -38,8 +38,16 @@ public class AboutFragment extends BaseFragment {
         tvTitle.setText("关于");
     }
 
-    @OnClick(R.id.iv_back)
+    @OnClick({R.id.iv_back, R.id.tv_back_title})
     public void onClick(View view) {
-        this.getActivity().finish();
+        switch (view.getId()) {
+            case R.id.iv_back:
+            case R.id.tv_back_title:
+                this.getActivity().finish();
+                break;
+            default:
+                break;
+        }
+
     }
 }

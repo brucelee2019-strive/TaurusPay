@@ -139,10 +139,11 @@ public class TransferAccountsFragment extends BasePresentFragment<TransferAccoun
         }
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_transfer_account_sure, R.id.tv_all_repertory,R.id.iv_account})
+    @OnClick({R.id.iv_back,R.id.tv_back_title, R.id.tv_transfer_account_sure, R.id.tv_all_repertory,R.id.iv_account})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
+            case R.id.tv_back_title:
                 getActivity().finish();
                 break;
             case R.id.tv_transfer_account_sure:

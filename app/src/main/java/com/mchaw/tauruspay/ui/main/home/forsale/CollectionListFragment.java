@@ -81,14 +81,12 @@ public class CollectionListFragment extends BasePresentListFragment<CollectionLi
     @Override
     public void onResume() {
         super.onResume();
-        //onRefresh();
-        //show = true;
+        onRefresh();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        //show = false;
     }
 
     @Override
@@ -104,19 +102,13 @@ public class CollectionListFragment extends BasePresentListFragment<CollectionLi
         collectionListAdapter = new CollectionListAdapter(list);
         collectionListAdapter.setOnItemChildClickListener(this);
         rvForCollection.setAdapter(collectionListAdapter);
-        //onRefresh();
+        onRefresh();
     }
 
     @Override
     protected void initHintViews() {
         loadingView = getLayoutInflater().inflate(R.layout.loading_view, (ViewGroup) rvForCollection.getParent(), false);
         notDataView = getLayoutInflater().inflate(R.layout.empty_view, (ViewGroup) rvForCollection.getParent(), false);
-//        notDataView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                onRefresh();
-//            }
-//        });
         errorView = getLayoutInflater().inflate(R.layout.error_view, (ViewGroup) rvForCollection.getParent(), false);
         errorView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,17 +147,16 @@ public class CollectionListFragment extends BasePresentListFragment<CollectionLi
     @Override
     public void setUpLodingReceivables() {
         //更新收款列表
-//        if (show) {
-//            onRefresh();
-//        }
-        onRefresh();
+        if (show) {
+            onRefresh();
+        }
     }
 
     @Subscribe
     public void tradingAmount(TradingBeanEvent event) {
         if (event != null) {
             if (show) {
-                //onRefresh();
+                onRefresh();
             }
         }
     }

@@ -101,48 +101,6 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:background="@drawable/touch_bg"
-        android:id="@+id/cl_bank_set"
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
-
-        <ImageView
-            android:id="@+id/iv_bank_set"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/wd_icon_yhk" />
-
-        <TextView
-            android:id="@+id/tv_bank_set"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="银行卡设置"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_bank_set"
-            app:layout_constraintStart_toEndOf="@+id/iv_bank_set"
-            app:layout_constraintTop_toTopOf="@+id/iv_bank_set" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:text=" > "
-            android:textSize="25sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/black"></TextView>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:background="@drawable/touch_bg"
         android:id="@+id/cl_qr_code"
         android:layout_width="match_parent"
         android:layout_height="50dp">

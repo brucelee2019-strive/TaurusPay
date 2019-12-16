@@ -12,6 +12,6 @@
         android:layout_marginTop="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="没有数据,点击重试或去添加！"
+        android:text="没有数据！"
         android:textColor="@color/txt_color"/>
 </LinearLayout>

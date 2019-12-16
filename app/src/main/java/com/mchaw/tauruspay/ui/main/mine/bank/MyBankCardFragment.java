@@ -40,10 +40,11 @@ public class MyBankCardFragment extends BaseFragment implements ChangeBankCardDi
         tvTitle.setText("我的银行卡");
     }
 
-    @OnClick({R.id.iv_back,R.id.cl_my_bank_card})
+    @OnClick({R.id.iv_back, R.id.tv_back_title, R.id.cl_my_bank_card})
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.iv_back:
+            case R.id.tv_back_title:
                 this.getActivity().finish();
                 break;
             case R.id.cl_my_bank_card:
@@ -54,6 +55,6 @@ public class MyBankCardFragment extends BaseFragment implements ChangeBankCardDi
 
     @Override
     public void onClickComplete(String name) {
-        ToastUtils.showShortToast(getContext(),name);
+        ToastUtils.showShortToast(getContext(), name);
     }
 }
