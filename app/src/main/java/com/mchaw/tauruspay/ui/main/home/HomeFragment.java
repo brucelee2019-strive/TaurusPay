@@ -19,8 +19,10 @@ import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.bean.eventbus.LoginSucceedEvent;
 import com.mchaw.tauruspay.bean.eventbus.mainpolling.MainPollingUserEvent;
 import com.mchaw.tauruspay.bean.home.UserBean;
+import com.mchaw.tauruspay.bean.updata.UpDataBean;
 import com.mchaw.tauruspay.common.util.OneClick.AntiShake;
 import com.mchaw.tauruspay.common.util.StringUtils;
+import com.mchaw.tauruspay.common.util.versionUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.login.LoginFragment;
 import com.mchaw.tauruspay.ui.main.home.constract.HomeConstract;
@@ -74,7 +76,13 @@ public class HomeFragment extends BasePresentFragment<HomePresenter> implements 
     private String strPre = "*开始代售前，请保持<font color='#FF9600'>金牛话费</font>与<font color='#00aaef'>支付宝</font>在线";
     private String strAfter = "*开始代售时，请及时查询确认收款";
 
-
+    private DownloadManager manager;
+    private String versionName;
+    private int versionCode;
+    private String description;
+    private String apkSize;
+    private String download;
+    private int qzgx;
 
     @Override
     protected int getContentViewId() {
@@ -114,6 +122,7 @@ public class HomeFragment extends BasePresentFragment<HomePresenter> implements 
         tvNotiveText.setSelected(true);
         tvPreSaleTxt.setText(Html.fromHtml(strPre));
         tvAfterSaleTxt.setText(strAfter);
+        presenter.getVersion();
     }
 
     @Override
@@ -124,7 +133,7 @@ public class HomeFragment extends BasePresentFragment<HomePresenter> implements 
         }
     }
 
-    @OnClick({R.id.btn_transfer_btn, R.id.btn_start_sail,R.id.tv_repertory_title})
+    @OnClick({R.id.btn_transfer_btn, R.id.btn_start_sail})
     public void onClick(View view) {
         if (AntiShake.check(view.getId())) {    //判断是否多次点击
             return;
@@ -135,9 +144,6 @@ public class HomeFragment extends BasePresentFragment<HomePresenter> implements 
                 break;
             case R.id.btn_start_sail:
                 startFragment(new ForSaleFragment());
-                break;
-            case R.id.tv_repertory_title:
-                startUpdate3();
                 break;
             default:
                 break;
@@ -151,6 +157,22 @@ public class HomeFragment extends BasePresentFragment<HomePresenter> implements 
         tvTodayMoneyForSale.setText(StringUtils.fenToYuan(userBean.getDayamount()));
         tvTodayTimeForSale.setText(String.valueOf(userBean.getDaycount()));
         tvAlreadyIncome.setText(StringUtils.fenToYuan(userBean.getDaydeposit()));
+    }
+
+    @Override
+    public void setVersion(UpDataBean upDataBean) {
+        if(upDataBean == null){
+            return;
+        }
+        versionName = upDataBean.getVersionName();
+        versionCode = upDataBean.getVersionCode();
+        description = upDataBean.getDescription();
+        apkSize = upDataBean.getApkSize();
+        download = upDataBean.getDownload();
+        qzgx = upDataBean.getType();
+        if(versionUtils.getAppVersionCode(getContext()) < versionCode){
+            startUpdate(versionCode,versionName,apkSize,description,download,qzgx);
+        }
     }
 
     @Subscribe
@@ -171,9 +193,7 @@ public class HomeFragment extends BasePresentFragment<HomePresenter> implements 
         }
     }
 
-    private DownloadManager manager;
-    private String url = "https://f29addac654be01c67d351d1b4282d53.dd.cdntips.com/imtt.dd.qq.com/16891/DC501F04BBAA458C9DC33008EFED5E7F.apk?mkey=5d6d132d73c4febb&f=0c2f&fsname=com.estrongs.android.pop_4.2.0.2.1_10027.apk&csr=1bbd&cip=115.196.216.78&proto=https";
-    private void startUpdate3() {
+    private void startUpdate(int versionCode,String versionName,String apkSize,String description,String download,int qzgx) {
         /*
          * 整个库允许配置的内容
          * 非必选
@@ -186,36 +206,31 @@ public class HomeFragment extends BasePresentFragment<HomePresenter> implements 
                 //下载完成自动跳动安装页面
                 .setJumpInstallPage(true)
                 //设置对话框背景图片 (图片规范参照demo中的示例图)
-                //.setDialogImage(R.drawable.ic_dialog)
+                .setDialogImage(R.drawable.ic_dialog)
                 //设置按钮的颜色
-                //.setDialogButtonColor(Color.parseColor("#E743DA"))
+                .setDialogButtonColor(Color.parseColor("#FF9600"))
                 //设置对话框强制更新时进度条和文字的颜色
-                //.setDialogProgressBarColor(Color.parseColor("#E743DA"))
+                .setDialogProgressBarColor(Color.parseColor("#FF9600"))
                 //设置按钮的文字颜色
                 .setDialogButtonTextColor(Color.WHITE)
                 //设置是否显示通知栏进度
                 .setShowNotification(true)
                 //设置是否提示后台下载toast
-                .setShowBgdToast(false)
+                .setShowBgdToast(true)
                 //设置强制更新
-                .setForcedUpgrade(false);
-                //设置对话框按钮的点击监听
-                //.setButtonClickListener((OnButtonClickListener) getContext())
-                //设置下载过程的监听
-                //.setOnDownloadListener((OnDownloadListener) getContext());
+                .setForcedUpgrade(qzgx==1?true:false);
 
         manager = DownloadManager.getInstance(getContext());
-        manager.setApkName("ESFileExplorer.apk")
-                .setApkUrl(url)
+        manager.setApkName("jnhf.apk")
+                .setApkUrl(download)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setShowNewerToast(true)
                 .setConfiguration(configuration)
-                .setApkVersionCode(2)
-                .setApkVersionName("2.1.8")
-                .setApkSize("20.4")
+                .setApkVersionCode(versionCode)
+                .setApkVersionName(versionName)
+                .setApkSize(apkSize)
                 .setAuthorities(getContext().getPackageName())
-                .setApkDescription("")
-//                .setApkMD5("DC501F04BBAA458C9DC33008EFED5E7F")
+                .setApkDescription(description)
                 .download();
     }
 

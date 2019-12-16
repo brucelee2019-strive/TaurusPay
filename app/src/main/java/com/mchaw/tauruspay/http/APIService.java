@@ -22,6 +22,7 @@ import com.mchaw.tauruspay.bean.qrcode.QRCodeUrlBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeNextBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeSureBean;
+import com.mchaw.tauruspay.bean.updata.UpDataBean;
 
 
 import java.util.List;
@@ -125,4 +126,7 @@ public interface APIService {
     @FormUrlEncoded
     @POST("logout")
     Observable<ResultBean<LoginOutBean>> getLoginOutBean(@Field("api_token") String api_token);
+
+    @POST("ts")
+    Observable<ResultBean<UpDataBean>> getVersion();
 }

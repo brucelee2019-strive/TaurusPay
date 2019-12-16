@@ -2,6 +2,7 @@ package com.mchaw.tauruspay.ui.main.home.presenter;
 
 import com.mchaw.tauruspay.base.mvp.presenter.RxPresenter;
 import com.mchaw.tauruspay.bean.home.UserBean;
+import com.mchaw.tauruspay.bean.updata.UpDataBean;
 import com.mchaw.tauruspay.http.ResultObserver;
 import com.mchaw.tauruspay.ui.main.home.constract.HomeConstract;
 import com.mchaw.tauruspay.ui.repository.LoginModel;
@@ -47,5 +48,28 @@ public class HomePresenter extends RxPresenter<HomeConstract.View> implements Ho
                     }
                 });
         addSubscribe(homeBeanDisposable);
+    }
+
+    @Override
+    public void getVersion() {
+        Disposable disposable = loginModel.getVersion()
+                .subscribeWith(new ResultObserver<UpDataBean>() {
+                    @Override
+                    public void onSuccess(UpDataBean upDataBean) {
+                        if(mView==null){
+                            return;
+                        }
+                        mView.setVersion(upDataBean);
+                    }
+
+                    @Override
+                    public void onFail(String msg) {
+                        if(mView==null){
+                            return;
+                        }
+                        mView.showError(msg);
+                    }
+                });
+        addSubscribe(disposable);
     }
 }
