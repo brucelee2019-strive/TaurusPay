@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -18,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,6 +24,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
+import com.mchaw.tauruspay.base.dialog.DialogCallBack;
 import com.mchaw.tauruspay.base.fragment.BasePresentListFragment;
 import com.mchaw.tauruspay.bean.ALiYunCodeBean;
 import com.mchaw.tauruspay.bean.qrcode.DeleteQRCodeGroupBean;
@@ -40,14 +39,13 @@ import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.glide.GlideImageEngine;
-import com.mchaw.tauruspay.ui.main.mine.dialog.QRCodeGroupDeleteDialog;
+import com.mchaw.tauruspay.ui.main.home.forsale.dialog.ConfirmDialogFragment;
 import com.mchaw.tauruspay.ui.main.mine.dialog.QRCodeGroupDialog;
 import com.mchaw.tauruspay.ui.main.mine.qrcode.adapter.QRCodeListAdapter;
 import com.mchaw.tauruspay.ui.main.mine.qrcode.constract.QRCodeConstract;
 import com.mchaw.tauruspay.ui.main.mine.qrcode.presenter.QRCodePresenter;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
-import com.zhihu.matisse.engine.impl.GlideEngine;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import java.io.File;
@@ -71,12 +69,14 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static com.mchaw.tauruspay.base.dialog.BaseDialogFragment.DIALOG_CONFIRM;
+
 /**
  * @author Bruce Lee
  * @date : 2019/11/8 19:23
  * @description: 二维码库Fragment
  */
-public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> implements QRCodeConstract.View, BaseQuickAdapter.OnItemChildClickListener, QRCodeGroupDialog.ConfirmListener, QRCodeGroupDeleteDialog.ConfirmListener {
+public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> implements QRCodeConstract.View, BaseQuickAdapter.OnItemChildClickListener, QRCodeGroupDialog.ConfirmListener{
     private static final int REQUEST_CODE_SELECT_PHOTO = 111;
     @BindView(R.id.rv_qr_list)
     RecyclerView rvQRList;
@@ -326,7 +326,27 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
                 }
                 break;
             case R.id.iv_delete:
-                QRCodeGroupDeleteDialog.showDialog(getChildFragmentManager(), qrCodeGroupBean.getAccount(), qrCodeGroupBean.getNick(), qrCodeGroupBean.getGroupid(), qrCodeGroupBean.getPaytype());
+                ConfirmDialogFragment confirmDialogFragment = ConfirmDialogFragment.newInstance();
+                confirmDialogFragment.setMsg("提示");
+                String payTypeName = qrCodeGroupBean.getPaytype() == 1?"支付宝":"微信";
+                confirmDialogFragment.setContent("确定要删除：\n" +
+                        payTypeName+"账号为：" + qrCodeGroupBean.getAccount() + "\n" +
+                        payTypeName+"昵称为：" + qrCodeGroupBean.getNick() + "\n"+
+                        "的二维码库么？");
+                confirmDialogFragment.setCancelText("取消");
+                confirmDialogFragment.setConfirmText("确认");
+                confirmDialogFragment.setListenCancel(true);
+                confirmDialogFragment.setDialogCallBack(new DialogCallBack() {
+                    @Override
+                    public void onDialogViewClick(int type, Object value) {
+                        if (type == DIALOG_CONFIRM) {
+                            presenter.deleteQRCodeGroup(String.valueOf(qrCodeGroupBean.getGroupid()), PreferencesUtils.getString(getContext(), "token"));
+                        } else {
+
+                        }
+                    }
+                });
+                confirmDialogFragment.show(this.getFragmentManager(), "confirmDialogFragment");
                 break;
             default:
                 break;
@@ -570,16 +590,6 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
             }
         }
         qrCodeListAdapter.notifyDataSetChanged();
-    }
-
-    /**
-     * 确定删除二维码组
-     *
-     * @param id
-     */
-    @Override
-    public void onClickComplete(int id) {
-        presenter.deleteQRCodeGroup(String.valueOf(id), PreferencesUtils.getString(getContext(), "token"));
     }
 
     /**

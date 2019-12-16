@@ -8,7 +8,7 @@ import androidx.annotation.Nullable;
 
 import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
-import com.mchaw.tauruspay.base.fragment.BaseFragment;
+import com.mchaw.tauruspay.base.dialog.DialogCallBack;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.bean.eventbus.LoginoutEvent;
 import com.mchaw.tauruspay.bean.login.LoginBean;
@@ -21,11 +21,10 @@ import com.mchaw.tauruspay.ui.login.LoginFragment;
 import com.mchaw.tauruspay.ui.login.constract.LoginConstract;
 import com.mchaw.tauruspay.ui.login.password.PasswordFragment;
 import com.mchaw.tauruspay.ui.login.presenter.LoginPresenter;
+import com.mchaw.tauruspay.ui.main.home.forsale.dialog.ConfirmDialogFragment;
 import com.mchaw.tauruspay.ui.main.mine.about.AboutFragment;
 import com.mchaw.tauruspay.ui.main.mine.activate.ActivateCodeFragment;
-import com.mchaw.tauruspay.ui.main.mine.bank.MyBankCardFragment;
 import com.mchaw.tauruspay.ui.main.mine.bill.BillFragment;
-import com.mchaw.tauruspay.ui.main.mine.dialog.LoginOutDialog;
 import com.mchaw.tauruspay.ui.main.mine.qrcode.QRCodeFragment;
 
 import org.greenrobot.eventbus.EventBus;
@@ -33,12 +32,14 @@ import org.greenrobot.eventbus.EventBus;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static com.mchaw.tauruspay.base.dialog.BaseDialogFragment.DIALOG_CONFIRM;
+
 /**
  * @author : Bruce Lee
  * @date : 2019/11/3 0003 21:11
  * @description :
  */
-public class MineFragment extends BasePresentFragment<LoginPresenter> implements LoginConstract.View,LoginOutDialog.ConfirmListener {
+public class MineFragment extends BasePresentFragment<LoginPresenter> implements LoginConstract.View {
 
     @BindView(R.id.tv_user_nickname)
     TextView tvUserNickname;
@@ -80,14 +81,30 @@ public class MineFragment extends BasePresentFragment<LoginPresenter> implements
         component.inject(this);
     }
 
-    @OnClick({R.id.tv_login_out, R.id.cl_bill,R.id.cl_qr_code, R.id.cl_activate_word, R.id.cl_change_password, R.id.cl_about})
+    @OnClick({R.id.tv_login_out, R.id.cl_bill, R.id.cl_qr_code, R.id.cl_activate_word, R.id.cl_change_password, R.id.cl_about})
     public void onClick(View view) {
         if (AntiShake.check(view.getId())) {    //判断是否多次点击
             return;
         }
         switch (view.getId()) {
             case R.id.tv_login_out:
-                LoginOutDialog.showDialog(getChildFragmentManager());
+                ConfirmDialogFragment confirmDialogFragment = ConfirmDialogFragment.newInstance();
+                confirmDialogFragment.setMsg("提示");
+                confirmDialogFragment.setContent("确定要退出么？");
+                confirmDialogFragment.setCancelText("取消");
+                confirmDialogFragment.setConfirmText("确认");
+                confirmDialogFragment.setListenCancel(true);
+                confirmDialogFragment.setDialogCallBack(new DialogCallBack() {
+                    @Override
+                    public void onDialogViewClick(int type, Object value) {
+                        if (type == DIALOG_CONFIRM) {
+                            presenter.getLoginOutBean(MyFrameApplication.tokenStr);
+                        } else {
+
+                        }
+                    }
+                });
+                confirmDialogFragment.show(this.getFragmentManager(), "confirmDialogFragment");
                 break;
             case R.id.cl_bill:
                 startFragment(new BillFragment());
@@ -108,11 +125,6 @@ public class MineFragment extends BasePresentFragment<LoginPresenter> implements
     }
 
     @Override
-    public void onClickComplete() {
-        presenter.getLoginOutBean(MyFrameApplication.tokenStr);
-    }
-
-    @Override
     public void setLoginBean(LoginBean loginBean) {
 
     }
@@ -122,9 +134,9 @@ public class MineFragment extends BasePresentFragment<LoginPresenter> implements
         MyFrameApplication.tokenStr = "";
         MyFrameApplication.groupid = 0;
         MyFrameApplication.startingPosition = -1;
-        PreferencesUtils.putString(getContext(),"token","");
-        PreferencesUtils.putString(getContext(),"name","");
-        PreferencesUtils.putString(getContext(),"payname","");
+        PreferencesUtils.putString(getContext(), "token", "");
+        PreferencesUtils.putString(getContext(), "name", "");
+        PreferencesUtils.putString(getContext(), "payname", "");
         EventBus.getDefault().post(new LoginoutEvent());
         startFragment(new LoginFragment());
         ToastUtils.showShortToast(getContext(), "退出成功！");

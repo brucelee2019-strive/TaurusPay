@@ -54,8 +54,6 @@ public class CollectionListFragment extends BasePresentListFragment<CollectionLi
 
     private CollectionListAdapter collectionListAdapter;
 
-    private boolean show = false;
-
     @Override
     protected int getContentViewId() {
         return R.layout.fragment_for_collection_list;
@@ -71,9 +69,8 @@ public class CollectionListFragment extends BasePresentListFragment<CollectionLi
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (hidden) {
-            show = false;
+
         } else {
-            show = true;
             onRefresh();
         }
     }
@@ -81,7 +78,6 @@ public class CollectionListFragment extends BasePresentListFragment<CollectionLi
     @Override
     public void onResume() {
         super.onResume();
-        onRefresh();
     }
 
     @Override
@@ -102,7 +98,6 @@ public class CollectionListFragment extends BasePresentListFragment<CollectionLi
         collectionListAdapter = new CollectionListAdapter(list);
         collectionListAdapter.setOnItemChildClickListener(this);
         rvForCollection.setAdapter(collectionListAdapter);
-        onRefresh();
     }
 
     @Override
@@ -120,7 +115,7 @@ public class CollectionListFragment extends BasePresentListFragment<CollectionLi
 
     @Override
     protected void onRefresh() {
-        collectionListAdapter.setEmptyView(loadingView);
+        //collectionListAdapter.setEmptyView(loadingView);
         presenter.getTradingList(MyFrameApplication.tokenStr);
     }
 
@@ -147,26 +142,20 @@ public class CollectionListFragment extends BasePresentListFragment<CollectionLi
     @Override
     public void setUpLodingReceivables() {
         //更新收款列表
-        if (show) {
             onRefresh();
-        }
     }
 
     @Subscribe
     public void tradingAmount(TradingBeanEvent event) {
         if (event != null) {
-            if (show) {
                 onRefresh();
-            }
         }
     }
 
     @Subscribe
     public void tradedAmount(TradedBeanEvent event) {
         if (event != null) {
-            if (show) {
                 onRefresh();
-            }
         }
     }
 
@@ -180,15 +169,12 @@ public class CollectionListFragment extends BasePresentListFragment<CollectionLi
 
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-        if (AntiShake.check(view.getId())) {
-            return;
-        }
         ReceivablesBean receivablesBean = (ReceivablesBean) adapter.getItem(position);
         switch (view.getId()) {
             case R.id.btn_sure:
-                //((ForSaleFragment) getParentFragment()).noticeOfCollection();
                 ConfirmDialogFragment confirmDialogFragment = ConfirmDialogFragment.newInstance();
-                confirmDialogFragment.setMsg("请确定收到此订单的付款!\n确认后话费将直接进入对方账户，将无法追回!");
+                confirmDialogFragment.setMsg("*注意！");
+                confirmDialogFragment.setContent("请确定收到此订单的付款!\n确认后话费将直接进入对方账户,\n将无法追回!");
                 confirmDialogFragment.setCancelText("取消");
                 confirmDialogFragment.setConfirmText("确认");
                 confirmDialogFragment.setListenCancel(true);
