@@ -29,7 +29,7 @@ public class CollectionListAdapter extends BaseQuickAdapter<ReceivablesBean, Bas
     protected void convert(@NonNull BaseViewHolder helper, ReceivablesBean item) {
         helper.addOnClickListener(R.id.btn_sure);
         helper.setText(R.id.tv_order_num,String.valueOf(item.getCodeid()));
-        helper.setText(R.id.tv_order_amount, StringUtils.fenToYuan(item.getAmount()));
+        helper.setText(R.id.tv_order_amount, "￥"+StringUtils.fenToYuan(item.getAmount()));
         helper.setText(R.id.tv_income_amout,"+"+StringUtils.earningsYuan(item.getAmount()));
         helper.setImageResource(R.id.iv_zfb_icon,item.getType()==0?R.drawable.weixin_logo:R.drawable.zhifubao_logo);
         helper.setText(R.id.tv_date, item.getTime());

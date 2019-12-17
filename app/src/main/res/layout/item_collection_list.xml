@@ -49,6 +49,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0"
+            android:textColor="@color/color_black_9"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/tv_residue_time"
             app:layout_constraintStart_toEndOf="@+id/tv_residue_time"
             app:layout_constraintTop_toTopOf="@+id/tv_residue_time" />
@@ -68,6 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="2019-11-07 20:00:00"
+            android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="@+id/iv_zfb_icon"
             app:layout_constraintStart_toEndOf="@+id/iv_zfb_icon" />
 
@@ -88,6 +91,7 @@
             android:text="￥303.00"
             android:textColor="@color/color_black_0"
             android:textSize="16sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/tv_order_num"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_order_num" />
@@ -109,6 +113,7 @@
             android:text="+1.51"
             android:textColor="@color/f54343"
             android:textSize="14sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/tv_date"
             app:layout_constraintEnd_toEndOf="@+id/tv_order_amount"
             app:layout_constraintTop_toTopOf="@+id/tv_date" />
@@ -122,7 +127,7 @@
             android:layout_marginBottom="1dp"
             android:background="@drawable/touch_btn_bg"
             android:text="确定"
-            android:textColor="@color/color_black_0"
+            android:textColor="@color/white"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
