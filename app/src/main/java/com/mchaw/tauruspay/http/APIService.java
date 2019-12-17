@@ -15,6 +15,7 @@ import com.mchaw.tauruspay.bean.login.LoginBean;
 import com.mchaw.tauruspay.bean.login.LoginOutBean;
 import com.mchaw.tauruspay.bean.login.PasswordBean;
 import com.mchaw.tauruspay.bean.login.RegisterBean;
+import com.mchaw.tauruspay.bean.notice.NoticeBean;
 import com.mchaw.tauruspay.bean.qrcode.DeleteQRCodeGroupBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupCreateBean;
 import com.mchaw.tauruspay.bean.qrcode.GroupinfoBean;
@@ -129,4 +130,10 @@ public interface APIService {
 
     @POST("ts")
     Observable<ResultBean<UpDataBean>> getVersion();
+
+    @FormUrlEncoded
+    @POST("my/notice")
+    Observable<ResultBean<NoticeBean>> getNotice(@Field("api_token") String api_token,@Field("noticeid") String noticeid);
+
+
 }

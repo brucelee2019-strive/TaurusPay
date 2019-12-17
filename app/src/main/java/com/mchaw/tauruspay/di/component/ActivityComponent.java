@@ -15,6 +15,7 @@ import com.mchaw.tauruspay.ui.main.home.transferaccounts.TransferAccountsFragmen
 import com.mchaw.tauruspay.ui.main.mine.MineFragment;
 import com.mchaw.tauruspay.ui.main.mine.activate.ActivateCodeFragment;
 import com.mchaw.tauruspay.ui.main.mine.bill.BillFragment;
+import com.mchaw.tauruspay.ui.main.mine.notice.NoticeDetailFragment;
 import com.mchaw.tauruspay.ui.main.mine.notice.NoticeFragment;
 import com.mchaw.tauruspay.ui.main.mine.qrcode.QRCodeFragment;
 import com.mchaw.tauruspay.ui.main.recharge.RechargeFragment;
@@ -75,4 +76,6 @@ public interface ActivityComponent {
     void inject(RecordSucceedFragment recordSucceedFragment);
 
     void inject(NoticeFragment noticeFragment);
+
+    void inject(NoticeDetailFragment noticeDetailFragment);
 }

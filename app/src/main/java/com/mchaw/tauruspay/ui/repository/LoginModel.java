@@ -7,6 +7,7 @@ import com.mchaw.tauruspay.bean.login.LoginBean;
 import com.mchaw.tauruspay.bean.login.LoginOutBean;
 import com.mchaw.tauruspay.bean.login.PasswordBean;
 import com.mchaw.tauruspay.bean.login.RegisterBean;
+import com.mchaw.tauruspay.bean.notice.NoticeBean;
 import com.mchaw.tauruspay.bean.updata.UpDataBean;
 import com.mchaw.tauruspay.http.ResultDisposable;
 import com.mchaw.tauruspay.http.ScheduleTranformer;
@@ -78,6 +79,14 @@ public class LoginModel extends BaseModel{
         return apiService.getVersion()
                 .compose(new ResultDisposable<UpDataBean>())
                 .compose(new ScheduleTranformer<UpDataBean>());
+    }
+
+
+    //获取通知
+    public Observable<NoticeBean> getNotice(String api_token, String noticeId) {
+        return apiService.getNotice(api_token,noticeId)
+                .compose(new ResultDisposable<NoticeBean>())
+                .compose(new ScheduleTranformer<NoticeBean>());
     }
 
 }

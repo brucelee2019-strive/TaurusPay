@@ -3,6 +3,7 @@ package com.mchaw.tauruspay.main.presenter;
 import com.mchaw.tauruspay.base.mvp.presenter.RxPresenter;
 import com.mchaw.tauruspay.bean.MainPollingBean;
 import com.mchaw.tauruspay.bean.bill.TradingBean;
+import com.mchaw.tauruspay.bean.notice.NoticeBean;
 import com.mchaw.tauruspay.http.ResultObserver;
 import com.mchaw.tauruspay.main.constract.MainConstract;
 import com.mchaw.tauruspay.ui.repository.LoginModel;
@@ -63,6 +64,29 @@ public class MainPresenter extends RxPresenter<MainConstract.View> implements Ma
                             return;
                         }
                         mView.setUpLodingReceivables();
+                    }
+
+                    @Override
+                    public void onFail(String msg) {
+                        if (mView == null) {
+                            return;
+                        }
+                        mView.showError(msg);
+                    }
+                });
+        addSubscribe(disposable);
+    }
+
+    @Override
+    public void getNotice(String api_token,String noticeId) {
+        Disposable disposable = loginModel.getNotice(api_token,noticeId)
+                .subscribeWith(new ResultObserver<NoticeBean>() {
+                    @Override
+                    public void onSuccess(NoticeBean noticeBean) {
+                        if (mView == null) {
+                            return;
+                        }
+                        mView.setNotice(noticeBean);
                     }
 
                     @Override

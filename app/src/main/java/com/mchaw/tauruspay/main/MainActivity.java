@@ -29,6 +29,7 @@ import com.mchaw.tauruspay.base.activity.BasePresenterActivity;
 import com.mchaw.tauruspay.bean.MainPollingBean;
 import com.mchaw.tauruspay.bean.eventbus.LoginSucceedEvent;
 import com.mchaw.tauruspay.bean.eventbus.LoginoutEvent;
+import com.mchaw.tauruspay.bean.eventbus.NoticeEvent;
 import com.mchaw.tauruspay.bean.eventbus.TradedBeanEvent;
 import com.mchaw.tauruspay.bean.eventbus.TradingBeanEvent;
 import com.mchaw.tauruspay.bean.eventbus.mainpolling.MainPollingGroupInfoEvent;
@@ -36,6 +37,7 @@ import com.mchaw.tauruspay.bean.eventbus.mainpolling.MainPollingReceivablesEvent
 import com.mchaw.tauruspay.bean.eventbus.mainpolling.MainPollingRechargeEvent;
 import com.mchaw.tauruspay.bean.eventbus.mainpolling.MainPollingUserEvent;
 import com.mchaw.tauruspay.bean.home.ReceivablesBean;
+import com.mchaw.tauruspay.bean.notice.NoticeBean;
 import com.mchaw.tauruspay.common.Constant;
 import com.mchaw.tauruspay.common.util.NoNullUtils;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
@@ -104,7 +106,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
             }
         }
         startPolling(0, 5);
-        addBadgeAt(3, 1);
+        noticeStartPolling(0,120);
     }
 
     private Badge addBadgeAt(int position, int number) {
@@ -252,7 +254,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
 
     @Subscribe
     public void loginSucceed(LoginSucceedEvent event) {
-        //startPolling(5,5);
+
     }
 
     @Override
@@ -317,7 +319,18 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
         EventBus.getDefault().post(new TradedBeanEvent());
     }
 
-    //以下是轮询
+    @Override
+    public void setNotice(NoticeBean noticeBean) {
+        if(noticeBean == null){
+            return;
+        }
+        addBadgeAt(3,noticeBean.getNotice());
+        NoticeEvent noticeEvent = new NoticeEvent();
+        noticeEvent.setNoticeNum(noticeBean.getNotice());
+        EventBus.getDefault().post(noticeEvent);
+    }
+
+    //以下是大轮询
     private Disposable disposable;
 
     public void startPolling(int start, int time) {
@@ -330,8 +343,6 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
                     public void accept(Long aLong) throws Exception {
                         Log.i("cici", "总程序交易中订单列表，轮询中...");
                         if (!TextUtils.isEmpty(MyFrameApplication.getInstance().tokenStr)) {
-                            //presenter.getTradingList(PreferencesUtils.getString(getApplicationContext(), "token"));
-                            //presenter.getHomeDataBean(PreferencesUtils.getString(getApplicationContext(), "token"));
                             presenter.getMainPollingBean(MyFrameApplication.getInstance().tokenStr, MyFrameApplication.groupid);
                         }
                     }
@@ -345,22 +356,47 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
         }
     }
 
+    //以下是消息通知轮询
+    private Disposable noticeDisposable;
+
+    public void noticeStartPolling(int start, int time) {
+        Log.i("cici", "消息通知，开始轮询...");
+        noticeDisposable = Observable.interval(start, time, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long aLong) throws Exception {
+                        Log.i("cici", "消息通知，轮询中...");
+                        if (!TextUtils.isEmpty(MyFrameApplication.getInstance().tokenStr)) {
+                            presenter.getNotice(MyFrameApplication.getInstance().tokenStr,"0");
+                        }
+                    }
+                });
+    }
+
+    public void noticeStopPolling() {
+        Log.i("cici", "消息通知，结束轮询");
+        if (noticeDisposable != null) {
+            noticeDisposable.dispose();
+        }
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
-        //startPolling(0, 5);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        //stopPolling();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         stopPolling();
+        noticeStopPolling();
     }
 
     private void waringTone() {

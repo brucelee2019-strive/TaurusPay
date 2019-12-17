@@ -10,9 +10,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BasePresentListFragment;
 import com.mchaw.tauruspay.bean.activate.ActivateCodeBean;
+import com.mchaw.tauruspay.bean.notice.NoticeBean;
+import com.mchaw.tauruspay.bean.notice.NoticeListBean;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.main.mine.activate.adapter.ActivateCodeAdapter;
 import com.mchaw.tauruspay.ui.main.mine.bill.constract.BillConstract;
@@ -25,20 +28,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * @author : Bruce Lee
  * @date : 2019/12/17 0017 07:47
  * @description :
  */
-public class NoticeFragment extends BasePresentListFragment<NoticePresenter> implements NoticeConstract.View, BaseQuickAdapter.OnItemClickListener{
+public class NoticeFragment extends BasePresentListFragment<NoticePresenter> implements NoticeConstract.View, BaseQuickAdapter.OnItemClickListener {
     @BindView(R.id.tv_back_title)
     TextView tvTitle;
 
     @BindView(R.id.rv_notice)
     RecyclerView rvNotice;
 
-    //private List<ActivateCodeBean> list = new ArrayList<>();
+    private List<NoticeListBean> list = new ArrayList<>();
     private NoticeAdapter noticeAdapter;
 
     @Override
@@ -57,6 +61,19 @@ public class NoticeFragment extends BasePresentListFragment<NoticePresenter> imp
     @Override
     protected void onRefresh() {
         noticeAdapter.setEmptyView(loadingView);
+        presenter.getNotice(MyFrameApplication.tokenStr, "0");
+    }
+
+    @OnClick({R.id.iv_back, R.id.tv_back_title})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.iv_back:
+            case R.id.tv_back_title:
+                this.getActivity().finish();
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
@@ -84,11 +101,39 @@ public class NoticeFragment extends BasePresentListFragment<NoticePresenter> imp
         noticeAdapter = new NoticeAdapter(list);
         noticeAdapter.setOnItemClickListener(this);
         rvNotice.setAdapter(noticeAdapter);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         onRefresh();
     }
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        NoticeListBean noticeListBean = (NoticeListBean) adapter.getItem(position);
+        if(noticeListBean == null ){
+            return;
+        }
+        startFragment(NoticeDetailFragment.newInstance(noticeListBean.getTitle(),noticeListBean.getContent(),noticeListBean.getCreated_at(),noticeListBean.getNoticeid()));
+    }
 
+    @Override
+    public void setNotice(NoticeBean noticeBean) {
+        if (noticeBean == null) {
+            noticeAdapter.setEmptyView(notDataView);
+            return;
+        }
+        list = noticeBean.getList();
+        if(list == null || list.size()<=0){
+            noticeAdapter.setEmptyView(notDataView);
+            return;
+        }
+        noticeAdapter.setNewData(list);
+    }
+
+    @Override
+    public void setNoticeFail() {
+        noticeAdapter.setEmptyView(errorView);
     }
 }

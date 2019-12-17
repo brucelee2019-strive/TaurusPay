@@ -11,6 +11,8 @@ import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.dialog.DialogCallBack;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.bean.eventbus.LoginoutEvent;
+import com.mchaw.tauruspay.bean.eventbus.NoticeEvent;
+import com.mchaw.tauruspay.bean.eventbus.TradingBeanEvent;
 import com.mchaw.tauruspay.bean.login.LoginBean;
 import com.mchaw.tauruspay.bean.login.LoginOutBean;
 import com.mchaw.tauruspay.common.util.OneClick.AntiShake;
@@ -25,12 +27,16 @@ import com.mchaw.tauruspay.ui.main.home.forsale.dialog.ConfirmDialogFragment;
 import com.mchaw.tauruspay.ui.main.mine.about.AboutFragment;
 import com.mchaw.tauruspay.ui.main.mine.activate.ActivateCodeFragment;
 import com.mchaw.tauruspay.ui.main.mine.bill.BillFragment;
+import com.mchaw.tauruspay.ui.main.mine.notice.NoticeFragment;
 import com.mchaw.tauruspay.ui.main.mine.qrcode.QRCodeFragment;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import q.rorbin.badgeview.Badge;
+import q.rorbin.badgeview.QBadgeView;
 
 import static com.mchaw.tauruspay.base.dialog.BaseDialogFragment.DIALOG_CONFIRM;
 
@@ -45,6 +51,8 @@ public class MineFragment extends BasePresentFragment<LoginPresenter> implements
     TextView tvUserNickname;
     @BindView(R.id.tv_user_anme)
     TextView tvPayName;
+    @BindView(R.id.tv_red_icon)
+    TextView tvRedIcon;
 
     @Override
     protected int getContentViewId() {
@@ -122,7 +130,7 @@ public class MineFragment extends BasePresentFragment<LoginPresenter> implements
                 startFragment(new AboutFragment());
                 break;
             case R.id.cl_notice:
-
+                startFragment(new NoticeFragment());
                 break;
             default:
                 break;
@@ -150,5 +158,29 @@ public class MineFragment extends BasePresentFragment<LoginPresenter> implements
     @Override
     public void setLoginFail() {
 
+    }
+
+    private Badge addBadgeAt(int number) {
+        // add badge
+        return new QBadgeView(getActivity())
+                .setBadgeNumber(number)
+                .setGravityOffset(0, 0, true)
+                .bindTarget(tvRedIcon)
+                .setOnDragStateChangedListener(new Badge.OnDragStateChangedListener() {
+                    @Override
+                    public void onDragStateChanged(int dragState, Badge badge, View targetView) {
+                        if (Badge.OnDragStateChangedListener.STATE_SUCCEED == dragState){
+
+                        }
+                    }
+                });
+    }
+
+    @Subscribe
+    public void noticeNum(NoticeEvent noticeEvent) {
+        if(noticeEvent == null){
+            return;
+        }
+        addBadgeAt(noticeEvent.getNoticeNum());
     }
 }
