@@ -9,10 +9,28 @@ public class ReceivablesBean {
     private int id;
     private String orderid;
     private int timeout;
-    private int time;
+    private String time;
     private int amount;
     private String codeid;
     private String status;
+    private int type;
+    private int endtime;
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public int getEndtime() {
+        return endtime;
+    }
+
+    public void setEndtime(int endtime) {
+        this.endtime = endtime;
+    }
 
     public int getId() {
         return id;
@@ -38,11 +56,11 @@ public class ReceivablesBean {
         this.timeout = timeout;
     }
 
-    public int getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(int time) {
+    public void setTime(String time) {
         this.time = time;
     }
 

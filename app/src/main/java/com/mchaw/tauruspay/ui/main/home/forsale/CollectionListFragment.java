@@ -35,8 +35,14 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 import static com.mchaw.tauruspay.base.dialog.BaseDialogFragment.DIALOG_CONFIRM;
 
@@ -98,6 +104,7 @@ public class CollectionListFragment extends BasePresentListFragment<CollectionLi
         collectionListAdapter = new CollectionListAdapter(list);
         collectionListAdapter.setOnItemChildClickListener(this);
         rvForCollection.setAdapter(collectionListAdapter);
+        startPolling(0, 1);
     }
 
     @Override
@@ -121,6 +128,7 @@ public class CollectionListFragment extends BasePresentListFragment<CollectionLi
 
     @Override
     public void setTradingList(List<ReceivablesBean> list) {
+        this.list = list;
         if (list != null && list.size() > 0) {
             collectionListAdapter.setNewData(list);
         } else {
@@ -142,20 +150,20 @@ public class CollectionListFragment extends BasePresentListFragment<CollectionLi
     @Override
     public void setUpLodingReceivables() {
         //更新收款列表
-            onRefresh();
+        onRefresh();
     }
 
     @Subscribe
     public void tradingAmount(TradingBeanEvent event) {
         if (event != null) {
-                onRefresh();
+            onRefresh();
         }
     }
 
     @Subscribe
     public void tradedAmount(TradedBeanEvent event) {
         if (event != null) {
-                onRefresh();
+            onRefresh();
         }
     }
 
@@ -192,6 +200,48 @@ public class CollectionListFragment extends BasePresentListFragment<CollectionLi
                 break;
             default:
                 break;
+        }
+    }
+
+    //为了倒计时的轮询
+    private Disposable disposable;
+
+    public void startPolling(int start, int time) {
+        disposable = Observable.interval(start, time, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long aLong) throws Exception {
+                        if (list != null && list.size() > 0) {
+                            countDown(list);
+                        }
+                    }
+                });
+    }
+
+    public void stopPolling() {
+        if (disposable != null) {
+            disposable.dispose();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        stopPolling();
+    }
+
+    private void countDown(List<ReceivablesBean> list) {
+        if(list==null||list.size()<=0){
+            return;
+        }
+        List<ReceivablesBean> receivablesBeanList = new ArrayList<>();
+        for (ReceivablesBean bean : list) {
+            int j = bean.getEndtime() - 1 < 0 ? 0 : bean.getEndtime() - 1;
+            bean.setEndtime(j);
+            receivablesBeanList.add(bean);
+            collectionListAdapter.setNewData(receivablesBeanList);
         }
     }
 }
