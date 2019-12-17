@@ -51,7 +51,7 @@ public class StringUtils {
 
     public static String earningsYuan(int f){
         DecimalFormat df=new DecimalFormat("0.00");
-        String str = df.format(Math.ceil(f*5/1000)/100);
+        String str = df.format(Math.ceil(f*6/1000)/100);
         return str;
     }
 }

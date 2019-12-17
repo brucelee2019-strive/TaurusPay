@@ -157,6 +157,7 @@ public class HomeFragment extends BasePresentFragment<HomePresenter> implements 
         tvTodayMoneyForSale.setText(StringUtils.fenToYuan(userBean.getDayamount()));
         tvTodayTimeForSale.setText(String.valueOf(userBean.getDaycount()));
         tvAlreadyIncome.setText(StringUtils.fenToYuan(userBean.getDaydeposit()));
+        MyFrameApplication.groupid = userBean.getGroupid();
     }
 
     @Override

@@ -29,6 +29,7 @@ public class QRCodeListAdapter extends BaseQuickAdapter<GroupinfoBean, BaseViewH
 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, GroupinfoBean item) {
+        int yscQRCodeNum = 0;
         helper.addOnClickListener(R.id.cl_303, R.id.cl_313, R.id.cl_785, R.id.cl_786, R.id.cl_1215, R.id.cl_1216, R.id.cl_2515,
                 R.id.cl_2516, R.id.cl_4985, R.id.cl_4988, R.id.cl_7988, R.id.cl_9988
                 , R.id.tv_show_order_list,R.id.iv_delete);
@@ -43,8 +44,12 @@ public class QRCodeListAdapter extends BaseQuickAdapter<GroupinfoBean, BaseViewH
         if(item.getQrcodes()!=null&&item.getQrcodes().size()>0) {
             for(int i =0; i<item.getQrcodes().size();i++){
                 setQRCodeStatus(item.getQrcodes().get(i), helper,i,item.getPaytype());
+                if(item.getQrcodes().get(i).getStatus()!=0&&item.getQrcodes().get(i).getStatus()!=3){
+                    yscQRCodeNum++;
+                }
             }
         }
+        helper.setText(R.id.tv_last_time,yscQRCodeNum+"张");
         helper.setGone(R.id.iv_delete,item.getCanDelete()== Constant.PAGE_DELETE_STATE);
         helper.setGone(R.id.tv_show_order_list,!item.isCanClickShowItems());
     }

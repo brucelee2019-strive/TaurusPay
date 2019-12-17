@@ -105,7 +105,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
                 ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
             }
         }
-        startPolling(0, 5);
+        startPolling(1, 5);
         noticeStartPolling(0,120);
     }
 
