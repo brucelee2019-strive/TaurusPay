@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BaseFragment;
+import com.mchaw.tauruspay.common.util.versionUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -21,6 +22,9 @@ public class AboutFragment extends BaseFragment {
 
     @BindView(R.id.tv_back_title)
     TextView tvTitle;
+
+    @BindView(R.id.tv_version)
+    TextView tvVersion;
 
     @Override
     protected int getContentViewId() {
@@ -36,6 +40,7 @@ public class AboutFragment extends BaseFragment {
     @Override
     protected void initFragment() {
         tvTitle.setText("关于");
+        tvVersion.setText("版本信息:"+ versionUtils.getAppVersionName(getContext()));
     }
 
     @OnClick({R.id.iv_back, R.id.tv_back_title})

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
@@ -17,6 +18,7 @@ import com.mchaw.tauruspay.common.dialog.LoadingDialog;
 import com.mchaw.tauruspay.common.util.OneClick.AntiShake;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
+import com.mchaw.tauruspay.common.util.versionUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.login.constract.LoginConstract;
 import com.mchaw.tauruspay.ui.login.password.PasswordFragment;
@@ -39,6 +41,8 @@ public class LoginFragment extends BasePresentFragment<LoginPresenter> implement
     EditText etUserName;
     @BindView(R.id.et_password)
     EditText etPasswd;
+    @BindView(R.id.tv_version)
+    TextView tvVersion;
 
     @Override
     protected int getContentViewId() {
@@ -54,6 +58,7 @@ public class LoginFragment extends BasePresentFragment<LoginPresenter> implement
     @Override
     protected void initFragment() {
         super.initFragment();
+        tvVersion.setText("版本:v"+ versionUtils.getAppVersionName(getContext()));
     }
 
     @Override
