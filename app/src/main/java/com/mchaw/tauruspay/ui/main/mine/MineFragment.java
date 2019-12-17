@@ -81,7 +81,7 @@ public class MineFragment extends BasePresentFragment<LoginPresenter> implements
         component.inject(this);
     }
 
-    @OnClick({R.id.tv_login_out, R.id.cl_bill, R.id.cl_qr_code, R.id.cl_activate_word, R.id.cl_change_password, R.id.cl_about})
+    @OnClick({R.id.tv_login_out, R.id.cl_bill, R.id.cl_qr_code, R.id.cl_activate_word, R.id.cl_change_password, R.id.cl_about, R.id.cl_notice})
     public void onClick(View view) {
         if (AntiShake.check(view.getId())) {    //判断是否多次点击
             return;
@@ -120,6 +120,11 @@ public class MineFragment extends BasePresentFragment<LoginPresenter> implements
                 break;
             case R.id.cl_about:
                 startFragment(new AboutFragment());
+                break;
+            case R.id.cl_notice:
+
+                break;
+            default:
                 break;
         }
     }
