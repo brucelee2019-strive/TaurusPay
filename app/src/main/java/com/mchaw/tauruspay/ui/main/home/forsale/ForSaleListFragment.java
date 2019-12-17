@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
+import com.mchaw.tauruspay.base.dialog.DialogCallBack;
 import com.mchaw.tauruspay.base.fragment.BasePresentListFragment;
 import com.mchaw.tauruspay.bean.eventbus.mainpolling.MainPollingGroupInfoEvent;
 import com.mchaw.tauruspay.bean.home.StartOrOverSellBean;
@@ -22,6 +23,7 @@ import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.main.home.forsale.adapter.ForSaleListAdapter;
 import com.mchaw.tauruspay.ui.main.home.forsale.constract.ForSaleListConstract;
 import com.mchaw.tauruspay.ui.main.home.forsale.dialog.CollectionListDialog;
+import com.mchaw.tauruspay.ui.main.home.forsale.dialog.ConfirmDialogFragment;
 import com.mchaw.tauruspay.ui.main.home.forsale.presenter.ForSaleListPresenter;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -30,6 +32,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+
+import static com.mchaw.tauruspay.base.dialog.BaseDialogFragment.DIALOG_CONFIRM;
 
 /**
  * @author Bruce Lee
@@ -200,7 +204,7 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
     @Override
     public void setStartingOrOverSell(StartOrOverSellBean startOrOverSellBean) {
         //开始待售的订单位置
-        MyFrameApplication.startingPosition = (startOrOverSellBean.getStatus() == 1)?recordPosition:-1;
+        MyFrameApplication.startingPosition = (startOrOverSellBean.getStatus() == 1) ? recordPosition : -1;
         qrCodeGroupBean.setStatus(startOrOverSellBean.getStatus());
         MyFrameApplication.groupid = (startOrOverSellBean.getStatus() == 1) ? qrCodeGroupBean.getGroupid() : 0;
         recordGroupid = qrCodeGroupBean.getGroupid();
@@ -236,14 +240,48 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
                             return;
                         }
                     }
-                    presenter.startingOrOverSell(String.valueOf(qrCodeGroupBean.getGroupid()), 1, PreferencesUtils.getString(getContext(), "token"));
+                    //弹窗
+                    ConfirmDialogFragment confirmDialogFragment = ConfirmDialogFragment.newInstance();
+                    confirmDialogFragment.setMsg("代售警告");
+                    confirmDialogFragment.setContent("请确保支付宝登录账号为\n["+qrCodeGroupBean.getAccount()+"]再代售\n否则有可能造成自动结单异常！");
+                    confirmDialogFragment.setCancelText("取消");
+                    confirmDialogFragment.setConfirmText("确认");
+                    confirmDialogFragment.setListenCancel(true);
+                    confirmDialogFragment.setDialogCallBack(new DialogCallBack() {
+                        @Override
+                        public void onDialogViewClick(int type, Object value) {
+                            if (type == DIALOG_CONFIRM) {
+                                presenter.startingOrOverSell(String.valueOf(qrCodeGroupBean.getGroupid()), 1, PreferencesUtils.getString(getContext(), "token"));
+                            } else {
+
+                            }
+                        }
+                    });
+                    confirmDialogFragment.show(this.getFragmentManager(), "confirmDialogFragment");
                 } else {
                     //停止代售前 检查是否有未完成的收款
 //                    if(){
 //                        ToastUtils.showShortToast(getContext(), "当前有收款未完成，请完成后再停止代售！");
 //                        return;
 //                    }
-                    presenter.startingOrOverSell(String.valueOf(qrCodeGroupBean.getGroupid()), 0, PreferencesUtils.getString(getContext(), "token"));
+                    //弹窗
+                    ConfirmDialogFragment confirmDialogFragment = ConfirmDialogFragment.newInstance();
+                    confirmDialogFragment.setMsg("提示");
+                    confirmDialogFragment.setContent("是否停止接单\n停止接单后请确保所有的单已结单\n停止接单后再次接单将重新排队");
+                    confirmDialogFragment.setCancelText("取消");
+                    confirmDialogFragment.setConfirmText("确认");
+                    confirmDialogFragment.setListenCancel(true);
+                    confirmDialogFragment.setDialogCallBack(new DialogCallBack() {
+                        @Override
+                        public void onDialogViewClick(int type, Object value) {
+                            if (type == DIALOG_CONFIRM) {
+                                presenter.startingOrOverSell(String.valueOf(qrCodeGroupBean.getGroupid()), 0, PreferencesUtils.getString(getContext(), "token"));
+                            } else {
+
+                            }
+                        }
+                    });
+                    confirmDialogFragment.show(this.getFragmentManager(), "confirmDialogFragment");
                 }
                 break;
             default:
