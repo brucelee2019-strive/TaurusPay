@@ -77,7 +77,7 @@ public class BillAdapter extends BaseQuickAdapter<BillBean, BaseViewHolder> {
                 helper.setText(R.id.tv_order_type, "充值成功");
                 helper.setImageResource(R.id.imageView8,R.drawable.czrz_fahuowancheng);
                 helper.setText(R.id.tv_order_income, StringUtils.fenToYuan(amount));
-                helper.setTextColor(R.id.tv_order_income, ContextCompat.getColor(mContext,R.color.color_black_9));
+                helper.setTextColor(R.id.tv_order_income, ContextCompat.getColor(mContext,R.color.e94630));
                 break;
             case 5://发货失败
                 helper.setText(R.id.tv_order_type, "充值失败");
@@ -101,7 +101,7 @@ public class BillAdapter extends BaseQuickAdapter<BillBean, BaseViewHolder> {
             case 1://接单返还
                 helper.setText(R.id.tv_order_type, "订单退费");
                 helper.setImageResource(R.id.imageView8,R.drawable.xsrz_jiedantuikuan);
-                helper.setText(R.id.tv_order_income, StringUtils.fenToYuan(amount));
+                helper.setText(R.id.tv_order_income, "+"+StringUtils.fenToYuan(amount));
                 helper.setTextColor(R.id.tv_order_income, ContextCompat.getColor(mContext,R.color.e94630));
                 break;
             case 2://结单红利

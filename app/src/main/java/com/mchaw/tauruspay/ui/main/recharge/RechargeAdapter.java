@@ -35,7 +35,7 @@ public class RechargeAdapter extends BaseQuickAdapter<RechargeBean, BaseViewHold
             case 0:
             case 1:
                 helper.setText(R.id.tv_recharge_result, "创建");
-                helper.setTextColor(R.id.tv_recharge_result, ContextCompat.getColor(mContext,R.color.color_user_experience));
+                helper.setTextColor(R.id.tv_recharge_result, ContextCompat.getColor(mContext,R.color.color_match_type_3));
                 helper.setImageResource(R.id.iv_recharge_state,R.drawable.cz_icon_cg);
                 helper.setGone(R.id.iv_recharge_state,false);
                 helper.setTextColor(R.id.tv_sale_money,ContextCompat.getColor(mContext,R.color.color_black_9));
