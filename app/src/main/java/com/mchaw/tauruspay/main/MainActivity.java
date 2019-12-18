@@ -257,6 +257,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
             return;
         }
         bottomView.setCurrentItem(0);
+        stopPolling();
     }
 
     @Subscribe

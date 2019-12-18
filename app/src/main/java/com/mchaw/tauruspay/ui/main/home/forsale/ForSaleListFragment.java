@@ -91,13 +91,7 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
     @Override
     protected void initHintViews() {
         loadingView = getLayoutInflater().inflate(R.layout.loading_view, (ViewGroup) rvForSalelist.getParent(), false);
-        notDataView = getLayoutInflater().inflate(R.layout.empty_view, (ViewGroup) rvForSalelist.getParent(), false);
-        notDataView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onRefresh();
-            }
-        });
+        notDataView = getLayoutInflater().inflate(R.layout.qrcode_for_sail_empty_view, (ViewGroup) rvForSalelist.getParent(), false);
         errorView = getLayoutInflater().inflate(R.layout.error_view, (ViewGroup) rvForSalelist.getParent(), false);
         errorView.setOnClickListener(new View.OnClickListener() {
             @Override
