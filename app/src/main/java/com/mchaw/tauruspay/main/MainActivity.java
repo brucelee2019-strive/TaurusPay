@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
@@ -41,10 +42,12 @@ import com.mchaw.tauruspay.bean.eventbus.mainpolling.MainPollingRechargeEvent;
 import com.mchaw.tauruspay.bean.eventbus.mainpolling.MainPollingUserEvent;
 import com.mchaw.tauruspay.bean.home.ReceivablesBean;
 import com.mchaw.tauruspay.bean.notice.NoticeBean;
+import com.mchaw.tauruspay.bean.updata.UpDataBean;
 import com.mchaw.tauruspay.common.Constant;
 import com.mchaw.tauruspay.common.util.NoNullUtils;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.WarningToneUtils;
+import com.mchaw.tauruspay.common.util.versionUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.main.constract.MainConstract;
 import com.mchaw.tauruspay.main.presenter.MainPresenter;
@@ -71,7 +74,7 @@ import io.reactivex.schedulers.Schedulers;
 import q.rorbin.badgeview.Badge;
 import q.rorbin.badgeview.QBadgeView;
 
-public class MainActivity extends BasePresenterActivity<MainPresenter> implements MainConstract.View, BottomNavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BasePresenterActivity<MainPresenter> implements MainConstract.View, BottomNavigationView.OnNavigationItemSelectedListener{
 
     public static final int FRAGMENT_HOME = 0;
     public static final int FRAGMENT_RECHARGE = 1;

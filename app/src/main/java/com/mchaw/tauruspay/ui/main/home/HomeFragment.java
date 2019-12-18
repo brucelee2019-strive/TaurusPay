@@ -42,7 +42,7 @@ import butterknife.OnClick;
  * @date : 2019/11/3 0003 21:02
  * @description :
  */
-public class HomeFragment extends BasePresentFragment<HomePresenter> implements HomeConstract.View, OnDownloadListener, View.OnClickListener, OnButtonClickListener{
+public class HomeFragment extends BasePresentFragment<HomePresenter> implements HomeConstract.View, OnDownloadListener, View.OnClickListener, OnButtonClickListener {
 
     @BindView(R.id.tv_notice_text)
     TextView tvNotiveText;
@@ -98,10 +98,10 @@ public class HomeFragment extends BasePresentFragment<HomePresenter> implements 
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if(hidden){
+        if (hidden) {
 
-        }else{
-            if(!TextUtils.isEmpty(MyFrameApplication.getInstance().tokenStr)) {
+        } else {
+            if (!TextUtils.isEmpty(MyFrameApplication.getInstance().tokenStr)) {
                 presenter.getHomeDataBean(MyFrameApplication.getInstance().tokenStr);
             }
         }
@@ -128,9 +128,7 @@ public class HomeFragment extends BasePresentFragment<HomePresenter> implements 
     @Override
     public void onResume() {
         super.onResume();
-        if(!TextUtils.isEmpty(MyFrameApplication.getInstance().tokenStr)) {
-            presenter.getHomeDataBean(MyFrameApplication.getInstance().tokenStr);
-        }
+        presenter.getHomeDataBean(MyFrameApplication.getInstance().tokenStr);
     }
 
     @OnClick({R.id.btn_transfer_btn, R.id.btn_start_sail})
@@ -162,7 +160,7 @@ public class HomeFragment extends BasePresentFragment<HomePresenter> implements 
 
     @Override
     public void setVersion(UpDataBean upDataBean) {
-        if(upDataBean == null){
+        if (upDataBean == null) {
             return;
         }
         versionName = upDataBean.getVersionName();
@@ -171,14 +169,14 @@ public class HomeFragment extends BasePresentFragment<HomePresenter> implements 
         apkSize = upDataBean.getApkSize();
         download = upDataBean.getDownload();
         qzgx = upDataBean.getType();
-        if(versionUtils.getAppVersionCode(getContext()) < versionCode){
-            startUpdate(versionCode,versionName,apkSize,description,download,qzgx);
+        if (versionUtils.getAppVersionCode(getContext()) < versionCode) {
+            startUpdate(versionCode, versionName, apkSize, description, download, qzgx);
         }
     }
 
     @Subscribe
     public void sellInfo(MainPollingUserEvent event) {
-        if(event != null){
+        if (event != null) {
             tvRepertory.setText(StringUtils.fenToYuan(event.getKucun()));
             tvTodayAgencyIncome.setText(StringUtils.fenToYuan(event.getDangrishouyi()));
             tvTodayMoneyForSale.setText(StringUtils.fenToYuan(event.getDangrikeshouedu()));
@@ -189,12 +187,12 @@ public class HomeFragment extends BasePresentFragment<HomePresenter> implements 
 
     @Subscribe
     public void loginSucceed(LoginSucceedEvent event) {
-        if(!TextUtils.isEmpty(MyFrameApplication.getInstance().tokenStr)) {
+        if (!TextUtils.isEmpty(MyFrameApplication.getInstance().tokenStr)) {
             presenter.getHomeDataBean(MyFrameApplication.getInstance().tokenStr);
         }
     }
 
-    private void startUpdate(int versionCode,String versionName,String apkSize,String description,String download,int qzgx) {
+    private void startUpdate(int versionCode, String versionName, String apkSize, String description, String download, int qzgx) {
         /*
          * 整个库允许配置的内容
          * 非必选
@@ -219,7 +217,7 @@ public class HomeFragment extends BasePresentFragment<HomePresenter> implements 
                 //设置是否提示后台下载toast
                 .setShowBgdToast(true)
                 //设置强制更新
-                .setForcedUpgrade(qzgx==1?true:false);
+                .setForcedUpgrade(qzgx == 1 ? true : false);
 
         manager = DownloadManager.getInstance(getContext());
         manager.setApkName("jnhf.apk")

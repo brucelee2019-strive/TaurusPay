@@ -15,6 +15,7 @@ import com.mchaw.tauruspay.bean.eventbus.NoticeEvent;
 import com.mchaw.tauruspay.bean.eventbus.TradingBeanEvent;
 import com.mchaw.tauruspay.bean.login.LoginBean;
 import com.mchaw.tauruspay.bean.login.LoginOutBean;
+import com.mchaw.tauruspay.bean.updata.UpDataBean;
 import com.mchaw.tauruspay.common.util.OneClick.AntiShake;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
@@ -157,6 +158,11 @@ public class MineFragment extends BasePresentFragment<LoginPresenter> implements
 
     @Override
     public void setLoginFail() {
+
+    }
+
+    @Override
+    public void setVersion(UpDataBean upDataBean) {
 
     }
 

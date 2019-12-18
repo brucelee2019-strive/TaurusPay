@@ -4,6 +4,7 @@ import com.mchaw.tauruspay.base.mvp.presenter.RxPresenter;
 import com.mchaw.tauruspay.bean.MainPollingBean;
 import com.mchaw.tauruspay.bean.bill.TradingBean;
 import com.mchaw.tauruspay.bean.notice.NoticeBean;
+import com.mchaw.tauruspay.bean.updata.UpDataBean;
 import com.mchaw.tauruspay.http.ResultObserver;
 import com.mchaw.tauruspay.main.constract.MainConstract;
 import com.mchaw.tauruspay.ui.repository.LoginModel;

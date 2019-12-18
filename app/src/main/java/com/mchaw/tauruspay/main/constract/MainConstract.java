@@ -4,6 +4,7 @@ import com.mchaw.tauruspay.base.mvp.presenter.BasePresenter;
 import com.mchaw.tauruspay.base.mvp.view.BaseView;
 import com.mchaw.tauruspay.bean.MainPollingBean;
 import com.mchaw.tauruspay.bean.notice.NoticeBean;
+import com.mchaw.tauruspay.bean.updata.UpDataBean;
 
 /**
  * @author Bruce Lee
