@@ -49,7 +49,7 @@ public class QRCodeListAdapter extends BaseQuickAdapter<GroupinfoBean, BaseViewH
                 }
             }
         }
-        helper.setText(R.id.tv_last_time,yscQRCodeNum+"张");
+        helper.setText(R.id.tv_last_time,yscQRCodeNum>=item.getCount()?yscQRCodeNum+"张":item.getCount()+"张");
         helper.setGone(R.id.iv_delete,item.getCanDelete()== Constant.PAGE_DELETE_STATE);
         helper.setGone(R.id.tv_show_order_list,!item.isCanClickShowItems());
     }

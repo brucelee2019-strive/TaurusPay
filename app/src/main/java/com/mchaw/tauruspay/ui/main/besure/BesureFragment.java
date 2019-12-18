@@ -28,21 +28,15 @@ public class BesureFragment extends BaseFragment {
     TextView tvTxt3;
     @BindView(R.id.tv_txt4)
     TextView tvTxt4;
-    @BindView(R.id.tv_txt5)
-    TextView tvTxt5;
-    @BindView(R.id.tv_txt6)
-    TextView tvTxt6;
-    @BindView(R.id.tv_txt7)
-    TextView tvTxt7;
     @BindView(R.id.tv_txt8)
     TextView tvTxt8;
     @BindView(R.id.tv_txt9)
     TextView tvTxt9;
 
-    String str1 = "1：必须使用绑定银行卡充值，请确保绑定银行卡填写正确，否则会造成资金损失；";
-    String str2 = "2：接单时，必须手机后台运行支付宝，且保持电量充足，网络流畅";
-    String str3 = "3：接单前，请自测您的支付宝成功收款后再接单，否则会造成资金损失";
-    String str4 = "4：接单后，请确保您的<font color='#FF0000'>支付宝收到对应额度后</font>再确认收款，否则造成资金损失后果自负；";
+    String str1 = "1：接单代售时，支付宝必须保持后行正常运行，且网络流畅电量充足；";
+    String str2 = "2：接单前，请自己检查支付宝收款是否正常，确认正常后再开始接单；";
+    String str3 = "3：接单后，请确认您的支付宝收款金额与代售提示的金额一致后再确认收款，否则造成资金损失后果自负；";
+    String str4 = "4：停止接单后，请确保所有订单处理完毕，出现纠纷可能会封号；";
     String str5 = "5：确认订单时，请务必<font color='#FF0000'>反复核实收款额度与所确定的订单数额完全一致</font>，如188.01.否则造成的资金损失后果自负";
     String str6 = "6：接单过程人必须在线，支付宝到账后必须在<font color='#FF0000'>60秒内确认订单，否则可能会被封号</font>";
     String str7 = "7：停止接单后，请确保所有订单已处理完毕，否则出现纠纷直接封号";
@@ -66,9 +60,7 @@ public class BesureFragment extends BaseFragment {
         tvTxt2.setText(str2);
         tvTxt3.setText(str3);
         tvTxt4.setText(Html.fromHtml(str4));
-        tvTxt5.setText(Html.fromHtml(str5));
-        tvTxt6.setText(Html.fromHtml(str6));
-        tvTxt7.setText(str7);
+
         tvTxt8.setText(str8);
         tvTxt9.setText(str9);
     }

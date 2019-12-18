@@ -17,6 +17,15 @@ public class GroupinfoBean {
     private String dayamount;
     private String daycount;
     private List<GroupinfoBean.QrcodesBean> qrcodes;
+    private int count;
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
 
     //用来操控展开，收紧按钮。和作为请求二维码档口的判断依据
     private boolean showItems = false;
