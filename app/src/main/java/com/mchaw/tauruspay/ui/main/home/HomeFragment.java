@@ -116,9 +116,9 @@ public class HomeFragment extends BasePresentFragment<HomePresenter> implements 
     @Override
     protected void initFragment() {
         super.initFragment();
-        if(TextUtils.isEmpty(MyFrameApplication.getInstance().tokenStr)){
-            startFragment(new LoginFragment());
-        }
+//        if(TextUtils.isEmpty(MyFrameApplication.getInstance().tokenStr)){
+//            startFragment(new LoginFragment());
+//        }
         tvNotiveText.setSelected(true);
         tvPreSaleTxt.setText(Html.fromHtml(strPre));
         tvAfterSaleTxt.setText(strAfter);

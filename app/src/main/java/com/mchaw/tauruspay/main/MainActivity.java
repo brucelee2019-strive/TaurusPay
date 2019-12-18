@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentFactory;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.azhon.appupdate.config.UpdateConfiguration;
@@ -26,7 +27,9 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.activity.BasePresenterActivity;
+import com.mchaw.tauruspay.base.fragment.helper.FragmentStartHelper;
 import com.mchaw.tauruspay.bean.MainPollingBean;
+import com.mchaw.tauruspay.bean.eventbus.ForbiddenEvent;
 import com.mchaw.tauruspay.bean.eventbus.LoginSucceedEvent;
 import com.mchaw.tauruspay.bean.eventbus.LoginoutEvent;
 import com.mchaw.tauruspay.bean.eventbus.NoticeEvent;
@@ -45,6 +48,7 @@ import com.mchaw.tauruspay.common.util.WarningToneUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.main.constract.MainConstract;
 import com.mchaw.tauruspay.main.presenter.MainPresenter;
+import com.mchaw.tauruspay.ui.login.LoginFragment;
 import com.mchaw.tauruspay.ui.main.besure.BesureFragment;
 import com.mchaw.tauruspay.ui.main.home.HomeFragment;
 import com.mchaw.tauruspay.ui.main.mine.MineFragment;
@@ -67,7 +71,7 @@ import io.reactivex.schedulers.Schedulers;
 import q.rorbin.badgeview.Badge;
 import q.rorbin.badgeview.QBadgeView;
 
-public class MainActivity extends BasePresenterActivity<MainPresenter> implements MainConstract.View, BottomNavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends BasePresenterActivity<MainPresenter> implements MainConstract.View, BottomNavigationView.OnNavigationItemSelectedListener {
 
     public static final int FRAGMENT_HOME = 0;
     public static final int FRAGMENT_RECHARGE = 1;
@@ -106,7 +110,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
             }
         }
         startPolling(1, 5);
-        noticeStartPolling(0,120);
+        noticeStartPolling(0, 120);
     }
 
     private Badge addBadgeAt(int position, int number) {
@@ -118,7 +122,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
                 .setOnDragStateChangedListener(new Badge.OnDragStateChangedListener() {
                     @Override
                     public void onDragStateChanged(int dragState, Badge badge, View targetView) {
-                        if (Badge.OnDragStateChangedListener.STATE_SUCCEED == dragState){
+                        if (Badge.OnDragStateChangedListener.STATE_SUCCEED == dragState) {
 
                         }
                     }
@@ -254,7 +258,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
 
     @Subscribe
     public void loginSucceed(LoginSucceedEvent event) {
-
+        startPolling(1, 5);
     }
 
     @Override
@@ -321,10 +325,10 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
 
     @Override
     public void setNotice(NoticeBean noticeBean) {
-        if(noticeBean == null){
+        if (noticeBean == null) {
             return;
         }
-        addBadgeAt(3,noticeBean.getNotice());
+        addBadgeAt(3, noticeBean.getNotice());
         NoticeEvent noticeEvent = new NoticeEvent();
         noticeEvent.setNoticeNum(noticeBean.getNotice());
         EventBus.getDefault().post(noticeEvent);
@@ -342,9 +346,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
                     @Override
                     public void accept(Long aLong) throws Exception {
                         Log.i("cici", "总程序交易中订单列表，轮询中...");
-                        if (!TextUtils.isEmpty(MyFrameApplication.getInstance().tokenStr)) {
-                            presenter.getMainPollingBean(MyFrameApplication.getInstance().tokenStr, MyFrameApplication.groupid);
-                        }
+                        presenter.getMainPollingBean(MyFrameApplication.getInstance().tokenStr, MyFrameApplication.groupid);
                     }
                 });
     }
@@ -369,7 +371,9 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
                     public void accept(Long aLong) throws Exception {
                         Log.i("cici", "消息通知，轮询中...");
                         if (!TextUtils.isEmpty(MyFrameApplication.getInstance().tokenStr)) {
-                            presenter.getNotice(MyFrameApplication.getInstance().tokenStr,"0");
+                            if (!TextUtils.isEmpty(MyFrameApplication.getInstance().tokenStr)) {
+                                presenter.getNotice(MyFrameApplication.getInstance().tokenStr, "0");
+                            }
                         }
                     }
                 });
@@ -403,6 +407,15 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
         if (PreferencesUtils.getBoolean(MainActivity.this, Constant.WARNING_TONE, true)) {
             WarningToneUtils.getInstance().playSound();
         }
+    }
+
+    @Subscribe
+    public void forbidden(ForbiddenEvent event) {
+        if (event == null) {
+            return;
+        }
+        stopPolling();
+        FragmentStartHelper.startFragment(getApplicationContext(), new LoginFragment());
     }
 
     public void provideToNotice(int amout) {

@@ -1,9 +1,15 @@
 package com.mchaw.tauruspay.http;
 
+import com.mchaw.tauruspay.MyFrameApplication;
+import com.mchaw.tauruspay.bean.eventbus.ForbiddenEvent;
+import com.mchaw.tauruspay.bean.eventbus.TradedBeanEvent;
 import com.mchaw.tauruspay.common.exception.CustomException;
 import com.mchaw.tauruspay.common.exception.EmptyException;
 import com.mchaw.tauruspay.common.exception.SessionInvalidException;
 import com.mchaw.tauruspay.bean.ResultBean;
+import com.mchaw.tauruspay.common.util.ToastUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
@@ -19,6 +25,8 @@ import io.reactivex.functions.Function;
 public class ResultDisposable<T> implements ObservableTransformer<ResultBean<T>, T> {
     //"0"表示请求成功
     private static final int CODE_SUCCESS = 0;
+    //"-1"表示账号禁用或token失效
+    private static final int CODE_FORBIDDEN = -1;
     //请求失败
     private static final int CODE_FAIL = 500;
     //Session失效
@@ -39,16 +47,20 @@ public class ResultDisposable<T> implements ObservableTransformer<ResultBean<T>,
 
             @Override
             public ObservableSource<T> apply(ResultBean<T> resultInfo) throws Exception {
-                if(resultInfo.code == CODE_SUCCESS) {
+                if (resultInfo.code == CODE_SUCCESS) {
                     if (resultInfo.data == null || resultInfo.data == "") {
                         return Observable.error(new EmptyException());
-                    }else{
+                    } else {
                         return Observable.just(resultInfo.data);
                     }
-                }else if (resultInfo.code == CODE_SESSION_INVALID) {
+                } else if (resultInfo.code == CODE_FORBIDDEN) {
+                    //EventBus
+                    EventBus.getDefault().post(new ForbiddenEvent());
                     return Observable.error(new SessionInvalidException());
-                }else {
-                    return Observable.error(new CustomException(resultInfo.code,resultInfo.msg,resultInfo.data));
+                } else if (resultInfo.code == CODE_SESSION_INVALID) {
+                    return Observable.error(new SessionInvalidException());
+                } else {
+                    return Observable.error(new CustomException(resultInfo.code, resultInfo.msg, resultInfo.data));
                 }
             }
         });
