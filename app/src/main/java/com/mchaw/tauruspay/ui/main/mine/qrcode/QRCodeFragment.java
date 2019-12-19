@@ -26,7 +26,9 @@ import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.dialog.DialogCallBack;
 import com.mchaw.tauruspay.base.fragment.BasePresentListFragment;
+import com.mchaw.tauruspay.base.fragment.helper.FragmentStartHelper;
 import com.mchaw.tauruspay.bean.ALiYunCodeBean;
+import com.mchaw.tauruspay.bean.eventbus.ForbiddenEvent;
 import com.mchaw.tauruspay.bean.qrcode.DeleteQRCodeGroupBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupCreateBean;
 import com.mchaw.tauruspay.bean.qrcode.GroupinfoBean;
@@ -39,6 +41,7 @@ import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.glide.GlideImageEngine;
+import com.mchaw.tauruspay.ui.login.LoginFragment;
 import com.mchaw.tauruspay.ui.main.home.forsale.dialog.ConfirmDialogFragment;
 import com.mchaw.tauruspay.ui.main.mine.dialog.QRCodeGroupDialog;
 import com.mchaw.tauruspay.ui.main.mine.qrcode.adapter.QRCodeListAdapter;
@@ -47,6 +50,8 @@ import com.mchaw.tauruspay.ui.main.mine.qrcode.presenter.QRCodePresenter;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
 import java.io.IOException;
@@ -662,6 +667,11 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
         if (animation != null) {
             animation.cancel();
         }
+        stopPolling();
+    }
+
+    @Subscribe
+    public void forbidden(ForbiddenEvent event) {
         stopPolling();
     }
 }

@@ -39,6 +39,7 @@ public class SplashActivity extends BaseActivity {
             public void run() {
                 if (TextUtils.isEmpty(MyFrameApplication.tokenStr)) {
                     FragmentStartHelper.startFragment(SplashActivity.this, new LoginFragmentForFirst());
+                    SplashActivity.this.finish();
                 } else {
                     Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                     startActivity(intent);

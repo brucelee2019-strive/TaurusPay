@@ -112,7 +112,8 @@ public class LoginFragment extends BasePresentFragment<LoginPresenter> implement
                 startFragment(new RegisterFragment());
                 break;
             case R.id.tv_find_password:
-                startFragment(new PasswordFragment());
+                //startFragment(new PasswordFragment());
+                ToastUtils.showShortToast(getContext(),"请联系客服！");
                 break;
             default:
                 break;

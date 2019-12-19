@@ -9,7 +9,7 @@ import java.util.Calendar;
  */
 public class OneClick {
     private String methodName;
-    private static final int CLICK_DELAY_TIME = 1500;
+    private static final int CLICK_DELAY_TIME = 800;
     private long lastClickTime = 0;
 
     public OneClick(String methodName) {

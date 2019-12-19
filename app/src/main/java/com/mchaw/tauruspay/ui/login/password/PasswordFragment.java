@@ -33,8 +33,6 @@ public class PasswordFragment extends BasePresentFragment<PasswordPresenter> imp
     TextView tvTitle;
     @BindView(R.id.et_account)
     EditText etAccount;
-    @BindView(R.id.et_auth_code)
-    EditText etAuthCode;
     @BindView(R.id.et_passwd)
     EditText etPasswd;
     @BindView(R.id.et_passwd_sure)
@@ -54,7 +52,7 @@ public class PasswordFragment extends BasePresentFragment<PasswordPresenter> imp
     @Override
     protected void initFragment() {
         super.initFragment();
-        tvTitle.setText("找回密码");
+        tvTitle.setText("修改密码");
     }
 
     @Override
@@ -85,16 +83,14 @@ public class PasswordFragment extends BasePresentFragment<PasswordPresenter> imp
     }
 
 
-    @OnClick({R.id.btn_get_auth_code, R.id.btn_reset_btn, R.id.iv_back, R.id.tv_back_title})
+    @OnClick({R.id.btn_reset_btn, R.id.iv_back, R.id.tv_back_title})
     public void onClick(View view) {
         if (AntiShake.check(view.getId())) {    //判断是否多次点击
             return;
         }
         switch (view.getId()) {
-            case R.id.btn_get_auth_code:
-                break;
             case R.id.btn_reset_btn:
-                resetPasswd(PreferencesUtils.getString(getContext(), "token"), etAuthCode.getText().toString(), etPasswd.getText().toString(), etPasswdSure.getText().toString());
+                resetPasswd(PreferencesUtils.getString(getContext(), "token"), "1234", etPasswd.getText().toString(), etPasswdSure.getText().toString());
                 break;
             case R.id.iv_back:
             case R.id.tv_back_title:

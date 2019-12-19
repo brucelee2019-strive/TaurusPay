@@ -6,6 +6,25 @@
 
     <include layout="@layout/layout_left_back_bar"></include>
 
+    <TextView
+        android:id="@+id/tv_nitive"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:ellipsize="marquee"
+        android:gravity="center"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:singleLine="true"
+        android:text="用户使用激活码注册后即可成为你的下级，可获得下级0.2%的收益"
+        android:textColor="@color/f54343"
+        android:textSize="12sp">
+    </TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/bdbdbd">
+    </TextView>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_activate"
         android:layout_width="match_parent"

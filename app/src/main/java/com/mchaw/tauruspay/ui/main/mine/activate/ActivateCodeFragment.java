@@ -43,6 +43,9 @@ public class ActivateCodeFragment extends BasePresentListFragment<ActivatePresen
     @BindView(R.id.rv_activate)
     RecyclerView rvActivate;
 
+    @BindView(R.id.tv_nitive)
+    TextView tvNotive;
+
     private List<ActivateCodeBean> list = new ArrayList<>();
     private ActivateCodeAdapter activateCodeAdapter;
 
@@ -67,6 +70,7 @@ public class ActivateCodeFragment extends BasePresentListFragment<ActivatePresen
     protected void initFragment() {
         super.initFragment();
         tvTitle.setText("激活口令");
+        tvNotive.setSelected(true);
         rvActivate.setLayoutManager(new LinearLayoutManager(getContext()));
         activateCodeAdapter = new ActivateCodeAdapter(list);
         activateCodeAdapter.setOnItemChildClickListener(this);

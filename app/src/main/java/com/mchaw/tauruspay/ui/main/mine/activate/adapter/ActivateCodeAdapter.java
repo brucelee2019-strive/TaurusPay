@@ -27,7 +27,7 @@ public class ActivateCodeAdapter extends BaseQuickAdapter<ActivateCodeBean, Base
     protected void convert(@NonNull BaseViewHolder helper, ActivateCodeBean item) {
         helper.addOnClickListener(R.id.btn_copy);
         helper.setText(R.id.tv_code,item.getCode());
-        helper.setText(R.id.tv_used_account, TextUtils.isEmpty(item.getUsename())?"受用账号:":"受用账号:"+item.getUsename());
+        helper.setText(R.id.tv_used_account, TextUtils.isEmpty(item.getUsename())?"受用账号:":"受用账号: "+item.getUsename());
         helper.setText(R.id.tv_time, TextUtils.isEmpty(item.getUsename())?"":item.getUpdate());
         helper.setGone(R.id.btn_copy,TextUtils.isEmpty(item.getUsename()));
     }

@@ -258,11 +258,13 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
         }
         bottomView.setCurrentItem(0);
         stopPolling();
+        noticeStopPolling();
     }
 
     @Subscribe
     public void loginSucceed(LoginSucceedEvent event) {
         startPolling(0, 5);
+        noticeStartPolling(0,120);
     }
 
     @Override
@@ -415,10 +417,8 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
 
     @Subscribe
     public void forbidden(ForbiddenEvent event) {
-        if (event == null) {
-            return;
-        }
         stopPolling();
+        noticeStopPolling();
         FragmentStartHelper.startFragment(getApplicationContext(), new LoginFragment());
     }
 

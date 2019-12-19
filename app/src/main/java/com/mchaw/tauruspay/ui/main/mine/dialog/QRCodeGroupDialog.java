@@ -70,6 +70,8 @@ public class QRCodeGroupDialog extends BaseDialogFragment {
         filterPopWindow();
         tvPayType.setText("支付宝");
         payType = ALI_PAY;
+        etIncomeAccount.setHint("请输入支付宝账号");
+        etIncomeNick.setHint("请输入支付宝昵称");
     }
 
     @Override
@@ -168,10 +170,14 @@ public class QRCodeGroupDialog extends BaseDialogFragment {
                     case ALI_PAY:
                         tvPayType.setText("支付宝");
                         payType = ALI_PAY;
+                        etIncomeAccount.setHint("请输入支付宝账号");
+                        etIncomeNick.setHint("请输入支付宝昵称");
                         break;
                     case WEIXIN_PAY:
                         tvPayType.setText("微信");
                         payType = WEIXIN_PAY;
+                        etIncomeAccount.setHint("请输入微信账号");
+                        etIncomeNick.setHint("请输入微信昵称");
                         break;
                     default:
                         break;
