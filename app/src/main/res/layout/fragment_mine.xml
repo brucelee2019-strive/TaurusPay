@@ -227,49 +227,6 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:background="@drawable/touch_bg"
-        android:id="@+id/cl_about"
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
-
-        <ImageView
-            android:id="@+id/iv_about"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/wd_icon_gy" />
-
-        <TextView
-            android:id="@+id/tv_about"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="关于"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_about"
-            app:layout_constraintStart_toEndOf="@+id/iv_about"
-            app:layout_constraintTop_toTopOf="@+id/iv_about" />
-
-        <TextView
-            android:id="@+id/textView13"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:text=" > "
-            android:textSize="25sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/black"></TextView>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:background="@drawable/touch_bg"
         android:id="@+id/cl_notice"
         android:layout_width="match_parent"
         android:layout_height="50dp">
@@ -313,6 +270,49 @@
             app:layout_constraintBottom_toBottomOf="@+id/textView20"
             app:layout_constraintEnd_toStartOf="@+id/textView20"
             app:layout_constraintTop_toTopOf="@+id/textView20" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black"></TextView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="@drawable/touch_bg"
+        android:id="@+id/cl_about"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <ImageView
+            android:id="@+id/iv_about"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/wd_icon_gy" />
+
+        <TextView
+            android:id="@+id/tv_about"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="关于"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_about"
+            app:layout_constraintStart_toEndOf="@+id/iv_about"
+            app:layout_constraintTop_toTopOf="@+id/iv_about" />
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text=" > "
+            android:textSize="25sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
