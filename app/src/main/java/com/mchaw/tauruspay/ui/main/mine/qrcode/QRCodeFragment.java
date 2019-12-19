@@ -456,7 +456,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
         Request request = new Request.Builder().url("http://qrapi.market.alicloudapi.com/yunapi/qrdecode.html")
                 .addHeader("Host", "qrapi.market.alicloudapi.com")
                 .addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
-                .addHeader("Authorization", "APPCODE ceff3e32309048aba2659a5459c62670").post(formBody).build();
+                .addHeader("Authorization", "APPCODE 9926645caaaf4cb7a6fe47bd95cea63e").post(formBody).build();
         client.newCall(request).enqueue(new Callback() {
             public void onFailure(Call call, IOException e) {
                 System.out.println(e.getMessage());

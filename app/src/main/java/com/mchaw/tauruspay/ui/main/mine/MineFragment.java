@@ -56,6 +56,8 @@ public class MineFragment extends BasePresentFragment<LoginPresenter> implements
     @BindView(R.id.tv_red_icon)
     TextView tvRedIcon;
 
+    private QBadgeView qBadgeView;
+
     @Override
     protected int getContentViewId() {
         return R.layout.fragment_mine;
@@ -83,6 +85,10 @@ public class MineFragment extends BasePresentFragment<LoginPresenter> implements
         super.initFragment();
         tvUserNickname.setText(PreferencesUtils.getString(getContext(), "name"));
         tvPayName.setText(PreferencesUtils.getString(getContext(), "payname"));
+        qBadgeView = new QBadgeView(getActivity());
+        qBadgeView.setBadgeNumber(0)
+                .setGravityOffset(0, 0, true)
+                .bindTarget(tvRedIcon);
     }
 
     @Override
@@ -167,28 +173,12 @@ public class MineFragment extends BasePresentFragment<LoginPresenter> implements
 
     }
 
-    private Badge addBadgeAt(int number) {
-        // add badge
-        return new QBadgeView(getActivity())
-                .setBadgeNumber(number)
-                .setGravityOffset(0, 0, true)
-                .bindTarget(tvRedIcon)
-                .setOnDragStateChangedListener(new Badge.OnDragStateChangedListener() {
-                    @Override
-                    public void onDragStateChanged(int dragState, Badge badge, View targetView) {
-                        if (Badge.OnDragStateChangedListener.STATE_SUCCEED == dragState){
-
-                        }
-                    }
-                });
-    }
-
     @Subscribe
     public void noticeNum(NoticeEvent noticeEvent) {
         if(noticeEvent == null){
             return;
         }
-        addBadgeAt(noticeEvent.getNoticeNum());
+        qBadgeView.setBadgeNumber(noticeEvent.getNoticeNum());
     }
 
     @Subscribe
@@ -196,6 +186,6 @@ public class MineFragment extends BasePresentFragment<LoginPresenter> implements
         if(noticeSureEvent == null){
             return;
         }
-        addBadgeAt(noticeSureEvent.getNoticeNum());
+        qBadgeView.setBadgeNumber(noticeSureEvent.getNoticeNum());
     }
 }

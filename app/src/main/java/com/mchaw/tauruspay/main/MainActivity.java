@@ -92,6 +92,8 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
     @BindView(R.id.bottom_view)
     BottomNavigationViewEx bottomView;
 
+    private QBadgeView qBadgeView;
+
     @Override
     public int getContentViewId() {
         return R.layout.activity_main;
@@ -115,22 +117,10 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
         }
         startPolling(1, 5);
         noticeStartPolling(0, 120);
-    }
-
-    private Badge addBadgeAt(int position, int number) {
-        // add badge
-        return new QBadgeView(this)
-                .setBadgeNumber(number)
+        qBadgeView = new QBadgeView(this);
+        qBadgeView.setBadgeNumber(0)
                 .setGravityOffset(12, 2, true)
-                .bindTarget(bottomView.getBottomNavigationItemView(position))
-                .setOnDragStateChangedListener(new Badge.OnDragStateChangedListener() {
-                    @Override
-                    public void onDragStateChanged(int dragState, Badge badge, View targetView) {
-                        if (Badge.OnDragStateChangedListener.STATE_SUCCEED == dragState) {
-
-                        }
-                    }
-                });
+                .bindTarget(bottomView.getBottomNavigationItemView(3));
     }
 
     @Override
@@ -335,7 +325,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
         if (noticeBean == null) {
             return;
         }
-        addBadgeAt(3, noticeBean.getNotice());
+        qBadgeView.setBadgeNumber(noticeBean.getNotice());
         NoticeEvent noticeEvent = new NoticeEvent();
         noticeEvent.setNoticeNum(noticeBean.getNotice());
         EventBus.getDefault().post(noticeEvent);
@@ -428,7 +418,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
        if(noticeSureEvent == null){
            return;
        }
-        addBadgeAt(3, noticeSureEvent.getNoticeNum());
+        qBadgeView.setBadgeNumber(noticeSureEvent.getNoticeNum());
     }
 
     public void provideToNotice(int amout) {
