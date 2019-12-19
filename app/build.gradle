@@ -10,10 +10,10 @@ android {
 
     signingConfigs {
         config {
-            keyAlias 'runxsports'
-            keyPassword 'runxsports'
-            storeFile file('runxsports.jks')
-            storePassword 'runxsports'
+            keyAlias 'wangzherongyao'
+            keyPassword 'wangzherongyao'
+            storeFile file('wangzherongyao.jks')
+            storePassword 'wangzherongyao'
         }
     }
 
