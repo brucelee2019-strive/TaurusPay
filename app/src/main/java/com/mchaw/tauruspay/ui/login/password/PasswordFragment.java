@@ -68,13 +68,8 @@ public class PasswordFragment extends BasePresentFragment<PasswordPresenter> imp
             ToastUtils.showShortToast(getContext(), "密码重置失败！");
             return;
         }
-        if (TextUtils.isEmpty(passwordBean.getApi_token())) {
-            ToastUtils.showShortToast(getContext(), "密码重置失败！");
-        } else {
-            ToastUtils.showShortToast(getContext(), "密码重置成功！");
-            PreferencesUtils.putString(getContext(), "token", passwordBean.getApi_token());
-            getActivity().finish();
-        }
+        ToastUtils.showShortToast(getContext(), "密码重置成功！");
+        getActivity().finish();
     }
 
     @Override

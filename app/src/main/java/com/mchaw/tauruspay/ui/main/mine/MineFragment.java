@@ -12,6 +12,7 @@ import com.mchaw.tauruspay.base.dialog.DialogCallBack;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.bean.eventbus.LoginoutEvent;
 import com.mchaw.tauruspay.bean.eventbus.NoticeEvent;
+import com.mchaw.tauruspay.bean.eventbus.NoticeSureEvent;
 import com.mchaw.tauruspay.bean.eventbus.TradingBeanEvent;
 import com.mchaw.tauruspay.bean.login.LoginBean;
 import com.mchaw.tauruspay.bean.login.LoginOutBean;
@@ -188,5 +189,13 @@ public class MineFragment extends BasePresentFragment<LoginPresenter> implements
             return;
         }
         addBadgeAt(noticeEvent.getNoticeNum());
+    }
+
+    @Subscribe
+    public void setNoticeRedPoint(NoticeSureEvent noticeSureEvent) {
+        if(noticeSureEvent == null){
+            return;
+        }
+        addBadgeAt(noticeSureEvent.getNoticeNum());
     }
 }

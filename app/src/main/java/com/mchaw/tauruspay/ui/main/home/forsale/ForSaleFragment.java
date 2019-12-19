@@ -175,6 +175,15 @@ public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> imple
         }
     }
 
+    public void setRedPoint(int size){
+        if (size > 0) {
+            tabLayout.showMsg(1, size);
+            tabLayout.setMsgMargin(1, 80, 0);
+        } else {
+            tabLayout.hideMsg(1);
+        }
+    }
+
     public void noticeOfCollection() {
         CollectionListDialog.showDialog(getChildFragmentManager());
     }

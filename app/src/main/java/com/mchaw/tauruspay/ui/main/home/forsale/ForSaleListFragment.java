@@ -237,7 +237,7 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
                     //弹窗
                     ConfirmDialogFragment confirmDialogFragment = ConfirmDialogFragment.newInstance();
                     confirmDialogFragment.setMsg("代售警告");
-                    confirmDialogFragment.setContent("请确保支付宝|微信账号为\n["+qrCodeGroupBean.getAccount()+"]再代售\n否则有可能造成自动结单异常！");
+                    confirmDialogFragment.setContent("请确保[支付宝|微信]账号为\n["+qrCodeGroupBean.getAccount()+"]再代售\n否则有可能造成自动结单异常！");
                     confirmDialogFragment.setCancelText("取消");
                     confirmDialogFragment.setConfirmText("确认");
                     confirmDialogFragment.setListenCancel(true);

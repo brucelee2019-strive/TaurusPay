@@ -1,5 +1,7 @@
 package com.mchaw.tauruspay.ui.main.mine.notice;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BasePresentListFragment;
 import com.mchaw.tauruspay.bean.activate.ActivateCodeBean;
+import com.mchaw.tauruspay.bean.eventbus.NoticeSureEvent;
 import com.mchaw.tauruspay.bean.notice.NoticeBean;
 import com.mchaw.tauruspay.bean.notice.NoticeListBean;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
@@ -23,6 +26,8 @@ import com.mchaw.tauruspay.ui.main.mine.bill.presenter.BillPresenter;
 import com.mchaw.tauruspay.ui.main.mine.notice.adapter.NoticeAdapter;
 import com.mchaw.tauruspay.ui.main.mine.notice.constract.NoticeConstract;
 import com.mchaw.tauruspay.ui.main.mine.notice.presenter.NoticePresenter;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +41,7 @@ import butterknife.OnClick;
  * @description :
  */
 public class NoticeFragment extends BasePresentListFragment<NoticePresenter> implements NoticeConstract.View, BaseQuickAdapter.OnItemClickListener {
+    private static final int REQUEST_CODE_READ_NOTICE= 112;
     @BindView(R.id.tv_back_title)
     TextView tvTitle;
 
@@ -115,7 +121,15 @@ public class NoticeFragment extends BasePresentListFragment<NoticePresenter> imp
         if(noticeListBean == null ){
             return;
         }
-        startFragment(NoticeDetailFragment.newInstance(noticeListBean.getTitle(),noticeListBean.getContent(),noticeListBean.getCreated_at(),noticeListBean.getNoticeid()));
+        startFragmentForResult(NoticeDetailFragment.newInstance(noticeListBean.getTitle(),noticeListBean.getContent(),noticeListBean.getCreated_at(),noticeListBean.getNoticeid()),REQUEST_CODE_READ_NOTICE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_READ_NOTICE && resultCode == Activity.RESULT_OK) {
+            onRefresh();
+        }
     }
 
     @Override
@@ -124,6 +138,9 @@ public class NoticeFragment extends BasePresentListFragment<NoticePresenter> imp
             noticeAdapter.setEmptyView(notDataView);
             return;
         }
+        NoticeSureEvent noticeSureEvent = new NoticeSureEvent();
+        noticeSureEvent.setNoticeNum(noticeBean.getNotice());
+        EventBus.getDefault().post(noticeSureEvent);
         list = noticeBean.getList();
         if(list == null || list.size()<=0){
             noticeAdapter.setEmptyView(notDataView);

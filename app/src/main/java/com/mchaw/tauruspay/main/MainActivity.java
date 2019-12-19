@@ -34,6 +34,7 @@ import com.mchaw.tauruspay.bean.eventbus.ForbiddenEvent;
 import com.mchaw.tauruspay.bean.eventbus.LoginSucceedEvent;
 import com.mchaw.tauruspay.bean.eventbus.LoginoutEvent;
 import com.mchaw.tauruspay.bean.eventbus.NoticeEvent;
+import com.mchaw.tauruspay.bean.eventbus.NoticeSureEvent;
 import com.mchaw.tauruspay.bean.eventbus.TradedBeanEvent;
 import com.mchaw.tauruspay.bean.eventbus.TradingBeanEvent;
 import com.mchaw.tauruspay.bean.eventbus.mainpolling.MainPollingGroupInfoEvent;
@@ -420,6 +421,14 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
         stopPolling();
         noticeStopPolling();
         FragmentStartHelper.startFragment(getApplicationContext(), new LoginFragment());
+    }
+
+    @Subscribe
+    public void setNoticeRedPoint(NoticeSureEvent noticeSureEvent) {
+       if(noticeSureEvent == null){
+           return;
+       }
+        addBadgeAt(3, noticeSureEvent.getNoticeNum());
     }
 
     public void provideToNotice(int amout) {

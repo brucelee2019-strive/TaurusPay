@@ -131,9 +131,11 @@ public class CollectionListFragment extends BasePresentListFragment<CollectionLi
         this.list = list;
         if (list != null && list.size() > 0) {
             collectionListAdapter.setNewData(list);
+            ((ForSaleFragment)getParentFragment()).setRedPoint(list.size());
         } else {
             collectionListAdapter.setNewData(null);
             collectionListAdapter.setEmptyView(notDataView);
+            ((ForSaleFragment)getParentFragment()).setRedPoint(0);
         }
     }
 
