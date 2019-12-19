@@ -81,7 +81,7 @@ import static com.mchaw.tauruspay.base.dialog.BaseDialogFragment.DIALOG_CONFIRM;
  * @date : 2019/11/8 19:23
  * @description: 二维码库Fragment
  */
-public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> implements QRCodeConstract.View, BaseQuickAdapter.OnItemChildClickListener, QRCodeGroupDialog.ConfirmListener{
+public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> implements QRCodeConstract.View, BaseQuickAdapter.OnItemChildClickListener, QRCodeGroupDialog.ConfirmListener {
     private static final int REQUEST_CODE_SELECT_PHOTO = 111;
     @BindView(R.id.rv_qr_list)
     RecyclerView rvQRList;
@@ -333,10 +333,10 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
             case R.id.iv_delete:
                 ConfirmDialogFragment confirmDialogFragment = ConfirmDialogFragment.newInstance();
                 confirmDialogFragment.setMsg("提示");
-                String payTypeName = qrCodeGroupBean.getPaytype() == 1?"支付宝":"微信";
+                String payTypeName = qrCodeGroupBean.getPaytype() == 1 ? "支付宝" : "微信";
                 confirmDialogFragment.setContent("确定要删除：\n" +
-                        payTypeName+"账号为：" + qrCodeGroupBean.getAccount() + "\n" +
-                        payTypeName+"昵称为：" + qrCodeGroupBean.getNick() + "\n"+
+                        payTypeName + "账号为：" + qrCodeGroupBean.getAccount() + "\n" +
+                        payTypeName + "昵称为：" + qrCodeGroupBean.getNick() + "\n" +
                         "的二维码库么？");
                 confirmDialogFragment.setCancelText("取消");
                 confirmDialogFragment.setConfirmText("确认");
@@ -384,7 +384,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
                 //是否只显示选择的类型的缩略图，就不会把所有图片视频都放在一起，而是需要什么展示什么
                 .showSingleMediaType(true)
                 //这两行要连用 是否在选择图片中展示照相 和适配安卓7.0 FileProvider
-                .capture(true)
+                .capture(false)
                 .captureStrategy(new CaptureStrategy(true, "PhotoPicker"))
                 //有序选择图片 123456...
                 .countable(true)
