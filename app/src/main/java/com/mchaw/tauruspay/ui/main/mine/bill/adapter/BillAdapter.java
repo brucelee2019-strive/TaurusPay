@@ -116,6 +116,18 @@ public class BillAdapter extends BaseQuickAdapter<BillBean, BaseViewHolder> {
                 helper.setText(R.id.tv_order_income, StringUtils.fenToYuan(amount));
                 helper.setTextColor(R.id.tv_order_income, ContextCompat.getColor(mContext,R.color.e94630));
                 break;
+            case 4://补单扣款
+                helper.setText(R.id.tv_order_type, "补单扣款");
+                helper.setImageResource(R.id.imageView8,R.drawable.xsrz_jiedankoukuan);
+                helper.setText(R.id.tv_order_income, "-"+StringUtils.fenToYuan(amount));
+                helper.setTextColor(R.id.tv_order_income, ContextCompat.getColor(mContext,R.color.color_black_0));
+                break;
+            case 5://补单红利
+                helper.setText(R.id.tv_order_type, "补单红利");
+                helper.setImageResource(R.id.imageView8,R.drawable.xsrz_jiedanhongli);
+                helper.setText(R.id.tv_order_income, StringUtils.fenToYuan(amount));
+                helper.setTextColor(R.id.tv_order_income, ContextCompat.getColor(mContext,R.color.e94630));
+                break;
             default:
                 break;
         }
