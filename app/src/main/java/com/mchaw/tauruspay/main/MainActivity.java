@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
@@ -48,6 +49,7 @@ import com.mchaw.tauruspay.bean.updata.UpDataBean;
 import com.mchaw.tauruspay.common.Constant;
 import com.mchaw.tauruspay.common.util.NoNullUtils;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
+import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.common.util.WarningToneUtils;
 import com.mchaw.tauruspay.common.util.versionUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
@@ -62,8 +64,18 @@ import com.mchaw.tauruspay.ui.main.recharge.RechargeFragment;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -95,6 +107,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
     BottomNavigationViewEx bottomView;
 
     private QBadgeView qBadgeView;
+    private Handler handler;
 
     @Override
     public int getContentViewId() {
@@ -123,6 +136,63 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
         qBadgeView.setBadgeNumber(0)
                 .setGravityOffset(12, 2, true)
                 .bindTarget(bottomView.getBottomNavigationItemView(3));
+
+                handler = new Handler(){
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                super.handleMessage(msg);
+                if(msg.what == 1){
+                    MyFrameApplication.pIp = (String) msg.obj;
+                }
+            }
+        };
+        GetNetIp();
+    }
+
+    public void GetNetIp() {
+        new Thread() {
+            @Override
+            public void run() {
+                String line = "";
+                URL infoUrl = null;
+                InputStream inStream = null;
+                try {
+                    infoUrl = new URL("http://pv.sohu.com/cityjson?ie=utf-8");
+                    URLConnection connection = infoUrl.openConnection();
+                    HttpURLConnection httpConnection = (HttpURLConnection) connection;
+                    int responseCode = httpConnection.getResponseCode();
+                    if (responseCode == HttpURLConnection.HTTP_OK) {
+                        inStream = httpConnection.getInputStream();
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(inStream, "utf-8"));
+                        StringBuilder strber = new StringBuilder();
+                        while ((line = reader.readLine()) != null)
+                            strber.append(line + "\n");
+                        inStream.close();
+                        // 从反馈的结果中提取出IP地址
+                        int start = strber.indexOf("{");
+                        int end = strber.indexOf("}");
+                        String json = strber.substring(start, end + 1);
+                        if (json != null) {
+                            try {
+                                JSONObject jsonObject = new JSONObject(json);
+                                line = jsonObject.optString("cip");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        Message msg = new Message();
+                        msg.what = 1;
+                        msg.obj = line;
+                        //向主线程发送消息
+                        handler.sendMessage(msg);
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 
     @Override

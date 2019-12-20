@@ -7,6 +7,8 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -26,7 +28,6 @@ import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.dialog.DialogCallBack;
 import com.mchaw.tauruspay.base.fragment.BasePresentListFragment;
-import com.mchaw.tauruspay.base.fragment.helper.FragmentStartHelper;
 import com.mchaw.tauruspay.bean.ALiYunCodeBean;
 import com.mchaw.tauruspay.bean.eventbus.ForbiddenEvent;
 import com.mchaw.tauruspay.bean.qrcode.DeleteQRCodeGroupBean;
@@ -51,9 +52,18 @@ import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import org.greenrobot.eventbus.Subscribe;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -131,11 +141,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
         qrCodeListAdapter.setOnItemChildClickListener(this);
         rvQRList.setAdapter(qrCodeListAdapter);
         onRefresh();
-        Log.i("cici", PreferencesUtils.getString(getContext(), "token"));
         pageState = Constant.PAGE_NORMAL_STATE;
-        String s = Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES).getAbsolutePath();
-        ToastUtils.showShortToast(getContext(),s);
     }
 
     @Override
@@ -491,10 +497,10 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
                         }
                     });
                 } else {
+                    canDone = true;
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            canDone = true;
                             ToastUtils.showShortToast(getContext(), "图片解析失败！");
                         }
                     });
