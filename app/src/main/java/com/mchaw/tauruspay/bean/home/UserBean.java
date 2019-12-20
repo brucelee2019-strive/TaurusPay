@@ -24,6 +24,15 @@ public class UserBean {
     private long dayonsale;
     private int state;
     private int groupid;
+    private int frozen;
+
+    public int getFrozen() {
+        return frozen;
+    }
+
+    public void setFrozen(int frozen) {
+        this.frozen = frozen;
+    }
 
     public int getGroupid() {
         return groupid;

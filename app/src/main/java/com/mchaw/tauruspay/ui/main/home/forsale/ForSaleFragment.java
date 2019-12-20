@@ -47,6 +47,8 @@ public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> imple
     TextView tvTodayIncomeNum;
     @BindView(R.id.tv_sailing_coin_num)
     TextView tvSailingCoinNum;
+    @BindView(R.id.tv_frozen_num)
+    TextView tvFrozenNum;
 
     @BindView(R.id.tv_back_title)
     TextView tvBackTitle;
@@ -122,6 +124,7 @@ public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> imple
         tvAllCoinNum.setText(StringUtils.fenToYuan(userBean.getDeposit()));
         tvTodayIncomeNum.setText(StringUtils.fenToYuan(userBean.getDaypoint()));
         tvSailingCoinNum.setText(StringUtils.fenToYuan(userBean.getDayonsale()));
+        tvFrozenNum.setText(StringUtils.fenToYuan(userBean.getFrozen()));
     }
 
     @Subscribe
@@ -130,6 +133,7 @@ public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> imple
             tvAllCoinNum.setText(StringUtils.fenToYuan(event.getKucun()));
             tvTodayIncomeNum.setText(StringUtils.fenToYuan(event.getDangrishouyi()));
             tvSailingCoinNum.setText(StringUtils.fenToYuan(event.getZaishouzhong()));
+            tvFrozenNum.setText(StringUtils.fenToYuan(event.getDongjiejine()));
         }
     }
 

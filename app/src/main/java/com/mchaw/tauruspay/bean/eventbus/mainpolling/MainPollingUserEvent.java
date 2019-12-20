@@ -12,6 +12,15 @@ public class MainPollingUserEvent {
     private long dangrishouyi;
     private long dangriyishouedu;
     private long zaishouzhong;
+    private long dongjiejine;
+
+    public long getDongjiejine() {
+        return dongjiejine;
+    }
+
+    public void setDongjiejine(long dongjiejine) {
+        this.dongjiejine = dongjiejine;
+    }
 
     public long getZaishouzhong() {
         return zaishouzhong;

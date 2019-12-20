@@ -133,6 +133,9 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
         onRefresh();
         Log.i("cici", PreferencesUtils.getString(getContext(), "token"));
         pageState = Constant.PAGE_NORMAL_STATE;
+        String s = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES).getAbsolutePath();
+        ToastUtils.showShortToast(getContext(),s);
     }
 
     @Override

@@ -118,7 +118,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
             }
         }
         startPolling(1, 5);
-        noticeStartPolling(0, 120);
+        noticeStartPolling(10, 120);
         qBadgeView = new QBadgeView(this);
         qBadgeView.setBadgeNumber(0)
                 .setGravityOffset(12, 2, true)
@@ -259,7 +259,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
     @Subscribe
     public void loginSucceed(LoginSucceedEvent event) {
         startPolling(1, 5);
-        noticeStartPolling(0,120);
+        noticeStartPolling(10,120);
     }
 
     @Override
@@ -277,6 +277,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
             mainPollingUserEvent.setDangrishouyi(bean.getUser().getDaypoint());
             mainPollingUserEvent.setDangriyishouedu(bean.getUser().getDaydeposit());
             mainPollingUserEvent.setZaishouzhong(bean.getUser().getDayonsale());
+            mainPollingUserEvent.setDongjiejine(bean.getUser().getFrozen());
             EventBus.getDefault().post(mainPollingUserEvent);
             //第一次默认MyFrameApplication.groupid为0,强退回来需要强行检验下强退前,二维码组状态。
             MyFrameApplication.groupid = bean.getUser().getGroupid();

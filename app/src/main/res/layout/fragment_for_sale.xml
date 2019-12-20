@@ -72,7 +72,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="3"
         android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -84,27 +84,28 @@
 
 
             <TextView
+                app:layout_constraintVertical_chainStyle="spread"
                 android:id="@+id/tv_today_income"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="今日收益(元)"
-                android:textSize="16sp"
                 android:textColor="@color/white"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@+id/tv_all_coin"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_chainStyle="spread" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_all_coin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="库存话费(元)"
-                android:textSize="16sp"
                 android:textColor="@color/white"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@+id/tv_sailing_coin"
                 app:layout_constraintEnd_toEndOf="@+id/tv_today_income"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/tv_today_income"
                 app:layout_constraintTop_toBottomOf="@+id/tv_today_income" />
 
@@ -113,12 +114,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="在售话费(元)"
-                android:textSize="16sp"
                 android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="@+id/tv_all_coin"
                 app:layout_constraintStart_toStartOf="@+id/tv_all_coin"
-                app:layout_constraintTop_toBottomOf="@+id/tv_all_coin" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_all_coin"
+                app:layout_constraintBottom_toTopOf="@+id/tv_frozen"
+                />
 
             <TextView
                 android:id="@+id/tv_today_income_num"
@@ -154,13 +156,48 @@
                 app:layout_constraintEnd_toEndOf="@+id/tv_all_coin_num"
                 app:layout_constraintTop_toTopOf="@+id/tv_sailing_coin" />
 
+            <TextView
+                android:id="@+id/tv_frozen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="冻结话费(元)"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/tv_sailing_coin"
+                app:layout_constraintStart_toStartOf="@+id/tv_sailing_coin"
+                app:layout_constraintTop_toBottomOf="@+id/tv_sailing_coin" />
+
+            <TextView
+                android:id="@+id/tv_frozen_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.00"
+                android:textSize="18sp"
+                android:textColor="@color/f5c443"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_frozen"
+                app:layout_constraintEnd_toEndOf="@+id/tv_sailing_coin_num"
+                app:layout_constraintTop_toTopOf="@+id/tv_frozen" />
+
+            <TextView
+                android:id="@+id/tv_frozen_call"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="请等待客服处理"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_frozen"
+                app:layout_constraintStart_toEndOf="@+id/tv_frozen"
+                app:layout_constraintTop_toTopOf="@+id/tv_frozen" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.flyco.tablayout.SlidingTabLayout
             android:background="@color/white"
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             app:tl_indicator_color="#000000"
             app:tl_indicator_height="2dp"
             app:tl_tab_space_equal="true"
@@ -177,7 +214,7 @@
         android:id="@+id/view_page"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3">
+        android:layout_weight="8">
     </androidx.viewpager.widget.ViewPager>
 
 </LinearLayout>
