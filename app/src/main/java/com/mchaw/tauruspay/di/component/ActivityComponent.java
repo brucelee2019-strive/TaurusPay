@@ -4,7 +4,7 @@ import com.mchaw.tauruspay.base.activity.BaseActivity;
 import com.mchaw.tauruspay.main.MainActivity;
 import com.mchaw.tauruspay.di.ActivityScoped;
 import com.mchaw.tauruspay.ui.SplashActivity;
-import com.mchaw.tauruspay.ui.login.LoginFragment;
+import com.mchaw.tauruspay.ui.login.LoginActivity;
 import com.mchaw.tauruspay.ui.login.LoginFragmentForFirst;
 import com.mchaw.tauruspay.ui.login.password.PasswordFragment;
 import com.mchaw.tauruspay.ui.login.register.RegisterFragment;
@@ -44,7 +44,7 @@ public interface ActivityComponent {
 
     void inject(SplashActivity splashActivity);
 
-    void inject(LoginFragment loginFragment);
+    //void inject(LoginFragment loginFragment);
 
     void inject(RegisterFragment registerFragment);
 
@@ -81,4 +81,6 @@ public interface ActivityComponent {
     void inject(NoticeDetailFragment noticeDetailFragment);
 
     void inject(LoginFragmentForFirst loginFragmentForFirst);
+
+    void inject(LoginActivity loginActivity);
 }

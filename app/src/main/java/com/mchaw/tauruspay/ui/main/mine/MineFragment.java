@@ -21,7 +21,6 @@ import com.mchaw.tauruspay.common.util.OneClick.AntiShake;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
-import com.mchaw.tauruspay.ui.login.LoginFragment;
 import com.mchaw.tauruspay.ui.login.constract.LoginConstract;
 import com.mchaw.tauruspay.ui.login.password.PasswordFragment;
 import com.mchaw.tauruspay.ui.login.presenter.LoginPresenter;
@@ -159,7 +158,7 @@ public class MineFragment extends BasePresentFragment<LoginPresenter> implements
         PreferencesUtils.putString(getContext(), "name", "");
         PreferencesUtils.putString(getContext(), "payname", "");
         EventBus.getDefault().post(new LoginoutEvent());
-        startFragment(new LoginFragment());
+        //startFragment(new LoginFragment());
         ToastUtils.showShortToast(getContext(), "退出成功！");
     }
 

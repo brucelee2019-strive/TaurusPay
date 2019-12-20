@@ -10,7 +10,6 @@ import com.mchaw.tauruspay.main.MainActivity;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.activity.BaseActivity;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
-import com.mchaw.tauruspay.ui.login.LoginFragment;
 import com.mchaw.tauruspay.ui.login.LoginFragmentForFirst;
 
 /**

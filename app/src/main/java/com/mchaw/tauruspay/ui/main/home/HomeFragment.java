@@ -24,7 +24,6 @@ import com.mchaw.tauruspay.common.util.OneClick.AntiShake;
 import com.mchaw.tauruspay.common.util.StringUtils;
 import com.mchaw.tauruspay.common.util.versionUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
-import com.mchaw.tauruspay.ui.login.LoginFragment;
 import com.mchaw.tauruspay.ui.main.home.constract.HomeConstract;
 import com.mchaw.tauruspay.ui.main.home.forsale.ForSaleFragment;
 import com.mchaw.tauruspay.ui.main.home.presenter.HomePresenter;

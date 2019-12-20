@@ -41,7 +41,6 @@ import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.glide.GlideImageEngine;
-import com.mchaw.tauruspay.ui.login.LoginFragment;
 import com.mchaw.tauruspay.ui.main.home.forsale.dialog.ConfirmDialogFragment;
 import com.mchaw.tauruspay.ui.main.mine.dialog.QRCodeGroupDialog;
 import com.mchaw.tauruspay.ui.main.mine.qrcode.adapter.QRCodeListAdapter;
@@ -435,6 +434,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
                         .compressToBitmap(imageFile);
             } catch (IOException e) {
                 e.printStackTrace();
+                canDone = true;
             }
             mAvatar = Base64Utils.bitmapToBase64(bitmap);
             //调用阿里云

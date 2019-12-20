@@ -1,6 +1,7 @@
 package com.mchaw.tauruspay.main;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
@@ -52,7 +53,8 @@ import com.mchaw.tauruspay.common.util.versionUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.main.constract.MainConstract;
 import com.mchaw.tauruspay.main.presenter.MainPresenter;
-import com.mchaw.tauruspay.ui.login.LoginFragment;
+import com.mchaw.tauruspay.ui.SplashActivity;
+import com.mchaw.tauruspay.ui.login.LoginActivity;
 import com.mchaw.tauruspay.ui.main.besure.BesureFragment;
 import com.mchaw.tauruspay.ui.main.home.HomeFragment;
 import com.mchaw.tauruspay.ui.main.mine.MineFragment;
@@ -250,11 +252,13 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
         bottomView.setCurrentItem(0);
         stopPolling();
         noticeStopPolling();
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
     }
 
     @Subscribe
     public void loginSucceed(LoginSucceedEvent event) {
-        startPolling(0, 5);
+        startPolling(1, 5);
         noticeStartPolling(0,120);
     }
 
@@ -410,7 +414,8 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
     public void forbidden(ForbiddenEvent event) {
         stopPolling();
         noticeStopPolling();
-        FragmentStartHelper.startFragment(getApplicationContext(), new LoginFragment());
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
     }
 
     @Subscribe
