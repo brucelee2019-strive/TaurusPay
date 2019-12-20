@@ -18,7 +18,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.mcaw.tauruspay"
+        applicationId "com.mchaw.tauruspay"
         minSdkVersion 19
         targetSdkVersion 29
         versionCode 1
@@ -204,5 +204,5 @@ dependencies {
     implementation 'com.azhon:appupdateX:2.6.0'
 
     //知乎相册
-    implementation 'com.zhihu.android:matisse:0.5.2-beta2'
+    implementation 'com.zhihu.android:matisse:0.5.3-beta3'
 }

@@ -153,6 +153,9 @@ public class ForSaleListAdapter extends BaseQuickAdapter<GroupinfoBean, BaseView
             case 7:
                 text = "准备加入队列";
                 break;
+            case 8:
+                text = "余额不足";
+                break;
             default:
                 break;
 
