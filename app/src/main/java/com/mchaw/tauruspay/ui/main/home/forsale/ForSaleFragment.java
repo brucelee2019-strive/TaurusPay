@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import butterknife.BindArray;
 import butterknife.BindView;
 import butterknife.OnClick;
+import q.rorbin.badgeview.QBadgeView;
 
 /**
  * @author Bruce Lee
@@ -65,6 +66,8 @@ public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> imple
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private int currentPage = 0;
 
+    private QBadgeView qBadgeView;
+
     @Override
     protected int getContentViewId() {
         return R.layout.fragment_for_sale;
@@ -95,6 +98,11 @@ public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> imple
         } else {
             ivYinXiao.setImageResource(R.drawable.ds_yinxiao_off);
         }
+
+        qBadgeView = new QBadgeView(getActivity());
+        qBadgeView.setBadgeNumber(0)
+                .setGravityOffset(35, 10, true)
+                .bindTarget(tabLayout);
     }
 
     @Override
@@ -166,22 +174,12 @@ public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> imple
     public void tradingAmount(TradingBeanEvent event) {
         if (event != null) {
             //小红点
-            if (event.getRedPoint() > 0) {
-                tabLayout.showMsg(1, event.getRedPoint());
-                tabLayout.setMsgMargin(1, 80, 0);
-            } else {
-                tabLayout.hideMsg(1);
-            }
+            qBadgeView.setBadgeNumber(event.getRedPoint());
         }
     }
 
     public void setRedPoint(int size){
-        if (size > 0) {
-            tabLayout.showMsg(1, size);
-            tabLayout.setMsgMargin(1, 80, 0);
-        } else {
-            tabLayout.hideMsg(1);
-        }
+        qBadgeView.setBadgeNumber(size);
     }
 
     public void noticeOfCollection() {
