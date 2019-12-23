@@ -47,6 +47,10 @@ public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> imple
     TextView tvTodayIncomeNum;
     @BindView(R.id.tv_sailing_coin_num)
     TextView tvSailingCoinNum;
+    @BindView(R.id.tv_frozen)
+    TextView tvFrozen;
+    @BindView(R.id.tv_frozen_call)
+    TextView tvFrozenCall;
     @BindView(R.id.tv_frozen_num)
     TextView tvFrozenNum;
 
@@ -125,6 +129,9 @@ public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> imple
         tvTodayIncomeNum.setText(StringUtils.fenToYuan(userBean.getDaypoint()));
         tvSailingCoinNum.setText(StringUtils.fenToYuan(userBean.getDayonsale()));
         tvFrozenNum.setText(StringUtils.fenToYuan(userBean.getFrozen()));
+        tvFrozen.setVisibility(userBean.getFrozen()==0?View.GONE:View.VISIBLE);
+        tvFrozenCall.setVisibility(userBean.getFrozen()==0?View.GONE:View.VISIBLE);
+        tvFrozenNum.setVisibility(userBean.getFrozen()==0?View.GONE:View.VISIBLE);
     }
 
     @Subscribe
@@ -134,6 +141,9 @@ public class ForSaleFragment extends BasePresentFragment<ForSalePresenter> imple
             tvTodayIncomeNum.setText(StringUtils.fenToYuan(event.getDangrishouyi()));
             tvSailingCoinNum.setText(StringUtils.fenToYuan(event.getZaishouzhong()));
             tvFrozenNum.setText(StringUtils.fenToYuan(event.getDongjiejine()));
+            tvFrozen.setVisibility(event.getDongjiejine()==0?View.GONE:View.VISIBLE);
+            tvFrozenCall.setVisibility(event.getDongjiejine()==0?View.GONE:View.VISIBLE);
+            tvFrozenNum.setVisibility(event.getDongjiejine()==0?View.GONE:View.VISIBLE);
         }
     }
 
