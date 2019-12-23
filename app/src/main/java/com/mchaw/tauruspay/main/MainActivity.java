@@ -293,6 +293,10 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
             EventBus.getDefault().post(mainPollingUserEvent);
             //第一次默认MyFrameApplication.groupid为0,强退回来需要强行检验下强退前,二维码组状态。
             MyFrameApplication.groupid = bean.getUser().getGroupid();
+            MyFrameApplication.alipayContextA = bean.getUser().getAlipay1();
+            MyFrameApplication.alipayContextB = bean.getUser().getAlipay2();
+            MyFrameApplication.wechatContextA = bean.getUser().getWechat1();
+            MyFrameApplication.wechatContextB = bean.getUser().getWechat2();
         }
         //在售二维码组
         MainPollingGroupInfoEvent mainPollingGroupInfoEvent = new MainPollingGroupInfoEvent();

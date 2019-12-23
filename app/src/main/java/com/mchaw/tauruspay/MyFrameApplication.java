@@ -51,6 +51,11 @@ public class MyFrameApplication extends Application {
         return PreferencesUtils.getString(this, Constant.PRE_SESSION_KEY);
     }
 
+    public  static String alipayContextA = "成功收款";
+    public  static String alipayContextB = "元。享免费提现等更多专属服务，点击查看";
+    public  static String wechatContextA = "微信支付收款";
+    public  static String wechatContextB = "朋友到店";
+
     public static int groupid = 0;
     //开始待售组独自拥有
     public static int startingPosition = -1 ;

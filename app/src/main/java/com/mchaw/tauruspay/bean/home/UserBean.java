@@ -25,6 +25,10 @@ public class UserBean {
     private int state;
     private int groupid;
     private int frozen;
+    private String alipay1;
+    private String alipay2;
+    private String wechat1;
+    private String wechat2;
 
     public int getFrozen() {
         return frozen;
@@ -97,4 +101,9 @@ public class UserBean {
     public void setDayonsale(long dayonsale) {
         this.dayonsale = dayonsale;
     }
+
+    public String getAlipay1() { return alipay1; }
+    public String getAlipay2() { return alipay2; }
+    public String getWechat1() { return wechat1; }
+    public String getWechat2() { return wechat2; }
 }
