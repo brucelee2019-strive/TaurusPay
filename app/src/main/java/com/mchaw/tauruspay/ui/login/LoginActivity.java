@@ -121,7 +121,7 @@ public class LoginActivity extends BasePresenterActivity<LoginPresenter> impleme
             ToastUtils.showShortToast(LoginActivity.this, "验证码不能为空！");
             return;
         }
-        presenter.getLoginBean(username, code, passwd);
+        presenter.getLoginBean(username, code, passwd,MyFrameApplication.pIp);
         LoadingDialog.showDialog(getSupportFragmentManager());
     }
 

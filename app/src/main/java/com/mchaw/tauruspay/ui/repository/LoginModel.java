@@ -29,8 +29,8 @@ public class LoginModel extends BaseModel{
 
     }
     //登录
-    public Observable<LoginBean> getLoginBean(String username, String code, String passwd) {
-        return apiService.getLoginBean(username,code,passwd)
+    public Observable<LoginBean> getLoginBean(String username, String code, String passwd,String ip) {
+        return apiService.getLoginBean(username,code,passwd,ip)
                 .compose(new ResultDisposable<LoginBean>())
                 .compose(new ScheduleTranformer<LoginBean>());
     }

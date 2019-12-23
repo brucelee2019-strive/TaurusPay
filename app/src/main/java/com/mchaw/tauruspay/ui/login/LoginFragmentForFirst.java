@@ -163,7 +163,7 @@ public class LoginFragmentForFirst extends BasePresentFragment<LoginPresenter> i
             ToastUtils.showShortToast(getContext(), "验证码不能为空！");
             return;
         }
-        presenter.getLoginBean(username, code, passwd);
+        presenter.getLoginBean(username, code, passwd,MyFrameApplication.pIp);
         LoadingDialog.showDialog(getChildFragmentManager());
     }
 

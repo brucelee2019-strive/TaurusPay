@@ -89,7 +89,7 @@ import io.reactivex.schedulers.Schedulers;
 import q.rorbin.badgeview.Badge;
 import q.rorbin.badgeview.QBadgeView;
 
-public class MainActivity extends BasePresenterActivity<MainPresenter> implements MainConstract.View, BottomNavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends BasePresenterActivity<MainPresenter> implements MainConstract.View, BottomNavigationView.OnNavigationItemSelectedListener {
 
     public static final int FRAGMENT_HOME = 0;
     public static final int FRAGMENT_RECHARGE = 1;
@@ -107,7 +107,6 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
     BottomNavigationViewEx bottomView;
 
     private QBadgeView qBadgeView;
-    private Handler handler;
 
     @Override
     public int getContentViewId() {
@@ -136,63 +135,6 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
         qBadgeView.setBadgeNumber(0)
                 .setGravityOffset(12, 2, true)
                 .bindTarget(bottomView.getBottomNavigationItemView(3));
-
-                handler = new Handler(){
-            @Override
-            public void handleMessage(@NonNull Message msg) {
-                super.handleMessage(msg);
-                if(msg.what == 1){
-                    MyFrameApplication.pIp = (String) msg.obj;
-                }
-            }
-        };
-        GetNetIp();
-    }
-
-    public void GetNetIp() {
-        new Thread() {
-            @Override
-            public void run() {
-                String line = "";
-                URL infoUrl = null;
-                InputStream inStream = null;
-                try {
-                    infoUrl = new URL("http://pv.sohu.com/cityjson?ie=utf-8");
-                    URLConnection connection = infoUrl.openConnection();
-                    HttpURLConnection httpConnection = (HttpURLConnection) connection;
-                    int responseCode = httpConnection.getResponseCode();
-                    if (responseCode == HttpURLConnection.HTTP_OK) {
-                        inStream = httpConnection.getInputStream();
-                        BufferedReader reader = new BufferedReader(new InputStreamReader(inStream, "utf-8"));
-                        StringBuilder strber = new StringBuilder();
-                        while ((line = reader.readLine()) != null)
-                            strber.append(line + "\n");
-                        inStream.close();
-                        // 从反馈的结果中提取出IP地址
-                        int start = strber.indexOf("{");
-                        int end = strber.indexOf("}");
-                        String json = strber.substring(start, end + 1);
-                        if (json != null) {
-                            try {
-                                JSONObject jsonObject = new JSONObject(json);
-                                line = jsonObject.optString("cip");
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        Message msg = new Message();
-                        msg.what = 1;
-                        msg.obj = line;
-                        //向主线程发送消息
-                        handler.sendMessage(msg);
-                    }
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
     }
 
     @Override
@@ -329,7 +271,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
     @Subscribe
     public void loginSucceed(LoginSucceedEvent event) {
         startPolling(1, 5);
-        noticeStartPolling(10,120);
+        noticeStartPolling(10, 120);
     }
 
     @Override
@@ -491,9 +433,9 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
 
     @Subscribe
     public void setNoticeRedPoint(NoticeSureEvent noticeSureEvent) {
-       if(noticeSureEvent == null){
-           return;
-       }
+        if (noticeSureEvent == null) {
+            return;
+        }
         qBadgeView.setBadgeNumber(noticeSureEvent.getNoticeNum());
     }
 

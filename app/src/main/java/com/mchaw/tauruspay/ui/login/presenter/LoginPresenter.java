@@ -27,8 +27,8 @@ public class LoginPresenter extends RxPresenter<LoginConstract.View> implements 
     }
 
     @Override
-    public void getLoginBean(String username, String code, String passwd) {
-        Disposable disposable = loginModel.getLoginBean(username,code,passwd)
+    public void getLoginBean(String username, String code, String passwd,String ip) {
+        Disposable disposable = loginModel.getLoginBean(username,code,passwd,ip)
                 .subscribeWith(new ResultObserver<LoginBean>() {
                     @Override
                     public void onSuccess(LoginBean loginBean) {

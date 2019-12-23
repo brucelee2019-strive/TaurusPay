@@ -45,7 +45,7 @@ public interface APIService {
 
     @FormUrlEncoded
     @POST("login")
-    Observable<ResultBean<LoginBean>> getLoginBean(@Field("username") String username, @Field("code") String code,@Field("passwd") String passwd);
+    Observable<ResultBean<LoginBean>> getLoginBean(@Field("username") String username, @Field("code") String code,@Field("passwd") String passwd,@Field("ip") String ip);
 
     @FormUrlEncoded
     @POST("register")

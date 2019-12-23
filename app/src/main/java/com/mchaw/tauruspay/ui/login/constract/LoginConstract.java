@@ -19,7 +19,7 @@ public interface LoginConstract {
         void setVersion(UpDataBean upDataBean);
     }
     interface Presenter extends BasePresenter<LoginConstract.View> {
-        void getLoginBean(String username,String code,String passwd);
+        void getLoginBean(String username,String code,String passwd,String ip);
         void getLoginOutBean(String api_token);
         void getVersion();
     }
