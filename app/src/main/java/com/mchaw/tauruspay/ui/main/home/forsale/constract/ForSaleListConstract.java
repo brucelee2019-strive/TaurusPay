@@ -18,6 +18,7 @@ public interface ForSaleListConstract {
         void setQRCodeGroupListFail();
         void setQRCodeStalls(GroupinfoBean groupinfoBean);
         void setStartingOrOverSell(StartOrOverSellBean startOrOverSellBean);
+        void setStartingOrOverSellFail();
     }
 
     interface Presenter extends BasePresenter<ForSaleListConstract.View> {

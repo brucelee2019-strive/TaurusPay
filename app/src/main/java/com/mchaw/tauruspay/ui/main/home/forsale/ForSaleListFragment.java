@@ -16,6 +16,7 @@ import com.mchaw.tauruspay.base.fragment.BasePresentListFragment;
 import com.mchaw.tauruspay.bean.eventbus.mainpolling.MainPollingGroupInfoEvent;
 import com.mchaw.tauruspay.bean.home.StartOrOverSellBean;
 import com.mchaw.tauruspay.bean.qrcode.GroupinfoBean;
+import com.mchaw.tauruspay.common.dialog.LoadingDialog;
 import com.mchaw.tauruspay.common.util.OneClick.AntiShake;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
@@ -197,6 +198,7 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
     //点击开始待售成功
     @Override
     public void setStartingOrOverSell(StartOrOverSellBean startOrOverSellBean) {
+        LoadingDialog.dismissDailog();
         //开始待售的订单位置
         MyFrameApplication.startingPosition = (startOrOverSellBean.getStatus() == 1) ? recordPosition : -1;
         qrCodeGroupBean.setStatus(startOrOverSellBean.getStatus());
@@ -205,6 +207,11 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
         presenter.getQRCodeStalls(String.valueOf(qrCodeGroupBean.getGroupid()), MyFrameApplication.tokenStr);
         forSaleListAdapter.notifyItemChanged(recordPosition);
         ToastUtils.showShortToast(getContext(), startOrOverSellBean.getStatus() == 1 ? "已开始代售" : "已停止代售");
+    }
+
+    @Override
+    public void setStartingOrOverSellFail() {
+        LoadingDialog.dismissDailog();
     }
 
     @Override
@@ -245,6 +252,7 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
                         @Override
                         public void onDialogViewClick(int type, Object value) {
                             if (type == DIALOG_CONFIRM) {
+                                LoadingDialog.showDialog(getChildFragmentManager());
                                 presenter.startingOrOverSell(String.valueOf(qrCodeGroupBean.getGroupid()), 1, PreferencesUtils.getString(getContext(), "token"));
                             } else {
 
@@ -269,6 +277,7 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
                         @Override
                         public void onDialogViewClick(int type, Object value) {
                             if (type == DIALOG_CONFIRM) {
+                                LoadingDialog.showDialog(getChildFragmentManager());
                                 presenter.startingOrOverSell(String.valueOf(qrCodeGroupBean.getGroupid()), 0, PreferencesUtils.getString(getContext(), "token"));
                             } else {
 

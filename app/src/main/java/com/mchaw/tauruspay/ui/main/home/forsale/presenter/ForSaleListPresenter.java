@@ -97,6 +97,7 @@ public class ForSaleListPresenter extends RxPresenter<ForSaleListConstract.View>
                         if (mView == null) {
                             return;
                         }
+                        mView.setStartingOrOverSellFail();
                         mView.showError(msg);
                     }
                 });

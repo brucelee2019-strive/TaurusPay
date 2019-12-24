@@ -35,6 +35,7 @@ import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupCreateBean;
 import com.mchaw.tauruspay.bean.qrcode.GroupinfoBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeUrlBean;
 import com.mchaw.tauruspay.common.Constant;
+import com.mchaw.tauruspay.common.dialog.LoadingDialog;
 import com.mchaw.tauruspay.common.util.Base64Utils;
 import com.mchaw.tauruspay.common.util.FileUtil;
 import com.mchaw.tauruspay.common.util.OneClick.AntiShake;
@@ -248,6 +249,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
                     openPhotoAlbum(tag);
                 }
                 canDone = false;
+                LoadingDialog.showDialog(getChildFragmentManager());
                 break;
             case R.id.cl_313:
                 if (canDone) {
@@ -255,6 +257,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
                     openPhotoAlbum(tag);
                 }
                 canDone = false;
+                LoadingDialog.showDialog(getChildFragmentManager());
                 break;
             case R.id.cl_785:
                 if (canDone) {
@@ -262,6 +265,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
                     openPhotoAlbum(tag);
                 }
                 canDone = false;
+                LoadingDialog.showDialog(getChildFragmentManager());
                 break;
             case R.id.cl_786:
                 if (canDone) {
@@ -269,6 +273,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
                     openPhotoAlbum(tag);
                 }
                 canDone = false;
+                LoadingDialog.showDialog(getChildFragmentManager());
                 break;
             case R.id.cl_1215:
                 if (canDone) {
@@ -276,6 +281,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
                     openPhotoAlbum(tag);
                 }
                 canDone = false;
+                LoadingDialog.showDialog(getChildFragmentManager());
                 break;
             case R.id.cl_1216:
                 if (canDone) {
@@ -283,6 +289,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
                     openPhotoAlbum(tag);
                 }
                 canDone = false;
+                LoadingDialog.showDialog(getChildFragmentManager());
                 break;
             case R.id.cl_2515:
                 if (canDone) {
@@ -290,6 +297,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
                     openPhotoAlbum(tag);
                 }
                 canDone = false;
+                LoadingDialog.showDialog(getChildFragmentManager());
                 break;
             case R.id.cl_2516:
                 if (canDone) {
@@ -297,6 +305,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
                     openPhotoAlbum(tag);
                 }
                 canDone = false;
+                LoadingDialog.showDialog(getChildFragmentManager());
                 break;
             case R.id.cl_4985:
                 if (canDone) {
@@ -304,6 +313,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
                     openPhotoAlbum(tag);
                 }
                 canDone = false;
+                LoadingDialog.showDialog(getChildFragmentManager());
                 break;
             case R.id.cl_4988:
                 if (canDone) {
@@ -311,6 +321,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
                     openPhotoAlbum(tag);
                 }
                 canDone = false;
+                LoadingDialog.showDialog(getChildFragmentManager());
                 break;
             case R.id.cl_7988:
                 if (canDone) {
@@ -318,6 +329,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
                     openPhotoAlbum(tag);
                 }
                 canDone = false;
+                LoadingDialog.showDialog(getChildFragmentManager());
                 break;
             case R.id.cl_9988:
                 if (canDone) {
@@ -325,6 +337,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
                     openPhotoAlbum(tag);
                 }
                 canDone = false;
+                LoadingDialog.showDialog(getChildFragmentManager());
                 break;
             case R.id.tv_show_order_list:
                 boolean ishow = qrCodeGroupBean.isShowItems();
@@ -422,6 +435,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
             displayImage(imageFile);
         } else {
             canDone = true;
+            LoadingDialog.dismissDailog();
         }
     }
 
@@ -444,6 +458,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
             } catch (IOException e) {
                 e.printStackTrace();
                 canDone = true;
+                LoadingDialog.dismissDailog();
             }
             mAvatar = Base64Utils.bitmapToBase64(bitmap);
             //调用阿里云
@@ -451,6 +466,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
         } else {
             ToastUtils.showShortToast(getContext(), "获取图片失败!");
             canDone = true;
+            LoadingDialog.dismissDailog();
         }
     }
 
@@ -488,10 +504,12 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
                                     } else {
                                         ToastUtils.showShortToast(getContext(), "null,图片解析失败！");
                                         canDone = true;
+                                        LoadingDialog.dismissDailog();
                                     }
                                 } else {
                                     ToastUtils.showShortToast(getContext(), "图片错误，图片解析失败！");
                                     canDone = true;
+                                    LoadingDialog.dismissDailog();
                                 }
                             }
                         }
@@ -501,6 +519,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            LoadingDialog.dismissDailog();
                             ToastUtils.showShortToast(getContext(), "图片解析失败！");
                         }
                     });
@@ -565,6 +584,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
     @Override
     public void setUpLoadingQRCodeUrlBean(QRCodeUrlBean qrCodeUrlBean) {
         canDone = true;
+        LoadingDialog.dismissDailog();
         //qrCodeListAdapter需刷新，档口的UI为审核状态 status=2
         if (qrCodeGroupBean.getQrcodes() != null && qrCodeGroupBean.getQrcodes().size() > 0) {
             qrCodeGroupBean.getQrcodes().get(tag).setStatus(2);
@@ -579,6 +599,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
     @Override
     public void setUpLoadingQRCodeUrlBeanFail() {
         canDone = true;
+        LoadingDialog.dismissDailog();
     }
 
     /**
