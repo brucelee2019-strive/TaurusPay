@@ -86,6 +86,7 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
         forSaleListAdapter = new ForSaleListAdapter(qrCodeGroupBeanList);
         forSaleListAdapter.setOnItemChildClickListener(this);
         rvForSalelist.setAdapter(forSaleListAdapter);
+        MyFrameApplication.startingPosition = PreferencesUtils.getInt(MyFrameApplication.getInstance(),"startingPosition",-1);
         onRefresh();
     }
 
@@ -149,7 +150,8 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
             //赋值 list(12个二维码档口id)
             qrCodeGroupBean.setQrcodes(bean.getQrcodes());
         }
-        forSaleListAdapter.notifyItemChanged(recordPosition);
+        //forSaleListAdapter.notifyItemChanged(recordPosition);
+        forSaleListAdapter.notifyDataSetChanged();
     }
 
     //来自大轮询
@@ -164,6 +166,7 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
                 qrCodeGroupBean.setStatus(0);
             }
             MyFrameApplication.startingPosition = -1;
+            PreferencesUtils.putInt(MyFrameApplication.getInstance(),"startingPosition",MyFrameApplication.startingPosition);
             forSaleListAdapter.notifyDataSetChanged();
             return;
         }
@@ -201,6 +204,7 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
         LoadingDialog.dismissDailog();
         //开始待售的订单位置
         MyFrameApplication.startingPosition = (startOrOverSellBean.getStatus() == 1) ? recordPosition : -1;
+        PreferencesUtils.putInt(MyFrameApplication.getInstance(),"startingPosition",MyFrameApplication.startingPosition);
         qrCodeGroupBean.setStatus(startOrOverSellBean.getStatus());
         MyFrameApplication.groupid = (startOrOverSellBean.getStatus() == 1) ? qrCodeGroupBean.getGroupid() : 0;
         recordGroupid = qrCodeGroupBean.getGroupid();

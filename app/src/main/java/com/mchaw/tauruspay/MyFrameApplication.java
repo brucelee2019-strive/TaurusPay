@@ -58,7 +58,7 @@ public class MyFrameApplication extends Application {
 
     public static int groupid = 0;
     //开始待售组独自拥有
-    public static int startingPosition = -1 ;
+    public static int startingPosition = -1;
     //公网Ip
     public static String pIp = "";
 }
