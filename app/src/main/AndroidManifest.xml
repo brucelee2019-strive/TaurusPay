@@ -43,7 +43,7 @@
             android:screenOrientation="portrait"></activity>
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.mchaw.tauruspay.fileprovider"
+            android:authorities="${applicationId}"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
