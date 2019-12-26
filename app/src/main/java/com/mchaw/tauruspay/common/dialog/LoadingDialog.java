@@ -11,7 +11,6 @@ import androidx.fragment.app.FragmentManager;
 
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.dialog.BaseDialogFragment;
-import com.mchaw.tauruspay.ui.main.mine.dialog.ChangeBankCardDialog;
 
 /**
  * @author Bruce Lee

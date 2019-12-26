@@ -1,20 +1,16 @@
 package com.mchaw.tauruspay.http;
 
-import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.bean.eventbus.ForbiddenEvent;
-import com.mchaw.tauruspay.bean.eventbus.TradedBeanEvent;
 import com.mchaw.tauruspay.common.exception.CustomException;
 import com.mchaw.tauruspay.common.exception.EmptyException;
 import com.mchaw.tauruspay.common.exception.SessionInvalidException;
 import com.mchaw.tauruspay.bean.ResultBean;
-import com.mchaw.tauruspay.common.util.ToastUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
-import io.reactivex.Observer;
 import io.reactivex.functions.Function;
 
 /**

@@ -1,14 +1,10 @@
 package com.mchaw.tauruspay.ui.main.mine.bill.presenter;
 
 import com.mchaw.tauruspay.base.mvp.presenter.RxPresenter;
-import com.mchaw.tauruspay.bean.bill.BillBean;
 import com.mchaw.tauruspay.bean.bill.BillTotalBean;
 import com.mchaw.tauruspay.http.ResultObserver;
 import com.mchaw.tauruspay.ui.main.mine.bill.constract.BillConstract;
-import com.mchaw.tauruspay.ui.repository.LoginModel;
 import com.mchaw.tauruspay.ui.repository.SellModel;
-
-import java.util.List;
 
 import javax.inject.Inject;
 

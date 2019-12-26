@@ -2,7 +2,6 @@ package com.mchaw.tauruspay.ui.main.mine.activate.presenter;
 
 import com.mchaw.tauruspay.base.mvp.presenter.RxPresenter;
 import com.mchaw.tauruspay.bean.activate.ActivateCodeBean;
-import com.mchaw.tauruspay.bean.login.LoginBean;
 import com.mchaw.tauruspay.http.ResultObserver;
 import com.mchaw.tauruspay.ui.main.mine.activate.constract.ActivateConstract;
 import com.mchaw.tauruspay.ui.repository.LoginModel;

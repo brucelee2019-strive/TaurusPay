@@ -1,9 +1,7 @@
 package com.mchaw.tauruspay;
 
 import android.app.Application;
-import android.widget.ScrollView;
 
-import com.mchaw.tauruspay.bean.qrcode.GroupinfoBean;
 import com.mchaw.tauruspay.common.Constant;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.WarningToneUtils;

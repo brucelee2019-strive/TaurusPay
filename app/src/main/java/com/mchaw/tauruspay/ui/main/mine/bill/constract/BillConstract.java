@@ -2,10 +2,7 @@ package com.mchaw.tauruspay.ui.main.mine.bill.constract;
 
 import com.mchaw.tauruspay.base.mvp.presenter.BasePresenter;
 import com.mchaw.tauruspay.base.mvp.view.BaseView;
-import com.mchaw.tauruspay.bean.bill.BillBean;
 import com.mchaw.tauruspay.bean.bill.BillTotalBean;
-
-import java.util.List;
 
 /**
  * @author Bruce Lee

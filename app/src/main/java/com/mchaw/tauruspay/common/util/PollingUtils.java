@@ -4,10 +4,6 @@ package com.mchaw.tauruspay.common.util;
 
 import android.util.Log;
 
-import com.mchaw.tauruspay.ui.main.mine.dialog.ChangeBankCardDialog;
-
-import org.reactivestreams.Subscriber;
-
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;

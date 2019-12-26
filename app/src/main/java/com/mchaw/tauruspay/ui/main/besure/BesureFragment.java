@@ -1,17 +1,22 @@
 package com.mchaw.tauruspay.ui.main.besure;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BaseFragment;
-import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
-import com.mchaw.tauruspay.di.component.ActivityComponent;
+import com.mchaw.tauruspay.common.util.OneClick.AntiShake;
+import com.mchaw.tauruspay.main.MainActivity;
+import com.mchaw.tauruspay.ui.GuideActivity;
+import com.mchaw.tauruspay.ui.SplashActivity;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * @author : Bruce Lee
@@ -63,5 +68,21 @@ public class BesureFragment extends BaseFragment {
 
         tvTxt8.setText(str8);
         tvTxt9.setText(str9);
+    }
+
+    @OnClick({R.id.iv_tuwen, R.id.tv_tuwen})
+    public void onClick(View view) {
+        if (AntiShake.check(view.getId())) {    //判断是否多次点击
+            return;
+        }
+        switch (view.getId()) {
+            case R.id.iv_tuwen:
+            case R.id.tv_tuwen:
+                Intent intent = new Intent(getActivity(), GuideActivity.class);
+                startActivity(intent);
+                break;
+            default:
+                break;
+        }
     }
 }

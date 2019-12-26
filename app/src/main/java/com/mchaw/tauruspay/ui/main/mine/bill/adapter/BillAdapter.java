@@ -7,7 +7,6 @@ import androidx.core.content.ContextCompat;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.mchaw.tauruspay.R;
-import com.mchaw.tauruspay.bean.activate.ActivateCodeBean;
 import com.mchaw.tauruspay.bean.bill.BillBean;
 import com.mchaw.tauruspay.common.util.StringUtils;
 

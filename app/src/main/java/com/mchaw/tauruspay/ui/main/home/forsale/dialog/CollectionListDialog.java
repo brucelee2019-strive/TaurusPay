@@ -2,7 +2,6 @@ package com.mchaw.tauruspay.ui.main.home.forsale.dialog;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.CountDownTimer;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;

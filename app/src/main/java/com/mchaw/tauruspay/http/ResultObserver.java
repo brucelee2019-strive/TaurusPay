@@ -7,7 +7,6 @@ import com.mchaw.tauruspay.common.exception.CustomException;
 import com.mchaw.tauruspay.common.exception.EmptyException;
 import com.mchaw.tauruspay.common.exception.SessionInvalidException;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
-import com.mchaw.tauruspay.common.util.ToastUtils;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;

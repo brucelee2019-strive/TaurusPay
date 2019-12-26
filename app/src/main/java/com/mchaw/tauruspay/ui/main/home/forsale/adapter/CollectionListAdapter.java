@@ -1,7 +1,5 @@
 package com.mchaw.tauruspay.ui.main.home.forsale.adapter;
 
-import android.widget.ScrollView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 

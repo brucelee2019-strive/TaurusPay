@@ -16,8 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import com.mchaw.tauruspay.R;
-
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 

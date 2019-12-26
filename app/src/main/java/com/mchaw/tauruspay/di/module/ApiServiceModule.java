@@ -1,7 +1,5 @@
 package com.mchaw.tauruspay.di.module;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mchaw.tauruspay.BuildConfig;
@@ -13,7 +11,6 @@ import com.mchaw.tauruspay.http.environment.EnvironmentManager;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
@@ -22,7 +19,6 @@ import dagger.Module;
 import dagger.Provides;
 import okhttp3.Cache;
 import okhttp3.CacheControl;
-import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

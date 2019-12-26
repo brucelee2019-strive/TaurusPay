@@ -3,8 +3,6 @@ package com.mchaw.tauruspay.ui.login.password.constract;
 import com.mchaw.tauruspay.base.mvp.presenter.BasePresenter;
 import com.mchaw.tauruspay.base.mvp.view.BaseView;
 import com.mchaw.tauruspay.bean.login.PasswordBean;
-import com.mchaw.tauruspay.bean.login.RegisterBean;
-import com.mchaw.tauruspay.ui.login.register.constract.RegisterConstract;
 
 /**
  * @author Bruce Lee

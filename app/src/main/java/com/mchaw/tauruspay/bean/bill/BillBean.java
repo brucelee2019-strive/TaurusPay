@@ -1,7 +1,5 @@
 package com.mchaw.tauruspay.bean.bill;
 
-import com.google.gson.annotations.SerializedName;
-
 /**
  * @author Bruce Lee
  * @date : 2019/11/25 18:34

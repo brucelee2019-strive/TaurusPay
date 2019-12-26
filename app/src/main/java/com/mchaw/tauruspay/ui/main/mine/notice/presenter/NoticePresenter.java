@@ -1,15 +1,10 @@
 package com.mchaw.tauruspay.ui.main.mine.notice.presenter;
 
 import com.mchaw.tauruspay.base.mvp.presenter.RxPresenter;
-import com.mchaw.tauruspay.bean.activate.ActivateCodeBean;
 import com.mchaw.tauruspay.bean.notice.NoticeBean;
-import com.mchaw.tauruspay.bean.notice.NoticeListBean;
 import com.mchaw.tauruspay.http.ResultObserver;
 import com.mchaw.tauruspay.ui.main.mine.notice.constract.NoticeConstract;
 import com.mchaw.tauruspay.ui.repository.LoginModel;
-import com.mchaw.tauruspay.ui.repository.SellModel;
-
-import java.util.List;
 
 import javax.inject.Inject;
 

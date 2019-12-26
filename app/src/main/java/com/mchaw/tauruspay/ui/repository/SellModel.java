@@ -1,6 +1,5 @@
 package com.mchaw.tauruspay.ui.repository;
 
-import com.mchaw.tauruspay.bean.bill.BillBean;
 import com.mchaw.tauruspay.bean.bill.BillTotalBean;
 import com.mchaw.tauruspay.bean.bill.TradingBean;
 import com.mchaw.tauruspay.bean.home.ReceivablesBean;

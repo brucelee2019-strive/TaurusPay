@@ -1,6 +1,10 @@
 package com.mchaw.tauruspay.ui.main.mine;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -13,7 +17,6 @@ import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.bean.eventbus.LoginoutEvent;
 import com.mchaw.tauruspay.bean.eventbus.NoticeEvent;
 import com.mchaw.tauruspay.bean.eventbus.NoticeSureEvent;
-import com.mchaw.tauruspay.bean.eventbus.TradingBeanEvent;
 import com.mchaw.tauruspay.bean.login.LoginBean;
 import com.mchaw.tauruspay.bean.login.LoginOutBean;
 import com.mchaw.tauruspay.bean.updata.UpDataBean;
@@ -36,7 +39,6 @@ import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import q.rorbin.badgeview.Badge;
 import q.rorbin.badgeview.QBadgeView;
 
 import static com.mchaw.tauruspay.base.dialog.BaseDialogFragment.DIALOG_CONFIRM;
@@ -54,6 +56,8 @@ public class MineFragment extends BasePresentFragment<LoginPresenter> implements
     TextView tvPayName;
     @BindView(R.id.tv_red_icon)
     TextView tvRedIcon;
+    @BindView(R.id.tv_wangzhi)
+    TextView tvWangzhi;
 
     private QBadgeView qBadgeView;
 
@@ -88,6 +92,7 @@ public class MineFragment extends BasePresentFragment<LoginPresenter> implements
         qBadgeView.setBadgeNumber(0)
                 .setGravityOffset(0, 0, true)
                 .bindTarget(tvRedIcon);
+        tvWangzhi.setText("http://115.144.238.240:8090/index.html");
     }
 
     @Override
@@ -96,7 +101,7 @@ public class MineFragment extends BasePresentFragment<LoginPresenter> implements
         component.inject(this);
     }
 
-    @OnClick({R.id.tv_login_out, R.id.cl_bill, R.id.cl_qr_code, R.id.cl_activate_word, R.id.cl_change_password, R.id.cl_about, R.id.cl_notice})
+    @OnClick({R.id.tv_login_out, R.id.cl_bill, R.id.cl_qr_code, R.id.cl_activate_word, R.id.cl_change_password, R.id.cl_about, R.id.cl_notice,R.id.btn_copy_btn})
     public void onClick(View view) {
         if (AntiShake.check(view.getId())) {    //判断是否多次点击
             return;
@@ -138,6 +143,22 @@ public class MineFragment extends BasePresentFragment<LoginPresenter> implements
                 break;
             case R.id.cl_notice:
                 startFragment(new NoticeFragment());
+                break;
+            case R.id.btn_copy_btn:
+                if(TextUtils.isEmpty(tvWangzhi.getText())){
+                    return;
+                }
+                //获取剪贴板管理器：
+                ClipboardManager cm = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                // 创建普通字符型ClipData
+                ClipData mClipData = ClipData.newPlainText("Label", tvWangzhi.getText());
+                // 将ClipData内容放到系统剪贴板里。
+                cm.setPrimaryClip(mClipData);
+                if(TextUtils.isEmpty(tvWangzhi.getText())){
+                    ToastUtils.showShortToast(getContext(),"没有可复制的内容");
+                    return;
+                }
+                ToastUtils.showShortToast(getContext(),"已复制<"+tvWangzhi.getText()+">到剪切板");
                 break;
             default:
                 break;

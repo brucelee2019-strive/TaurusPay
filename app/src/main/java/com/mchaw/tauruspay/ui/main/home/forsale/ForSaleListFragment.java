@@ -182,9 +182,14 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
 //                qrCodeGroupBean.setQrcodes(event.getGroupinfo().getQrcodes());
 //            }
             if (qrCodeGroupBeanList != null && qrCodeGroupBeanList.size() > 0) {
-                if (MyFrameApplication.startingPosition == -1) {
-                    return;
-                }
+               for(int i=0;i<qrCodeGroupBeanList.size();i++){
+                   if(MyFrameApplication.groupid == qrCodeGroupBeanList.get(i).getGroupid()){
+                       MyFrameApplication.startingPosition = i;
+                   }
+               }
+               if(MyFrameApplication.startingPosition == -1){
+                   return;
+               }
                 GroupinfoBean startingGroupinfoBean = qrCodeGroupBeanList.get(MyFrameApplication.startingPosition);
                 if (startingGroupinfoBean != null) {
                     startingGroupinfoBean.setDaycount(event.getGroupinfo().getDaycount());
@@ -195,7 +200,6 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
                 forSaleListAdapter.notifyDataSetChanged();
             }
         }
-
     }
 
     //点击开始待售成功

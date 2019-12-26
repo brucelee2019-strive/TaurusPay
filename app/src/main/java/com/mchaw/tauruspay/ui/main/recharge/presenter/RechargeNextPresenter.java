@@ -1,7 +1,6 @@
 package com.mchaw.tauruspay.ui.main.recharge.presenter;
 
 import com.mchaw.tauruspay.base.mvp.presenter.RxPresenter;
-import com.mchaw.tauruspay.bean.login.LoginBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeNextBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeSureBean;
 import com.mchaw.tauruspay.http.ResultObserver;

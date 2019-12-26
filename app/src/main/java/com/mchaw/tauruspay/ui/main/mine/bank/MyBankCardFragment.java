@@ -7,7 +7,6 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.mchaw.tauruspay.R;
-import com.mchaw.tauruspay.base.dialog.DialogCallBack;
 import com.mchaw.tauruspay.base.fragment.BaseFragment;
 import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.ui.main.mine.dialog.ChangeBankCardDialog;

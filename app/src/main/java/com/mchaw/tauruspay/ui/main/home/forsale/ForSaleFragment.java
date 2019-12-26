@@ -23,7 +23,6 @@ import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.main.home.forsale.constract.ForSaleConstract;
 import com.mchaw.tauruspay.ui.main.home.forsale.dialog.CollectionListDialog;
 import com.mchaw.tauruspay.ui.main.home.forsale.presenter.ForSalePresenter;
-import com.mchaw.tauruspay.ui.main.mine.dialog.ChangeBankCardDialog;
 
 import org.greenrobot.eventbus.Subscribe;
 

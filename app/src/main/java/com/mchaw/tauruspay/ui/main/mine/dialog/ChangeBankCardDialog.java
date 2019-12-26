@@ -13,8 +13,6 @@ import androidx.fragment.app.FragmentManager;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.dialog.BaseDialogFragment;
 
-import org.greenrobot.eventbus.EventBus;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 

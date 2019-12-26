@@ -17,7 +17,6 @@ import com.azhon.appupdate.manager.DownloadManager;
 import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
-import com.mchaw.tauruspay.bean.eventbus.LoginSucceedEvent;
 import com.mchaw.tauruspay.bean.login.LoginBean;
 import com.mchaw.tauruspay.bean.login.LoginOutBean;
 import com.mchaw.tauruspay.bean.updata.UpDataBean;
@@ -28,13 +27,9 @@ import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.common.util.versionUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.main.MainActivity;
-import com.mchaw.tauruspay.ui.SplashActivity;
 import com.mchaw.tauruspay.ui.login.constract.LoginConstract;
-import com.mchaw.tauruspay.ui.login.password.PasswordFragment;
 import com.mchaw.tauruspay.ui.login.presenter.LoginPresenter;
 import com.mchaw.tauruspay.ui.login.register.RegisterFragment;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 

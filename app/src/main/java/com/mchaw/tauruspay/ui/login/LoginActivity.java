@@ -1,5 +1,6 @@
 package com.mchaw.tauruspay.ui.login;
 
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.common.util.versionUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
+import com.mchaw.tauruspay.main.MainActivity;
 import com.mchaw.tauruspay.ui.login.constract.LoginConstract;
 import com.mchaw.tauruspay.ui.login.presenter.LoginPresenter;
 import com.mchaw.tauruspay.ui.login.register.RegisterFragment;
@@ -65,6 +67,8 @@ public class LoginActivity extends BasePresenterActivity<LoginPresenter> impleme
         if(loginBean == null){
             return;
         }
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
         MyFrameApplication.tokenStr = loginBean.getToken();
         PreferencesUtils.putString(LoginActivity.this,"token",loginBean.getToken());
         PreferencesUtils.putString(LoginActivity.this,"name",loginBean.getName());

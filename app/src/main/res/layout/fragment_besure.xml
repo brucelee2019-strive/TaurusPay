@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -79,5 +81,51 @@
             android:layout_marginBottom="20dp"
             android:textColor="#ff0000"
             android:textSize="12sp"></TextView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp">
+
+            <TextView
+                android:id="@+id/textView63"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="新手必看"
+                android:textColor="@color/color_black_0"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView35"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView63"
+                app:layout_constraintStart_toEndOf="@+id/textView63"
+                app:layout_constraintTop_toTopOf="@+id/textView63"
+                app:srcCompat="@drawable/ydshouzhi" />
+
+            <ImageView
+                android:id="@+id/iv_tuwen"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView35"
+                app:layout_constraintStart_toEndOf="@+id/imageView35"
+                app:layout_constraintTop_toTopOf="@+id/imageView35"
+                app:srcCompat="@drawable/ydtuwen" />
+
+            <TextView
+                android:id="@+id/tv_tuwen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="金牛app使用图文教程"
+                android:textColor="@color/color_black_0"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_tuwen"
+                app:layout_constraintStart_toEndOf="@+id/iv_tuwen"
+                app:layout_constraintTop_toTopOf="@+id/iv_tuwen" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 </ScrollView>

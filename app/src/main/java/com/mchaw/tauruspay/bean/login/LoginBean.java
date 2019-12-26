@@ -1,15 +1,5 @@
 package com.mchaw.tauruspay.bean.login;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author : Bruce Lee
  * @date : 2019/11/4 0004 21:31

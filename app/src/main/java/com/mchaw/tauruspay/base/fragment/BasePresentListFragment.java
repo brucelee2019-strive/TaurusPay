@@ -1,10 +1,7 @@
 package com.mchaw.tauruspay.base.fragment;
 
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-
-import androidx.annotation.Nullable;
 
 import com.mchaw.tauruspay.base.mvp.presenter.BasePresenter;
 import com.mchaw.tauruspay.base.mvp.view.BaseView;
