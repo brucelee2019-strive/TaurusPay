@@ -121,11 +121,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="金牛app使用图文教程"
-                android:textColor="@color/color_black_0"
+                android:textColor="@color/e94630"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_tuwen"
                 app:layout_constraintStart_toEndOf="@+id/iv_tuwen"
                 app:layout_constraintTop_toTopOf="@+id/iv_tuwen" />
+
+            <TextView
+                android:id="@+id/textView65"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/e94630"
+                app:layout_constraintEnd_toEndOf="@+id/tv_tuwen"
+                app:layout_constraintStart_toEndOf="@+id/imageView35"
+                app:layout_constraintTop_toBottomOf="@+id/tv_tuwen" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 </ScrollView>

@@ -1,368 +1,430 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@drawable/zz_kchf_bg">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/iv_user_icon"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/user_icon" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@drawable/zz_kchf_bg">
 
-        <TextView
-            android:id="@+id/tv_user_nickname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="BruceLee"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            app:layout_constraintStart_toEndOf="@+id/iv_user_icon"
-            app:layout_constraintTop_toTopOf="@+id/iv_user_icon" />
+            <ImageView
+                android:id="@+id/iv_user_icon"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/user_icon" />
 
-        <TextView
-            android:id="@+id/tv_user_anme"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="李小龙"
-            android:textSize="16sp"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_user_icon"
-            app:layout_constraintStart_toEndOf="@+id/iv_user_icon" />
+            <TextView
+                android:id="@+id/tv_user_nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="BruceLee"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/iv_user_icon"
+                app:layout_constraintTop_toTopOf="@+id/iv_user_icon" />
 
-        <TextView
-            android:id="@+id/tv_login_out"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:text="登出 > "
-            android:textSize="25dp"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/tv_user_anme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="李小龙"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_user_icon"
+                app:layout_constraintStart_toEndOf="@+id/iv_user_icon" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_bill"
-        android:background="@drawable/touch_bg"
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
+            <TextView
+                android:id="@+id/tv_login_out"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:text="登出 > "
+                android:textColor="@color/white"
+                android:textSize="25dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <ImageView
-            android:id="@+id/iv_bill"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/wd_icon_zd" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_bill"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/touch_bg">
 
-        <TextView
-            android:id="@+id/tv_bill"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="账单"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_bill"
-            app:layout_constraintStart_toEndOf="@+id/iv_bill"
-            app:layout_constraintTop_toTopOf="@+id/iv_bill" />
+            <ImageView
+                android:id="@+id/iv_bill"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/wd_icon_zd" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:text=" > "
-            android:textSize="25sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/tv_bill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="账单"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_bill"
+                app:layout_constraintStart_toEndOf="@+id/iv_bill"
+                app:layout_constraintTop_toTopOf="@+id/iv_bill" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/black"></TextView>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:background="@drawable/touch_bg"
-        android:id="@+id/cl_qr_code"
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
-
-        <ImageView
-            android:id="@+id/iv_qr_code"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/wd_icon_ewmk" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text=" > "
+                android:textSize="25sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:id="@+id/tv_qr_code"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="二维码库"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_qr_code"
-            app:layout_constraintStart_toEndOf="@+id/iv_qr_code"
-            app:layout_constraintTop_toTopOf="@+id/iv_qr_code" />
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"></TextView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_qr_code"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/touch_bg">
+
+            <ImageView
+                android:id="@+id/iv_qr_code"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/wd_icon_ewmk" />
+
+            <TextView
+                android:id="@+id/tv_qr_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="二维码库"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_qr_code"
+                app:layout_constraintStart_toEndOf="@+id/iv_qr_code"
+                app:layout_constraintTop_toTopOf="@+id/iv_qr_code" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text=" > "
+                android:textSize="25sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:text=" > "
-            android:textSize="25sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"></TextView>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/black"></TextView>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_activate_word"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/touch_bg">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:background="@drawable/touch_bg"
-        android:id="@+id/cl_activate_word"
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
+            <ImageView
+                android:id="@+id/iv_activate_word"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/wd_icon_jhkl" />
 
-        <ImageView
-            android:id="@+id/iv_activate_word"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/wd_icon_jhkl" />
+            <TextView
+                android:id="@+id/tv_activate_word"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="激活口令"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_activate_word"
+                app:layout_constraintStart_toEndOf="@+id/iv_activate_word"
+                app:layout_constraintTop_toTopOf="@+id/iv_activate_word" />
 
-        <TextView
-            android:id="@+id/tv_activate_word"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="激活口令"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_activate_word"
-            app:layout_constraintStart_toEndOf="@+id/iv_activate_word"
-            app:layout_constraintTop_toTopOf="@+id/iv_activate_word" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:text=" > "
-            android:textSize="25sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/black"></TextView>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:background="@drawable/touch_bg"
-        android:id="@+id/cl_change_password"
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
-
-        <ImageView
-            android:id="@+id/iv_change_password"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/wd_icon_xgmm" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text=" > "
+                android:textSize="25sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:id="@+id/tv_change_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="修改密码"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_change_password"
-            app:layout_constraintStart_toEndOf="@+id/iv_change_password"
-            app:layout_constraintTop_toTopOf="@+id/iv_change_password" />
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"></TextView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_change_password"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/touch_bg">
+
+            <ImageView
+                android:id="@+id/iv_change_password"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/wd_icon_xgmm" />
+
+            <TextView
+                android:id="@+id/tv_change_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="修改密码"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_change_password"
+                app:layout_constraintStart_toEndOf="@+id/iv_change_password"
+                app:layout_constraintTop_toTopOf="@+id/iv_change_password" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text=" > "
+                android:textSize="25sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:text=" > "
-            android:textSize="25sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"></TextView>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/black"></TextView>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_notice"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/touch_bg">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:background="@drawable/touch_bg"
-        android:id="@+id/cl_notice"
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
+            <ImageView
+                android:id="@+id/iv_notice"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/notice_icon" />
 
-        <ImageView
-            android:id="@+id/iv_notice"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/notice_icon" />
+            <TextView
+                android:id="@+id/tv_notice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="通知"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_notice"
+                app:layout_constraintStart_toEndOf="@+id/iv_notice"
+                app:layout_constraintTop_toTopOf="@+id/iv_notice" />
 
-        <TextView
-            android:id="@+id/tv_notice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="通知"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_notice"
-            app:layout_constraintStart_toEndOf="@+id/iv_notice"
-            app:layout_constraintTop_toTopOf="@+id/iv_notice" />
+            <TextView
+                android:id="@+id/textView20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text=" > "
+                android:textSize="25sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textView20"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:text=" > "
-            android:textSize="25sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_red_icon"
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView20"
-            app:layout_constraintEnd_toStartOf="@+id/textView20"
-            app:layout_constraintTop_toTopOf="@+id/textView20" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/black"></TextView>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:background="@drawable/touch_bg"
-        android:id="@+id/cl_about"
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
-
-        <ImageView
-            android:id="@+id/iv_about"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/wd_icon_gy" />
+            <TextView
+                android:id="@+id/tv_red_icon"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView20"
+                app:layout_constraintEnd_toStartOf="@+id/textView20"
+                app:layout_constraintTop_toTopOf="@+id/textView20" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:id="@+id/tv_about"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="关于"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_about"
-            app:layout_constraintStart_toEndOf="@+id/iv_about"
-            app:layout_constraintTop_toTopOf="@+id/iv_about" />
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"></TextView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_guide"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/touch_bg">
+
+            <ImageView
+                android:id="@+id/iv_guide"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/tuwen_my" />
+
+            <TextView
+                android:id="@+id/tv_guide"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="新手引导图文教程"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_guide"
+                app:layout_constraintStart_toEndOf="@+id/iv_guide"
+                app:layout_constraintTop_toTopOf="@+id/iv_guide" />
+
+            <TextView
+                android:id="@+id/tv_goto_guide"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text=" > "
+                android:textSize="25sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:id="@+id/textView13"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:text=" > "
-            android:textSize="25sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"></TextView>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/black"></TextView>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_about"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/touch_bg">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:background="@drawable/touch_bg"
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
+            <ImageView
+                android:id="@+id/iv_about"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/wd_icon_gy" />
 
+            <TextView
+                android:id="@+id/tv_about"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="关于"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_about"
+                app:layout_constraintStart_toEndOf="@+id/iv_about"
+                app:layout_constraintTop_toTopOf="@+id/iv_about" />
 
-        <ImageView
-            android:id="@+id/imageView36"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/icon_wangzhi" />
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text=" > "
+                android:textSize="25sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:id="@+id/tv_wangzhi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="http://115.144.238.240:8090/index.html"
-            android:textSize="10sp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView36"
-            app:layout_constraintStart_toEndOf="@+id/imageView36"
-            app:layout_constraintTop_toTopOf="@+id/imageView36" />
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"></TextView>
 
-        <Button
-            android:id="@+id/btn_copy_btn"
-            android:layout_width="60dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="8dp"
-            android:gravity="center"
-            android:text="复制"
-            android:textColor="@color/white"
-            android:background="@drawable/touch_btn_bg"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/touch_bg">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/black"></TextView>
-</LinearLayout>
+
+            <ImageView
+                android:id="@+id/imageView36"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/icon_wangzhi" />
+
+            <TextView
+                android:id="@+id/tv_wangzhi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="http://115.144.238.240:8090/index.html"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView36"
+                app:layout_constraintTop_toBottomOf="@+id/textView66" />
+
+            <Button
+                android:id="@+id/btn_copy_btn"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/touch_btn_bg"
+                android:gravity="center"
+                android:text="复制"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView66"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="下载链接:"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@+id/tv_wangzhi"
+                app:layout_constraintStart_toEndOf="@+id/imageView36"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="spread" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"></TextView>
+    </LinearLayout>
+</ScrollView>

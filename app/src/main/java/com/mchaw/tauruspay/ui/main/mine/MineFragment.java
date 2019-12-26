@@ -3,6 +3,7 @@ package com.mchaw.tauruspay.ui.main.mine;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -24,6 +25,7 @@ import com.mchaw.tauruspay.common.util.OneClick.AntiShake;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
+import com.mchaw.tauruspay.ui.GuideActivity;
 import com.mchaw.tauruspay.ui.login.constract.LoginConstract;
 import com.mchaw.tauruspay.ui.login.password.PasswordFragment;
 import com.mchaw.tauruspay.ui.login.presenter.LoginPresenter;
@@ -101,7 +103,7 @@ public class MineFragment extends BasePresentFragment<LoginPresenter> implements
         component.inject(this);
     }
 
-    @OnClick({R.id.tv_login_out, R.id.cl_bill, R.id.cl_qr_code, R.id.cl_activate_word, R.id.cl_change_password, R.id.cl_about, R.id.cl_notice,R.id.btn_copy_btn})
+    @OnClick({R.id.tv_login_out, R.id.cl_bill, R.id.cl_qr_code, R.id.cl_activate_word, R.id.cl_change_password, R.id.cl_about, R.id.cl_notice,R.id.btn_copy_btn,R.id.cl_guide})
     public void onClick(View view) {
         if (AntiShake.check(view.getId())) {    //判断是否多次点击
             return;
@@ -159,6 +161,10 @@ public class MineFragment extends BasePresentFragment<LoginPresenter> implements
                     return;
                 }
                 ToastUtils.showShortToast(getContext(),"已复制<"+tvWangzhi.getText()+">到剪切板");
+                break;
+            case R.id.cl_guide:
+                Intent intent = new Intent(getActivity(), GuideActivity.class);
+                startActivity(intent);
                 break;
             default:
                 break;
