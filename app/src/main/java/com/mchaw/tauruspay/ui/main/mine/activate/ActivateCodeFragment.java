@@ -39,9 +39,10 @@ public class ActivateCodeFragment extends BasePresentListFragment<ActivatePresen
 
     @BindView(R.id.tv_back_title)
     TextView tvTitle;
-
     @BindView(R.id.rv_activate)
     RecyclerView rvActivate;
+    @BindView(R.id.tv_wangzhi)
+    TextView tvWangzhi;
 
     private List<ActivateCodeBean> list = new ArrayList<>();
     private ActivateCodeAdapter activateCodeAdapter;
@@ -66,11 +67,12 @@ public class ActivateCodeFragment extends BasePresentListFragment<ActivatePresen
     @Override
     protected void initFragment() {
         super.initFragment();
-        tvTitle.setText("激活口令");
+        tvTitle.setText("推广下级赚钱");
         rvActivate.setLayoutManager(new LinearLayoutManager(getContext()));
         activateCodeAdapter = new ActivateCodeAdapter(list);
         activateCodeAdapter.setOnItemChildClickListener(this);
         rvActivate.setAdapter(activateCodeAdapter);
+        tvWangzhi.setText("http://115.144.238.240:8090/index.html");
         onRefresh();
     }
 
@@ -99,12 +101,28 @@ public class ActivateCodeFragment extends BasePresentListFragment<ActivatePresen
         presenter.getActiveCodeList(PreferencesUtils.getString(getContext(), "token"));
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_back_title})
+    @OnClick({R.id.iv_back, R.id.tv_back_title,R.id.btn_copy_btn})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
             case R.id.tv_back_title:
                 this.getActivity().finish();
+                break;
+            case R.id.btn_copy_btn:
+                if(TextUtils.isEmpty(tvWangzhi.getText())){
+                    return;
+                }
+                //获取剪贴板管理器：
+                ClipboardManager cm = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                // 创建普通字符型ClipData
+                ClipData mClipData = ClipData.newPlainText("Label", tvWangzhi.getText());
+                // 将ClipData内容放到系统剪贴板里。
+                cm.setPrimaryClip(mClipData);
+                if(TextUtils.isEmpty(tvWangzhi.getText())){
+                    ToastUtils.showShortToast(getContext(),"没有可复制的内容");
+                    return;
+                }
+                ToastUtils.showShortToast(getContext(),"已复制<"+tvWangzhi.getText()+">到剪切板");
                 break;
             default:
                 break;
