@@ -473,6 +473,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
                 .addHeader("Authorization", "APPCODE 9926645caaaf4cb7a6fe47bd95cea63e").post(formBody).build();
         client.newCall(request).enqueue(new Callback() {
             public void onFailure(Call call, IOException e) {
+                canDone = true;
                 System.out.println(e.getMessage());
             }
 
