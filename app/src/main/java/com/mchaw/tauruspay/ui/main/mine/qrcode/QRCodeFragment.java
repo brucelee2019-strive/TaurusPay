@@ -474,6 +474,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
         client.newCall(request).enqueue(new Callback() {
             public void onFailure(Call call, IOException e) {
                 canDone = true;
+                LoadingDialog.dismissDailog();
                 System.out.println(e.getMessage());
             }
 
