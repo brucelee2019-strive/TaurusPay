@@ -1,7 +1,9 @@
 package com.mchaw.tauruspay.base.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,6 +31,8 @@ import org.greenrobot.eventbus.Subscribe;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+import static android.content.Context.POWER_SERVICE;
+
 /**
  * @author : Bruce Lee
  * @description :
@@ -48,10 +52,16 @@ public abstract class BaseFragment extends Fragment implements FragmentStartHelp
 
     private Unbinder unbinder;
 
+    private PowerManager.WakeLock wakeLock;
+    @SuppressLint("InvalidWakeLockTag")
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        PowerManager powerManager = (PowerManager) getActivity().getSystemService(POWER_SERVICE);
+        wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
+                "MyWakelockTag");
+        wakeLock.acquire();
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         getIntentData();
     }
@@ -173,6 +183,7 @@ public abstract class BaseFragment extends Fragment implements FragmentStartHelp
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        wakeLock.release();
         try {
             EventBus.getDefault().unregister(this);
         } catch (Exception e) {

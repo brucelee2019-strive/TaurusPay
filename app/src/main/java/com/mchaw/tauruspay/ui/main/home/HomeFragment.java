@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -21,6 +22,7 @@ import com.mchaw.tauruspay.bean.eventbus.mainpolling.MainPollingUserEvent;
 import com.mchaw.tauruspay.bean.home.UserBean;
 import com.mchaw.tauruspay.bean.updata.UpDataBean;
 import com.mchaw.tauruspay.common.util.OneClick.AntiShake;
+import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.StringUtils;
 import com.mchaw.tauruspay.common.util.versionUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
@@ -71,6 +73,9 @@ public class HomeFragment extends BasePresentFragment<HomePresenter> implements 
     //当天已售额度
     @BindView(R.id.tv_already_income)
     TextView tvAlreadyIncome;
+
+    @BindView(R.id.btn_start_sail)
+    Button btnStartSail;
 
     private String strPre = "*开始代售前，请保持<font color='#FF9600'>金牛话费</font>与<font color='#00aaef'>支付宝</font>在线";
     private String strAfter = "*开始代售时，请及时查询确认收款";
@@ -157,6 +162,8 @@ public class HomeFragment extends BasePresentFragment<HomePresenter> implements 
         tvTodayTimeForSale.setText(String.valueOf(userBean.getDaycount()));
         tvAlreadyIncome.setText(StringUtils.fenToYuan(userBean.getDaydeposit()));
         MyFrameApplication.groupid = userBean.getGroupid();
+        MyFrameApplication.startingPosition = MyFrameApplication.groupid == 0?-1:PreferencesUtils.getInt(getContext(),"startingPosition");
+        btnStartSail.setText(MyFrameApplication.startingPosition==-1?"开始代售":"分组["+(MyFrameApplication.startingPosition+1)+"]正在代售");
     }
 
     @Override
@@ -177,12 +184,14 @@ public class HomeFragment extends BasePresentFragment<HomePresenter> implements 
 
     @Subscribe
     public void sellInfo(MainPollingUserEvent event) {
+        MyFrameApplication.startingPosition = MyFrameApplication.groupid == 0?-1:PreferencesUtils.getInt(getContext(),"startingPosition");
         if (event != null) {
             tvRepertory.setText(StringUtils.fenToYuan(event.getKucun()));
             tvTodayAgencyIncome.setText(StringUtils.fenToYuan(event.getDangrishouyi()));
             tvTodayMoneyForSale.setText(StringUtils.fenToYuan(event.getDangrikeshouedu()));
             tvTodayTimeForSale.setText(String.valueOf(event.getDangrikeshoudanshu()));
             tvAlreadyIncome.setText(StringUtils.fenToYuan(event.getDangriyishouedu()));
+            btnStartSail.setText(MyFrameApplication.startingPosition==-1?"开始代售":"分组["+(MyFrameApplication.startingPosition+1)+"]正在代售");
         }
     }
 

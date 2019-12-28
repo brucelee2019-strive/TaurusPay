@@ -1,10 +1,12 @@
 package com.mchaw.tauruspay.main;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
@@ -87,10 +89,17 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
         return R.layout.activity_main;
     }
 
+
+    private PowerManager.WakeLock wakeLock;
+    @SuppressLint("InvalidWakeLockTag")
     @Override
     public void initActivity() {
         super.initActivity();
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
+        wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
+                "MyWakelockTag");
+        wakeLock.acquire();
         bottomView.enableAnimation(true);
         bottomView.enableShiftingMode(false);
         bottomView.enableItemShiftingMode(false);
@@ -393,6 +402,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
         super.onDestroy();
         stopPolling();
         noticeStopPolling();
+        wakeLock.release();
     }
 
     private void waringTone() {
