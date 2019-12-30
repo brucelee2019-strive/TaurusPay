@@ -137,7 +137,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
     @Override
     protected void initHintViews() {
         loadingView = getLayoutInflater().inflate(R.layout.loading_view, (ViewGroup) rvQRList.getParent(), false);
-        notDataView = getLayoutInflater().inflate(R.layout.empty_view, (ViewGroup) rvQRList.getParent(), false);
+        notDataView = getLayoutInflater().inflate(R.layout.er_code_list_empty_view, (ViewGroup) rvQRList.getParent(), false);
         notDataView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
