@@ -1,6 +1,7 @@
 package com.mchaw.tauruspay.base.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.PowerManager;
@@ -52,16 +53,11 @@ public abstract class BaseFragment extends Fragment implements FragmentStartHelp
 
     private Unbinder unbinder;
 
-    private PowerManager.WakeLock wakeLock;
-    @SuppressLint("InvalidWakeLockTag")
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         PowerManager powerManager = (PowerManager) getActivity().getSystemService(POWER_SERVICE);
-        wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
-                "MyWakelockTag");
-        wakeLock.acquire();
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         getIntentData();
     }
@@ -183,7 +179,6 @@ public abstract class BaseFragment extends Fragment implements FragmentStartHelp
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        wakeLock.release();
         try {
             EventBus.getDefault().unregister(this);
         } catch (Exception e) {
@@ -191,6 +186,11 @@ public abstract class BaseFragment extends Fragment implements FragmentStartHelp
                 Log.e("EventBus error", e.getMessage());
             }
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 
     @Subscribe

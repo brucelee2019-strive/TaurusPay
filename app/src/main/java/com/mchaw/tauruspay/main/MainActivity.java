@@ -2,6 +2,7 @@ package com.mchaw.tauruspay.main;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -90,16 +91,11 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
     }
 
 
-    private PowerManager.WakeLock wakeLock;
-    @SuppressLint("InvalidWakeLockTag")
     @Override
     public void initActivity() {
         super.initActivity();
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
-        wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
-                "MyWakelockTag");
-        wakeLock.acquire();
         bottomView.enableAnimation(true);
         bottomView.enableShiftingMode(false);
         bottomView.enableItemShiftingMode(false);
@@ -350,6 +346,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
                         presenter.getMainPollingBean(MyFrameApplication.getInstance().tokenStr, MyFrameApplication.groupid);
                     }
                 });
+        acquireWakeLock();
     }
 
     public void stopPolling() {
@@ -402,7 +399,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
         super.onDestroy();
         stopPolling();
         noticeStopPolling();
-        wakeLock.release();
+        releaseWakeLock();
     }
 
     private void waringTone() {
@@ -432,6 +429,32 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
             if (amout == receivablesBean.getAmount()) {
                 presenter.upLodingReceivables(String.valueOf(receivablesBean.getId()), PreferencesUtils.getString(getApplicationContext(), "token"));
             }
+        }
+    }
+
+    PowerManager.WakeLock wakeLock = null;
+    //获取电源锁，保持该服务在屏幕熄灭时仍然获取CPU时，保持运行
+    @SuppressLint("InvalidWakeLockTag")
+    private void acquireWakeLock()
+    {
+        if (null == wakeLock)
+        {
+            PowerManager pm = (PowerManager)this.getSystemService(Context.POWER_SERVICE);
+            wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK|PowerManager.ON_AFTER_RELEASE, "PostLocationService");
+            if (null != wakeLock)
+            {
+                wakeLock.acquire();
+            }
+        }
+    }
+
+    //释放设备电源锁
+    private void releaseWakeLock()
+    {
+        if (null != wakeLock)
+        {
+            wakeLock.release();
+            wakeLock = null;
         }
     }
 }
