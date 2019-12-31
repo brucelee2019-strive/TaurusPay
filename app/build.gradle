@@ -201,7 +201,7 @@ dependencies {
     implementation 'id.zelory:compressor:2.1.0'
 
     //下载更新
-    implementation 'com.azhon:appupdateX:2.6.0'
+    implementation 'com.azhon:appupdateX:2.7.0'
 
     //知乎相册
     implementation 'com.zhihu.android:matisse:0.5.3-beta3'

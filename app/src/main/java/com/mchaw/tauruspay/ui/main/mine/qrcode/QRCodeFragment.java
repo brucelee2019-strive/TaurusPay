@@ -537,6 +537,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
 
     @Override
     public void setQRCodeGroupListFail() {
+        LoadingDialog.dismissDailog();
         qrCodeListAdapter.setEmptyView(errorView);
     }
 

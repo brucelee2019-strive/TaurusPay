@@ -119,11 +119,11 @@ public class RegisterFragment extends BasePresentFragment<RegisterPresenter> imp
             return;
         }
         if (TextUtils.isEmpty(passwd)) {
-            ToastUtils.showShortToast(getContext(), "登录密码不能为空！");
+            ToastUtils.showShortToast(getContext(), "登录密码不能为空或含有特殊字符！");
             return;
         }
         if (TextUtils.isEmpty(passwdSure)) {
-            ToastUtils.showShortToast(getContext(), "确认密码不能为空！");
+            ToastUtils.showShortToast(getContext(), "确认密码不能为空或含有特殊字符！");
             return;
         }
         if (!passwd.equals(passwdSure)) {
