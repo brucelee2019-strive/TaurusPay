@@ -132,6 +132,18 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/iv_ds_icon"
             app:layout_constraintEnd_toEndOf="@+id/iv_ds_icon" />
+
+        <TextView
+            android:id="@+id/tv_sign"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="任意"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/f54343"
+            app:layout_constraintBottom_toTopOf="@+id/tv_start_sail_btn"
+            app:layout_constraintEnd_toEndOf="@+id/tv_start_sail_btn"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
     <LinearLayout
         android:id="@+id/ll_1"

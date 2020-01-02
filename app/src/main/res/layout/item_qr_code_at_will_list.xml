@@ -127,6 +127,19 @@
             app:layout_constraintBottom_toBottomOf="@+id/iv_ds_icon"
             app:layout_constraintEnd_toEndOf="@+id/iv_ds_icon" />
 
+        <TextView
+            android:id="@+id/tv_sign"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="任意"
+            android:textColor="@color/f54343"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_delete"
+            app:layout_constraintEnd_toStartOf="@+id/iv_delete"
+            app:layout_constraintTop_toTopOf="@+id/iv_delete" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
     <LinearLayout
         android:id="@+id/ll_1"
