@@ -13,6 +13,7 @@ import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.dialog.DialogCallBack;
 import com.mchaw.tauruspay.base.fragment.BasePresentListFragment;
+import com.mchaw.tauruspay.bean.entry.MultipleItem;
 import com.mchaw.tauruspay.bean.eventbus.mainpolling.MainPollingGroupInfoEvent;
 import com.mchaw.tauruspay.bean.home.StartOrOverSellBean;
 import com.mchaw.tauruspay.bean.qrcode.GroupinfoBean;
@@ -83,10 +84,10 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
     protected void initFragment() {
         super.initFragment();
         rvForSalelist.setLayoutManager(new LinearLayoutManager(getContext()));
-        forSaleListAdapter = new ForSaleListAdapter(qrCodeGroupBeanList);
+        forSaleListAdapter = new ForSaleListAdapter(multipleItemList);
         forSaleListAdapter.setOnItemChildClickListener(this);
         rvForSalelist.setAdapter(forSaleListAdapter);
-        MyFrameApplication.startingPosition = PreferencesUtils.getInt(MyFrameApplication.getInstance(),"startingPosition",-1);
+        MyFrameApplication.startingPosition = PreferencesUtils.getInt(MyFrameApplication.getInstance(), "startingPosition", -1);
         onRefresh();
     }
 
@@ -109,6 +110,8 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
         presenter.getQRCodeGroupList(PreferencesUtils.getString(getContext(), "token"));
     }
 
+    private List<MultipleItem> multipleItemList = new ArrayList<>();
+
     /**
      * 代售分组
      *
@@ -118,12 +121,33 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
     public void setQRCodeGroupList(List<GroupinfoBean> list) {
         qrCodeGroupBeanList = list;
         if (list != null && list.size() > 0) {
-            forSaleListAdapter.setNewData(list);
+            multipleItemList = new ArrayList<>();
+            for (GroupinfoBean groupinfoBean : list) {
+                switch (groupinfoBean.getPaytype()) {
+                    case 0:
+                        multipleItemList.add(new MultipleItem<>(MultipleItem.ER_CODE_FOR_SAIL_FIXED_WX, groupinfoBean));
+                        break;
+                    case 1:
+                        multipleItemList.add(new MultipleItem<>(MultipleItem.ER_CODE_FOR_SAIL_FIXED_ALIPAY, groupinfoBean));
+                        break;
+                    case 3:
+                        multipleItemList.add(new MultipleItem<>(MultipleItem.ER_CODE_OR_SAIL_AT_WILL_ALIPAY, groupinfoBean));
+                        break;
+                    case 4:
+                        multipleItemList.add(new MultipleItem<>(MultipleItem.ER_CODE_OR_SAIL_AT_WILL_WX, groupinfoBean));
+                        break;
+                    default:
+                        multipleItemList.add(new MultipleItem<>(MultipleItem.ER_CODE_FOR_SAIL_FIXED_WX, groupinfoBean));
+                        break;
+                }
+            }
+            forSaleListAdapter.setNewData(multipleItemList);
         } else {
             forSaleListAdapter.setNewData(null);
             forSaleListAdapter.setEmptyView(notDataView);
         }
     }
+
 
     @Override
     public void setQRCodeGroupListFail() {
@@ -166,7 +190,7 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
                 qrCodeGroupBean.setStatus(0);
             }
             MyFrameApplication.startingPosition = -1;
-            PreferencesUtils.putInt(MyFrameApplication.getInstance(),"startingPosition",MyFrameApplication.startingPosition);
+            PreferencesUtils.putInt(MyFrameApplication.getInstance(), "startingPosition", MyFrameApplication.startingPosition);
             forSaleListAdapter.notifyDataSetChanged();
             return;
         }
@@ -182,14 +206,9 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
 //                qrCodeGroupBean.setQrcodes(event.getGroupinfo().getQrcodes());
 //            }
             if (qrCodeGroupBeanList != null && qrCodeGroupBeanList.size() > 0) {
-               for(int i=0;i<qrCodeGroupBeanList.size();i++){
-                   if(MyFrameApplication.groupid == qrCodeGroupBeanList.get(i).getGroupid()){
-                       MyFrameApplication.startingPosition = i;
-                   }
-               }
-               if(MyFrameApplication.startingPosition == -1){
-                   return;
-               }
+                if (MyFrameApplication.startingPosition == -1) {
+                    return;
+                }
                 GroupinfoBean startingGroupinfoBean = qrCodeGroupBeanList.get(MyFrameApplication.startingPosition);
                 if (startingGroupinfoBean != null) {
                     startingGroupinfoBean.setDaycount(event.getGroupinfo().getDaycount());
@@ -208,7 +227,7 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
         LoadingDialog.dismissDailog();
         //开始待售的订单位置
         MyFrameApplication.startingPosition = (startOrOverSellBean.getStatus() == 1) ? recordPosition : -1;
-        PreferencesUtils.putInt(MyFrameApplication.getInstance(),"startingPosition",MyFrameApplication.startingPosition);
+        PreferencesUtils.putInt(MyFrameApplication.getInstance(), "startingPosition", MyFrameApplication.startingPosition);
         qrCodeGroupBean.setStatus(startOrOverSellBean.getStatus());
         MyFrameApplication.groupid = (startOrOverSellBean.getStatus() == 1) ? qrCodeGroupBean.getGroupid() : 0;
         recordGroupid = qrCodeGroupBean.getGroupid();
@@ -228,75 +247,149 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
             ToastUtils.showShortToast(getContext(), "客官，请慢点点击！");
             return;
         }
-        qrCodeGroupBean = (GroupinfoBean) adapter.getItem(position);
-        recordGroupid = qrCodeGroupBean.getGroupid();
-        recordPosition = position;
-        switch (view.getId()) {
-            case R.id.tv_show_order_list://点击收缩按钮
-                boolean ishow = qrCodeGroupBean.isShowItems();
-                qrCodeGroupBean.setShowItems(!ishow);
-                if (qrCodeGroupBean.isShowItems()) {
-                    presenter.getQRCodeStalls(String.valueOf(qrCodeGroupBean.getGroupid()), MyFrameApplication.tokenStr);
-                }
-                adapter.notifyItemChanged(position);
-                break;
-            case R.id.tv_start_sail_btn://点击开始代售
-                if (qrCodeGroupBean.getStatus() == 0) {
-                    //代售之前检查是否已有组正在代售 list应该是轮询的list
-                    for (GroupinfoBean bean : qrCodeGroupBeanList) {
-                        if (bean.getStatus() == 1) {
-                            ToastUtils.showShortToast(getContext(), "当前有在售的分组，请先关闭当前的分组");
-                            return;
-                        }
+        MultipleItem multipleItem = (MultipleItem) adapter.getData().get(position);
+        if (multipleItem.getItemType() == MultipleItem.ER_CODE_FOR_SAIL_FIXED_WX || multipleItem.getItemType() == MultipleItem.ER_CODE_FOR_SAIL_FIXED_ALIPAY) {
+            qrCodeGroupBean = (GroupinfoBean) multipleItem.getData();
+            recordGroupid = qrCodeGroupBean.getGroupid();
+            recordPosition = position;
+            switch (view.getId()) {
+                case R.id.tv_show_order_list://点击收缩按钮
+                    boolean ishow = qrCodeGroupBean.isShowItems();
+                    qrCodeGroupBean.setShowItems(!ishow);
+                    if (qrCodeGroupBean.isShowItems()) {
+                        presenter.getQRCodeStalls(String.valueOf(qrCodeGroupBean.getGroupid()), MyFrameApplication.tokenStr);
                     }
-                    //弹窗
-                    ConfirmDialogFragment confirmDialogFragment = ConfirmDialogFragment.newInstance();
-                    confirmDialogFragment.setMsg("代售警告");
-                    confirmDialogFragment.setContent("请确保[支付宝|微信]账号为\n["+qrCodeGroupBean.getAccount()+"]再代售\n否则有可能造成自动结单异常！");
-                    confirmDialogFragment.setCancelText("取消");
-                    confirmDialogFragment.setConfirmText("确认");
-                    confirmDialogFragment.setListenCancel(true);
-                    confirmDialogFragment.setDialogCallBack(new DialogCallBack() {
-                        @Override
-                        public void onDialogViewClick(int type, Object value) {
-                            if (type == DIALOG_CONFIRM) {
-                                LoadingDialog.showDialog(getChildFragmentManager());
-                                presenter.startingOrOverSell(String.valueOf(qrCodeGroupBean.getGroupid()), 1, PreferencesUtils.getString(getContext(), "token"));
-                            } else {
-
+                    adapter.notifyItemChanged(position);
+                    break;
+                case R.id.tv_start_sail_btn://点击开始代售
+                    if (qrCodeGroupBean.getStatus() == 0) {
+                        //代售之前检查是否已有组正在代售 list应该是轮询的list
+                        for (GroupinfoBean bean : qrCodeGroupBeanList) {
+                            if (bean.getStatus() == 1) {
+                                ToastUtils.showShortToast(getContext(), "当前有在售的分组，请先关闭当前的分组");
+                                return;
                             }
                         }
-                    });
-                    confirmDialogFragment.show(this.getFragmentManager(), "confirmDialogFragment");
-                } else {
-                    //停止代售前 检查是否有未完成的收款
+                        //弹窗
+                        ConfirmDialogFragment confirmDialogFragment = ConfirmDialogFragment.newInstance();
+                        confirmDialogFragment.setMsg("代售警告");
+                        confirmDialogFragment.setContent("请确保[支付宝|微信]账号为\n[" + qrCodeGroupBean.getAccount() + "]再代售\n否则有可能造成自动结单异常！");
+                        confirmDialogFragment.setCancelText("取消");
+                        confirmDialogFragment.setConfirmText("确认");
+                        confirmDialogFragment.setListenCancel(true);
+                        confirmDialogFragment.setDialogCallBack(new DialogCallBack() {
+                            @Override
+                            public void onDialogViewClick(int type, Object value) {
+                                if (type == DIALOG_CONFIRM) {
+                                    LoadingDialog.showDialog(getChildFragmentManager());
+                                    presenter.startingOrOverSell(String.valueOf(qrCodeGroupBean.getGroupid()), 1, PreferencesUtils.getString(getContext(), "token"));
+                                } else {
+
+                                }
+                            }
+                        });
+                        confirmDialogFragment.show(this.getFragmentManager(), "confirmDialogFragment");
+                    } else {
+                        //停止代售前 检查是否有未完成的收款
 //                    if(){
 //                        ToastUtils.showShortToast(getContext(), "当前有收款未完成，请完成后再停止代售！");
 //                        return;
 //                    }
-                    //弹窗
-                    ConfirmDialogFragment confirmDialogFragment = ConfirmDialogFragment.newInstance();
-                    confirmDialogFragment.setMsg("提示");
-                    confirmDialogFragment.setContent("是否停止接单\n停止接单后请确保所有的单已结单\n停止接单后再次接单将重新排队");
-                    confirmDialogFragment.setCancelText("取消");
-                    confirmDialogFragment.setConfirmText("确认");
-                    confirmDialogFragment.setListenCancel(true);
-                    confirmDialogFragment.setDialogCallBack(new DialogCallBack() {
-                        @Override
-                        public void onDialogViewClick(int type, Object value) {
-                            if (type == DIALOG_CONFIRM) {
-                                LoadingDialog.showDialog(getChildFragmentManager());
-                                presenter.startingOrOverSell(String.valueOf(qrCodeGroupBean.getGroupid()), 0, PreferencesUtils.getString(getContext(), "token"));
-                            } else {
+                        //弹窗
+                        ConfirmDialogFragment confirmDialogFragment = ConfirmDialogFragment.newInstance();
+                        confirmDialogFragment.setMsg("提示");
+                        confirmDialogFragment.setContent("是否停止接单\n停止接单后请确保所有的单已结单\n停止接单后再次接单将重新排队");
+                        confirmDialogFragment.setCancelText("取消");
+                        confirmDialogFragment.setConfirmText("确认");
+                        confirmDialogFragment.setListenCancel(true);
+                        confirmDialogFragment.setDialogCallBack(new DialogCallBack() {
+                            @Override
+                            public void onDialogViewClick(int type, Object value) {
+                                if (type == DIALOG_CONFIRM) {
+                                    LoadingDialog.showDialog(getChildFragmentManager());
+                                    presenter.startingOrOverSell(String.valueOf(qrCodeGroupBean.getGroupid()), 0, PreferencesUtils.getString(getContext(), "token"));
+                                } else {
 
+                                }
+                            }
+                        });
+                        confirmDialogFragment.show(this.getFragmentManager(), "confirmDialogFragment");
+                    }
+                    break;
+                default:
+                    break;
+            }
+        } else if (multipleItem.getItemType() == MultipleItem.ER_CODE_OR_SAIL_AT_WILL_ALIPAY || multipleItem.getItemType() == MultipleItem.ER_CODE_OR_SAIL_AT_WILL_WX ) {
+            qrCodeGroupBean = (GroupinfoBean) multipleItem.getData();
+            recordGroupid = qrCodeGroupBean.getGroupid();
+            recordPosition = position;
+            switch (view.getId()) {
+                case R.id.tv_show_order_list://点击收缩按钮
+                    boolean ishow = qrCodeGroupBean.isShowItems();
+                    qrCodeGroupBean.setShowItems(!ishow);
+                    if (qrCodeGroupBean.isShowItems()) {
+                        presenter.getQRCodeStalls(String.valueOf(qrCodeGroupBean.getGroupid()), MyFrameApplication.tokenStr);
+                    }
+                    adapter.notifyItemChanged(position);
+                    break;
+                case R.id.tv_start_sail_btn://点击开始代售
+                    if (qrCodeGroupBean.getStatus() == 0) {
+                        //代售之前检查是否已有组正在代售 list应该是轮询的list
+                        for (GroupinfoBean bean : qrCodeGroupBeanList) {
+                            if (bean.getStatus() == 1) {
+                                ToastUtils.showShortToast(getContext(), "当前有在售的分组，请先关闭当前的分组");
+                                return;
                             }
                         }
-                    });
-                    confirmDialogFragment.show(this.getFragmentManager(), "confirmDialogFragment");
-                }
-                break;
-            default:
-                break;
+                        //弹窗
+                        ConfirmDialogFragment confirmDialogFragment = ConfirmDialogFragment.newInstance();
+                        confirmDialogFragment.setMsg("代售警告");
+                        confirmDialogFragment.setContent("请确保[支付宝|微信]账号为\n[" + qrCodeGroupBean.getAccount() + "]再代售\n否则有可能造成自动结单异常！");
+                        confirmDialogFragment.setCancelText("取消");
+                        confirmDialogFragment.setConfirmText("确认");
+                        confirmDialogFragment.setListenCancel(true);
+                        confirmDialogFragment.setDialogCallBack(new DialogCallBack() {
+                            @Override
+                            public void onDialogViewClick(int type, Object value) {
+                                if (type == DIALOG_CONFIRM) {
+                                    LoadingDialog.showDialog(getChildFragmentManager());
+                                    presenter.startingOrOverSell(String.valueOf(qrCodeGroupBean.getGroupid()), 1, PreferencesUtils.getString(getContext(), "token"));
+                                } else {
+
+                                }
+                            }
+                        });
+                        confirmDialogFragment.show(this.getFragmentManager(), "confirmDialogFragment");
+                    } else {
+                        //停止代售前 检查是否有未完成的收款
+//                    if(){
+//                        ToastUtils.showShortToast(getContext(), "当前有收款未完成，请完成后再停止代售！");
+//                        return;
+//                    }
+                        //弹窗
+                        ConfirmDialogFragment confirmDialogFragment = ConfirmDialogFragment.newInstance();
+                        confirmDialogFragment.setMsg("提示");
+                        confirmDialogFragment.setContent("是否停止接单\n停止接单后请确保所有的单已结单\n停止接单后再次接单将重新排队");
+                        confirmDialogFragment.setCancelText("取消");
+                        confirmDialogFragment.setConfirmText("确认");
+                        confirmDialogFragment.setListenCancel(true);
+                        confirmDialogFragment.setDialogCallBack(new DialogCallBack() {
+                            @Override
+                            public void onDialogViewClick(int type, Object value) {
+                                if (type == DIALOG_CONFIRM) {
+                                    LoadingDialog.showDialog(getChildFragmentManager());
+                                    presenter.startingOrOverSell(String.valueOf(qrCodeGroupBean.getGroupid()), 0, PreferencesUtils.getString(getContext(), "token"));
+                                } else {
+
+                                }
+                            }
+                        });
+                        confirmDialogFragment.show(this.getFragmentManager(), "confirmDialogFragment");
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
     }
 

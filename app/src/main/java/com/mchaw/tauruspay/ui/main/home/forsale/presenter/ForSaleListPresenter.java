@@ -1,5 +1,7 @@
 package com.mchaw.tauruspay.ui.main.home.forsale.presenter;
 
+
+
 import com.mchaw.tauruspay.base.mvp.presenter.RxPresenter;
 import com.mchaw.tauruspay.bean.home.StartOrOverSellBean;
 import com.mchaw.tauruspay.bean.qrcode.GroupinfoBean;

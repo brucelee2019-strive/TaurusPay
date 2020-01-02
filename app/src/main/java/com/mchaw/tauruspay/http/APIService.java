@@ -6,6 +6,7 @@ import com.mchaw.tauruspay.bean.ResultBean;
 import com.mchaw.tauruspay.bean.activate.ActivateCodeBean;
 import com.mchaw.tauruspay.bean.bill.BillTotalBean;
 import com.mchaw.tauruspay.bean.bill.TradingBean;
+import com.mchaw.tauruspay.bean.entry.MultipleItem;
 import com.mchaw.tauruspay.bean.home.UserBean;
 import com.mchaw.tauruspay.bean.home.ReceivablesBean;
 import com.mchaw.tauruspay.bean.home.StartOrOverSellBean;

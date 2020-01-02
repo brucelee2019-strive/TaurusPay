@@ -1,6 +1,7 @@
 package com.mchaw.tauruspay.ui.main.mine.qrcode.presenter;
 
 import com.mchaw.tauruspay.base.mvp.presenter.RxPresenter;
+import com.mchaw.tauruspay.bean.entry.MultipleItem;
 import com.mchaw.tauruspay.bean.qrcode.DeleteQRCodeGroupBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupCreateBean;
 import com.mchaw.tauruspay.bean.qrcode.GroupinfoBean;
@@ -71,6 +72,7 @@ public class QRCodePresenter extends RxPresenter<QRCodeConstract.View> implement
                         if (mView == null) {
                             return;
                         }
+                        mView.setQRCodeGroupBeanFail();
                         mView.showError(msg);
                     }
                 });

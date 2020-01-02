@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tv_last_orders_num"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <TextView
+        android:background="@color/bdbdbd"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"></TextView>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+        <ImageView
+            android:id="@+id/iv_ds_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_ds_line"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ds_icon_zfb" />
+
+        <TextView
+            android:id="@+id/tv_ds_line"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginEnd="8dp"
+            android:background="@color/bdbdbd"
+            app:layout_constraintBottom_toTopOf="@+id/tv_last_orders"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/iv_ds_icon"
+            app:layout_constraintTop_toBottomOf="@+id/iv_ds_icon" />
+
+        <TextView
+            android:id="@+id/tv_last_orders"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="已上传"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/iv_ds_icon"
+            app:layout_constraintTop_toBottomOf="@+id/tv_ds_line" />
+
+        <TextView
+            android:id="@+id/tv_last_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12张"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_last_orders"
+            app:layout_constraintStart_toEndOf="@+id/tv_last_orders"
+            app:layout_constraintTop_toTopOf="@+id/tv_last_orders"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="40dp"
+            android:id="@+id/tv_show_order_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_last_orders"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_last_orders"
+            app:srcCompat="@drawable/ds_btn_sq" />
+
+        <TextView
+            android:id="@+id/textView33"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="支付宝账号："
+            app:layout_constraintStart_toEndOf="@+id/iv_ds_icon"
+            app:layout_constraintTop_toTopOf="@+id/iv_ds_icon" />
+
+        <TextView
+            android:id="@+id/textView34"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="支付宝昵称："
+            app:layout_constraintBottom_toBottomOf="@+id/iv_ds_icon"
+            app:layout_constraintStart_toEndOf="@+id/iv_ds_icon" />
+
+        <TextView
+            android:id="@+id/tv_zfb_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textColor="@color/color_black_0"
+            app:layout_constraintBottom_toBottomOf="@+id/textView33"
+            app:layout_constraintStart_toEndOf="@+id/textView33"
+            app:layout_constraintTop_toTopOf="@+id/textView33" />
+
+        <TextView
+            android:id="@+id/tv_zfb_nike_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textColor="@color/color_black_0"
+            app:layout_constraintBottom_toBottomOf="@+id/textView34"
+            app:layout_constraintStart_toEndOf="@+id/textView34"
+            app:layout_constraintTop_toTopOf="@+id/textView34"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/iv_delete"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_ds_line"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/ic_menu_delete" />
+
+        <TextView
+            android:id="@+id/tv_position"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textSize="18sp"
+            android:paddingRight="5dp"
+            android:textColor="@color/color_black_0"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_ds_icon"
+            app:layout_constraintEnd_toEndOf="@+id/iv_ds_icon" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:id="@+id/ll_1"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_303"
+            android:background="@drawable/ds_ds_bg"
+            android:layout_margin="5dp"
+            android:layout_width="200dp"
+            android:layout_height="match_parent">
+
+            <ImageView
+                app:layout_constraintVertical_chainStyle="spread"
+                android:id="@+id/iv_303"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/tv_303"
+                app:srcCompat="@drawable/qrcode_add" />
+
+            <TextView
+                android:id="@+id/tv_303"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="任意收款码"
+                android:textColor="@color/f54343"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/iv_303"
+                app:layout_constraintStart_toStartOf="@+id/iv_303"
+                app:layout_constraintTop_toBottomOf="@+id/iv_303" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+    <TextView
+        android:background="@color/bdbdbd"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"></TextView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_black_0"></TextView>
+</LinearLayout>

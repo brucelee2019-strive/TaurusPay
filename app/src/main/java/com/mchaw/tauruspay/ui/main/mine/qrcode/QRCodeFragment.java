@@ -27,6 +27,7 @@ import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.dialog.DialogCallBack;
 import com.mchaw.tauruspay.base.fragment.BasePresentListFragment;
 import com.mchaw.tauruspay.bean.ALiYunCodeBean;
+import com.mchaw.tauruspay.bean.entry.MultipleItem;
 import com.mchaw.tauruspay.bean.eventbus.ForbiddenEvent;
 import com.mchaw.tauruspay.bean.qrcode.DeleteQRCodeGroupBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupCreateBean;
@@ -127,7 +128,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
     protected void initFragment() {
         super.initFragment();
         rvQRList.setLayoutManager(new LinearLayoutManager(getContext()));
-        qrCodeListAdapter = new QRCodeListAdapter(getActivity(), qrCodeGroupBeanList);
+        qrCodeListAdapter = new QRCodeListAdapter(multipleItemList);
         qrCodeListAdapter.setOnItemChildClickListener(this);
         rvQRList.setAdapter(qrCodeListAdapter);
         onRefresh();
@@ -137,7 +138,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
     @Override
     protected void initHintViews() {
         loadingView = getLayoutInflater().inflate(R.layout.loading_view, (ViewGroup) rvQRList.getParent(), false);
-        notDataView = getLayoutInflater().inflate(R.layout.er_code_list_empty_view, (ViewGroup) rvQRList.getParent(), false);
+        notDataView = getLayoutInflater().inflate(R.layout.empty_view, (ViewGroup) rvQRList.getParent(), false);
         notDataView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -230,142 +231,283 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
             ToastUtils.showShortToast(getContext(), "客官，请慢点点击！");
             return;
         }
-        qrCodeGroupBean = (GroupinfoBean) adapter.getItem(position);
-        switch (view.getId()) {
-            case R.id.cl_303:
-                if (canDone) {
-                    tag = 0;
-                    openPhotoAlbum(tag);
-                }
-                canDone = false;
-                LoadingDialog.showDialog(getChildFragmentManager());
-                break;
-            case R.id.cl_313:
-                if (canDone) {
-                    tag = 1;
-                    openPhotoAlbum(tag);
-                }
-                canDone = false;
-                LoadingDialog.showDialog(getChildFragmentManager());
-                break;
-            case R.id.cl_785:
-                if (canDone) {
-                    tag = 2;
-                    openPhotoAlbum(tag);
-                }
-                canDone = false;
-                LoadingDialog.showDialog(getChildFragmentManager());
-                break;
-            case R.id.cl_786:
-                if (canDone) {
-                    tag = 3;
-                    openPhotoAlbum(tag);
-                }
-                canDone = false;
-                LoadingDialog.showDialog(getChildFragmentManager());
-                break;
-            case R.id.cl_1215:
-                if (canDone) {
-                    tag = 4;
-                    openPhotoAlbum(tag);
-                }
-                canDone = false;
-                LoadingDialog.showDialog(getChildFragmentManager());
-                break;
-            case R.id.cl_1216:
-                if (canDone) {
-                    tag = 5;
-                    openPhotoAlbum(tag);
-                }
-                canDone = false;
-                LoadingDialog.showDialog(getChildFragmentManager());
-                break;
-            case R.id.cl_2515:
-                if (canDone) {
-                    tag = 6;
-                    openPhotoAlbum(tag);
-                }
-                canDone = false;
-                LoadingDialog.showDialog(getChildFragmentManager());
-                break;
-            case R.id.cl_2516:
-                if (canDone) {
-                    tag = 7;
-                    openPhotoAlbum(tag);
-                }
-                canDone = false;
-                LoadingDialog.showDialog(getChildFragmentManager());
-                break;
-            case R.id.cl_4985:
-                if (canDone) {
-                    tag = 8;
-                    openPhotoAlbum(tag);
-                }
-                canDone = false;
-                LoadingDialog.showDialog(getChildFragmentManager());
-                break;
-            case R.id.cl_4988:
-                if (canDone) {
-                    tag = 9;
-                    openPhotoAlbum(tag);
-                }
-                canDone = false;
-                LoadingDialog.showDialog(getChildFragmentManager());
-                break;
-            case R.id.cl_7988:
-                if (canDone) {
-                    tag = 10;
-                    openPhotoAlbum(tag);
-                }
-                canDone = false;
-                LoadingDialog.showDialog(getChildFragmentManager());
-                break;
-            case R.id.cl_9988:
-                if (canDone) {
-                    tag = 11;
-                    openPhotoAlbum(tag);
-                }
-                canDone = false;
-                LoadingDialog.showDialog(getChildFragmentManager());
-                break;
-            case R.id.tv_show_order_list:
-                boolean ishow = qrCodeGroupBean.isShowItems();
-                qrCodeGroupBean.setShowItems(!ishow);
-                adapter.notifyItemChanged(position);
-                if (!ishow) {
-                    groupid = qrCodeGroupBean.getGroupid();
-                    //presenter.getQRCodeStalls(String.valueOf(groupid), PreferencesUtils.getString(getContext(), "token"));
-                    startPolling(10);
-                } else {
-                    //stopPolling();
-                }
-                break;
-            case R.id.iv_delete:
-                ConfirmDialogFragment confirmDialogFragment = ConfirmDialogFragment.newInstance();
-                confirmDialogFragment.setMsg("提示");
-                String payTypeName = qrCodeGroupBean.getPaytype() == 1 ? "支付宝" : "微信";
-                confirmDialogFragment.setContent("确定要删除：\n" +
-                        payTypeName + "账号为：" + qrCodeGroupBean.getAccount() + "\n" +
-                        payTypeName + "昵称为：" + qrCodeGroupBean.getNick() + "\n" +
-                        "的二维码库么？");
-                confirmDialogFragment.setCancelText("取消");
-                confirmDialogFragment.setConfirmText("确认");
-                confirmDialogFragment.setListenCancel(true);
-                confirmDialogFragment.setDialogCallBack(new DialogCallBack() {
-                    @Override
-                    public void onDialogViewClick(int type, Object value) {
-                        if (type == DIALOG_CONFIRM) {
-                            presenter.deleteQRCodeGroup(String.valueOf(qrCodeGroupBean.getGroupid()), PreferencesUtils.getString(getContext(), "token"));
-                        } else {
-
-                        }
+        MultipleItem multipleItem = (MultipleItem) adapter.getData().get(position);
+        if (multipleItem.getItemType() == MultipleItem.ER_CODE_FIXED_WX || multipleItem.getItemType() == MultipleItem.ER_CODE_FIXED_ALIPAY) {
+            qrCodeGroupBean = (GroupinfoBean) multipleItem.getData();
+            switch (view.getId()) {
+                case R.id.cl_303:
+                    if (canDone) {
+                        tag = 0;
+                        openPhotoAlbum(tag);
                     }
-                });
-                confirmDialogFragment.show(this.getFragmentManager(), "confirmDialogFragment");
-                break;
-            default:
-                break;
+                    canDone = false;
+                    LoadingDialog.showDialog(getChildFragmentManager());
+                    break;
+                case R.id.cl_313:
+                    if (canDone) {
+                        tag = 1;
+                        openPhotoAlbum(tag);
+                    }
+                    canDone = false;
+                    LoadingDialog.showDialog(getChildFragmentManager());
+                    break;
+                case R.id.cl_785:
+                    if (canDone) {
+                        tag = 2;
+                        openPhotoAlbum(tag);
+                    }
+                    canDone = false;
+                    LoadingDialog.showDialog(getChildFragmentManager());
+                    break;
+                case R.id.cl_786:
+                    if (canDone) {
+                        tag = 3;
+                        openPhotoAlbum(tag);
+                    }
+                    canDone = false;
+                    LoadingDialog.showDialog(getChildFragmentManager());
+                    break;
+                case R.id.cl_1215:
+                    if (canDone) {
+                        tag = 4;
+                        openPhotoAlbum(tag);
+                    }
+                    canDone = false;
+                    LoadingDialog.showDialog(getChildFragmentManager());
+                    break;
+                case R.id.cl_1216:
+                    if (canDone) {
+                        tag = 5;
+                        openPhotoAlbum(tag);
+                    }
+                    canDone = false;
+                    LoadingDialog.showDialog(getChildFragmentManager());
+                    break;
+                case R.id.cl_2515:
+                    if (canDone) {
+                        tag = 6;
+                        openPhotoAlbum(tag);
+                    }
+                    canDone = false;
+                    LoadingDialog.showDialog(getChildFragmentManager());
+                    break;
+                case R.id.cl_2516:
+                    if (canDone) {
+                        tag = 7;
+                        openPhotoAlbum(tag);
+                    }
+                    canDone = false;
+                    LoadingDialog.showDialog(getChildFragmentManager());
+                    break;
+                case R.id.cl_4985:
+                    if (canDone) {
+                        tag = 8;
+                        openPhotoAlbum(tag);
+                    }
+                    canDone = false;
+                    LoadingDialog.showDialog(getChildFragmentManager());
+                    break;
+                case R.id.cl_4988:
+                    if (canDone) {
+                        tag = 9;
+                        openPhotoAlbum(tag);
+                    }
+                    canDone = false;
+                    LoadingDialog.showDialog(getChildFragmentManager());
+                    break;
+                case R.id.cl_7988:
+                    if (canDone) {
+                        tag = 10;
+                        openPhotoAlbum(tag);
+                    }
+                    canDone = false;
+                    LoadingDialog.showDialog(getChildFragmentManager());
+                    break;
+                case R.id.cl_9988:
+                    if (canDone) {
+                        tag = 11;
+                        openPhotoAlbum(tag);
+                    }
+                    canDone = false;
+                    LoadingDialog.showDialog(getChildFragmentManager());
+                    break;
+                case R.id.tv_show_order_list:
+                    boolean ishow = qrCodeGroupBean.isShowItems();
+                    qrCodeGroupBean.setShowItems(!ishow);
+                    adapter.notifyItemChanged(position);
+                    if (!ishow) {
+                        groupid = qrCodeGroupBean.getGroupid();
+                        //presenter.getQRCodeStalls(String.valueOf(groupid), PreferencesUtils.getString(getContext(), "token"));
+                        startPolling(10);
+                    } else {
+                        //stopPolling();
+                    }
+                    break;
+                case R.id.iv_delete:
+                    ConfirmDialogFragment confirmDialogFragment = ConfirmDialogFragment.newInstance();
+                    confirmDialogFragment.setMsg("提示");
+                    String payTypeName = qrCodeGroupBean.getPaytype() == 1 ? "支付宝" : "微信";
+                    confirmDialogFragment.setContent("确定要删除：\n" +
+                            payTypeName + "账号为：" + qrCodeGroupBean.getAccount() + "\n" +
+                            payTypeName + "昵称为：" + qrCodeGroupBean.getNick() + "\n" +
+                            "的二维码库么？");
+                    confirmDialogFragment.setCancelText("取消");
+                    confirmDialogFragment.setConfirmText("确认");
+                    confirmDialogFragment.setListenCancel(true);
+                    confirmDialogFragment.setDialogCallBack(new DialogCallBack() {
+                        @Override
+                        public void onDialogViewClick(int type, Object value) {
+                            if (type == DIALOG_CONFIRM) {
+                                presenter.deleteQRCodeGroup(String.valueOf(qrCodeGroupBean.getGroupid()), PreferencesUtils.getString(getContext(), "token"));
+                            } else {
 
+                            }
+                        }
+                    });
+                    confirmDialogFragment.show(this.getFragmentManager(), "confirmDialogFragment");
+                    break;
+                default:
+                    break;
+
+            }
+        } else if (multipleItem.getItemType() == MultipleItem.ER_CODE_AT_WILL_ALIPAY || multipleItem.getItemType() == MultipleItem.ER_CODE_AT_WILL_WX) {
+            qrCodeGroupBean = (GroupinfoBean) multipleItem.getData();
+            switch (view.getId()) {
+                case R.id.cl_303:
+                    if (canDone) {
+                        tag = 0;
+                        openPhotoAlbum(tag);
+                    }
+                    canDone = false;
+                    LoadingDialog.showDialog(getChildFragmentManager());
+                    break;
+                case R.id.cl_313:
+                    if (canDone) {
+                        tag = 1;
+                        openPhotoAlbum(tag);
+                    }
+                    canDone = false;
+                    LoadingDialog.showDialog(getChildFragmentManager());
+                    break;
+                case R.id.cl_785:
+                    if (canDone) {
+                        tag = 2;
+                        openPhotoAlbum(tag);
+                    }
+                    canDone = false;
+                    LoadingDialog.showDialog(getChildFragmentManager());
+                    break;
+                case R.id.cl_786:
+                    if (canDone) {
+                        tag = 3;
+                        openPhotoAlbum(tag);
+                    }
+                    canDone = false;
+                    LoadingDialog.showDialog(getChildFragmentManager());
+                    break;
+                case R.id.cl_1215:
+                    if (canDone) {
+                        tag = 4;
+                        openPhotoAlbum(tag);
+                    }
+                    canDone = false;
+                    LoadingDialog.showDialog(getChildFragmentManager());
+                    break;
+                case R.id.cl_1216:
+                    if (canDone) {
+                        tag = 5;
+                        openPhotoAlbum(tag);
+                    }
+                    canDone = false;
+                    LoadingDialog.showDialog(getChildFragmentManager());
+                    break;
+                case R.id.cl_2515:
+                    if (canDone) {
+                        tag = 6;
+                        openPhotoAlbum(tag);
+                    }
+                    canDone = false;
+                    LoadingDialog.showDialog(getChildFragmentManager());
+                    break;
+                case R.id.cl_2516:
+                    if (canDone) {
+                        tag = 7;
+                        openPhotoAlbum(tag);
+                    }
+                    canDone = false;
+                    LoadingDialog.showDialog(getChildFragmentManager());
+                    break;
+                case R.id.cl_4985:
+                    if (canDone) {
+                        tag = 8;
+                        openPhotoAlbum(tag);
+                    }
+                    canDone = false;
+                    LoadingDialog.showDialog(getChildFragmentManager());
+                    break;
+                case R.id.cl_4988:
+                    if (canDone) {
+                        tag = 9;
+                        openPhotoAlbum(tag);
+                    }
+                    canDone = false;
+                    LoadingDialog.showDialog(getChildFragmentManager());
+                    break;
+                case R.id.cl_7988:
+                    if (canDone) {
+                        tag = 10;
+                        openPhotoAlbum(tag);
+                    }
+                    canDone = false;
+                    LoadingDialog.showDialog(getChildFragmentManager());
+                    break;
+                case R.id.cl_9988:
+                    if (canDone) {
+                        tag = 11;
+                        openPhotoAlbum(tag);
+                    }
+                    canDone = false;
+                    LoadingDialog.showDialog(getChildFragmentManager());
+                    break;
+                case R.id.tv_show_order_list:
+                    boolean ishow = qrCodeGroupBean.isShowItems();
+                    qrCodeGroupBean.setShowItems(!ishow);
+                    adapter.notifyItemChanged(position);
+                    if (!ishow) {
+                        groupid = qrCodeGroupBean.getGroupid();
+                        //presenter.getQRCodeStalls(String.valueOf(groupid), PreferencesUtils.getString(getContext(), "token"));
+                        startPolling(10);
+                    } else {
+                        //stopPolling();
+                    }
+                    break;
+                case R.id.iv_delete:
+                    ConfirmDialogFragment confirmDialogFragment = ConfirmDialogFragment.newInstance();
+                    confirmDialogFragment.setMsg("提示");
+                    String payTypeName = qrCodeGroupBean.getPaytype() == 1 ? "支付宝" : "微信";
+                    confirmDialogFragment.setContent("确定要删除：\n" +
+                            payTypeName + "账号为：" + qrCodeGroupBean.getAccount() + "\n" +
+                            payTypeName + "昵称为：" + qrCodeGroupBean.getNick() + "\n" +
+                            "的二维码库么？");
+                    confirmDialogFragment.setCancelText("取消");
+                    confirmDialogFragment.setConfirmText("确认");
+                    confirmDialogFragment.setListenCancel(true);
+                    confirmDialogFragment.setDialogCallBack(new DialogCallBack() {
+                        @Override
+                        public void onDialogViewClick(int type, Object value) {
+                            if (type == DIALOG_CONFIRM) {
+                                presenter.deleteQRCodeGroup(String.valueOf(qrCodeGroupBean.getGroupid()), PreferencesUtils.getString(getContext(), "token"));
+                            } else {
+
+                            }
+                        }
+                    });
+                    confirmDialogFragment.show(this.getFragmentManager(), "confirmDialogFragment");
+                    break;
+                default:
+                    break;
+
+            }
         }
     }
 
@@ -519,6 +661,8 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
         });
     }
 
+    private List<MultipleItem> multipleItemList = new ArrayList<>();
+
     /**
      * 获取二维码库的集合
      *
@@ -528,7 +672,27 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
     public void setQRCodeGroupList(List<GroupinfoBean> list) {
         qrCodeGroupBeanList = list;
         if (list != null && list.size() > 0) {
-            qrCodeListAdapter.setNewData(list);
+            multipleItemList = new ArrayList<>();
+            for (GroupinfoBean groupinfoBean : list) {
+                switch (groupinfoBean.getPaytype()) {
+                    case 0:
+                        multipleItemList.add(new MultipleItem<>(MultipleItem.ER_CODE_FIXED_WX, groupinfoBean));
+                        break;
+                    case 1:
+                        multipleItemList.add(new MultipleItem<>(MultipleItem.ER_CODE_FIXED_ALIPAY, groupinfoBean));
+                        break;
+                    case 3:
+                        multipleItemList.add(new MultipleItem<>(MultipleItem.ER_CODE_AT_WILL_ALIPAY, groupinfoBean));
+                        break;
+                    case 4:
+                        multipleItemList.add(new MultipleItem<>(MultipleItem.ER_CODE_AT_WILL_WX, groupinfoBean));
+                        break;
+                    default:
+                        multipleItemList.add(new MultipleItem<>(MultipleItem.ER_CODE_FIXED_WX, groupinfoBean));
+                        break;
+                }
+            }
+            qrCodeListAdapter.setNewData(multipleItemList);
         } else {
             qrCodeListAdapter.setNewData(null);
             qrCodeListAdapter.setEmptyView(notDataView);
@@ -537,7 +701,6 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
 
     @Override
     public void setQRCodeGroupListFail() {
-        LoadingDialog.dismissDailog();
         qrCodeListAdapter.setEmptyView(errorView);
     }
 
@@ -549,11 +712,15 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
      */
     @Override
     public void setQRCodeGroupBean(QRCodeGroupCreateBean qrCodeGroupCreateBean) {
-        LoadingDialog.dismissDailog();
         if (qrCodeGroupCreateBean == null) {
             return;
         }
         presenter.getQRCodeGroupList(PreferencesUtils.getString(getContext(), "token"));
+    }
+
+    @Override
+    public void setQRCodeGroupBeanFail() {
+        LoadingDialog.dismissDailog();
     }
 
     /**
@@ -565,7 +732,6 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
      */
     @Override
     public void onClickComplete(String code, String account, String nick) {
-        LoadingDialog.showDialog(getChildFragmentManager());
         presenter.getQRCodeGroupBean(PreferencesUtils.getString(getContext(), "token"), account, nick, code);
     }
 

@@ -1,5 +1,6 @@
 package com.mchaw.tauruspay.ui.repository;
 
+import com.mchaw.tauruspay.bean.entry.MultipleItem;
 import com.mchaw.tauruspay.bean.qrcode.DeleteQRCodeGroupBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupCreateBean;
 import com.mchaw.tauruspay.bean.qrcode.GroupinfoBean;
