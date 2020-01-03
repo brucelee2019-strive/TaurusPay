@@ -2,6 +2,8 @@ package com.mchaw.tauruspay.main;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,6 +14,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.WindowManager;
+import android.content.IntentFilter;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -49,6 +52,10 @@ import com.mchaw.tauruspay.ui.login.LoginActivity;
 import com.mchaw.tauruspay.ui.main.besure.BesureFragment;
 import com.mchaw.tauruspay.ui.main.home.HomeFragment;
 import com.mchaw.tauruspay.ui.main.mine.MineFragment;
+import com.mchaw.tauruspay.service.PayNotifiService;
+//import com.mchaw.tauruspay.ui.SplashActivity;
+import android.content.BroadcastReceiver;
+
 import com.mchaw.tauruspay.ui.main.recharge.RechargeFragment;
 
 import org.greenrobot.eventbus.EventBus;
@@ -73,6 +80,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
     public static final int FRAGMENT_BESURE = 2;
     public static final int FRAGMENT_MINE = 3;
 
+    private MyReceiver receiver = null;
     private HomeFragment homeFragment;
     private RechargeFragment rechargeFragment;
     private BesureFragment besureFragment;
@@ -101,6 +109,17 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
         bottomView.enableItemShiftingMode(false);
         bottomView.setItemIconTintList(null);
         bottomView.setOnNavigationItemSelectedListener(this);
+
+//        Intent intent = new Intent(this, PayNotifiService.class);//启动服务
+//        startService(intent);//启动服务
+//        toggleNotificationListenerService();
+        runPayNptifyService(this);
+        //注册广播接收器
+        receiver = new MyReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("com.mchaw.tauruspay.service.PayNotifyService");
+        MainActivity.this.registerReceiver(receiver, filter);
+
         showFragment(FRAGMENT_HOME);
         //动态权限申请
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
@@ -114,6 +133,33 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
         qBadgeView.setBadgeNumber(0)
                 .setGravityOffset(12, 2, true)
                 .bindTarget(bottomView.getBottomNavigationItemView(3));
+    }
+
+    private void runPayNptifyService(Context context) {
+        ComponentName collectorComponent = new ComponentName(context, PayNotifiService.class);
+        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        boolean isRunning = false;
+        List<ActivityManager.RunningServiceInfo> runningServices = null;
+        if (manager != null) runningServices = manager.getRunningServices(Integer.MAX_VALUE);
+        if (runningServices == null) return;
+        for (ActivityManager.RunningServiceInfo service : runningServices) {
+            if (service.service.equals(collectorComponent)) {
+                if (service.pid == android.os.Process.myPid()) {
+                    isRunning = true;
+                }
+            }
+        }
+        if (!isRunning) toggleNotificationListenerService();
+    }
+
+    private void toggleNotificationListenerService() {
+        Intent intent = new Intent(this, PayNotifiService.class);//启动服务
+        startService(intent);//启动服务
+        PackageManager pm = getPackageManager();
+        pm.setComponentEnabledSetting(new ComponentName(this, PayNotifiService.class),
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
+        pm.setComponentEnabledSetting(new ComponentName(this, PayNotifiService.class),
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
     }
 
     @Override
@@ -335,6 +381,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
     private Disposable disposable;
 
     public void startPolling(int start, int time) {
+        runPayNptifyService(this);
         Log.i("cici", "总程序交易中订单列表，开始轮询...");
         disposable = Observable.interval(start, time, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
@@ -408,6 +455,19 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
         }
     }
 
+    public class MyReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Bundle bundle = intent.getExtras();
+            int amout = bundle.getInt("amout");
+            for (ReceivablesBean receivablesBean : receivablesBeanList) {
+                if (amout == receivablesBean.getAmount()) {
+                    presenter.upLodingReceivables(String.valueOf(receivablesBean.getId()), PreferencesUtils.getString(getApplicationContext(), "token"));
+                }
+            }
+        }
+    }
+
     @Subscribe
     public void forbidden(ForbiddenEvent event) {
         stopPolling();
@@ -433,26 +493,22 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
     }
 
     PowerManager.WakeLock wakeLock = null;
+
     //获取电源锁，保持该服务在屏幕熄灭时仍然获取CPU时，保持运行
     @SuppressLint("InvalidWakeLockTag")
-    private void acquireWakeLock()
-    {
-        if (null == wakeLock)
-        {
-            PowerManager pm = (PowerManager)this.getSystemService(Context.POWER_SERVICE);
-            wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK|PowerManager.ON_AFTER_RELEASE, "PostLocationService");
-            if (null != wakeLock)
-            {
+    private void acquireWakeLock() {
+        if (null == wakeLock) {
+            PowerManager pm = (PowerManager) this.getSystemService(Context.POWER_SERVICE);
+            wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK | PowerManager.ON_AFTER_RELEASE, "PostLocationService");
+            if (null != wakeLock) {
                 wakeLock.acquire();
             }
         }
     }
 
     //释放设备电源锁
-    private void releaseWakeLock()
-    {
-        if (null != wakeLock)
-        {
+    private void releaseWakeLock() {
+        if (null != wakeLock) {
             wakeLock.release();
             wakeLock = null;
         }

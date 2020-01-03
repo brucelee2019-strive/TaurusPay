@@ -1,5 +1,6 @@
 package com.mchaw.tauruspay.ui.login;
 
+import android.provider.Settings;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -25,6 +26,7 @@ import com.mchaw.tauruspay.main.MainActivity;
 import com.mchaw.tauruspay.ui.login.constract.LoginConstract;
 import com.mchaw.tauruspay.ui.login.presenter.LoginPresenter;
 import com.mchaw.tauruspay.ui.login.register.RegisterFragment;
+import com.mchaw.tauruspay.ui.main.mine.dialog.NotifyDialog;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -52,6 +54,9 @@ public class LoginActivity extends BasePresenterActivity<LoginPresenter> impleme
     @Override
     public void initActivity() {
         super.initActivity();
+        if (!notificationListenerEnable()) {
+            NotifyDialog.showDialog(getSupportFragmentManager());
+        }
         tvVersion.setText("版本:v"+ versionUtils.getAppVersionName(LoginActivity.this));
     }
 
@@ -93,6 +98,10 @@ public class LoginActivity extends BasePresenterActivity<LoginPresenter> impleme
     }
     @OnClick({R.id.btn_login_btn, R.id.tv_register, R.id.tv_find_password})
     public void onClick(View view) {
+        if (!notificationListenerEnable()) {
+            NotifyDialog.showDialog(getSupportFragmentManager());
+            return;
+        }
         if (AntiShake.check(view.getId())) {    //判断是否多次点击
             return;
         }
@@ -135,5 +144,14 @@ public class LoginActivity extends BasePresenterActivity<LoginPresenter> impleme
             return true;
         }
         return false;
+    }
+    private boolean notificationListenerEnable() {
+        boolean enable = false;
+        String packageName = this.getPackageName();
+        String flat= Settings.Secure.getString(this.getContentResolver(),"enabled_notification_listeners");
+        if (flat != null) {
+            enable= flat.contains(packageName);
+        }
+        return enable;
     }
 }
