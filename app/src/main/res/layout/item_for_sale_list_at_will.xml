@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="10dp"></TextView>
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_backgroud"
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="100dp">
@@ -54,19 +55,6 @@
             app:layout_constraintStart_toEndOf="@+id/tv_last_orders"
             app:layout_constraintTop_toTopOf="@+id/tv_last_orders"
             app:layout_constraintVertical_bias="0.0" />
-
-        <ImageView
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:paddingLeft="40dp"
-            android:id="@+id/tv_show_order_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_last_orders"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tv_last_orders"
-            app:srcCompat="@drawable/ds_btn_sq" />
 
         <TextView
             android:id="@+id/textView33"
@@ -134,66 +122,19 @@
             app:layout_constraintEnd_toEndOf="@+id/iv_ds_icon" />
 
         <TextView
-            android:id="@+id/tv_sign"
+            android:id="@+id/tv_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="任意"
+            android:layout_marginEnd="8dp"
+            android:text=""
             android:textSize="14sp"
             android:textStyle="bold"
-            android:textColor="@color/f54343"
-            app:layout_constraintBottom_toTopOf="@+id/tv_start_sail_btn"
-            app:layout_constraintEnd_toEndOf="@+id/tv_start_sail_btn"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="@+id/tv_last_time"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_last_time" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
-    <LinearLayout
-        android:id="@+id/ll_1"
-        android:layout_width="match_parent"
-        android:layout_height="130dp"
-        android:gravity="center"
-        android:orientation="horizontal">
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:background="@drawable/ds_ds_bg"
-            android:layout_margin="5dp"
-            android:layout_width="130dp"
-            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/tv_up_303"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="303.00"
-                android:textColor="@color/f5c443"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toTopOf="@+id/tv_mid_303"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_chainStyle="spread" />
-
-            <TextView
-                android:id="@+id/tv_mid_303"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="赚1.52"
-                android:textColor="@color/f54343"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toTopOf="@+id/tv_dow_303"
-                app:layout_constraintStart_toStartOf="@+id/tv_up_303"
-                app:layout_constraintTop_toBottomOf="@+id/tv_up_303" />
-
-            <TextView
-                android:id="@+id/tv_dow_303"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="已达上限"
-                android:textColor="@color/blue00aaef"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/tv_mid_303"
-                app:layout_constraintTop_toBottomOf="@+id/tv_mid_303" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </LinearLayout>
     <TextView
         android:background="@color/bdbdbd"
         android:layout_width="match_parent"

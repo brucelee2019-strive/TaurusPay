@@ -712,6 +712,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
      */
     @Override
     public void setQRCodeGroupBean(QRCodeGroupCreateBean qrCodeGroupCreateBean) {
+        LoadingDialog.dismissDailog();
         if (qrCodeGroupCreateBean == null) {
             return;
         }
@@ -732,6 +733,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
      */
     @Override
     public void onClickComplete(String code, String account, String nick) {
+        LoadingDialog.showDialog(getSupportFragmentManager());
         presenter.getQRCodeGroupBean(PreferencesUtils.getString(getContext(), "token"), account, nick, code);
     }
 

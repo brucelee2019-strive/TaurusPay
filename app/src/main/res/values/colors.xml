@@ -115,6 +115,7 @@
 
     <!--胜负平走颜色-->
     <color name="color_match_win">#C90E22</color>
+    <color name="acolor_match_win">#4DC90E22</color>
     <color name="color_match_lose">#2889DE</color>
     <color name="color_match_tie">#A5A6A7</color>
     <color name="color_match_com">#48494A</color>
@@ -134,6 +135,7 @@
     <color name="color_assist">#F8B62B</color>
     <!--强调色-->
     <color name="color_special">#20C40C</color>
+    <color name="acolor_special">#4D20C40C</color>
     <!--标题、标签-->
     <color name="color_major">#333333</color>
     <!--副标题、正文-->
@@ -236,6 +238,7 @@
     <color name="e94630">#e94630</color>
     <color name="f54343">#f54343</color>
     <color name="blue00aaef">#00aaef</color>
+    <color name="ablue00aaef">#4D00aaef</color>
 
     <color name="bg">#F0F0F0</color>
     <color name="txt_color">#48495F</color>

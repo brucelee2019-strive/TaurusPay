@@ -51,8 +51,8 @@ public class QRCodeGroupDialog extends BaseDialogFragment {
      */
     private int filterWidth;
 
-    private final int WEIXIN_PAY = 0;
-    private final int ALI_PAY = 1;
+    //private final int WEIXIN_PAY = 0;
+    //private final int ALI_PAY = 1;
     private final int ALI_PAY_AT_WILL = 3;
     private final int WEIXIN_PAY_AT_WILL = 4;
     private int payType;
@@ -71,7 +71,7 @@ public class QRCodeGroupDialog extends BaseDialogFragment {
     protected void initDialogFragment(View view) {
         filterPopWindow();
         tvPayType.setText("支付宝");
-        payType = ALI_PAY;
+        payType = ALI_PAY_AT_WILL;
         etIncomeAccount.setHint("请输入支付宝账号");
         etIncomeNick.setHint("请输入支付宝昵称");
     }
@@ -156,8 +156,8 @@ public class QRCodeGroupDialog extends BaseDialogFragment {
         //设置外部点击关闭ppw窗口
         filterPop.setOutsideTouchable(true);
         filterPop.setFocusable(true);
-        popSkipFilter(layout, R.id.tv_alipay, ALI_PAY);
-        popSkipFilter(layout, R.id.tv_weixin, WEIXIN_PAY);
+        //popSkipFilter(layout, R.id.tv_alipay, ALI_PAY);
+        //popSkipFilter(layout, R.id.tv_weixin, WEIXIN_PAY);
         popSkipFilter(layout, R.id.tv_alipay_at_will, ALI_PAY_AT_WILL);
         popSkipFilter(layout, R.id.tv_weixin_at_will, WEIXIN_PAY_AT_WILL);
     }
@@ -171,26 +171,26 @@ public class QRCodeGroupDialog extends BaseDialogFragment {
             @Override
             public void onClick(View v) {
                 switch (type) {
-                    case ALI_PAY:
-                        tvPayType.setText("支付宝");
-                        payType = ALI_PAY;
-                        etIncomeAccount.setHint("请输入支付宝账号");
-                        etIncomeNick.setHint("请输入支付宝昵称");
-                        break;
-                    case WEIXIN_PAY:
-                        tvPayType.setText("微信");
-                        payType = WEIXIN_PAY;
-                        etIncomeAccount.setHint("请输入微信账号");
-                        etIncomeNick.setHint("请输入微信昵称");
-                        break;
+//                    case ALI_PAY:
+//                        tvPayType.setText("支付宝");
+//                        payType = ALI_PAY;
+//                        etIncomeAccount.setHint("请输入支付宝账号");
+//                        etIncomeNick.setHint("请输入支付宝昵称");
+//                        break;
+//                    case WEIXIN_PAY:
+//                        tvPayType.setText("微信");
+//                        payType = WEIXIN_PAY;
+//                        etIncomeAccount.setHint("请输入微信账号");
+//                        etIncomeNick.setHint("请输入微信昵称");
+//                        break;
                     case ALI_PAY_AT_WILL:
-                        tvPayType.setText("支付宝任意码");
+                        tvPayType.setText("支付宝");
                         payType = ALI_PAY_AT_WILL;
                         etIncomeAccount.setHint("请输入支付宝账号");
                         etIncomeNick.setHint("请输入支付宝昵称");
                         break;
                     case WEIXIN_PAY_AT_WILL:
-                        tvPayType.setText("微信任意码");
+                        tvPayType.setText("微信");
                         payType = WEIXIN_PAY_AT_WILL;
                         etIncomeAccount.setHint("请输入微信账号");
                         etIncomeNick.setHint("请输入微信昵称");
