@@ -6,13 +6,13 @@ package com.mchaw.tauruspay.bean.qrcode;
  * @description:创建二维码库Bean
  */
 public class QRCodeGroupCreateBean {
-    private int id;
+    private String id;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 }

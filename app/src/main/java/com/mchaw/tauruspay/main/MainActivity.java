@@ -6,9 +6,11 @@ import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.os.PowerManager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -133,6 +135,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
         qBadgeView.setBadgeNumber(0)
                 .setGravityOffset(12, 2, true)
                 .bindTarget(bottomView.getBottomNavigationItemView(3));
+        acquireWakeLock();
     }
 
     private void runPayNptifyService(Context context) {
@@ -153,8 +156,8 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
     }
 
     private void toggleNotificationListenerService() {
-        Intent intent = new Intent(this, PayNotifiService.class);//启动服务
-        startService(intent);//启动服务
+        //Intent intent = new Intent(this, PayNotifiService.class);//启动服务
+        //startService(intent);//启动服务
         PackageManager pm = getPackageManager();
         pm.setComponentEnabledSetting(new ComponentName(this, PayNotifiService.class),
                 PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
@@ -381,7 +384,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
     private Disposable disposable;
 
     public void startPolling(int start, int time) {
-        runPayNptifyService(this);
+        //runPayNptifyService(this);
         Log.i("cici", "总程序交易中订单列表，开始轮询...");
         disposable = Observable.interval(start, time, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
@@ -393,7 +396,6 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
                         presenter.getMainPollingBean(MyFrameApplication.getInstance().tokenStr, MyFrameApplication.groupid);
                     }
                 });
-        acquireWakeLock();
     }
 
     public void stopPolling() {

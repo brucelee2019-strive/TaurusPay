@@ -190,10 +190,11 @@ public class QRCodeGroupDialog extends BaseDialogFragment {
                         etIncomeNick.setHint("请输入支付宝昵称");
                         break;
                     case WEIXIN_PAY_AT_WILL:
-                        tvPayType.setText("微信");
-                        payType = WEIXIN_PAY_AT_WILL;
-                        etIncomeAccount.setHint("请输入微信账号");
-                        etIncomeNick.setHint("请输入微信昵称");
+//                        tvPayType.setText("微信");
+//                        payType = WEIXIN_PAY_AT_WILL;
+//                        etIncomeAccount.setHint("请输入微信账号");
+//                        etIncomeNick.setHint("请输入微信昵称");
+                        ToastUtils.showShortToast(getContext(),"暂未开放！");
                         break;
                     default:
                         break;

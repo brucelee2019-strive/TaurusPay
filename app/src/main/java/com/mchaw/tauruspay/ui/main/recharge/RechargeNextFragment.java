@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -167,7 +168,8 @@ public class RechargeNextFragment extends BasePresentFragment<RechargeNextPresen
 
     private void showByState(int state) {
         tvRemittanceBtn.setText(state == RECHARGEING ? "下一步" : "我已汇款");
-        tvRemittanceNotice.setText(state == RECHARGEING ? "点击下一步可显示对应的收款卡号" : "如以完成，请点击我已汇款");
+        tvRemittanceNotice.setText(state == RECHARGEING ? "点击下一步可显示对应的收款卡号" : "务必在充值完成后点击我已汇款");
+        tvRemittanceNotice.setTextColor(ContextCompat.getColor(getContext(),state == RECHARGEING ?R.color.color_black_3:R.color.f54343));
         ivStateRecharging.setImageResource(state == RECHARGEING ? R.drawable.cz_btn_cz_xz : R.drawable.cz_btn_cz_mr);
         ivStateAuditing.setImageResource(state == RECHARGEING ? R.drawable.cz_btn_sh_mr : R.drawable.cz_btn_sh_xz);
         clRechargeNum.setVisibility(state == RECHARGEING ? View.VISIBLE : View.GONE);
