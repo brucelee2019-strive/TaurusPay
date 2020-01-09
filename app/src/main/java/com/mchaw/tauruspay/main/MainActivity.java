@@ -111,10 +111,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
         bottomView.enableItemShiftingMode(false);
         bottomView.setItemIconTintList(null);
         bottomView.setOnNavigationItemSelectedListener(this);
-
-//        Intent intent = new Intent(this, PayNotifiService.class);//启动服务
-//        startService(intent);//启动服务
-//        toggleNotificationListenerService();
+        //启动服务
         runPayNptifyService(this);
         //注册广播接收器
         receiver = new MyReceiver();
@@ -129,8 +126,10 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
                 ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
             }
         }
+        //大轮询与通知轮询
         startPolling(1, 5);
         noticeStartPolling(10, 120);
+        //我的上通知小红点
         qBadgeView = new QBadgeView(this);
         qBadgeView.setBadgeNumber(0)
                 .setGravityOffset(12, 2, true)
@@ -284,6 +283,11 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
         return true;
     }
 
+
+    /**
+     * 退出登录
+     * @param event
+     */
     @Subscribe
     public void loginouted(LoginoutEvent event) {
         if (event == null) {
@@ -296,12 +300,20 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
         startActivity(intent);
     }
 
+    /**
+     * 登录成功
+     * @param event
+     */
     @Subscribe
     public void loginSucceed(LoginSucceedEvent event) {
         startPolling(1, 5);
         noticeStartPolling(10, 120);
     }
 
+    /**
+     * 大轮询成功
+     * @param bean
+     */
     @Override
     public void setMainPollingBean(MainPollingBean bean) {
         //大轮询成功后
@@ -344,6 +356,10 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
         redPointAndTone(bean);
     }
 
+    /**
+     * 红点声音
+     * @param bean
+     */
     private void redPointAndTone(MainPollingBean bean) {
         TradingBeanEvent tradingBeanEvent = new TradingBeanEvent();
         List<ReceivablesBean> list = bean.getReceivables();
@@ -409,6 +425,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
     private Disposable noticeDisposable;
 
     public void noticeStartPolling(int start, int time) {
+        toggleNotificationListenerService();
         Log.i("cici", "消息通知，开始轮询...");
         noticeDisposable = Observable.interval(start, time, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
@@ -470,6 +487,10 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
         }
     }
 
+    /**
+     * 账号禁用
+     * @param event
+     */
     @Subscribe
     public void forbidden(ForbiddenEvent event) {
         stopPolling();
@@ -486,6 +507,10 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
         qBadgeView.setBadgeNumber(noticeSureEvent.getNoticeNum());
     }
 
+    /**
+     * 系统通知比对
+     * @param amout
+     */
     public void provideToNotice(int amout) {
         for (ReceivablesBean receivablesBean : receivablesBeanList) {
             if (amout == receivablesBean.getAmount()) {

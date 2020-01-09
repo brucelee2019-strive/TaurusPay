@@ -14,6 +14,7 @@ import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.dialog.DialogCallBack;
 import com.mchaw.tauruspay.base.fragment.BasePresentListFragment;
 import com.mchaw.tauruspay.bean.entry.MultipleItem;
+import com.mchaw.tauruspay.bean.eventbus.QRCodeNotPassEvent;
 import com.mchaw.tauruspay.bean.eventbus.mainpolling.MainPollingGroupInfoEvent;
 import com.mchaw.tauruspay.bean.home.StartOrOverSellBean;
 import com.mchaw.tauruspay.bean.qrcode.GroupinfoBean;
@@ -24,9 +25,9 @@ import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.main.home.forsale.adapter.ForSaleListAdapter;
 import com.mchaw.tauruspay.ui.main.home.forsale.constract.ForSaleListConstract;
-import com.mchaw.tauruspay.ui.main.home.forsale.dialog.CollectionListDialog;
 import com.mchaw.tauruspay.ui.main.home.forsale.dialog.ConfirmDialogFragment;
 import com.mchaw.tauruspay.ui.main.home.forsale.presenter.ForSaleListPresenter;
+import com.mchaw.tauruspay.ui.main.mine.qrcode.QRCodeFragment;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -42,7 +43,7 @@ import static com.mchaw.tauruspay.base.dialog.BaseDialogFragment.DIALOG_CONFIRM;
  * @date : 2019/11/7 11:56
  * @description:待售列表Fragment
  */
-public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPresenter> implements ForSaleListConstract.View, BaseQuickAdapter.OnItemChildClickListener, CollectionListDialog.ConfirmListener {
+public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPresenter> implements ForSaleListConstract.View, BaseQuickAdapter.OnItemChildClickListener {
 
     @BindView(R.id.rv_for_sale_list)
     RecyclerView rvForSalelist;
@@ -319,7 +320,7 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
                 default:
                     break;
             }
-        } else if (multipleItem.getItemType() == MultipleItem.ER_CODE_OR_SAIL_AT_WILL_ALIPAY || multipleItem.getItemType() == MultipleItem.ER_CODE_OR_SAIL_AT_WILL_WX ) {
+        } else if (multipleItem.getItemType() == MultipleItem.ER_CODE_OR_SAIL_AT_WILL_ALIPAY || multipleItem.getItemType() == MultipleItem.ER_CODE_OR_SAIL_AT_WILL_WX) {
             qrCodeGroupBean = (GroupinfoBean) multipleItem.getData();
             recordGroupid = qrCodeGroupBean.getGroupid();
             recordPosition = position;
@@ -393,8 +394,13 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
         }
     }
 
-    @Override
-    public void onClickComplete() {
-
+    /**
+     * 二维码库二维码没有通过
+     *
+     * @param event
+     */
+    @Subscribe
+    public void qrCodeNotPass(QRCodeNotPassEvent event) {
+        startFragment(new QRCodeFragment());
     }
 }

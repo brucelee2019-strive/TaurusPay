@@ -133,6 +133,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
         rvQRList.setAdapter(qrCodeListAdapter);
         onRefresh();
         pageState = Constant.PAGE_NORMAL_STATE;
+        ToastUtils.showShortToast(getContext(),"确保二维码上传并审核通过，才能开启代售！");
     }
 
     @Override
