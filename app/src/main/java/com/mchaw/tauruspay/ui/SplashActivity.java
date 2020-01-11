@@ -8,12 +8,17 @@ import android.text.TextUtils;
 import androidx.annotation.NonNull;
 
 import com.mchaw.tauruspay.MyFrameApplication;
+import com.mchaw.tauruspay.base.activity.BasePresenterActivity;
 import com.mchaw.tauruspay.base.fragment.helper.FragmentStartHelper;
+import com.mchaw.tauruspay.bean.home.UserBean;
+import com.mchaw.tauruspay.bean.updata.UpDataBean;
+import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.main.MainActivity;
 import com.mchaw.tauruspay.R;
-import com.mchaw.tauruspay.base.activity.BaseActivity;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.login.LoginFragmentForFirst;
+import com.mchaw.tauruspay.ui.main.home.constract.HomeConstract;
+import com.mchaw.tauruspay.ui.main.home.presenter.HomePresenter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,8 +37,9 @@ import java.net.URLConnection;
  * @date : 2019/11/19 16:38
  * @description:
  */
-public class SplashActivity extends BaseActivity {
+public class SplashActivity extends BasePresenterActivity<HomePresenter> implements HomeConstract.View {
     private Handler handler;
+
     @Override
     public int getContentViewId() {
         return R.layout.fragment_splash;
@@ -51,6 +57,9 @@ public class SplashActivity extends BaseActivity {
                 }
             }
         };
+        if (!TextUtils.isEmpty(MyFrameApplication.tokenStr)) {
+            presenter.getHomeDataBean(MyFrameApplication.tokenStr);
+        }
         GetNetIp();
         new Handler().postDelayed(new Runnable() {
             public void run() {
@@ -114,6 +123,19 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     public void injectActivityComponent(ActivityComponent component) {
-        super.injectActivityComponent(component);
+        component.inject(this);
+    }
+
+    @Override
+    public void setHomeDataBean(UserBean userBean) {
+        MyFrameApplication.groupid = userBean.getGroupid();
+        MyFrameApplication.userType = userBean.getType();
+        MyFrameApplication.userInviteCode = userBean.getCode();
+        MyFrameApplication.userRate = userBean.getRate();
+    }
+
+    @Override
+    public void setVersion(UpDataBean upDataBean) {
+
     }
 }

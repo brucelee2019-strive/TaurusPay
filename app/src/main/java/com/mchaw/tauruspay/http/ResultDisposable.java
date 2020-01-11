@@ -33,12 +33,6 @@ public class ResultDisposable<T> implements ObservableTransformer<ResultBean<T>,
     //请求失败
     private static final int CODE_SERVICE_ERROR = 10010008;
 
-    //1100013 赔率发生变化1100013
-    public static final int CODE_RATE_CHANGE = 1100013;
-
-    //1100038 竞猜下单赛事不存在
-    public static final int CODE_RATE_MATCH_STOP = 1100038;
-
     @Override
     public ObservableSource<T> apply(Observable<ResultBean<T>> upstream) {
         return upstream.flatMap(new Function<ResultBean<T>, ObservableSource<T>>() {

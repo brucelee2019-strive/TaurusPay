@@ -185,6 +185,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
+            android:id="@+id/tv_activate_word_line"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/black"></TextView>

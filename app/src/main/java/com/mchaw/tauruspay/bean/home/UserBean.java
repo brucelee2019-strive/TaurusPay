@@ -29,6 +29,33 @@ public class UserBean {
     private String alipay2;
     private String wechat1;
     private String wechat2;
+    private int type;
+    private String code;
+    private int rate;
+
+    public int getRate() {
+        return rate;
+    }
+
+    public void setRate(int rate) {
+        this.rate = rate;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public int getFrozen() {
         return frozen;
@@ -102,8 +129,19 @@ public class UserBean {
         this.dayonsale = dayonsale;
     }
 
-    public String getAlipay1() { return alipay1; }
-    public String getAlipay2() { return alipay2; }
-    public String getWechat1() { return wechat1; }
-    public String getWechat2() { return wechat2; }
+    public String getAlipay1() {
+        return alipay1;
+    }
+
+    public String getAlipay2() {
+        return alipay2;
+    }
+
+    public String getWechat1() {
+        return wechat1;
+    }
+
+    public String getWechat2() {
+        return wechat2;
+    }
 }

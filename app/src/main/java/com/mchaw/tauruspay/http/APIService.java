@@ -4,6 +4,7 @@ package com.mchaw.tauruspay.http;
 import com.mchaw.tauruspay.bean.MainPollingBean;
 import com.mchaw.tauruspay.bean.ResultBean;
 import com.mchaw.tauruspay.bean.activate.ActivateCodeBean;
+import com.mchaw.tauruspay.bean.agency.AgencyBean;
 import com.mchaw.tauruspay.bean.bill.BillTotalBean;
 import com.mchaw.tauruspay.bean.bill.TradingBean;
 import com.mchaw.tauruspay.bean.entry.MultipleItem;
@@ -20,6 +21,8 @@ import com.mchaw.tauruspay.bean.qrcode.DeleteQRCodeGroupBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeGroupCreateBean;
 import com.mchaw.tauruspay.bean.qrcode.GroupinfoBean;
 import com.mchaw.tauruspay.bean.qrcode.QRCodeUrlBean;
+import com.mchaw.tauruspay.bean.recharge.AuditBean;
+import com.mchaw.tauruspay.bean.recharge.RechargeAuditBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeNextBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeSureBean;
@@ -135,5 +138,16 @@ public interface APIService {
     @POST("my/notice")
     Observable<ResultBean<NoticeBean>> getNotice(@Field("api_token") String api_token,@Field("noticeid") String noticeid);
 
+    @FormUrlEncoded
+    @POST("recharge/agentexamine")
+    Observable<ResultBean<AuditBean>> getRechargeAudit(@Field("api_token") String api_token, @Field("order") String order,@Field("status") int status);
+
+    @FormUrlEncoded
+    @POST("recharge/agentlist")
+    Observable<ResultBean<List<RechargeAuditBean>>> getRechargeAuditList(@Field("api_token") String api_token, @Field("type") int type);
+
+    @FormUrlEncoded
+    @POST("my/agent")
+    Observable<ResultBean<AgencyBean>> getAgent(@Field("api_token") String api_token);
 
 }

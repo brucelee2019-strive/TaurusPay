@@ -1,6 +1,8 @@
 package com.mchaw.tauruspay.ui.repository;
 
 import com.mchaw.tauruspay.bean.home.TransferAccountsBean;
+import com.mchaw.tauruspay.bean.recharge.AuditBean;
+import com.mchaw.tauruspay.bean.recharge.RechargeAuditBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeNextBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeSureBean;
@@ -58,5 +60,19 @@ public class FundModel extends BaseModel{
         return apiService.getRechargeUpdateList(api_token)
                 .compose(new ResultDisposable<List<RechargeBean>>())
                 .compose(new ScheduleTranformer<List<RechargeBean>>());
+    }
+
+    //用于一级代理审核充值订单
+    public Observable<AuditBean> getRechargeAudit(String api_token,String order,int status) {
+        return apiService.getRechargeAudit(api_token,order,status)
+                .compose(new ResultDisposable<AuditBean>())
+                .compose(new ScheduleTranformer<AuditBean>());
+    }
+
+    //用于一级代理的待审核订单列表
+    public Observable<List<RechargeAuditBean>> getRechargeAuditList(String api_token, int type) {
+        return apiService.getRechargeAuditList(api_token,type)
+                .compose(new ResultDisposable<List<RechargeAuditBean>>())
+                .compose(new ScheduleTranformer<List<RechargeAuditBean>>());
     }
 }

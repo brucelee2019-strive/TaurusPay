@@ -33,6 +33,7 @@ import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.StringUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
+import com.mchaw.tauruspay.ui.main.recharge.adapter.RechargeNextAdapter;
 import com.mchaw.tauruspay.ui.main.recharge.constract.RechargeNextConstract;
 import com.mchaw.tauruspay.ui.main.recharge.presenter.RechargeNextPresenter;
 

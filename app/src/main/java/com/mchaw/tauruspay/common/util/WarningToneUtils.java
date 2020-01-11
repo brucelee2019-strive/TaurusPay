@@ -24,7 +24,7 @@ public class WarningToneUtils {
     }
 
     private SoundPool mSound;
-    private int cardHit;
+    private int cardHit,auditHit;
     private Context mContext;
     private Vibrator vibrator ;
     public WarningToneUtils(Context context) {
@@ -38,12 +38,18 @@ public class WarningToneUtils {
             mSound = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
         }
         cardHit = mSound.load(mContext, R.raw.goal, 1);
+        auditHit = mSound.load(mContext, R.raw.audit, 1);
         vibrator =  (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
     }
 
     public void playSound() {
         mSound.play(cardHit, 15, 15, 1, 0, 1);
         cardHit = mSound.load(mContext, R.raw.goal, 1);
+    }
+
+    public void playAuditSound() {
+        mSound.play(auditHit, 15, 15, 1, 0, 1);
+        auditHit = mSound.load(mContext, R.raw.audit, 1);
     }
 
     public void playShake() {

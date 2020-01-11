@@ -105,9 +105,9 @@ public class HomeFragment extends BasePresentFragment<HomePresenter> implements 
         if (hidden) {
 
         } else {
-//            if (!TextUtils.isEmpty(MyFrameApplication.getInstance().tokenStr)) {
-//                presenter.getHomeDataBean(MyFrameApplication.getInstance().tokenStr);
-//            }
+            if (!TextUtils.isEmpty(MyFrameApplication.getInstance().tokenStr)) {
+                presenter.getHomeDataBean(MyFrameApplication.getInstance().tokenStr);
+            }
         }
     }
 
@@ -162,6 +162,9 @@ public class HomeFragment extends BasePresentFragment<HomePresenter> implements 
         tvTodayTimeForSale.setText(String.valueOf(userBean.getDaycount()));
         tvAlreadyIncome.setText(StringUtils.fenToYuan(userBean.getDaydeposit()));
         MyFrameApplication.groupid = userBean.getGroupid();
+        MyFrameApplication.userType = userBean.getType();
+        MyFrameApplication.userRate = userBean.getRate();
+        MyFrameApplication.userInviteCode = userBean.getCode();
         MyFrameApplication.startingPosition = MyFrameApplication.groupid == 0?-1:PreferencesUtils.getInt(getContext(),"startingPosition");
         btnStartSail.setText(MyFrameApplication.startingPosition==-1?"开始代售":"分组["+(MyFrameApplication.startingPosition+1)+"]正在代售");
     }

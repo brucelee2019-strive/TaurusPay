@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
@@ -32,6 +33,7 @@ import com.mchaw.tauruspay.ui.login.presenter.LoginPresenter;
 import com.mchaw.tauruspay.ui.main.home.forsale.dialog.ConfirmDialogFragment;
 import com.mchaw.tauruspay.ui.main.mine.about.AboutFragment;
 import com.mchaw.tauruspay.ui.main.mine.activate.ActivateCodeFragment;
+import com.mchaw.tauruspay.ui.main.mine.agency.AgencyListFragment;
 import com.mchaw.tauruspay.ui.main.mine.bill.BillFragment;
 import com.mchaw.tauruspay.ui.main.mine.notice.NoticeFragment;
 import com.mchaw.tauruspay.ui.main.mine.qrcode.QRCodeFragment;
@@ -58,6 +60,10 @@ public class MineFragment extends BasePresentFragment<LoginPresenter> implements
     TextView tvPayName;
     @BindView(R.id.tv_red_icon)
     TextView tvRedIcon;
+    @BindView(R.id.cl_activate_word)
+    ConstraintLayout clActivateWord;
+    @BindView(R.id.tv_activate_word_line)
+    TextView tvActivateWordLine;
 
     private QBadgeView qBadgeView;
 
@@ -92,6 +98,8 @@ public class MineFragment extends BasePresentFragment<LoginPresenter> implements
         qBadgeView.setBadgeNumber(0)
                 .setGravityOffset(0, 0, true)
                 .bindTarget(tvRedIcon);
+        clActivateWord.setVisibility(MyFrameApplication.userType == 3 ? View.GONE : View.VISIBLE);
+        tvActivateWordLine.setVisibility(MyFrameApplication.userType == 3 ? View.GONE : View.VISIBLE);
     }
 
     @Override
@@ -100,7 +108,7 @@ public class MineFragment extends BasePresentFragment<LoginPresenter> implements
         component.inject(this);
     }
 
-    @OnClick({R.id.tv_login_out, R.id.cl_bill, R.id.cl_qr_code, R.id.cl_activate_word, R.id.cl_change_password, R.id.cl_about, R.id.cl_notice,R.id.cl_guide})
+    @OnClick({R.id.tv_login_out, R.id.cl_bill, R.id.cl_qr_code, R.id.cl_activate_word, R.id.cl_change_password, R.id.cl_about, R.id.cl_notice, R.id.cl_guide})
     public void onClick(View view) {
         if (AntiShake.check(view.getId())) {    //判断是否多次点击
             return;
@@ -132,7 +140,7 @@ public class MineFragment extends BasePresentFragment<LoginPresenter> implements
                 startFragment(new QRCodeFragment());
                 break;
             case R.id.cl_activate_word:
-                startFragment(new ActivateCodeFragment());
+                startActivateFragment(MyFrameApplication.userType);
                 break;
             case R.id.cl_change_password:
                 startFragment(new PasswordFragment());
@@ -146,6 +154,26 @@ public class MineFragment extends BasePresentFragment<LoginPresenter> implements
             case R.id.cl_guide:
                 Intent intent = new Intent(getActivity(), GuideActivity.class);
                 startActivity(intent);
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * 开启邀请赚钱界面
+     * @param type
+     */
+    private void startActivateFragment(int type) {
+        switch (type) {
+            case 0:
+                startFragment(new ActivateCodeFragment());
+                break;
+            case 1:
+            case 2:
+                startFragment(new AgencyListFragment());
+                break;
+            case 3:
                 break;
             default:
                 break;
@@ -182,7 +210,7 @@ public class MineFragment extends BasePresentFragment<LoginPresenter> implements
 
     @Subscribe
     public void noticeNum(NoticeEvent noticeEvent) {
-        if(noticeEvent == null){
+        if (noticeEvent == null) {
             return;
         }
         qBadgeView.setBadgeNumber(noticeEvent.getNoticeNum());
@@ -190,7 +218,7 @@ public class MineFragment extends BasePresentFragment<LoginPresenter> implements
 
     @Subscribe
     public void setNoticeRedPoint(NoticeSureEvent noticeSureEvent) {
-        if(noticeSureEvent == null){
+        if (noticeSureEvent == null) {
             return;
         }
         qBadgeView.setBadgeNumber(noticeSureEvent.getNoticeNum());

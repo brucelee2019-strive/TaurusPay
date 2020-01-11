@@ -14,7 +14,7 @@ import com.mchaw.tauruspay.bean.home.UserBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeBean;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
-import com.mchaw.tauruspay.ui.main.recharge.RechargeAdapter;
+import com.mchaw.tauruspay.ui.main.recharge.adapter.RechargeAdapter;
 import com.mchaw.tauruspay.ui.main.recharge.constract.RechargeListConstract;
 import com.mchaw.tauruspay.ui.main.recharge.presenter.RechargeListPresenter;
 

@@ -24,6 +24,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.mchaw.tauruspay.MyFrameApplication;
@@ -43,6 +44,7 @@ import com.mchaw.tauruspay.bean.eventbus.mainpolling.MainPollingRechargeEvent;
 import com.mchaw.tauruspay.bean.eventbus.mainpolling.MainPollingUserEvent;
 import com.mchaw.tauruspay.bean.home.ReceivablesBean;
 import com.mchaw.tauruspay.bean.notice.NoticeBean;
+import com.mchaw.tauruspay.bean.recharge.RechargeAuditBean;
 import com.mchaw.tauruspay.common.Constant;
 import com.mchaw.tauruspay.common.util.NoNullUtils;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
@@ -58,6 +60,7 @@ import com.mchaw.tauruspay.service.PayNotifiService;
 //import com.mchaw.tauruspay.ui.SplashActivity;
 import android.content.BroadcastReceiver;
 
+import com.mchaw.tauruspay.ui.main.recharge.RechargeAuditFragment;
 import com.mchaw.tauruspay.ui.main.recharge.RechargeFragment;
 
 import org.greenrobot.eventbus.EventBus;
@@ -85,6 +88,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
     private MyReceiver receiver = null;
     private HomeFragment homeFragment;
     private RechargeFragment rechargeFragment;
+    private RechargeAuditFragment rechargeAuditFragment;
     private BesureFragment besureFragment;
     private MineFragment mineFragment;
 
@@ -93,7 +97,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
     @BindView(R.id.bottom_view)
     BottomNavigationViewEx bottomView;
 
-    private QBadgeView qBadgeView;
+    private QBadgeView qBadgeView,qBadgeView2;
 
     @Override
     public int getContentViewId() {
@@ -105,12 +109,12 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
     public void initActivity() {
         super.initActivity();
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
         bottomView.enableAnimation(true);
         bottomView.enableShiftingMode(false);
         bottomView.enableItemShiftingMode(false);
         bottomView.setItemIconTintList(null);
         bottomView.setOnNavigationItemSelectedListener(this);
+
         //启动服务
         runPayNptifyService(this);
         //注册广播接收器
@@ -134,6 +138,11 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
         qBadgeView.setBadgeNumber(0)
                 .setGravityOffset(12, 2, true)
                 .bindTarget(bottomView.getBottomNavigationItemView(3));
+        //一级代理 充值上的通知小红点
+        qBadgeView2 = new QBadgeView(this);
+        qBadgeView2.setBadgeNumber(0)
+                .setGravityOffset(12, 2, true)
+                .bindTarget(bottomView.getBottomNavigationItemView(1));
         acquireWakeLock();
     }
 
@@ -171,6 +180,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
         for (Fragment fragment : getSupportFragmentManager().getFragments()) {
             if (fragment != homeFragment
                     && fragment != rechargeFragment
+                    && fragment != rechargeAuditFragment
                     && fragment != besureFragment
                     && fragment != mineFragment) {
                 ft.remove(fragment);
@@ -197,11 +207,20 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
                 }
                 break;
             case FRAGMENT_RECHARGE:
-                if (rechargeFragment == null) {
-                    rechargeFragment = new RechargeFragment();
-                    ft.add(R.id.fragment_content, rechargeFragment, RechargeFragment.class.getName());
+                if (MyFrameApplication.userType == 1) {
+                    if (rechargeAuditFragment == null) {
+                        rechargeAuditFragment = new RechargeAuditFragment();
+                        ft.add(R.id.fragment_content, rechargeAuditFragment, RechargeAuditFragment.class.getName());
+                    } else {
+                        ft.show(rechargeAuditFragment);
+                    }
                 } else {
-                    ft.show(rechargeFragment);
+                    if (rechargeFragment == null) {
+                        rechargeFragment = new RechargeFragment();
+                        ft.add(R.id.fragment_content, rechargeFragment, RechargeFragment.class.getName());
+                    } else {
+                        ft.show(rechargeFragment);
+                    }
                 }
                 break;
             case FRAGMENT_BESURE:
@@ -240,13 +259,14 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
             ft.hide(rechargeFragment);
         }
 
+        if (rechargeAuditFragment != null) {
+            ft.hide(rechargeAuditFragment);
+        }
+
         if (besureFragment != null) {
             ft.hide(besureFragment);
         }
 
-        if (mineFragment != null) {
-            ft.hide(mineFragment);
-        }
         if (mineFragment != null) {
             ft.hide(mineFragment);
         }
@@ -286,6 +306,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
 
     /**
      * 退出登录
+     *
      * @param event
      */
     @Subscribe
@@ -302,6 +323,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
 
     /**
      * 登录成功
+     *
      * @param event
      */
     @Subscribe
@@ -312,6 +334,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
 
     /**
      * 大轮询成功
+     *
      * @param bean
      */
     @Override
@@ -333,6 +356,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
             EventBus.getDefault().post(mainPollingUserEvent);
             //第一次默认MyFrameApplication.groupid为0,强退回来需要强行检验下强退前,二维码组状态。
             MyFrameApplication.groupid = bean.getUser().getGroupid();
+            MyFrameApplication.userType = bean.getUser().getType();
             MyFrameApplication.alipayContextA = bean.getUser().getAlipay1();
             MyFrameApplication.alipayContextB = bean.getUser().getAlipay2();
             MyFrameApplication.wechatContextA = bean.getUser().getWechat1();
@@ -358,6 +382,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
 
     /**
      * 红点声音
+     *
      * @param bean
      */
     private void redPointAndTone(MainPollingBean bean) {
@@ -394,6 +419,21 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
         NoticeEvent noticeEvent = new NoticeEvent();
         noticeEvent.setNoticeNum(noticeBean.getNotice());
         EventBus.getDefault().post(noticeEvent);
+    }
+
+    /**
+     * 用于一级代理的 待审核充值审核用
+     *
+     * @param list
+     */
+    @Override
+    public void setRechargeAuditList(List<RechargeAuditBean> list) {
+        if (list != null && list.size() > 0) {
+            qBadgeView2.setBadgeNumber(list.size());
+            WarningToneUtils.getInstance().playAuditSound();
+        }else{
+            qBadgeView2.setBadgeNumber(0);
+        }
     }
 
     //以下是大轮询
@@ -437,6 +477,9 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
                         if (!TextUtils.isEmpty(MyFrameApplication.getInstance().tokenStr)) {
                             if (!TextUtils.isEmpty(MyFrameApplication.getInstance().tokenStr)) {
                                 presenter.getNotice(MyFrameApplication.getInstance().tokenStr, "0");
+                                if (MyFrameApplication.userType == 1) {
+                                    presenter.getRechargeAuditList(MyFrameApplication.tokenStr, 0);
+                                }
                             }
                         }
                     }
@@ -489,6 +532,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
 
     /**
      * 账号禁用
+     *
      * @param event
      */
     @Subscribe
@@ -509,6 +553,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
 
     /**
      * 系统通知比对
+     *
      * @param amout
      */
     public void provideToNotice(int amout) {

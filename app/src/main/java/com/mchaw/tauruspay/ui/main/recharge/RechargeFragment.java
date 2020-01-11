@@ -23,6 +23,7 @@ import com.mchaw.tauruspay.common.util.OneClick.AntiShake;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.StringUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
+import com.mchaw.tauruspay.ui.main.recharge.adapter.RechargeAdapter;
 import com.mchaw.tauruspay.ui.main.recharge.constract.RechargeListConstract;
 import com.mchaw.tauruspay.ui.main.recharge.presenter.RechargeListPresenter;
 import com.mchaw.tauruspay.ui.main.recharge.record.RecordMainFragment;
@@ -94,12 +95,6 @@ public class RechargeFragment extends BasePresentListFragment<RechargeListPresen
     protected void initHintViews() {
         loadingView = getLayoutInflater().inflate(R.layout.loading_view, (ViewGroup) rvIncomeRecoed.getParent(), false);
         notDataView = getLayoutInflater().inflate(R.layout.empty_view, (ViewGroup) rvIncomeRecoed.getParent(), false);
-        notDataView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onRefresh();
-            }
-        });
         errorView = getLayoutInflater().inflate(R.layout.error_view, (ViewGroup) rvIncomeRecoed.getParent(), false);
         errorView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -2,6 +2,7 @@ package com.mchaw.tauruspay.ui.repository;
 
 import com.mchaw.tauruspay.bean.MainPollingBean;
 import com.mchaw.tauruspay.bean.activate.ActivateCodeBean;
+import com.mchaw.tauruspay.bean.agency.AgencyBean;
 import com.mchaw.tauruspay.bean.home.UserBean;
 import com.mchaw.tauruspay.bean.login.LoginBean;
 import com.mchaw.tauruspay.bean.login.LoginOutBean;
@@ -87,6 +88,13 @@ public class LoginModel extends BaseModel{
         return apiService.getNotice(api_token,noticeId)
                 .compose(new ResultDisposable<NoticeBean>())
                 .compose(new ScheduleTranformer<NoticeBean>());
+    }
+
+    //一级,二级代理的获取下级代理集合
+    public Observable<AgencyBean> getAgent(String api_token) {
+        return apiService.getAgent(api_token)
+                .compose(new ResultDisposable<AgencyBean>())
+                .compose(new ScheduleTranformer<AgencyBean>());
     }
 
 }

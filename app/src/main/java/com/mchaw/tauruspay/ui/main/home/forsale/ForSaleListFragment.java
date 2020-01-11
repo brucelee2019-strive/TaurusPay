@@ -198,14 +198,7 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
         if (event.getGroupinfo().getQrcodes() == null || event.getGroupinfo().getQrcodes().size() <= 0) {
             return;
         }
-        //status为0 表示停售状态
-        if (MyFrameApplication.groupid == event.getGroupinfo().getGroupid()) {//确保同一组
-            //赋值 list(12个二维码档口id)
-//            if (qrCodeGroupBean != null) {
-//                qrCodeGroupBean.setDaycount(event.getGroupinfo().getDaycount());
-//                qrCodeGroupBean.setStatus(event.getGroupinfo().getStatus());
-//                qrCodeGroupBean.setQrcodes(event.getGroupinfo().getQrcodes());
-//            }
+        if (MyFrameApplication.groupid == event.getGroupinfo().getGroupid()) {
             if (qrCodeGroupBeanList != null && qrCodeGroupBeanList.size() > 0) {
                 if (MyFrameApplication.startingPosition == -1) {
                     return;
@@ -216,7 +209,6 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
                     startingGroupinfoBean.setStatus(event.getGroupinfo().getStatus());
                     startingGroupinfoBean.setQrcodes(event.getGroupinfo().getQrcodes());
                 }
-                //forSaleListAdapter.notifyItemChanged(MyFrameApplication.startingPosition);
                 forSaleListAdapter.notifyDataSetChanged();
             }
         }
@@ -292,10 +284,6 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
                         confirmDialogFragment.show(this.getFragmentManager(), "confirmDialogFragment");
                     } else {
                         //停止代售前 检查是否有未完成的收款
-//                    if(){
-//                        ToastUtils.showShortToast(getContext(), "当前有收款未完成，请完成后再停止代售！");
-//                        return;
-//                    }
                         //弹窗
                         ConfirmDialogFragment confirmDialogFragment = ConfirmDialogFragment.newInstance();
                         confirmDialogFragment.setMsg("提示");
@@ -363,11 +351,7 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
                         confirmDialogFragment.show(this.getFragmentManager(), "confirmDialogFragment");
                     } else {
                         //停止代售前 检查是否有未完成的收款
-//                    if(){
-//                        ToastUtils.showShortToast(getContext(), "当前有收款未完成，请完成后再停止代售！");
-//                        return;
-//                    }
-                        //弹窗
+                        // 弹窗
                         ConfirmDialogFragment confirmDialogFragment = ConfirmDialogFragment.newInstance();
                         confirmDialogFragment.setMsg("提示");
                         confirmDialogFragment.setContent("是否停止接单\n停止接单后请确保所有的单已结单\n停止接单后再次接单将重新排队");

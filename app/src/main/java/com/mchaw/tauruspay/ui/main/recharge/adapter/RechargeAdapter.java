@@ -1,4 +1,4 @@
-package com.mchaw.tauruspay.ui.main.recharge;
+package com.mchaw.tauruspay.ui.main.recharge.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

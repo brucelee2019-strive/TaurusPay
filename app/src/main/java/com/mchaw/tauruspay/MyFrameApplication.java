@@ -54,9 +54,16 @@ public class MyFrameApplication extends Application {
     public  static String wechatContextA = "微信支付收款";
     public  static String wechatContextB = "朋友到店";
 
+    //代售分组id
     public static int groupid = 0;
-    //开始待售组独自拥有
+    //开始待售组独自拥有 开始代售分组的位置需本地保存
     public static int startingPosition = -1;
     //公网Ip
     public static String pIp = "";
+    //用户类型 0:普通用户 1:一级代理 2:二级代理 3:三级代理
+    public static int userType = 0;
+    //如果是一级,二级代理会有 userInviteCode 代理推广码
+    public static String userInviteCode = "";
+    //如果是一级，二级代理会有 userRate 代理返点率
+    public static int userRate = 0;
 }
