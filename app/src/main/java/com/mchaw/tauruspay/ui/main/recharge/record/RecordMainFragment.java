@@ -9,9 +9,12 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.flyco.tablayout.SlidingTabLayout;
+import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.fragment.BaseFragment;
 import com.mchaw.tauruspay.common.adapter.TabPageAdapter;
+import com.mchaw.tauruspay.ui.main.recharge.record.LowerRechargeRecord.LowerRechargeFailFragment;
+import com.mchaw.tauruspay.ui.main.recharge.record.LowerRechargeRecord.LowerRechargeSucceedFragment;
 
 import java.util.ArrayList;
 
@@ -51,9 +54,15 @@ public class RecordMainFragment extends BaseFragment implements ViewPager.OnPage
 
     @Override
     protected void initFragment() {
-        tvBackTitle.setText("审核");
-        mFragments.add(new RecordSucceedFragment());
-        mFragments.add(new RecordFailedFragment());
+        if (MyFrameApplication.userType == 1) {
+            tvBackTitle.setText("我的审核");
+            mFragments.add(new LowerRechargeSucceedFragment());
+            mFragments.add(new LowerRechargeFailFragment());
+        } else {
+            tvBackTitle.setText("审核");
+            mFragments.add(new RecordSucceedFragment());
+            mFragments.add(new RecordFailedFragment());
+        }
         TabPageAdapter adapter = new TabPageAdapter(getChildFragmentManager(), mFragments, saleTabs);
         viewPage.setAdapter(adapter);
         viewPage.setCurrentItem(currentPage);

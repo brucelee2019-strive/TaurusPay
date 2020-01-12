@@ -7,10 +7,10 @@
     android:gravity="center">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_marginLeft="48dp"
-        android:layout_marginRight="48dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="250dp"
         android:background="@drawable/ds_tanchuang_k">
 
         <TextView
@@ -45,13 +45,14 @@
         <TextView
             android:id="@+id/tv_cancel"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/bg_text_cancel_btn"
+            android:padding="15dp"
             android:layout_margin="5dp"
             android:text="取消"
             android:gravity="center"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/tv_sure"
             app:layout_constraintHorizontal_chainStyle="spread"
@@ -61,13 +62,14 @@
         <TextView
             android:id="@+id/tv_sure"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/bg_text_btn"
+            android:padding="15dp"
             android:layout_margin="5dp"
             android:text="确定"
             android:gravity="center"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="@+id/tv_cancel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_cancel"

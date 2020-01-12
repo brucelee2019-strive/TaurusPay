@@ -25,6 +25,6 @@ public interface MainConstract {
         void getMainPollingBean(String api_token,int groupid);
         void upLodingReceivables(String codeId,String api_token);
         void getNotice(String api_token,String noticeId);
-        void getRechargeAuditList(String api_token,int type);
+        void getRechargeAuditList(String api_token,int type,int page);
     }
 }

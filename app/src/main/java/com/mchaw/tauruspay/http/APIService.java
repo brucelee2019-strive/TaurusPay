@@ -5,6 +5,7 @@ import com.mchaw.tauruspay.bean.MainPollingBean;
 import com.mchaw.tauruspay.bean.ResultBean;
 import com.mchaw.tauruspay.bean.activate.ActivateCodeBean;
 import com.mchaw.tauruspay.bean.agency.AgencyBean;
+import com.mchaw.tauruspay.bean.agency.LowerRateBean;
 import com.mchaw.tauruspay.bean.bill.BillTotalBean;
 import com.mchaw.tauruspay.bean.bill.TradingBean;
 import com.mchaw.tauruspay.bean.entry.MultipleItem;
@@ -144,10 +145,13 @@ public interface APIService {
 
     @FormUrlEncoded
     @POST("recharge/agentlist")
-    Observable<ResultBean<List<RechargeAuditBean>>> getRechargeAuditList(@Field("api_token") String api_token, @Field("type") int type);
+    Observable<ResultBean<List<RechargeAuditBean>>> getRechargeAuditList(@Field("api_token") String api_token, @Field("type") int type,@Field("page") int page);
 
     @FormUrlEncoded
     @POST("my/agent")
     Observable<ResultBean<AgencyBean>> getAgent(@Field("api_token") String api_token);
 
+    @FormUrlEncoded
+    @POST("my/agentstatus")
+    Observable<ResultBean<LowerRateBean>> changeLowerRate(@Field("api_token") String api_token,@Field("cashierid") String cashierid,@Field("rate") String rate);
 }

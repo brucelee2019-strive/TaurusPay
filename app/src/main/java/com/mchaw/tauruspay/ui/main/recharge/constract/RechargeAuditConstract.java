@@ -26,6 +26,6 @@ public interface RechargeAuditConstract {
     interface Presenter extends BasePresenter<RechargeAuditConstract.View> {
         void getHomeDataBean(String api_token);
         void getRechargeAudit(String api_token,String order,int status);
-        void getRechargeAuditList(String api_token,int type);
+        void getRechargeAuditList(String api_token,int type,int page);
     }
 }

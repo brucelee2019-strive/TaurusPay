@@ -23,6 +23,8 @@ import com.mchaw.tauruspay.ui.main.mine.qrcode.QRCodeFragment;
 import com.mchaw.tauruspay.ui.main.recharge.RechargeAuditFragment;
 import com.mchaw.tauruspay.ui.main.recharge.RechargeFragment;
 import com.mchaw.tauruspay.ui.main.recharge.RechargeNextFragment;
+import com.mchaw.tauruspay.ui.main.recharge.record.LowerRechargeRecord.LowerRechargeFailFragment;
+import com.mchaw.tauruspay.ui.main.recharge.record.LowerRechargeRecord.LowerRechargeSucceedFragment;
 import com.mchaw.tauruspay.ui.main.recharge.record.RecordFailedFragment;
 import com.mchaw.tauruspay.ui.main.recharge.record.RecordSucceedFragment;
 
@@ -87,4 +89,8 @@ public interface ActivityComponent {
     void inject(LoginActivity loginActivity);
 
     void inject(AgencyListFragment agencyListFragment);
+
+    void inject(LowerRechargeSucceedFragment lowerRechargeSucceedFragment);
+
+    void inject(LowerRechargeFailFragment lowerRechargeFailFragment);
 }

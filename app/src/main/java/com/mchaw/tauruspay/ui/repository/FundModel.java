@@ -70,8 +70,8 @@ public class FundModel extends BaseModel{
     }
 
     //用于一级代理的待审核订单列表
-    public Observable<List<RechargeAuditBean>> getRechargeAuditList(String api_token, int type) {
-        return apiService.getRechargeAuditList(api_token,type)
+    public Observable<List<RechargeAuditBean>> getRechargeAuditList(String api_token, int type,int page) {
+        return apiService.getRechargeAuditList(api_token,type,page)
                 .compose(new ResultDisposable<List<RechargeAuditBean>>())
                 .compose(new ScheduleTranformer<List<RechargeAuditBean>>());
     }

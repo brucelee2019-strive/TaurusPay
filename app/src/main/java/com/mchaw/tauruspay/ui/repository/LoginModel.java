@@ -3,6 +3,7 @@ package com.mchaw.tauruspay.ui.repository;
 import com.mchaw.tauruspay.bean.MainPollingBean;
 import com.mchaw.tauruspay.bean.activate.ActivateCodeBean;
 import com.mchaw.tauruspay.bean.agency.AgencyBean;
+import com.mchaw.tauruspay.bean.agency.LowerRateBean;
 import com.mchaw.tauruspay.bean.home.UserBean;
 import com.mchaw.tauruspay.bean.login.LoginBean;
 import com.mchaw.tauruspay.bean.login.LoginOutBean;
@@ -96,5 +97,13 @@ public class LoginModel extends BaseModel{
                 .compose(new ResultDisposable<AgencyBean>())
                 .compose(new ScheduleTranformer<AgencyBean>());
     }
+
+    //一级,二级代理的更改下级代理返点
+    public Observable<LowerRateBean> changeLowerRate(String api_token,String cashierid,String rate) {
+        return apiService.changeLowerRate(api_token,cashierid,rate)
+                .compose(new ResultDisposable<LowerRateBean>())
+                .compose(new ScheduleTranformer<LowerRateBean>());
+    }
+
 
 }

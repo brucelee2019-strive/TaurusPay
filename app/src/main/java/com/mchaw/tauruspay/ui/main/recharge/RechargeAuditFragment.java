@@ -106,7 +106,7 @@ public class RechargeAuditFragment extends BasePresentListFragment<RechargeAudit
     protected void onRefresh() {
         rechargeAuditAdapter.setEmptyView(loadingView);
         presenter.getHomeDataBean(PreferencesUtils.getString(getContext(), "token"));
-        presenter.getRechargeAuditList(MyFrameApplication.tokenStr,0);
+        presenter.getRechargeAuditList(MyFrameApplication.tokenStr,0,0);
     }
 
     @Override

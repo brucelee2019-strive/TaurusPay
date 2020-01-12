@@ -2,6 +2,7 @@ package com.mchaw.tauruspay.ui.main.mine.agency.presenter;
 
 import com.mchaw.tauruspay.base.mvp.presenter.RxPresenter;
 import com.mchaw.tauruspay.bean.agency.AgencyBean;
+import com.mchaw.tauruspay.bean.agency.LowerRateBean;
 import com.mchaw.tauruspay.http.ResultObserver;
 import com.mchaw.tauruspay.ui.main.mine.agency.constract.AgencyListConstract;
 import com.mchaw.tauruspay.ui.repository.LoginModel;
@@ -42,6 +43,29 @@ public class AgencyListPresenter extends RxPresenter<AgencyListConstract.View> i
                             return;
                         }
                         mView.setAgentFail();
+                        mView.showError(msg);
+                    }
+                });
+        addSubscribe(disposable);
+    }
+
+    @Override
+    public void changeLowerRate(String api_token,String cashierid,String rate) {
+        Disposable disposable = loginModel.changeLowerRate(api_token,cashierid,rate)
+                .subscribeWith(new ResultObserver<LowerRateBean>() {
+                    @Override
+                    public void onSuccess(LowerRateBean lowerRateBean) {
+                        if (mView == null) {
+                            return;
+                        }
+                        mView.setChangeLowerRate(lowerRateBean);
+                    }
+
+                    @Override
+                    public void onFail(String msg) {
+                        if (mView == null) {
+                            return;
+                        }
                         mView.showError(msg);
                     }
                 });

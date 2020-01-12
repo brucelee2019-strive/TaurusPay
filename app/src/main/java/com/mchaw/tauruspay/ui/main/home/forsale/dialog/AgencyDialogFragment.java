@@ -2,6 +2,7 @@ package com.mchaw.tauruspay.ui.main.home.forsale.dialog;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,24 +12,29 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.dialog.BaseDialogFragment;
+import com.mchaw.tauruspay.common.Constant;
+import com.mchaw.tauruspay.common.widget.WheelPicker;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * @author BruceLee
- * @date 2017/6/13
- * @description 确认对话框
+ * @author : Bruce Lee
+ * @date : 2020/1/12 0012 10:41
+ * @description :
  */
-
-public class ConfirmDialogFragment extends BaseDialogFragment {
+public class AgencyDialogFragment extends BaseDialogFragment implements  WheelPicker.OnWheelChangeListener {
 
     @BindView(R.id.tv_mgs)
     TextView tvMsg;
-    @BindView(R.id.tv_content)
-    TextView tvContent;
     @BindView(R.id.btn_cancel)
     Button btnCancel;
     @BindView(R.id.btn_confirm)
@@ -36,8 +42,15 @@ public class ConfirmDialogFragment extends BaseDialogFragment {
     @BindView(R.id.iv_close)
     ImageView ivClose;
 
+    @BindView(R.id.wheel_picker)
+    WheelPicker wheelPicker;
+
+    private List<String> list;
+    private String round;
+
+    private int position;
+
     private String msg;
-    private String content;
     private String cancel;
     private String confirm;
     private int cancelColor = -1;
@@ -53,10 +66,6 @@ public class ConfirmDialogFragment extends BaseDialogFragment {
 
     public void setMsg(String msg) {
         this.msg = msg;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
     }
 
     public void setCancelText(String cancel) {
@@ -101,22 +110,29 @@ public class ConfirmDialogFragment extends BaseDialogFragment {
         return false;
     }
 
+    public static <T> AgencyDialogFragment newInstance(List<T> list) {
+        return newInstance(list,0);
+    }
+
+    public static <T> AgencyDialogFragment newInstance(List<T> list , int position) {
+        Bundle bundle = new Bundle();
+        //bundle.putSerializable(Constant.INTENT_LIST, (Serializable) list);
+        bundle.putStringArrayList(Constant.INTENT_LIST, (ArrayList<String>) list);
+        bundle.putInt(Constant.INTENT_POSITION,position);
+        AgencyDialogFragment dialog = new AgencyDialogFragment();
+        dialog.setArguments(bundle);
+        return dialog;
+    }
+
     @Override
     protected int getContentViewId() {
-        return R.layout.dialog_confirm;
+        return R.layout.dialog_lower_agency;
     }
 
     @Override
     protected void initDialogFragment(View view) {
         if (!TextUtils.isEmpty(msg)) {
             tvMsg.setText(msg);
-        }
-
-        if (TextUtils.isEmpty(content)) {
-            tvContent.setVisibility(View.GONE);
-        } else {
-            tvContent.setVisibility(View.VISIBLE);
-            tvContent.setText(content);
         }
 
         if (!TextUtils.isEmpty(cancel)) {
@@ -135,21 +151,51 @@ public class ConfirmDialogFragment extends BaseDialogFragment {
         }
         btnConfirm.setVisibility(confirmVisible ? View.VISIBLE : View.GONE);
         ivClose.setVisibility(closeVisible ? View.VISIBLE : View.GONE);
+
+        position = Math.min(position, list.size() - 1);
+        position = Math.max(position, 0);
+        wheelPicker.setData(getWheelList());
+        wheelPicker.setSelectedItemPosition(position);
+        wheelPicker.setOnWheelChangeListener(this);
+        onWheelSelected(position);
+    }
+
+    @Override
+    public void onWheelScrolled(int offset) {
+    }
+
+    @Override
+    public void onWheelSelected(int position) {
+        if (list != null && !list.isEmpty()) {
+            round = list.get(position);
+        }
+    }
+
+    @Override
+    public void onWheelScrollStateChanged(int state) {
+
+    }
+    private List getWheelList() {
+        List<String> array = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            //DialogItemConvert bean = list.get(i);
+            array.add(list.get(i));
+        }
+        return array;
     }
 
     @OnClick({R.id.btn_cancel, R.id.btn_confirm, R.id.iv_close})
     public void onViewClicked(View view) {
-        dialog.dismiss();
         switch (view.getId()) {
             case R.id.btn_cancel:
-                if (callBack != null && listenCancel) {
-                    callBack.onDialogViewClick(DIALOG_CANCEL, null);
-                }
+            case R.id.iv_close:
+                dialog.dismiss();
                 break;
             case R.id.btn_confirm:
                 if (callBack != null) {
-                    callBack.onDialogViewClick(DIALOG_CONFIRM, null);
+                    callBack.onDialogViewClick(DIALOG_CONFIRM, round);
                 }
+                dialog.dismiss();
                 break;
             default:
                 break;
@@ -168,6 +214,15 @@ public class ConfirmDialogFragment extends BaseDialogFragment {
             window.setWindowAnimations(R.style.SignDialogAnim);
             WindowManager.LayoutParams wl = window.getAttributes();
             window.setAttributes(wl);
+        }
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            list = (List<String>) getArguments().getSerializable(Constant.INTENT_LIST);
+            position = getArguments().getInt(Constant.INTENT_POSITION);
         }
     }
 }

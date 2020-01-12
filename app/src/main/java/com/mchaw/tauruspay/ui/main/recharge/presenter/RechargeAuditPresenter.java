@@ -84,8 +84,8 @@ public class RechargeAuditPresenter extends RxPresenter<RechargeAuditConstract.V
     }
 
     @Override
-    public void getRechargeAuditList(String api_token, int type) {
-        Disposable disposable = fundModel.getRechargeAuditList(api_token,type)
+    public void getRechargeAuditList(String api_token, int type,int page) {
+        Disposable disposable = fundModel.getRechargeAuditList(api_token,type,page)
                 .subscribeWith(new ResultObserver<List<RechargeAuditBean>>() {
                     @Override
                     public void onSuccess(List<RechargeAuditBean> list) {

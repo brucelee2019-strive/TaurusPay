@@ -478,7 +478,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
                             if (!TextUtils.isEmpty(MyFrameApplication.getInstance().tokenStr)) {
                                 presenter.getNotice(MyFrameApplication.getInstance().tokenStr, "0");
                                 if (MyFrameApplication.userType == 1) {
-                                    presenter.getRechargeAuditList(MyFrameApplication.tokenStr, 0);
+                                    presenter.getRechargeAuditList(MyFrameApplication.tokenStr, 0,0);
                                 }
                             }
                         }

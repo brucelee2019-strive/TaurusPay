@@ -17,7 +17,7 @@ public class AgencyItemBean {
      * daydeposit : 0
      */
 
-    private int id;
+    private String id;
     private String name;
     private int rate;
     private String ydaypoint;
@@ -25,11 +25,11 @@ public class AgencyItemBean {
     private String daypoint;
     private String daydeposit;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
