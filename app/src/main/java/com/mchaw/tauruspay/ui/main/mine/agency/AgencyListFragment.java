@@ -22,6 +22,7 @@ import com.mchaw.tauruspay.bean.agency.AgencyBean;
 import com.mchaw.tauruspay.bean.agency.AgencyItemBean;
 import com.mchaw.tauruspay.bean.agency.AgencyUser;
 import com.mchaw.tauruspay.bean.agency.LowerRateBean;
+import com.mchaw.tauruspay.common.util.StringUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.main.home.forsale.dialog.AgencyDialogFragment;
@@ -208,7 +209,7 @@ public class AgencyListFragment extends BasePresentListFragment<AgencyListPresen
         AgencyUser agencyUser = agencyBean.getAgencyUser();
         if (agencyUser != null) {
             tvAcount.setText(agencyUser.getName());
-            tvInventory.setText(agencyUser.getPoint());
+            tvInventory.setText(StringUtils.fenToYuan(agencyUser.getPoint()));
         }
         if (agencyItemBeanList != null && agencyItemBeanList.size() > 0) {
             agencyListAdapter.setNewData(agencyItemBeanList);

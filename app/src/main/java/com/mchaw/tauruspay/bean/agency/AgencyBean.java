@@ -9,15 +9,15 @@ import java.util.List;
  * @description:
  */
 public class AgencyBean {
-    private AgencyUser agencyUser;
+    private AgencyUser user;
     private List<AgencyItemBean> list = new ArrayList<>();
 
     public AgencyUser getAgencyUser() {
-        return agencyUser;
+        return user;
     }
 
-    public void setAgencyUser(AgencyUser agencyUser) {
-        this.agencyUser = agencyUser;
+    public void setAgencyUser(AgencyUser user) {
+        this.user = user;
     }
 
     public List<AgencyItemBean> getList() {

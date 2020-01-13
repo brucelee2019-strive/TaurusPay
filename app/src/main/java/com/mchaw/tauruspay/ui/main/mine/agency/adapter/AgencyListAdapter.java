@@ -25,10 +25,10 @@ public class AgencyListAdapter extends BaseQuickAdapter<AgencyItemBean, BaseView
     protected void convert(@NonNull BaseViewHolder helper, AgencyItemBean item) {
         helper.addOnClickListener(R.id.btn_change_rate);
         helper.setText(R.id.tv_account,item.getName());
-        helper.setText(R.id.tv_y_day_point, StringUtils.fenToYuan(item.getYdaypoint()));
-        helper.setText(R.id.tv_y_day_deposit, StringUtils.fenToYuan(item.getYdaydeposit()));
-        helper.setText(R.id.tv_day_point, StringUtils.fenToYuan(item.getDaypoint()));
-        helper.setText(R.id.tv_day_deposit, StringUtils.fenToYuan(item.getDaydeposit()));
+        helper.setText(R.id.tv_y_day_point, StringUtils.fenToYuan(item.getYdaydeposit()));
+        helper.setText(R.id.tv_y_day_deposit, StringUtils.fenToYuan(item.getYdaypoint()));
+        helper.setText(R.id.tv_day_point, StringUtils.fenToYuan(item.getDaydeposit()));
+        helper.setText(R.id.tv_day_deposit, StringUtils.fenToYuan(item.getDaypoint()));
         helper.setText(R.id.tv_rate,String.valueOf(item.getRate()));
     }
 }
