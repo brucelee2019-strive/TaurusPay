@@ -431,6 +431,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
         if (list != null && list.size() > 0) {
             qBadgeView2.setBadgeNumber(list.size());
             WarningToneUtils.getInstance().playAuditSound();
+            EventBus.getDefault().post(new RechargeAuditBean());
         }else{
             qBadgeView2.setBadgeNumber(0);
         }

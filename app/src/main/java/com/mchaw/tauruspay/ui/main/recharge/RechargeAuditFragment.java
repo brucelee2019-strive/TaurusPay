@@ -1,5 +1,6 @@
 package com.mchaw.tauruspay.ui.main.recharge;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.dialog.DialogCallBack;
 import com.mchaw.tauruspay.base.fragment.BasePresentListFragment;
+import com.mchaw.tauruspay.bean.eventbus.ForbiddenEvent;
+import com.mchaw.tauruspay.bean.eventbus.RechargeAuditEvent;
 import com.mchaw.tauruspay.bean.eventbus.mainpolling.MainPollingUserEvent;
 import com.mchaw.tauruspay.bean.home.UserBean;
 import com.mchaw.tauruspay.bean.recharge.AuditBean;
@@ -23,6 +26,8 @@ import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.StringUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
+import com.mchaw.tauruspay.main.MainActivity;
+import com.mchaw.tauruspay.ui.login.LoginActivity;
 import com.mchaw.tauruspay.ui.main.home.forsale.dialog.ConfirmDialogFragment;
 import com.mchaw.tauruspay.ui.main.recharge.adapter.RechargeAuditAdapter;
 import com.mchaw.tauruspay.ui.main.recharge.constract.RechargeAuditConstract;
@@ -204,5 +209,15 @@ public class RechargeAuditFragment extends BasePresentListFragment<RechargeAudit
             default:
                 break;
         }
+    }
+
+    /**
+     * 账号禁用
+     *
+     * @param event
+     */
+    @Subscribe
+    public void rechargeAuditUpdate(RechargeAuditEvent event) {
+        onRefresh();
     }
 }
