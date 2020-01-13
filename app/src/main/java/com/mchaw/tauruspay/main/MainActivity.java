@@ -37,6 +37,7 @@ import com.mchaw.tauruspay.bean.eventbus.LoginSucceedEvent;
 import com.mchaw.tauruspay.bean.eventbus.LoginoutEvent;
 import com.mchaw.tauruspay.bean.eventbus.NoticeEvent;
 import com.mchaw.tauruspay.bean.eventbus.NoticeSureEvent;
+import com.mchaw.tauruspay.bean.eventbus.RechargeAuditEvent;
 import com.mchaw.tauruspay.bean.eventbus.TradedBeanEvent;
 import com.mchaw.tauruspay.bean.eventbus.TradingBeanEvent;
 import com.mchaw.tauruspay.bean.eventbus.mainpolling.MainPollingGroupInfoEvent;
@@ -432,7 +433,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
         if (list != null && list.size() > 0) {
             qBadgeView2.setBadgeNumber(list.size());
             WarningToneUtils.getInstance().playAuditSound();
-            EventBus.getDefault().post(new RechargeAuditBean());
+            EventBus.getDefault().post(new RechargeAuditEvent());
         }else{
             qBadgeView2.setBadgeNumber(0);
         }

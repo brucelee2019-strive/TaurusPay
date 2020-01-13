@@ -15,6 +15,7 @@ public interface AgencyListConstract {
         void setAgent(AgencyBean agencyBean);
         void setAgentFail();
         void setChangeLowerRate(LowerRateBean lowerRateBean);
+        void setChangeLowerRateFail();
     }
     interface Presenter extends BasePresenter<AgencyListConstract.View> {
         void getAgent(String api_token);

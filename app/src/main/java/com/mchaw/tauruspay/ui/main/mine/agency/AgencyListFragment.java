@@ -83,6 +83,9 @@ public class AgencyListFragment extends BasePresentListFragment<AgencyListPresen
         tvBroadcastCode.setText(MyFrameApplication.userInviteCode);
         tvDownLink.setText("http://115.144.238.240:8090/index.html");
         if(MyFrameApplication.userType==1){
+            agencyList.add("1");
+            agencyList.add("2");
+            agencyList.add("3");
             agencyList.add("4");
             agencyList.add("5");
             agencyList.add("6");
@@ -96,6 +99,11 @@ public class AgencyListFragment extends BasePresentListFragment<AgencyListPresen
             agencyList.add("14");
             agencyList.add("15");
         }else{
+            agencyList.add("1");
+            agencyList.add("2");
+            agencyList.add("3");
+            agencyList.add("4");
+            agencyList.add("5");
             agencyList.add("6");
             agencyList.add("7");
             agencyList.add("8");
@@ -227,5 +235,11 @@ public class AgencyListFragment extends BasePresentListFragment<AgencyListPresen
     @Override
     public void setChangeLowerRate(LowerRateBean lowerRateBean) {
         onRefresh();
+        ToastUtils.showShortToast(getContext(),"设置成功");
+    }
+
+    @Override
+    public void setChangeLowerRateFail() {
+        ToastUtils.showShortToast(getContext(),"设置失败");
     }
 }

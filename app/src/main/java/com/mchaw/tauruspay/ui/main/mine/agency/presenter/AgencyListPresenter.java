@@ -66,6 +66,7 @@ public class AgencyListPresenter extends RxPresenter<AgencyListConstract.View> i
                         if (mView == null) {
                             return;
                         }
+                        mView.setChangeLowerRateFail();
                         mView.showError(msg);
                     }
                 });

@@ -10,10 +10,10 @@ android {
 
     signingConfigs {
         config {
-            keyAlias 'wangzherongyao'
-            keyPassword 'wangzherongyao'
-            storeFile file('wangzherongyao.jks')
-            storePassword 'wangzherongyao'
+            keyAlias 'android'
+            keyPassword '12345678'
+            storeFile file('android.jks')
+            storePassword '12345678'
         }
     }
 
