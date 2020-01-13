@@ -2,6 +2,7 @@ package com.mchaw.tauruspay.ui.main.recharge.record.LowerRechargeRecord;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -28,5 +29,6 @@ public class LowerRechargeAdapter extends BaseQuickAdapter<RechargeAuditBean, Ba
         helper.setText(R.id.tv_recharge_amount,"+" + StringUtils.fenToYuan(item.getAmount()));
         helper.setText(R.id.tv_recharge_time,item.getUpdate());
         helper.setText(R.id.btn_audit_btn,item.getStatus()==4?"已同意":"已拒绝");
+        helper.setTextColor(R.id.btn_audit_btn, ContextCompat.getColor(mContext,item.getStatus()==4?R.color.color_special:R.color.color_black_5));
     }
 }

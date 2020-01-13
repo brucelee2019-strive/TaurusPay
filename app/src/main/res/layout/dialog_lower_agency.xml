@@ -11,7 +11,7 @@
         android:layout_gravity="center"
         android:layout_marginLeft="44dp"
         android:layout_marginRight="44dp"
-        android:background="@drawable/bg_dialog_confirm"
+        android:background="@drawable/bg_agency_dialog"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -37,7 +37,7 @@
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:lineSpacingExtra="4dp"
-            android:textColor="@color/e94630"
+            android:textColor="@color/color_black_0"
             android:textStyle="bold"
             android:textSize="18sp" />
 

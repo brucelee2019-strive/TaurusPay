@@ -1,5 +1,8 @@
 package com.mchaw.tauruspay.ui.main.mine.agency;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -19,6 +22,7 @@ import com.mchaw.tauruspay.bean.agency.AgencyBean;
 import com.mchaw.tauruspay.bean.agency.AgencyItemBean;
 import com.mchaw.tauruspay.bean.agency.AgencyUser;
 import com.mchaw.tauruspay.bean.agency.LowerRateBean;
+import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.ui.main.home.forsale.dialog.AgencyDialogFragment;
 import com.mchaw.tauruspay.ui.main.mine.agency.adapter.AgencyListAdapter;
@@ -47,6 +51,10 @@ public class AgencyListFragment extends BasePresentListFragment<AgencyListPresen
     TextView tvInventory;
     @BindView(R.id.tv_live)
     TextView tvLive;
+    @BindView(R.id.tv_down_link)
+    TextView tvDownLink;
+    @BindView(R.id.tv_broadcast_code)
+    TextView tvBroadcastCode;
 
     private List<AgencyItemBean> list = new ArrayList<>();
     private AgencyListAdapter agencyListAdapter;
@@ -71,6 +79,8 @@ public class AgencyListFragment extends BasePresentListFragment<AgencyListPresen
         agencyListAdapter.setOnItemChildClickListener(this);
         rvAgencyList.setAdapter(agencyListAdapter);
         tvLive.setText(MyFrameApplication.userType==1?"(一级代理)":"(二级代理)");
+        tvBroadcastCode.setText(MyFrameApplication.userInviteCode);
+        tvDownLink.setText("http://115.144.238.240:8090/index.html");
         if(MyFrameApplication.userType==1){
             agencyList.add("4");
             agencyList.add("5");
@@ -129,6 +139,7 @@ public class AgencyListFragment extends BasePresentListFragment<AgencyListPresen
             case R.id.btn_change_rate:
                 int pos = agencyList.indexOf(currentAgency);
                 AgencyDialogFragment roundDialogFragment = AgencyDialogFragment.newInstance(agencyList, pos < 0 ? 0 : pos);
+                roundDialogFragment.setMsg("设置账号["+agencyItemBean.getName()+"]的返点为:");
                 roundDialogFragment.setDialogCallBack(new DialogCallBack() {
                     @Override
                     public void onDialogViewClick(int type, Object value) {
@@ -146,12 +157,44 @@ public class AgencyListFragment extends BasePresentListFragment<AgencyListPresen
         }
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_back_title})
+    @OnClick({R.id.iv_back, R.id.tv_back_title,R.id.btn_copy_link,R.id.btn_copy_code})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
             case R.id.tv_back_title:
                 this.getActivity().finish();
+                break;
+            case R.id.btn_copy_link:
+                if(TextUtils.isEmpty(tvDownLink.getText())){
+                    return;
+                }
+                //获取剪贴板管理器：
+                ClipboardManager cm = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                // 创建普通字符型ClipData
+                ClipData mClipData = ClipData.newPlainText("Label", tvDownLink.getText());
+                // 将ClipData内容放到系统剪贴板里。
+                cm.setPrimaryClip(mClipData);
+                if(TextUtils.isEmpty(tvDownLink.getText())){
+                    ToastUtils.showShortToast(getContext(),"没有可复制的内容");
+                    return;
+                }
+                ToastUtils.showShortToast(getContext(),"已复制<"+tvDownLink.getText()+">到剪切板");
+                break;
+            case R.id.btn_copy_code:
+                if(TextUtils.isEmpty(tvBroadcastCode.getText())){
+                    return;
+                }
+                //获取剪贴板管理器：
+                ClipboardManager cm1 = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                // 创建普通字符型ClipData
+                ClipData mClipData1 = ClipData.newPlainText("Label", tvBroadcastCode.getText());
+                // 将ClipData内容放到系统剪贴板里。
+                cm1.setPrimaryClip(mClipData1);
+                if(TextUtils.isEmpty(tvBroadcastCode.getText())){
+                    ToastUtils.showShortToast(getContext(),"没有可复制的内容");
+                    return;
+                }
+                ToastUtils.showShortToast(getContext(),"已复制<"+tvBroadcastCode.getText()+">到剪切板");
                 break;
             default:
                 break;
