@@ -85,9 +85,6 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
     private static final int REQUEST_CODE_SELECT_PHOTO = 111;
     @BindView(R.id.rv_qr_list)
     RecyclerView rvQRList;
-
-    @BindView(R.id.iv_add_item)
-    ImageView ivAddItem;
     @BindView(R.id.tv_back_title)
     TextView tvBackTitle;
     @BindView(R.id.tv_right)
@@ -130,7 +127,15 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
         rvQRList.setLayoutManager(new LinearLayoutManager(getContext()));
         qrCodeListAdapter = new QRCodeListAdapter(multipleItemList);
         qrCodeListAdapter.setOnItemChildClickListener(this);
+        View footerView = getFooterView(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                QRCodeGroupDialog.showDialog(getChildFragmentManager());
+            }
+        });
+        qrCodeListAdapter.addFooterView(footerView, 0);
         rvQRList.setAdapter(qrCodeListAdapter);
+
         onRefresh();
         pageState = Constant.PAGE_NORMAL_STATE;
         ToastUtils.showShortToast(getContext(),"确保二维码上传并审核通过，才能开启代售！");
@@ -138,26 +143,20 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
 
     @Override
     protected void initHintViews() {
-        loadingView = getLayoutInflater().inflate(R.layout.loading_view, (ViewGroup) rvQRList.getParent(), false);
-        notDataView = getLayoutInflater().inflate(R.layout.empty_view, (ViewGroup) rvQRList.getParent(), false);
-        notDataView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onRefresh();
-            }
-        });
-        errorView = getLayoutInflater().inflate(R.layout.error_view, (ViewGroup) rvQRList.getParent(), false);
-        errorView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onRefresh();
-            }
-        });
+//        loadingView = getLayoutInflater().inflate(R.layout.loading_view, (ViewGroup) rvQRList.getParent(), false);
+//        notDataView = getLayoutInflater().inflate(R.layout.empty_view, (ViewGroup) rvQRList.getParent(), false);
+//        errorView = getLayoutInflater().inflate(R.layout.error_view, (ViewGroup) rvQRList.getParent(), false);
+//        errorView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onRefresh();
+//            }
+//        });
     }
 
     @Override
     protected void onRefresh() {
-        qrCodeListAdapter.setEmptyView(loadingView);
+        //qrCodeListAdapter.setEmptyView(loadingView);
         presenter.getQRCodeGroupList(PreferencesUtils.getString(getContext(), "token"));
     }
 
@@ -172,7 +171,6 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
                 if (qrCodeGroupBeanList != null && qrCodeGroupBeanList.size() > 0) {
                     pageState = Constant.PAGE_DELETE_STATE;
                     tvRight.setText("取消");
-                    ivAddItem.setVisibility(View.GONE);
                     for (GroupinfoBean bean : qrCodeGroupBeanList) {
                         bean.setCanDelete(Constant.PAGE_DELETE_STATE);
                         bean.setShowItems(false);
@@ -186,7 +184,6 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
             case Constant.PAGE_DELETE_STATE:
                 pageState = Constant.PAGE_NORMAL_STATE;
                 tvRight.setText("编辑");
-                ivAddItem.setVisibility(View.VISIBLE);
                 if (qrCodeGroupBeanList != null && qrCodeGroupBeanList.size() > 0) {
                     for (GroupinfoBean bean : qrCodeGroupBeanList) {
                         bean.setCanDelete(Constant.PAGE_NORMAL_STATE);
@@ -203,7 +200,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
 
     private Animation animation;
 
-    @OnClick({R.id.iv_back, R.id.tv_back_title, R.id.iv_add_item, R.id.tv_right})
+    @OnClick({R.id.iv_back, R.id.tv_back_title,R.id.tv_right})
     public void onClick(View view) {
         if (AntiShake.check(view.getId())) {    //判断是否多次点击
             return;
@@ -212,11 +209,6 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
             case R.id.iv_back:
             case R.id.tv_back_title:
                 getActivity().finish();
-                break;
-            case R.id.iv_add_item:
-                animation = AnimationUtils.loadAnimation(getContext(), R.anim.btn_normal_to_large);
-                ivAddItem.startAnimation(animation);
-                QRCodeGroupDialog.showDialog(getChildFragmentManager());
                 break;
             case R.id.tv_right:
                 pageState(pageState);
@@ -696,13 +688,13 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
             qrCodeListAdapter.setNewData(multipleItemList);
         } else {
             qrCodeListAdapter.setNewData(null);
-            qrCodeListAdapter.setEmptyView(notDataView);
+            //qrCodeListAdapter.setEmptyView(notDataView);
         }
     }
 
     @Override
     public void setQRCodeGroupListFail() {
-        qrCodeListAdapter.setEmptyView(errorView);
+        //qrCodeListAdapter.setEmptyView(errorView);
     }
 
 
@@ -866,5 +858,11 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
     @Subscribe
     public void forbidden(ForbiddenEvent event) {
         stopPolling();
+    }
+
+    private View getFooterView(View.OnClickListener listener) {
+        View view = getLayoutInflater().inflate(R.layout.footer_view, (ViewGroup) rvQRList.getParent(), false);
+        view.setOnClickListener(listener);
+        return view;
     }
 }
