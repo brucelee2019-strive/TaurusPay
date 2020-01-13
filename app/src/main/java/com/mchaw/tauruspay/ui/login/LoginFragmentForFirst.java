@@ -31,6 +31,7 @@ import com.mchaw.tauruspay.main.MainActivity;
 import com.mchaw.tauruspay.ui.login.constract.LoginConstract;
 import com.mchaw.tauruspay.ui.login.presenter.LoginPresenter;
 import com.mchaw.tauruspay.ui.login.register.RegisterFragment;
+import com.mchaw.tauruspay.ui.main.mine.dialog.NotifyDialog;
 
 import java.io.File;
 
@@ -73,6 +74,9 @@ public class LoginFragmentForFirst extends BasePresentFragment<LoginPresenter> i
     @Override
     protected void initFragment() {
         super.initFragment();
+        if (!notificationListenerEnable()) {
+            NotifyDialog.showDialog(getSupportFragmentManager());
+        }
         tvVersion.setText("版本:v"+ versionUtils.getAppVersionName(getContext()));
         presenter.getVersion();
     }
@@ -127,6 +131,9 @@ public class LoginFragmentForFirst extends BasePresentFragment<LoginPresenter> i
 
     @OnClick({R.id.btn_login_btn, R.id.tv_register, R.id.tv_find_password})
     public void onClick(View view) {
+        if (!notificationListenerEnable()) {
+            NotifyDialog.showDialog(getSupportFragmentManager());
+        }
         if (AntiShake.check(view.getId())) {    //判断是否多次点击
             return;
         }
@@ -238,5 +245,15 @@ public class LoginFragmentForFirst extends BasePresentFragment<LoginPresenter> i
     @Override
     public void error(Exception e) {
 
+    }
+
+    private boolean notificationListenerEnable() {
+        boolean enable = false;
+        String packageName = getActivity().getPackageName();
+        String flat= Settings.Secure.getString(getActivity().getContentResolver(),"enabled_notification_listeners");
+        if (flat != null) {
+            enable= flat.contains(packageName);
+        }
+        return enable;
     }
 }
