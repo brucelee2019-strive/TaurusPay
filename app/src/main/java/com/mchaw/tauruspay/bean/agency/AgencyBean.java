@@ -10,7 +10,16 @@ import java.util.List;
  */
 public class AgencyBean {
     private AgencyUser user;
+    private List<RateBean> rate = new ArrayList<>();
     private List<AgencyItemBean> list = new ArrayList<>();
+
+    public List<RateBean> getRate() {
+        return rate;
+    }
+
+    public void setRate(List<RateBean> rate) {
+        this.rate = rate;
+    }
 
     public AgencyUser getAgencyUser() {
         return user;

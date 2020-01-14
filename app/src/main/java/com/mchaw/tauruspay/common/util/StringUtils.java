@@ -51,6 +51,19 @@ public class StringUtils {
         return yuan;
     }
 
+    /**
+     * 设置一级代理 返点规则 分转万元
+     * @param fen
+     * @return
+     */
+    public static String fenToWYuan(String fen){
+        if( fen.length() < 7 ){
+            return "0";
+        }
+        String strm = fen.substring(0,fen.length()-6);   //截掉后六位
+        return strm;
+    }
+
     public static String fenToYuanInt(int f){
         String fen = String.valueOf(f);
         if(fen.length() < 2){

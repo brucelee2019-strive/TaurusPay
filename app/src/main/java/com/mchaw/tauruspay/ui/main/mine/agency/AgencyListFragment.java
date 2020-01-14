@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -22,6 +23,7 @@ import com.mchaw.tauruspay.bean.agency.AgencyBean;
 import com.mchaw.tauruspay.bean.agency.AgencyItemBean;
 import com.mchaw.tauruspay.bean.agency.AgencyUser;
 import com.mchaw.tauruspay.bean.agency.LowerRateBean;
+import com.mchaw.tauruspay.bean.agency.RateBean;
 import com.mchaw.tauruspay.common.util.StringUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
@@ -64,10 +66,13 @@ public class AgencyListFragment extends BasePresentListFragment<AgencyListPresen
     TextView tvDayDespoint;
     @BindView(R.id.tv_day_point)
     TextView tvDayPoint;
+    @BindView(R.id.btn_agency_rule)
+    Button btnAgencyRule;
 
 
     private List<AgencyItemBean> list = new ArrayList<>();
     private AgencyListAdapter agencyListAdapter;
+    private List<String> ruleList = new ArrayList<>();
 
     @Override
     protected int getContentViewId() {
@@ -91,6 +96,7 @@ public class AgencyListFragment extends BasePresentListFragment<AgencyListPresen
         tvLive.setText(MyFrameApplication.userType == 1 ? "(一级代理)" : "(二级代理)");
         //tvBroadcastCode.setText(MyFrameApplication.userInviteCode);
         tvDownLink.setText("http://115.144.238.240:8090/index.html");
+        btnAgencyRule.setVisibility(MyFrameApplication.userType==1?View.VISIBLE:View.GONE);
         if (MyFrameApplication.userType == 1) {
 //            agencyList.add("1");
 //            agencyList.add("2");
@@ -181,7 +187,7 @@ public class AgencyListFragment extends BasePresentListFragment<AgencyListPresen
         }
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_back_title, R.id.btn_copy_link, R.id.btn_copy_code})
+    @OnClick({R.id.iv_back, R.id.tv_back_title, R.id.btn_copy_link, R.id.btn_copy_code,R.id.btn_agency_rule})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -220,6 +226,18 @@ public class AgencyListFragment extends BasePresentListFragment<AgencyListPresen
                 }
                 ToastUtils.showShortToast(getContext(), "已复制<" + tvBroadcastCode.getText() + ">到剪切板");
                 break;
+            case R.id.btn_agency_rule:
+                AgencyDialogFragment roundDialogFragment = AgencyDialogFragment.newInstance(ruleList, 1);
+                roundDialogFragment.setMsg("一级代理的返点规则为:");
+                roundDialogFragment.setCancelVisible(false);
+                roundDialogFragment.setDialogCallBack(new DialogCallBack() {
+                    @Override
+                    public void onDialogViewClick(int type, Object value) {
+
+                    }
+                });
+                roundDialogFragment.show(getSupportFragmentManager(), null);
+                break;
             default:
                 break;
         }
@@ -239,6 +257,24 @@ public class AgencyListFragment extends BasePresentListFragment<AgencyListPresen
             tvDayDespoint.setText(StringUtils.fenToYuan(agencyUser.getDaydeposit()));
             tvDayPoint.setText(StringUtils.fenToYuan(agencyUser.getDaypoint()));
             tvBroadcastCode.setText(agencyUser.getCode());
+        }
+        List<RateBean> rateBeanList = new ArrayList<>();
+        rateBeanList = agencyBean.getRate();
+        if(rateBeanList!=null && rateBeanList.size()>0){
+            ruleList.add("当日代售额度 : 返点率");
+            for(int i =0;i<rateBeanList.size();i++){
+                if(i==rateBeanList.size()-1){
+                    ruleList.add("      大于" + StringUtils.fenToWYuan(rateBeanList.get(i).getMin()) + "万 :   " + rateBeanList.get(i).getRate() + "‰");
+                }else {
+                    ruleList.add("      " + StringUtils.fenToWYuan(rateBeanList.get(i).getMin()) + "-" + StringUtils.fenToWYuan(rateBeanList.get(i).getMax()) + "万 :   " + rateBeanList.get(i).getRate() + "‰");
+                }
+
+            }
+//            ruleList.add("      0-10万 :    9‰");
+//            ruleList.add("     10-50万 :   10‰");
+//            ruleList.add("    50-100万 :   11‰");
+//            ruleList.add("   100-200万 :   12‰");
+//            ruleList.add("   大于200万 :   13‰");
         }
         if (agencyItemBeanList != null && agencyItemBeanList.size() > 0) {
             agencyListAdapter.setNewData(agencyItemBeanList);
