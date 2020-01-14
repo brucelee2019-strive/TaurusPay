@@ -48,14 +48,23 @@ public class AgencyListFragment extends BasePresentListFragment<AgencyListPresen
     RecyclerView rvAgencyList;
     @BindView(R.id.tv_acount)
     TextView tvAcount;
-    @BindView(R.id.tv_inventory)
-    TextView tvInventory;
+    @BindView(R.id.tv_rate)
+    TextView tvRate;
     @BindView(R.id.tv_live)
     TextView tvLive;
     @BindView(R.id.tv_down_link)
     TextView tvDownLink;
     @BindView(R.id.tv_broadcast_code)
     TextView tvBroadcastCode;
+    @BindView(R.id.tv_y_day_despoint)
+    TextView tvYDayDespoint;
+    @BindView(R.id.tv_y_day_point)
+    TextView tvYDayPoint;
+    @BindView(R.id.tv_day_despoint)
+    TextView tvDayDespoint;
+    @BindView(R.id.tv_day_point)
+    TextView tvDayPoint;
+
 
     private List<AgencyItemBean> list = new ArrayList<>();
     private AgencyListAdapter agencyListAdapter;
@@ -79,35 +88,41 @@ public class AgencyListFragment extends BasePresentListFragment<AgencyListPresen
         agencyListAdapter = new AgencyListAdapter(list);
         agencyListAdapter.setOnItemChildClickListener(this);
         rvAgencyList.setAdapter(agencyListAdapter);
-        tvLive.setText(MyFrameApplication.userType==1?"(一级代理)":"(二级代理)");
-        tvBroadcastCode.setText(MyFrameApplication.userInviteCode);
+        tvLive.setText(MyFrameApplication.userType == 1 ? "(一级代理)" : "(二级代理)");
+        //tvBroadcastCode.setText(MyFrameApplication.userInviteCode);
         tvDownLink.setText("http://115.144.238.240:8090/index.html");
-        if(MyFrameApplication.userType==1){
-            agencyList.add("1");
-            agencyList.add("2");
-            agencyList.add("3");
-            agencyList.add("4");
-            agencyList.add("5");
-            agencyList.add("6");
-            agencyList.add("7");
-            agencyList.add("8");
-            agencyList.add("9");
-            agencyList.add("10");
-            agencyList.add("11");
-            agencyList.add("12");
-            agencyList.add("13");
-            agencyList.add("14");
-            agencyList.add("15");
-        }else{
-            agencyList.add("1");
-            agencyList.add("2");
-            agencyList.add("3");
-            agencyList.add("4");
-            agencyList.add("5");
-            agencyList.add("6");
-            agencyList.add("7");
-            agencyList.add("8");
-            agencyList.add("9");
+        if (MyFrameApplication.userType == 1) {
+//            agencyList.add("1");
+//            agencyList.add("2");
+//            agencyList.add("3");
+//            agencyList.add("4");
+//            agencyList.add("5");
+//            agencyList.add("6");
+//            agencyList.add("7");
+//            agencyList.add("8");
+//            agencyList.add("9");
+//            agencyList.add("10");
+//            agencyList.add("11");
+//            agencyList.add("12");
+//            agencyList.add("13");
+//            agencyList.add("14");
+//            agencyList.add("15");
+            for (int i = 5; i < MyFrameApplication.userRate; i++) {
+                agencyList.add(String.valueOf(i));
+            }
+        } else {
+            for (int i = 3; i < MyFrameApplication.userRate; i++) {
+                agencyList.add(String.valueOf(i));
+            }
+//            agencyList.add("1");
+//            agencyList.add("2");
+//            agencyList.add("3");
+//            agencyList.add("4");
+//            agencyList.add("5");
+//            agencyList.add("6");
+//            agencyList.add("7");
+//            agencyList.add("8");
+//            agencyList.add("9");
         }
         onRefresh();
     }
@@ -148,7 +163,7 @@ public class AgencyListFragment extends BasePresentListFragment<AgencyListPresen
             case R.id.btn_change_rate:
                 int pos = agencyList.indexOf(currentAgency);
                 AgencyDialogFragment roundDialogFragment = AgencyDialogFragment.newInstance(agencyList, pos < 0 ? 0 : pos);
-                roundDialogFragment.setMsg("设置账号["+agencyItemBean.getName()+"]的返点为:");
+                roundDialogFragment.setMsg("设置账号[" + agencyItemBean.getName() + "]的返点为:");
                 roundDialogFragment.setDialogCallBack(new DialogCallBack() {
                     @Override
                     public void onDialogViewClick(int type, Object value) {
@@ -156,7 +171,7 @@ public class AgencyListFragment extends BasePresentListFragment<AgencyListPresen
                         if (TextUtils.isEmpty(currentAgency)) {
                             return;
                         }
-                        presenter.changeLowerRate(MyFrameApplication.tokenStr,agencyItemBean.getId(),currentAgency);
+                        presenter.changeLowerRate(MyFrameApplication.tokenStr, agencyItemBean.getId(), currentAgency);
                     }
                 });
                 roundDialogFragment.show(getSupportFragmentManager(), null);
@@ -166,7 +181,7 @@ public class AgencyListFragment extends BasePresentListFragment<AgencyListPresen
         }
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_back_title,R.id.btn_copy_link,R.id.btn_copy_code})
+    @OnClick({R.id.iv_back, R.id.tv_back_title, R.id.btn_copy_link, R.id.btn_copy_code})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -174,7 +189,7 @@ public class AgencyListFragment extends BasePresentListFragment<AgencyListPresen
                 this.getActivity().finish();
                 break;
             case R.id.btn_copy_link:
-                if(TextUtils.isEmpty(tvDownLink.getText())){
+                if (TextUtils.isEmpty(tvDownLink.getText())) {
                     return;
                 }
                 //获取剪贴板管理器：
@@ -183,14 +198,14 @@ public class AgencyListFragment extends BasePresentListFragment<AgencyListPresen
                 ClipData mClipData = ClipData.newPlainText("Label", tvDownLink.getText());
                 // 将ClipData内容放到系统剪贴板里。
                 cm.setPrimaryClip(mClipData);
-                if(TextUtils.isEmpty(tvDownLink.getText())){
-                    ToastUtils.showShortToast(getContext(),"没有可复制的内容");
+                if (TextUtils.isEmpty(tvDownLink.getText())) {
+                    ToastUtils.showShortToast(getContext(), "没有可复制的内容");
                     return;
                 }
-                ToastUtils.showShortToast(getContext(),"已复制<"+tvDownLink.getText()+">到剪切板");
+                ToastUtils.showShortToast(getContext(), "已复制<" + tvDownLink.getText() + ">到剪切板");
                 break;
             case R.id.btn_copy_code:
-                if(TextUtils.isEmpty(tvBroadcastCode.getText())){
+                if (TextUtils.isEmpty(tvBroadcastCode.getText())) {
                     return;
                 }
                 //获取剪贴板管理器：
@@ -199,11 +214,11 @@ public class AgencyListFragment extends BasePresentListFragment<AgencyListPresen
                 ClipData mClipData1 = ClipData.newPlainText("Label", tvBroadcastCode.getText());
                 // 将ClipData内容放到系统剪贴板里。
                 cm1.setPrimaryClip(mClipData1);
-                if(TextUtils.isEmpty(tvBroadcastCode.getText())){
-                    ToastUtils.showShortToast(getContext(),"没有可复制的内容");
+                if (TextUtils.isEmpty(tvBroadcastCode.getText())) {
+                    ToastUtils.showShortToast(getContext(), "没有可复制的内容");
                     return;
                 }
-                ToastUtils.showShortToast(getContext(),"已复制<"+tvBroadcastCode.getText()+">到剪切板");
+                ToastUtils.showShortToast(getContext(), "已复制<" + tvBroadcastCode.getText() + ">到剪切板");
                 break;
             default:
                 break;
@@ -217,7 +232,13 @@ public class AgencyListFragment extends BasePresentListFragment<AgencyListPresen
         AgencyUser agencyUser = agencyBean.getAgencyUser();
         if (agencyUser != null) {
             tvAcount.setText(agencyUser.getName());
-            tvInventory.setText(StringUtils.fenToYuan(agencyUser.getPoint()));
+            tvRate.setText(String.valueOf(agencyUser.getRate()));
+            MyFrameApplication.userRate = agencyUser.getRate();
+            tvYDayDespoint.setText(StringUtils.fenToYuan(agencyUser.getYdaydeposit()));
+            tvYDayPoint.setText(StringUtils.fenToYuan(agencyUser.getYdaypoint()));
+            tvDayDespoint.setText(StringUtils.fenToYuan(agencyUser.getDaydeposit()));
+            tvDayPoint.setText(StringUtils.fenToYuan(agencyUser.getDaypoint()));
+            tvBroadcastCode.setText(agencyUser.getCode());
         }
         if (agencyItemBeanList != null && agencyItemBeanList.size() > 0) {
             agencyListAdapter.setNewData(agencyItemBeanList);
@@ -235,11 +256,11 @@ public class AgencyListFragment extends BasePresentListFragment<AgencyListPresen
     @Override
     public void setChangeLowerRate(LowerRateBean lowerRateBean) {
         onRefresh();
-        ToastUtils.showShortToast(getContext(),"设置成功");
+        ToastUtils.showShortToast(getContext(), "设置成功");
     }
 
     @Override
     public void setChangeLowerRateFail() {
-        ToastUtils.showShortToast(getContext(),"设置失败");
+        ToastUtils.showShortToast(getContext(), "设置失败");
     }
 }

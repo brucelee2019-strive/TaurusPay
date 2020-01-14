@@ -86,6 +86,8 @@ public class MineFragment extends BasePresentFragment<LoginPresenter> implements
         } else {
             tvUserNickname.setText(PreferencesUtils.getString(getContext(), "name"));
             tvPayName.setText(PreferencesUtils.getString(getContext(), "payname"));
+            clActivateWord.setVisibility(MyFrameApplication.userType == 3 ? View.GONE : View.VISIBLE);
+            tvActivateWordLine.setVisibility(MyFrameApplication.userType == 3 ? View.GONE : View.VISIBLE);
         }
     }
 

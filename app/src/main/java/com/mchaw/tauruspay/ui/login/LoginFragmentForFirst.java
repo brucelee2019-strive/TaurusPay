@@ -133,6 +133,7 @@ public class LoginFragmentForFirst extends BasePresentFragment<LoginPresenter> i
     public void onClick(View view) {
         if (!notificationListenerEnable()) {
             NotifyDialog.showDialog(getSupportFragmentManager());
+            return;
         }
         if (AntiShake.check(view.getId())) {    //判断是否多次点击
             return;

@@ -1,5 +1,7 @@
 package com.mchaw.tauruspay.common.util;
 
+import com.mchaw.tauruspay.MyFrameApplication;
+
 import java.text.DecimalFormat;
 
 /**
@@ -63,7 +65,12 @@ public class StringUtils {
 
     public static String earningsYuan(int f){
         DecimalFormat df=new DecimalFormat("0.00");
-        String str = df.format(Math.ceil(f*6/1000)/100);
+        String str = "";
+        if(MyFrameApplication.userType == 2 || MyFrameApplication.userType == 3){
+            str = df.format(Math.ceil(f * MyFrameApplication.userRate / 1000) / 100);
+        }else {
+            str = df.format(Math.ceil(f * 6 / 1000) / 100);
+        }
         return str;
     }
 }

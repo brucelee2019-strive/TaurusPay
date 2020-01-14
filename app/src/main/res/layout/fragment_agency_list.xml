@@ -10,7 +10,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="130dp"
         android:background="@drawable/cz_kchf_bg">
 
         <TextView
@@ -24,7 +24,7 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/textView67"
+            app:layout_constraintBottom_toTopOf="@+id/textView74"
             app:layout_constraintVertical_chainStyle="spread"/>
 
         <TextView
@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="库存话费(元):"
+            android:text="返点(千分之):"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@+id/tv_acount"
             app:layout_constraintStart_toEndOf="@+id/tv_live"
@@ -51,9 +51,10 @@
             app:layout_constraintTop_toTopOf="@+id/tv_acount" />
 
         <TextView
-            android:id="@+id/tv_inventory"
+            android:id="@+id/tv_rate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
             android:text="0.00"
             android:textColor="@color/f54343"
             android:textSize="16sp"
@@ -67,9 +68,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="下载链接:"
+            android:textSize="12sp"
             android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="@+id/tv_acount"
-            app:layout_constraintTop_toBottomOf="@+id/tv_acount"
+            app:layout_constraintTop_toBottomOf="@+id/textView75"
             app:layout_constraintBottom_toTopOf="@+id/textView68"/>
 
         <TextView
@@ -77,6 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="推广码:"
+            android:textSize="12sp"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/textView67"
@@ -134,6 +137,98 @@
             app:layout_constraintBottom_toBottomOf="@+id/tv_broadcast_code"
             app:layout_constraintStart_toEndOf="@+id/tv_broadcast_code"
             app:layout_constraintTop_toTopOf="@+id/tv_broadcast_code" />
+
+        <TextView
+            android:id="@+id/textView74"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="昨日下级代售总额:"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/textView75"
+            app:layout_constraintStart_toStartOf="@+id/tv_acount"
+            app:layout_constraintTop_toBottomOf="@+id/tv_acount" />
+
+        <TextView
+            android:id="@+id/textView75"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="今日下级代售总额:"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/textView67"
+            app:layout_constraintStart_toStartOf="@+id/textView74"
+            app:layout_constraintTop_toBottomOf="@+id/textView74" />
+
+        <TextView
+            android:id="@+id/tv_y_day_despoint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:text="0.00"
+            android:textStyle="bold"
+            android:textColor="@color/f54343"
+            app:layout_constraintBottom_toBottomOf="@+id/textView74"
+            app:layout_constraintStart_toEndOf="@+id/textView74"
+            app:layout_constraintTop_toTopOf="@+id/textView74" />
+
+        <TextView
+            android:id="@+id/tv_day_despoint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:text="0.00"
+            android:textStyle="bold"
+            android:textColor="@color/f54343"
+            app:layout_constraintBottom_toBottomOf="@+id/textView75"
+            app:layout_constraintStart_toEndOf="@+id/textView75"
+            app:layout_constraintTop_toTopOf="@+id/textView75" />
+
+        <TextView
+            android:id="@+id/textView78"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="昨日总收益:"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/textView74"
+            app:layout_constraintStart_toEndOf="@+id/textView73"
+            app:layout_constraintTop_toTopOf="@+id/textView74" />
+
+        <TextView
+            android:id="@+id/textView79"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="今日总收益:"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/textView75"
+            app:layout_constraintStart_toStartOf="@+id/textView78"
+            app:layout_constraintTop_toTopOf="@+id/textView75" />
+
+        <TextView
+            android:id="@+id/tv_y_day_point"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:text="0.00"
+            android:textStyle="bold"
+            android:textColor="@color/f54343"
+            app:layout_constraintBottom_toBottomOf="@+id/textView78"
+            app:layout_constraintStart_toEndOf="@+id/textView78"
+            app:layout_constraintTop_toTopOf="@+id/textView78" />
+
+        <TextView
+            android:id="@+id/tv_day_point"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:text="0.00"
+            android:textStyle="bold"
+            android:textColor="@color/f54343"
+            app:layout_constraintBottom_toBottomOf="@+id/textView79"
+            app:layout_constraintStart_toEndOf="@+id/textView79"
+            app:layout_constraintTop_toTopOf="@+id/textView79" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

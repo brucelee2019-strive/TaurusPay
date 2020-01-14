@@ -7,13 +7,26 @@ package com.mchaw.tauruspay.bean.agency;
  */
 public class AgencyUser {
 
+
     /**
-     * name : wu123123
+     * name : wu888888
      * point : 0
+     * rate : 6
+     * code : 2021
+     * ydaypoint : 277
+     * ydaydeposit : 138900
+     * daypoint : 0
+     * daydeposit : 0
      */
 
     private String name;
-    private String point;
+    private int point;
+    private int rate;
+    private String code;
+    private String ydaypoint;
+    private String ydaydeposit;
+    private String daypoint;
+    private String daydeposit;
 
     public String getName() {
         return name;
@@ -23,11 +36,59 @@ public class AgencyUser {
         this.name = name;
     }
 
-    public String getPoint() {
+    public int getPoint() {
         return point;
     }
 
-    public void setPoint(String point) {
+    public void setPoint(int point) {
         this.point = point;
+    }
+
+    public int getRate() {
+        return rate;
+    }
+
+    public void setRate(int rate) {
+        this.rate = rate;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getYdaypoint() {
+        return ydaypoint;
+    }
+
+    public void setYdaypoint(String ydaypoint) {
+        this.ydaypoint = ydaypoint;
+    }
+
+    public String getYdaydeposit() {
+        return ydaydeposit;
+    }
+
+    public void setYdaydeposit(String ydaydeposit) {
+        this.ydaydeposit = ydaydeposit;
+    }
+
+    public String getDaypoint() {
+        return daypoint;
+    }
+
+    public void setDaypoint(String daypoint) {
+        this.daypoint = daypoint;
+    }
+
+    public String getDaydeposit() {
+        return daydeposit;
+    }
+
+    public void setDaydeposit(String daydeposit) {
+        this.daydeposit = daydeposit;
     }
 }
