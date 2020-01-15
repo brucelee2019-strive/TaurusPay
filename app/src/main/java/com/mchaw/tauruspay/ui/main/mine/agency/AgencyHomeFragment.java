@@ -90,6 +90,16 @@ public class AgencyHomeFragment extends BasePresentListFragment<AgencyListPresen
     }
 
     @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (hidden) {
+
+        } else {
+           onRefresh();
+        }
+    }
+
+    @Override
     protected void initFragment() {
         super.initFragment();
         rvAgencyList.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -109,7 +119,6 @@ public class AgencyHomeFragment extends BasePresentListFragment<AgencyListPresen
                 agencyList.add(String.valueOf(i));
             }
         }
-        onRefresh();
     }
 
     @Override
@@ -273,5 +282,11 @@ public class AgencyHomeFragment extends BasePresentListFragment<AgencyListPresen
     @Override
     public void setChangeLowerRateFail() {
         ToastUtils.showShortToast(getContext(), "设置失败");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        onRefresh();
     }
 }
