@@ -351,6 +351,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
      */
     @Subscribe
     public void loginSucceed(LoginSucceedEvent event) {
+        showFragment(FRAGMENT_HOME);
         if (MyFrameApplication.userType != 1) {
             startPolling(1, 5);
         }
@@ -522,7 +523,6 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
     @Override
     protected void onResume() {
         super.onResume();
-        showFragment(FRAGMENT_HOME);
     }
 
     @Override
