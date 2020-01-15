@@ -98,21 +98,6 @@ public class AgencyListFragment extends BasePresentListFragment<AgencyListPresen
         tvDownLink.setText("http://115.144.238.240:8090/index.html");
         btnAgencyRule.setVisibility(MyFrameApplication.userType == 1 ? View.VISIBLE : View.GONE);
         if (MyFrameApplication.userType == 1) {
-//            agencyList.add("1");
-//            agencyList.add("2");
-//            agencyList.add("3");
-//            agencyList.add("4");
-//            agencyList.add("5");
-//            agencyList.add("6");
-//            agencyList.add("7");
-//            agencyList.add("8");
-//            agencyList.add("9");
-//            agencyList.add("10");
-//            agencyList.add("11");
-//            agencyList.add("12");
-//            agencyList.add("13");
-//            agencyList.add("14");
-//            agencyList.add("15");
             for (int i = 5; i < MyFrameApplication.userRate; i++) {
                 agencyList.add(String.valueOf(i));
             }
@@ -120,15 +105,6 @@ public class AgencyListFragment extends BasePresentListFragment<AgencyListPresen
             for (int i = 3; i < MyFrameApplication.userRate; i++) {
                 agencyList.add(String.valueOf(i));
             }
-//            agencyList.add("1");
-//            agencyList.add("2");
-//            agencyList.add("3");
-//            agencyList.add("4");
-//            agencyList.add("5");
-//            agencyList.add("6");
-//            agencyList.add("7");
-//            agencyList.add("8");
-//            agencyList.add("9");
         }
         onRefresh();
     }
