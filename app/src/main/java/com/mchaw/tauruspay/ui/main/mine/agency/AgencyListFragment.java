@@ -96,7 +96,7 @@ public class AgencyListFragment extends BasePresentListFragment<AgencyListPresen
         tvLive.setText(MyFrameApplication.userType == 1 ? "(一级代理)" : "(二级代理)");
         //tvBroadcastCode.setText(MyFrameApplication.userInviteCode);
         tvDownLink.setText("http://115.144.238.240:8090/index.html");
-        btnAgencyRule.setVisibility(MyFrameApplication.userType==1?View.VISIBLE:View.GONE);
+        btnAgencyRule.setVisibility(MyFrameApplication.userType == 1 ? View.VISIBLE : View.GONE);
         if (MyFrameApplication.userType == 1) {
 //            agencyList.add("1");
 //            agencyList.add("2");
@@ -187,7 +187,7 @@ public class AgencyListFragment extends BasePresentListFragment<AgencyListPresen
         }
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_back_title, R.id.btn_copy_link, R.id.btn_copy_code,R.id.btn_agency_rule})
+    @OnClick({R.id.iv_back, R.id.tv_back_title, R.id.btn_copy_link, R.id.btn_copy_code, R.id.btn_agency_rule})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -260,15 +260,15 @@ public class AgencyListFragment extends BasePresentListFragment<AgencyListPresen
         }
         List<RateBean> rateBeanList = new ArrayList<>();
         rateBeanList = agencyBean.getRate();
-        if(rateBeanList!=null && rateBeanList.size()>0){
+        if (rateBeanList != null && rateBeanList.size() > 0) {
+            ruleList = new ArrayList<>();
             ruleList.add("当日代售额度 : 返点率");
-            for(int i =0;i<rateBeanList.size();i++){
-                if(i==rateBeanList.size()-1){
+            for (int i = 0; i < rateBeanList.size(); i++) {
+                if (i == rateBeanList.size() - 1) {
                     ruleList.add("      大于" + StringUtils.fenToWYuan(rateBeanList.get(i).getMin()) + "万 :   " + rateBeanList.get(i).getRate() + "‰");
-                }else {
+                } else {
                     ruleList.add("      " + StringUtils.fenToWYuan(rateBeanList.get(i).getMin()) + "-" + StringUtils.fenToWYuan(rateBeanList.get(i).getMax()) + "万 :   " + rateBeanList.get(i).getRate() + "‰");
                 }
-
             }
 //            ruleList.add("      0-10万 :    9‰");
 //            ruleList.add("     10-50万 :   10‰");
