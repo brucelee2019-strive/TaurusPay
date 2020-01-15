@@ -64,6 +64,10 @@ public class MineFragment extends BasePresentFragment<LoginPresenter> implements
     ConstraintLayout clActivateWord;
     @BindView(R.id.tv_activate_word_line)
     TextView tvActivateWordLine;
+    @BindView(R.id.cl_qr_code)
+    ConstraintLayout clQRCode;
+    @BindView(R.id.tv_qr_code_line)
+    TextView tv_QR_Code_Line;
 
     private QBadgeView qBadgeView;
 
@@ -88,6 +92,8 @@ public class MineFragment extends BasePresentFragment<LoginPresenter> implements
             tvPayName.setText(PreferencesUtils.getString(getContext(), "payname"));
             clActivateWord.setVisibility(MyFrameApplication.userType == 3 ? View.GONE : View.VISIBLE);
             tvActivateWordLine.setVisibility(MyFrameApplication.userType == 3 ? View.GONE : View.VISIBLE);
+            clQRCode.setVisibility(MyFrameApplication.userType == 1 ? View.GONE : View.VISIBLE);
+            tv_QR_Code_Line.setVisibility(MyFrameApplication.userType == 1 ? View.GONE : View.VISIBLE);
         }
     }
 
@@ -102,6 +108,8 @@ public class MineFragment extends BasePresentFragment<LoginPresenter> implements
                 .bindTarget(tvRedIcon);
         clActivateWord.setVisibility(MyFrameApplication.userType == 3 ? View.GONE : View.VISIBLE);
         tvActivateWordLine.setVisibility(MyFrameApplication.userType == 3 ? View.GONE : View.VISIBLE);
+        clQRCode.setVisibility(MyFrameApplication.userType == 1 ? View.GONE : View.VISIBLE);
+        tv_QR_Code_Line.setVisibility(MyFrameApplication.userType == 1 ? View.GONE : View.VISIBLE);
     }
 
     @Override

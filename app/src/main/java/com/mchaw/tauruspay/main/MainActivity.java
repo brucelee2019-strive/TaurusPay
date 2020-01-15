@@ -62,6 +62,8 @@ import com.mchaw.tauruspay.service.PayNotifiService;
 //import com.mchaw.tauruspay.ui.SplashActivity;
 import android.content.BroadcastReceiver;
 
+import com.mchaw.tauruspay.ui.main.mine.agency.AgencyHomeFragment;
+import com.mchaw.tauruspay.ui.main.mine.agency.AgencyListFragment;
 import com.mchaw.tauruspay.ui.main.recharge.RechargeAuditFragment;
 import com.mchaw.tauruspay.ui.main.recharge.RechargeFragment;
 
@@ -94,12 +96,14 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
     private BesureFragment besureFragment;
     private MineFragment mineFragment;
 
+    private AgencyHomeFragment agencyHomeFragment;
+
     private static List<ReceivablesBean> receivablesBeanList = new ArrayList<>();
 
     @BindView(R.id.bottom_view)
     BottomNavigationViewEx bottomView;
 
-    private QBadgeView qBadgeView,qBadgeView2;
+    private QBadgeView qBadgeView, qBadgeView2;
 
     @Override
     public int getContentViewId() {
@@ -133,7 +137,9 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
             }
         }
         //大轮询与通知轮询
-        startPolling(1, 5);
+        if (MyFrameApplication.userType != 1) {
+            startPolling(1, 5);
+        }
         noticeStartPolling(10, 120);
         //我的上通知小红点
         qBadgeView = new QBadgeView(this);
@@ -184,7 +190,8 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
                     && fragment != rechargeFragment
                     && fragment != rechargeAuditFragment
                     && fragment != besureFragment
-                    && fragment != mineFragment) {
+                    && fragment != mineFragment
+                    && fragment != agencyHomeFragment) {
                 ft.remove(fragment);
             }
         }
@@ -201,12 +208,22 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
         hideFragment(ft);
         switch (index) {
             case FRAGMENT_HOME:
-                if (homeFragment == null) {
-                    homeFragment = new HomeFragment();
-                    ft.add(R.id.fragment_content, homeFragment, HomeFragment.class.getName());
+                if (MyFrameApplication.userType == 1) {
+                    if (agencyHomeFragment == null) {
+                        agencyHomeFragment = new AgencyHomeFragment();
+                        ft.add(R.id.fragment_content, agencyHomeFragment, AgencyHomeFragment.class.getName());
+                    } else {
+                        ft.show(agencyHomeFragment);
+                    }
                 } else {
-                    ft.show(homeFragment);
+                    if (homeFragment == null) {
+                        homeFragment = new HomeFragment();
+                        ft.add(R.id.fragment_content, homeFragment, HomeFragment.class.getName());
+                    } else {
+                        ft.show(homeFragment);
+                    }
                 }
+
                 break;
             case FRAGMENT_RECHARGE:
                 if (MyFrameApplication.userType == 1) {
@@ -272,6 +289,10 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
         if (mineFragment != null) {
             ft.hide(mineFragment);
         }
+
+        if (agencyHomeFragment != null) {
+            ft.hide(agencyHomeFragment);
+        }
     }
 
     /**
@@ -330,7 +351,9 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
      */
     @Subscribe
     public void loginSucceed(LoginSucceedEvent event) {
-        startPolling(1, 5);
+        if (MyFrameApplication.userType != 1) {
+            startPolling(1, 5);
+        }
         noticeStartPolling(10, 120);
     }
 
@@ -434,7 +457,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
             qBadgeView2.setBadgeNumber(list.size());
             WarningToneUtils.getInstance().playAuditSound();
             EventBus.getDefault().post(new RechargeAuditEvent());
-        }else{
+        } else {
             qBadgeView2.setBadgeNumber(0);
         }
     }
@@ -481,7 +504,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
                             if (!TextUtils.isEmpty(MyFrameApplication.getInstance().tokenStr)) {
                                 presenter.getNotice(MyFrameApplication.getInstance().tokenStr, "0");
                                 if (MyFrameApplication.userType == 1) {
-                                    presenter.getRechargeAuditList(MyFrameApplication.tokenStr, 0,0);
+                                    presenter.getRechargeAuditList(MyFrameApplication.tokenStr, 0, 0);
                                 }
                             }
                         }
@@ -499,6 +522,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
     @Override
     protected void onResume() {
         super.onResume();
+        showFragment(FRAGMENT_HOME);
     }
 
     @Override

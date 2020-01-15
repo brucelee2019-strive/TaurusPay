@@ -94,6 +94,7 @@ public class LoginFragmentForFirst extends BasePresentFragment<LoginPresenter> i
             return;
         }
         MyFrameApplication.tokenStr = loginBean.getToken();
+        MyFrameApplication.userType = loginBean.getType();
         PreferencesUtils.putString(getContext(),"token",loginBean.getToken());
         PreferencesUtils.putString(getContext(),"name",loginBean.getName());
         PreferencesUtils.putString(getContext(),"payname",loginBean.getPayname());

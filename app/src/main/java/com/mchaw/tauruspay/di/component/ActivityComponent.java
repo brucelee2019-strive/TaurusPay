@@ -15,6 +15,7 @@ import com.mchaw.tauruspay.ui.main.home.forsale.ForSaleListFragment;
 import com.mchaw.tauruspay.ui.main.home.transferaccounts.TransferAccountsFragment;
 import com.mchaw.tauruspay.ui.main.mine.MineFragment;
 import com.mchaw.tauruspay.ui.main.mine.activate.ActivateCodeFragment;
+import com.mchaw.tauruspay.ui.main.mine.agency.AgencyHomeFragment;
 import com.mchaw.tauruspay.ui.main.mine.agency.AgencyListFragment;
 import com.mchaw.tauruspay.ui.main.mine.bill.BillFragment;
 import com.mchaw.tauruspay.ui.main.mine.notice.NoticeDetailFragment;
@@ -93,4 +94,6 @@ public interface ActivityComponent {
     void inject(LowerRechargeSucceedFragment lowerRechargeSucceedFragment);
 
     void inject(LowerRechargeFailFragment lowerRechargeFailFragment);
+
+    void inject(AgencyHomeFragment agencyHomeFragment);
 }

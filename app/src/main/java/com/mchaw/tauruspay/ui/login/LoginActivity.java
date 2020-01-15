@@ -76,6 +76,7 @@ public class LoginActivity extends BasePresenterActivity<LoginPresenter> impleme
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
         MyFrameApplication.tokenStr = loginBean.getToken();
+        MyFrameApplication.userType = loginBean.getType();
         PreferencesUtils.putString(LoginActivity.this,"token",loginBean.getToken());
         PreferencesUtils.putString(LoginActivity.this,"name",loginBean.getName());
         PreferencesUtils.putString(LoginActivity.this,"payname",loginBean.getPayname());
