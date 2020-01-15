@@ -14,6 +14,7 @@ import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.dialog.DialogCallBack;
 import com.mchaw.tauruspay.base.fragment.BasePresentListFragment;
 import com.mchaw.tauruspay.bean.eventbus.ForbiddenEvent;
+import com.mchaw.tauruspay.bean.eventbus.PXVAuditEvent;
 import com.mchaw.tauruspay.bean.eventbus.RechargeAuditEvent;
 import com.mchaw.tauruspay.bean.eventbus.mainpolling.MainPollingUserEvent;
 import com.mchaw.tauruspay.bean.home.UserBean;
@@ -34,6 +35,7 @@ import com.mchaw.tauruspay.ui.main.recharge.constract.RechargeAuditConstract;
 import com.mchaw.tauruspay.ui.main.recharge.presenter.RechargeAuditPresenter;
 import com.mchaw.tauruspay.ui.main.recharge.record.RecordMainFragment;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
@@ -122,6 +124,7 @@ public class RechargeAuditFragment extends BasePresentListFragment<RechargeAudit
     @Override
     public void setRechargeAudit(AuditBean auditBean) {
         LoadingDialog.dismissDailog();
+        EventBus.getDefault().post(new PXVAuditEvent());
         onRefresh();
         if (auditBean.getStatus() == 4) {
             ToastUtils.showShortToast(getContext(),"您已确认此笔充值");

@@ -37,6 +37,7 @@ import com.mchaw.tauruspay.bean.eventbus.LoginSucceedEvent;
 import com.mchaw.tauruspay.bean.eventbus.LoginoutEvent;
 import com.mchaw.tauruspay.bean.eventbus.NoticeEvent;
 import com.mchaw.tauruspay.bean.eventbus.NoticeSureEvent;
+import com.mchaw.tauruspay.bean.eventbus.PXVAuditEvent;
 import com.mchaw.tauruspay.bean.eventbus.RechargeAuditEvent;
 import com.mchaw.tauruspay.bean.eventbus.TradedBeanEvent;
 import com.mchaw.tauruspay.bean.eventbus.TradingBeanEvent;
@@ -490,7 +491,6 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
 
     //以下是消息通知轮询
     private Disposable noticeDisposable;
-
     public void noticeStartPolling(int start, int time) {
         toggleNotificationListenerService();
         Log.i("cici", "消息通知，开始轮询...");
@@ -576,6 +576,17 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
             return;
         }
         qBadgeView.setBadgeNumber(noticeSureEvent.getNoticeNum());
+    }
+
+    /**
+     * 一级代理审核 刷新
+     * @param event
+     */
+    @Subscribe
+    public void PXVAuditUpdate(PXVAuditEvent event) {
+        if (MyFrameApplication.userType == 1) {
+            presenter.getRechargeAuditList(MyFrameApplication.tokenStr, 0, 0);
+        }
     }
 
     /**
