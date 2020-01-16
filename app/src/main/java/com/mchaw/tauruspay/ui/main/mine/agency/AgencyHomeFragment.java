@@ -95,7 +95,7 @@ public class AgencyHomeFragment extends BasePresentListFragment<AgencyListPresen
         if (hidden) {
 
         } else {
-           onRefresh();
+            onRefresh();
         }
     }
 
@@ -241,11 +241,6 @@ public class AgencyHomeFragment extends BasePresentListFragment<AgencyListPresen
                     ruleList.add("      " + StringUtils.fenToWYuan(rateBeanList.get(i).getMin()) + "-" + StringUtils.fenToWYuan(rateBeanList.get(i).getMax()) + "万 :   " + rateBeanList.get(i).getRate() + "‰");
                 }
             }
-//            ruleList.add("      0-10万 :    9‰");
-//            ruleList.add("     10-50万 :   10‰");
-//            ruleList.add("    50-100万 :   11‰");
-//            ruleList.add("   100-200万 :   12‰");
-//            ruleList.add("   大于200万 :   13‰");
         }
         if (agencyItemBeanList != null && agencyItemBeanList.size() > 0) {
             agencyListAdapter.setNewData(agencyItemBeanList);
@@ -278,6 +273,7 @@ public class AgencyHomeFragment extends BasePresentListFragment<AgencyListPresen
         //tvBroadcastCode.setText(MyFrameApplication.userInviteCode);
         tvDownLink.setText("http://115.144.238.240:8090/index.html");
         btnAgencyRule.setVisibility(MyFrameApplication.userType == 1 ? View.VISIBLE : View.GONE);
+        agencyList = new ArrayList<>();
         if (MyFrameApplication.userType == 1) {
             for (int i = 5; i < MyFrameApplication.userRate; i++) {
                 agencyList.add(String.valueOf(i));
