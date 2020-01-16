@@ -132,9 +132,6 @@ public class HomeFragment extends BasePresentFragment<HomePresenter> implements 
     @Override
     public void onResume() {
         super.onResume();
-        if (!TextUtils.isEmpty(MyFrameApplication.getInstance().tokenStr)) {
-            presenter.getHomeDataBean(MyFrameApplication.getInstance().tokenStr);
-        }
     }
 
     @OnClick({R.id.btn_transfer_btn, R.id.btn_start_sail})

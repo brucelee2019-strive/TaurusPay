@@ -196,6 +196,5 @@ public class RechargeFragment extends BasePresentListFragment<RechargeListPresen
     @Override
     public void onResume() {
         super.onResume();
-        onRefresh();
     }
 }

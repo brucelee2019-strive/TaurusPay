@@ -95,17 +95,38 @@ public class AgencyHomeFragment extends BasePresentListFragment<AgencyListPresen
         if (hidden) {
 
         } else {
-            onRefresh();
+            agentResume();
         }
     }
 
     @Override
     protected void initFragment() {
         super.initFragment();
+        tvDownLink.setText("http://115.144.238.240:8090/index.html");
         rvAgencyList.setLayoutManager(new LinearLayoutManager(getContext()));
         agencyListAdapter = new AgencyListAdapter(list);
         agencyListAdapter.setOnItemChildClickListener(this);
         rvAgencyList.setAdapter(agencyListAdapter);
+        agentResume();
+    }
+
+    /**
+     * 一级代理账号切换,初始话方法
+     */
+    private void agentResume(){
+        tvLive.setText(MyFrameApplication.userType == 1 ? "(一级代理)" : "(二级代理)");
+        btnAgencyRule.setVisibility(MyFrameApplication.userType == 1 ? View.VISIBLE : View.GONE);
+        agencyList = new ArrayList<>();
+        if (MyFrameApplication.userType == 1) {
+            for (int i = 5; i < MyFrameApplication.userRate; i++) {
+                agencyList.add(String.valueOf(i));
+            }
+        } else {
+            for (int i = 3; i < MyFrameApplication.userRate; i++) {
+                agencyList.add(String.valueOf(i));
+            }
+        }
+        onRefresh();
     }
 
     @Override
@@ -271,20 +292,5 @@ public class AgencyHomeFragment extends BasePresentListFragment<AgencyListPresen
     @Override
     public void onResume() {
         super.onResume();
-        tvLive.setText(MyFrameApplication.userType == 1 ? "(一级代理)" : "(二级代理)");
-        //tvBroadcastCode.setText(MyFrameApplication.userInviteCode);
-        tvDownLink.setText("http://115.144.238.240:8090/index.html");
-        btnAgencyRule.setVisibility(MyFrameApplication.userType == 1 ? View.VISIBLE : View.GONE);
-        agencyList = new ArrayList<>();
-        if (MyFrameApplication.userType == 1) {
-            for (int i = 5; i < MyFrameApplication.userRate; i++) {
-                agencyList.add(String.valueOf(i));
-            }
-        } else {
-            for (int i = 3; i < MyFrameApplication.userRate; i++) {
-                agencyList.add(String.valueOf(i));
-            }
-        }
-        onRefresh();
     }
 }
