@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
@@ -37,8 +39,10 @@ import com.mchaw.tauruspay.ui.main.recharge.record.RecordMainFragment;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -113,7 +117,9 @@ public class RechargeAuditFragment extends BasePresentListFragment<RechargeAudit
     protected void onRefresh() {
         rechargeAuditAdapter.setEmptyView(loadingView);
         presenter.getHomeDataBean(PreferencesUtils.getString(getContext(), "token"));
-        presenter.getRechargeAuditList(MyFrameApplication.tokenStr,0,0);
+        if (MyFrameApplication.userType == 1) {
+            presenter.getRechargeAuditList(MyFrameApplication.tokenStr, 0, 0);
+        }
     }
 
     @Override
@@ -127,9 +133,9 @@ public class RechargeAuditFragment extends BasePresentListFragment<RechargeAudit
         EventBus.getDefault().post(new PXVAuditEvent());
         onRefresh();
         if (auditBean.getStatus() == 4) {
-            ToastUtils.showShortToast(getContext(),"您已确认此笔充值");
+            ToastUtils.showShortToast(getContext(), "您已确认此笔充值");
         } else {
-            ToastUtils.showShortToast(getContext(),"您已拒绝此笔充值");
+            ToastUtils.showShortToast(getContext(), "您已拒绝此笔充值");
         }
     }
 
@@ -184,10 +190,10 @@ public class RechargeAuditFragment extends BasePresentListFragment<RechargeAudit
                     public void onDialogViewClick(int type, Object value) {
                         if (type == DIALOG_CONFIRM) {
                             LoadingDialog.showDialog(getChildFragmentManager());
-                            presenter.getRechargeAudit(MyFrameApplication.tokenStr, rechargeAuditBean.getOrderid(),4);
+                            presenter.getRechargeAudit(MyFrameApplication.tokenStr, rechargeAuditBean.getOrderid(), 4);
                         } else if (type == DIALOG_CANCEL) {
                             LoadingDialog.showDialog(getChildFragmentManager());
-                            presenter.getRechargeAudit(MyFrameApplication.tokenStr, rechargeAuditBean.getOrderid(),3);
+                            presenter.getRechargeAudit(MyFrameApplication.tokenStr, rechargeAuditBean.getOrderid(), 3);
                         } else {
 
                         }

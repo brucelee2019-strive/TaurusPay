@@ -130,7 +130,9 @@ public class AgencyHomeFragment extends BasePresentListFragment<AgencyListPresen
     @Override
     protected void onRefresh() {
         agencyListAdapter.setEmptyView(loadingView);
-        presenter.getAgent(MyFrameApplication.tokenStr);
+        if(MyFrameApplication.userType == 1) {
+            presenter.getAgent(MyFrameApplication.tokenStr);
+        }
     }
 
     private List<String> agencyList = new ArrayList<>();
