@@ -25,6 +25,7 @@ import com.mchaw.tauruspay.bean.agency.AgencyItemBean;
 import com.mchaw.tauruspay.bean.agency.AgencyUser;
 import com.mchaw.tauruspay.bean.agency.LowerRateBean;
 import com.mchaw.tauruspay.bean.agency.RateBean;
+import com.mchaw.tauruspay.bean.eventbus.LoginSucceedEvent;
 import com.mchaw.tauruspay.common.util.StringUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
@@ -34,6 +35,8 @@ import com.mchaw.tauruspay.ui.main.mine.agency.adapter.AgencyListAdapter;
 import com.mchaw.tauruspay.ui.main.mine.agency.constract.AgencyListConstract;
 import com.mchaw.tauruspay.ui.main.mine.agency.presenter.AgencyListPresenter;
 import com.mchaw.tauruspay.ui.repository.LoginModel;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,16 +119,6 @@ public class AgencyHomeFragment extends BasePresentListFragment<AgencyListPresen
     private void agentResume(){
         tvLive.setText(MyFrameApplication.userType == 1 ? "(一级代理)" : "(二级代理)");
         btnAgencyRule.setVisibility(MyFrameApplication.userType == 1 ? View.VISIBLE : View.GONE);
-        agencyList = new ArrayList<>();
-        if (MyFrameApplication.userType == 1) {
-            for (int i = 5; i < MyFrameApplication.userRate; i++) {
-                agencyList.add(String.valueOf(i));
-            }
-        } else {
-            for (int i = 3; i < MyFrameApplication.userRate; i++) {
-                agencyList.add(String.valueOf(i));
-            }
-        }
         onRefresh();
     }
 
@@ -158,7 +151,6 @@ public class AgencyHomeFragment extends BasePresentListFragment<AgencyListPresen
 
     private List<String> agencyList = new ArrayList<>();
     private String currentAgency;
-
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
         AgencyItemBean agencyItemBean = (AgencyItemBean) adapter.getItem(position);
@@ -252,6 +244,16 @@ public class AgencyHomeFragment extends BasePresentListFragment<AgencyListPresen
             tvDayPoint.setText(StringUtils.fenToYuan(agencyUser.getDaypoint()));
             tvBroadcastCode.setText(agencyUser.getCode());
         }
+        agencyList = new ArrayList<>();
+        if (MyFrameApplication.userType == 1) {
+            for (int i = 0; i < MyFrameApplication.userRate; i++) {
+                agencyList.add(String.valueOf(i));
+            }
+        } else {
+            for (int i = 0; i < MyFrameApplication.userRate; i++) {
+                agencyList.add(String.valueOf(i));
+            }
+        }
         List<RateBean> rateBeanList = new ArrayList<>();
         rateBeanList = agencyBean.getRate();
         if (rateBeanList != null && rateBeanList.size() > 0) {
@@ -292,5 +294,10 @@ public class AgencyHomeFragment extends BasePresentListFragment<AgencyListPresen
     @Override
     public void onResume() {
         super.onResume();
+    }
+
+    @Subscribe
+    public void loginSucceed(LoginSucceedEvent event) {
+        onRefresh();
     }
 }
