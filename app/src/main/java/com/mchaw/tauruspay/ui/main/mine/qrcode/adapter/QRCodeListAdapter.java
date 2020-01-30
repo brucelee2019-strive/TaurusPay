@@ -96,7 +96,7 @@ public class QRCodeListAdapter extends BaseMultiItemQuickAdapter<MultipleItem, B
                 int yscQRCodeNum = 0;
                 helper.addOnClickListener(R.id.cl_303, R.id.cl_313, R.id.cl_785, R.id.cl_786, R.id.cl_1215, R.id.cl_1216, R.id.cl_2515,
                         R.id.cl_2516, R.id.cl_4985, R.id.cl_4988, R.id.cl_7988, R.id.cl_9988
-                        , R.id.tv_show_order_list, R.id.iv_delete);
+                        , R.id.tv_show_order_list,R.id.tv_show_notice, R.id.iv_delete);
                 helper.setImageResource(R.id.iv_ds_icon, (groupinfoBean.getPaytype() == 1 || groupinfoBean.getPaytype() == 3)? R.drawable.ds_icon_zfb : R.drawable.ds_icon_wx);
                 helper.setText(R.id.tv_position, String.valueOf((helper.getPosition() + 1)));
                 helper.setText(R.id.tv_zfb_account, groupinfoBean.getAccount());
@@ -105,6 +105,7 @@ public class QRCodeListAdapter extends BaseMultiItemQuickAdapter<MultipleItem, B
                 helper.setGone(R.id.ll_2, groupinfoBean.isShowItems());
                 helper.setGone(R.id.ll_3, groupinfoBean.isShowItems());
                 helper.setImageResource(R.id.tv_show_order_list, groupinfoBean.isShowItems() == true ? R.drawable.ds_btn_sq : R.drawable.ds_btn_zk);
+                helper.setText(R.id.tv_show_notice,groupinfoBean.isShowItems() == true ?"点击收起":"展开上传二维码");
                 if (groupinfoBean.getQrcodes() != null && groupinfoBean.getQrcodes().size() > 0) {
                     for (int i = 0; i < groupinfoBean.getQrcodes().size(); i++) {
                         setQRCodeStatus(groupinfoBean.getQrcodes().get(i), helper, i, groupinfoBean.getPaytype());
@@ -123,13 +124,14 @@ public class QRCodeListAdapter extends BaseMultiItemQuickAdapter<MultipleItem, B
                 int yscQRCodeNum1 = 0;
                 helper.addOnClickListener(R.id.cl_303, R.id.cl_313, R.id.cl_785, R.id.cl_786, R.id.cl_1215, R.id.cl_1216, R.id.cl_2515,
                         R.id.cl_2516, R.id.cl_4985, R.id.cl_4988, R.id.cl_7988, R.id.cl_9988
-                        , R.id.tv_show_order_list, R.id.iv_delete);
+                        , R.id.tv_show_order_list, R.id.tv_show_notice,R.id.iv_delete);
                 helper.setImageResource(R.id.iv_ds_icon, (groupinfoBean1.getPaytype() == 1 || groupinfoBean1.getPaytype() == 3) ? R.drawable.ds_icon_zfb : R.drawable.ds_icon_wx);
                 helper.setText(R.id.tv_position, String.valueOf((helper.getPosition() + 1)));
                 helper.setText(R.id.tv_zfb_account, groupinfoBean1.getAccount());
                 helper.setText(R.id.tv_zfb_nike_name, groupinfoBean1.getNick());
                 helper.setGone(R.id.ll_1, groupinfoBean1.isShowItems());
                 helper.setImageResource(R.id.tv_show_order_list, groupinfoBean1.isShowItems() == true ? R.drawable.ds_btn_sq : R.drawable.ds_btn_zk);
+                helper.setText(R.id.tv_show_notice,groupinfoBean1.isShowItems() == true ?"点击收起":"展开上传二维码");
                 if (groupinfoBean1.getQrcodes() != null && groupinfoBean1.getQrcodes().size() > 0) {
                     for (int i = 0; i < groupinfoBean1.getQrcodes().size(); i++) {
                         setQRCodeStatus(groupinfoBean1.getQrcodes().get(i), helper, i, groupinfoBean1.getPaytype());

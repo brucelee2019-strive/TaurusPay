@@ -138,7 +138,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
 
         onRefresh();
         pageState = Constant.PAGE_NORMAL_STATE;
-        ToastUtils.showShortToast(getContext(),"确保二维码上传并审核通过，才能开启代售！");
+        ToastUtils.showShortToast(getContext(), "确保二维码上传并审核通过，才能开启代售！");
     }
 
     @Override
@@ -200,7 +200,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
 
     private Animation animation;
 
-    @OnClick({R.id.iv_back, R.id.tv_back_title,R.id.tv_right})
+    @OnClick({R.id.iv_back, R.id.tv_back_title, R.id.tv_right})
     public void onClick(View view) {
         if (AntiShake.check(view.getId())) {    //判断是否多次点击
             return;
@@ -325,6 +325,7 @@ public class QRCodeFragment extends BasePresentListFragment<QRCodePresenter> imp
                     LoadingDialog.showDialog(getChildFragmentManager());
                     break;
                 case R.id.tv_show_order_list:
+                case R.id.tv_show_notice:
                     boolean ishow = qrCodeGroupBean.isShowItems();
                     qrCodeGroupBean.setShowItems(!ishow);
                     adapter.notifyItemChanged(position);

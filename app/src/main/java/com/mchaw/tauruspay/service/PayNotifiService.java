@@ -24,13 +24,10 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.mchaw.tauruspay.MyFrameApplication;
-import com.mchaw.tauruspay.common.util.ToastUtils;
-import com.mchaw.tauruspay.main.MainActivity;
 
 @SuppressLint("OverrideAbstract")
 public class PayNotifiService extends NotificationListenerService {
