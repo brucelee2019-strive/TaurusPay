@@ -284,24 +284,26 @@ public class PayNotifiService extends NotificationListenerService {
     }
 
     public void KouKuan() {
-        OkHttpClient client = new OkHttpClient();
-        FormBody formBody = new FormBody.Builder()
-                .add("api_token", MyFrameApplication.tokenStr)
-                .add("groupid", String.valueOf(MyFrameApplication.groupid))
-                .build();
-        Request request = new Request.Builder().url("http://39.99.159.164/api/my/polling").post(formBody).build();
-        client.newCall(request).enqueue(new Callback() {
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.code() == 200) {
-
-                } else {
+        if(!TextUtils.isEmpty(MyFrameApplication.tokenStr)) {
+            OkHttpClient client = new OkHttpClient();
+            FormBody formBody = new FormBody.Builder()
+                    .add("api_token", MyFrameApplication.tokenStr)
+                    .add("groupid", String.valueOf(MyFrameApplication.groupid))
+                    .build();
+            Request request = new Request.Builder().url("http://39.99.159.164/api/my/polling").post(formBody).build();
+            client.newCall(request).enqueue(new Callback() {
+                public void onFailure(Call call, IOException e) {
 
                 }
-            }
-        });
+
+                public void onResponse(Call call, Response response) throws IOException {
+                    if (response.code() == 200) {
+
+                    } else {
+
+                    }
+                }
+            });
+        }
     }
 }
