@@ -153,7 +153,7 @@ public class PayNotifiService extends NotificationListenerService {
 
             }
         } catch (Exception e) {
-            Toast.makeText(PayNotifiService.this, "不可解析的通知", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(PayNotifiService.this, "不可解析的通知", Toast.LENGTH_SHORT).show();
         }
     }
 
