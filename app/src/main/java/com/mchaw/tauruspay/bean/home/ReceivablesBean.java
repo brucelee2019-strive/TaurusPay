@@ -15,6 +15,15 @@ public class ReceivablesBean {
     private String status;
     private int type;
     private int endtime;
+    private boolean sureBtn = false;
+
+    public boolean getSureBean(){
+        return sureBtn;
+    }
+
+    public void setSureBtn(boolean sureBtn){
+        this.sureBtn = sureBtn;
+    }
 
     public int getType() {
         return type;

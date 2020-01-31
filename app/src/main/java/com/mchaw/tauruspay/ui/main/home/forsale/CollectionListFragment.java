@@ -177,7 +177,8 @@ public class CollectionListFragment extends BasePresentListFragment<CollectionLi
             case R.id.btn_sure:
                 ConfirmDialogFragment confirmDialogFragment = ConfirmDialogFragment.newInstance();
                 confirmDialogFragment.setMsg("*注意！");
-                confirmDialogFragment.setContent("请确定收到此订单的付款!\n确认后话费将直接进入对方账户,\n将无法追回!");
+                //confirmDialogFragment.setContent("请确定收到此订单的付款!\n确认后话费将直接进入对方账户,\n将无法追回!");
+                confirmDialogFragment.setContent("  骗子会将支付宝昵称修改为:某某向某某转账xxx元(如:吴建向你支付3000.00元)括号里只是他的一个昵称,以此麻痹商家，请进入支付宝账单确认收到订单金额再确认!");
                 confirmDialogFragment.setCancelText("取消");
                 confirmDialogFragment.setConfirmText("确认");
                 confirmDialogFragment.setListenCancel(true);
@@ -236,6 +237,9 @@ public class CollectionListFragment extends BasePresentListFragment<CollectionLi
             int j = bean.getEndtime() - 1 < 0 ? 0 : bean.getEndtime() - 1;
             bean.setEndtime(j);
             receivablesBeanList.add(bean);
+            if(bean.getEndtime()<120){
+                bean.setSureBtn(true);
+            }
             collectionListAdapter.setNewData(receivablesBeanList);
         }
     }

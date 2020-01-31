@@ -32,5 +32,6 @@ public class CollectionListAdapter extends BaseQuickAdapter<ReceivablesBean, Bas
         helper.setImageResource(R.id.iv_zfb_icon,item.getType()==0?R.drawable.weixin_logo:R.drawable.zhifubao_logo);
         helper.setText(R.id.tv_date, item.getTime());
         helper.setText(R.id.tv_time_show, TimeUtils.timeParse(item.getEndtime()));
+        helper.setGone(R.id.btn_sure,item.getSureBean());
     }
 }
