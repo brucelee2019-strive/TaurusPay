@@ -3,7 +3,6 @@ package com.mchaw.tauruspay.service;
 import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -14,48 +13,17 @@ import android.os.Looper;
 import android.os.Message;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
-import android.text.TextUtils;
 import android.util.Log;
-import android.widget.Toast;
-
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.math.BigDecimal;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.text.SimpleDateFormat;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import com.google.gson.Gson;
 import com.mchaw.tauruspay.MyFrameApplication;
-import com.mchaw.tauruspay.bean.ALiYunCodeBean;
-import com.mchaw.tauruspay.common.dialog.LoadingDialog;
-import com.mchaw.tauruspay.common.util.PreferencesUtils;
-import com.mchaw.tauruspay.common.util.ToastUtils;
-
-import org.json.JSONException;
-
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 @SuppressLint("OverrideAbstract")
 public class PayNotifiService extends NotificationListenerService {
@@ -82,7 +50,6 @@ public class PayNotifiService extends NotificationListenerService {
     public int onStartCommand(Intent intent, int flags, int startId) {
 //        Log.i("KEVIN", "-------------------------------------------------------------------------------------------Service started" + "-----");
         data = intent.getStringExtra("data");
-        startPolling(0,13);
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -92,7 +59,6 @@ public class PayNotifiService extends NotificationListenerService {
                 PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
         pm.setComponentEnabledSetting(new ComponentName(this, PayNotifiService.class),
                 PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
-        startPolling(0,13);
     }
 
     @Override
@@ -107,7 +73,6 @@ public class PayNotifiService extends NotificationListenerService {
 
     @Override
     public void onDestroy() {
-        stopPolling();
         Message message = new Message();
         message.what = 0;
         mHandler.sendMessage(message);
@@ -258,52 +223,6 @@ public class PayNotifiService extends NotificationListenerService {
             return false;
         } catch (NumberFormatException e) {
             return false;
-        }
-    }
-
-    //以下是大轮询
-    private Disposable disposable;
-
-    public void startPolling(int start, int time) {
-        disposable = Observable.interval(start, time, TimeUnit.SECONDS)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Long>() {
-                    @Override
-                    public void accept(Long aLong) throws Exception {
-                        KouKuan();
-                    }
-                });
-    }
-
-    public void stopPolling() {
-        Log.i("cici", "总程序交易中订单列表，结束轮询");
-        if (disposable != null) {
-            disposable.dispose();
-        }
-    }
-
-    public void KouKuan() {
-        if(!TextUtils.isEmpty(MyFrameApplication.tokenStr)) {
-            OkHttpClient client = new OkHttpClient();
-            FormBody formBody = new FormBody.Builder()
-                    .add("api_token", MyFrameApplication.tokenStr)
-                    .add("groupid", String.valueOf(MyFrameApplication.groupid))
-                    .build();
-            Request request = new Request.Builder().url("http://39.99.159.164/api/my/polling").post(formBody).build();
-            client.newCall(request).enqueue(new Callback() {
-                public void onFailure(Call call, IOException e) {
-
-                }
-
-                public void onResponse(Call call, Response response) throws IOException {
-                    if (response.code() == 200) {
-
-                    } else {
-
-                    }
-                }
-            });
         }
     }
 }

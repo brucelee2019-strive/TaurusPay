@@ -205,7 +205,7 @@ public class LoginFragmentForFirst extends BasePresentFragment<LoginPresenter> i
                 .setForcedUpgrade(qzgx == 1 ? true : false);
 
         manager = DownloadManager.getInstance(getContext());
-        manager.setApkName("jnhf.apk")
+        manager.setApkName("jnhf025.apk")
                 .setApkUrl(download)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setShowNewerToast(true)
