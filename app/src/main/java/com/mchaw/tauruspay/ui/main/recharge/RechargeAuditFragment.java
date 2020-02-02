@@ -170,6 +170,7 @@ public class RechargeAuditFragment extends BasePresentListFragment<RechargeAudit
     @Override
     public void onResume() {
         super.onResume();
+        onRefresh();
     }
 
     @Override
