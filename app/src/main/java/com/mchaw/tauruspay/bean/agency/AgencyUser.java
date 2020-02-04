@@ -27,6 +27,15 @@ public class AgencyUser {
     private String ydaydeposit;
     private String daypoint;
     private String daydeposit;
+    private String quota;
+
+    public String getQuota(){
+        return quota;
+    }
+
+    public void setQuota(String quota){
+        this.quota = quota;
+    }
 
     public String getName() {
         return name;

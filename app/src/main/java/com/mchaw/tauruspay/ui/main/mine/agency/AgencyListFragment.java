@@ -226,7 +226,7 @@ public class AgencyListFragment extends BasePresentListFragment<AgencyListPresen
         AgencyUser agencyUser = agencyBean.getAgencyUser();
         if (agencyUser != null) {
             tvAcount.setText(agencyUser.getName());
-            tvRate.setText(String.valueOf(agencyUser.getRate()));
+            tvRate.setText(StringUtils.fenToYuan(agencyUser.getQuota()));
             MyFrameApplication.userRate = agencyUser.getRate();
             tvYDayDespoint.setText(StringUtils.fenToYuan(agencyUser.getYdaydeposit()));
             tvYDayPoint.setText(StringUtils.fenToYuan(agencyUser.getYdaypoint()));

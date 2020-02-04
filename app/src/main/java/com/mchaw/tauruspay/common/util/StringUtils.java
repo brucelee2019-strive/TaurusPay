@@ -1,5 +1,7 @@
 package com.mchaw.tauruspay.common.util;
 
+import android.text.TextUtils;
+
 import com.mchaw.tauruspay.MyFrameApplication;
 
 import java.text.DecimalFormat;
@@ -39,6 +41,9 @@ public class StringUtils {
     }
 
     public static String fenToYuan(String fen){
+        if(TextUtils.isEmpty(fen)){
+            return "0.00";
+        }
         if(fen.length() < 2){
             return "0.0"+fen;
         }

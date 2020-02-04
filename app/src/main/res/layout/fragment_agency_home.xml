@@ -29,13 +29,12 @@
             android:id="@+id/textView73"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="返点率(‰):"
+            android:layout_marginStart="32dp"
+            android:text="卡池总额:"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@+id/tv_acount"
-            app:layout_constraintStart_toEndOf="@+id/tv_live"
-            app:layout_constraintTop_toTopOf="@+id/tv_acount"
-            android:visibility="invisible"/>
+            app:layout_constraintStart_toEndOf="@+id/textView74"
+            app:layout_constraintTop_toTopOf="@+id/tv_acount" />
 
         <TextView
             android:id="@+id/tv_live"
@@ -61,8 +60,7 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/textView73"
             app:layout_constraintStart_toEndOf="@+id/textView73"
-            app:layout_constraintTop_toTopOf="@+id/textView73"
-            android:visibility="invisible"/>
+            app:layout_constraintTop_toTopOf="@+id/textView73"/>
 
         <TextView
             android:id="@+id/textView67"
