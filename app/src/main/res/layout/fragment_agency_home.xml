@@ -29,7 +29,7 @@
             android:id="@+id/textView73"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="24dp"
             android:text="卡池总额:"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@+id/tv_acount"

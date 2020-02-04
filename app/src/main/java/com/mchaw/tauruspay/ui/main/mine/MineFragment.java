@@ -37,6 +37,7 @@ import com.mchaw.tauruspay.ui.main.mine.agency.AgencyListFragment;
 import com.mchaw.tauruspay.ui.main.mine.bill.BillFragment;
 import com.mchaw.tauruspay.ui.main.mine.notice.NoticeFragment;
 import com.mchaw.tauruspay.ui.main.mine.qrcode.QRCodeFragment;
+import com.mchaw.tauruspay.ui.main.mine.withdraw.WithdrawFragment;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -118,7 +119,7 @@ public class MineFragment extends BasePresentFragment<LoginPresenter> implements
         component.inject(this);
     }
 
-    @OnClick({R.id.tv_login_out, R.id.cl_bill, R.id.cl_qr_code, R.id.cl_activate_word, R.id.cl_change_password, R.id.cl_about, R.id.cl_notice, R.id.cl_guide})
+    @OnClick({R.id.tv_login_out, R.id.cl_bill, R.id.cl_qr_code, R.id.cl_activate_word, R.id.cl_change_password, R.id.cl_about, R.id.cl_notice, R.id.cl_guide,R.id.cl_withdraw})
     public void onClick(View view) {
         if (AntiShake.check(view.getId())) {    //判断是否多次点击
             return;
@@ -164,6 +165,9 @@ public class MineFragment extends BasePresentFragment<LoginPresenter> implements
             case R.id.cl_guide:
                 Intent intent = new Intent(getActivity(), GuideActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.cl_withdraw:
+                startFragment(new WithdrawFragment());
                 break;
             default:
                 break;
