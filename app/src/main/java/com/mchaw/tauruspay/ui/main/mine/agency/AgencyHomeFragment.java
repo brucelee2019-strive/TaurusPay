@@ -31,6 +31,7 @@ import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.http.ResultObserver;
 import com.mchaw.tauruspay.ui.main.home.forsale.dialog.AgencyDialogFragment;
+import com.mchaw.tauruspay.ui.main.home.transferaccounts.TransferAccountsFragment;
 import com.mchaw.tauruspay.ui.main.mine.agency.adapter.AgencyListAdapter;
 import com.mchaw.tauruspay.ui.main.mine.agency.constract.AgencyListConstract;
 import com.mchaw.tauruspay.ui.main.mine.agency.presenter.AgencyListPresenter;
@@ -177,7 +178,7 @@ public class AgencyHomeFragment extends BasePresentListFragment<AgencyListPresen
         }
     }
 
-    @OnClick({R.id.btn_copy_link, R.id.btn_copy_code, R.id.btn_agency_rule})
+    @OnClick({R.id.btn_copy_link, R.id.btn_copy_code, R.id.btn_agency_rule,R.id.btn_transfer_btn})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_copy_link:
@@ -223,6 +224,9 @@ public class AgencyHomeFragment extends BasePresentListFragment<AgencyListPresen
                     }
                 });
                 roundDialogFragment.show(getSupportFragmentManager(), null);
+                break;
+            case R.id.btn_transfer_btn:
+                startFragment(new TransferAccountsFragment());
                 break;
             default:
                 break;

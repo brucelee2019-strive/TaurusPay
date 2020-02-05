@@ -8,7 +8,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="160dp"
         android:background="@drawable/cz_kchf_bg">
 
         <TextView
@@ -242,6 +242,29 @@
             app:layout_constraintBottom_toBottomOf="@+id/tv_rate"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_rate" />
+
+        <Button
+            android:id="@+id/btn_transfer_btn"
+            android:layout_width="80dp"
+            android:layout_height="25dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/touch_bg"
+            android:gravity="center"
+            android:text="转账"
+            android:textColor="@color/color_black_0"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_broadcast_code"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_broadcast_code" />
+
+        <ImageView
+            android:id="@+id/imageView37"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_transfer_btn"
+            app:layout_constraintEnd_toStartOf="@+id/btn_transfer_btn"
+            app:layout_constraintTop_toTopOf="@+id/btn_transfer_btn"
+            app:srcCompat="@drawable/zhuanzhang" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
