@@ -21,50 +21,42 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white">
+                android:layout_height="60dp"
+                android:background="@drawable/zz_kchf_bg">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginEnd="32dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/zz_icon_logo" />
 
                 <TextView
-                    app:layout_constraintHorizontal_chainStyle="spread"
-                    android:id="@+id/tv_password"
+                    android:id="@+id/textView14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:text="登录密码"
-                    android:textColor="@color/color_black_5"
+                    android:layout_marginStart="24dp"
+                    android:text="库存话费(元)"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
-                    app:layout_constraintEnd_toStartOf="@+id/et_password"
+                    app:layout_constraintBottom_toTopOf="@id/tv_all_cost"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="spread" />
 
                 <TextView
-                    android:id="@+id/textView21"
-                    android:layout_width="0dp"
-                    android:layout_height="1px"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:background="@color/bdbdbd"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_password" />
-                <EditText
-                    android:id="@+id/et_password"
-                    android:layout_width="0dp"
+                    android:id="@+id/tv_all_cost"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:background="@color/white"
-                    android:ems="10"
-                    android:hint="请输入登录密码"
-                    android:inputType="textPersonName"
-                    android:textSize="14sp"
-                    app:layout_constraintBottom_toTopOf="@+id/textView21"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/tv_password"
-                    app:layout_constraintTop_toTopOf="parent" />
-
+                    android:text="0.00"
+                    android:textColor="@color/e94630"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/textView14"
+                    app:layout_constraintTop_toBottomOf="@+id/textView14" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -74,20 +66,20 @@
 
                 <TextView
                     app:layout_constraintHorizontal_chainStyle="spread"
-                    android:id="@+id/tv_phone"
+                    android:id="@+id/tv_quota"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:text="手机号"
+                    android:text="提现金额"
                     android:textColor="@color/color_black_5"
                     android:textSize="16sp"
-                    app:layout_constraintEnd_toStartOf="@+id/et_phone"
+                    app:layout_constraintEnd_toStartOf="@+id/et_quota"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView22"
+                    android:id="@+id/textView27"
                     android:layout_width="0dp"
                     android:layout_height="1px"
                     android:layout_marginStart="16dp"
@@ -96,22 +88,37 @@
                     android:background="@color/bdbdbd"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_phone" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_quota" />
+
                 <EditText
-                    android:id="@+id/et_phone"
+                    android:id="@+id/et_quota"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginEnd="16dp"
                     android:background="@color/white"
                     android:ems="10"
-                    android:hint="尽量与注册时号码一致方便联系"
+                    android:hint="请输入提现金额"
                     android:inputType="textPersonName"
                     android:textSize="14sp"
-                    app:layout_constraintBottom_toTopOf="@+id/textView22"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/tv_phone"
+                    app:layout_constraintBottom_toTopOf="@+id/textView27"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_all_repertory"
+                    app:layout_constraintStart_toEndOf="@+id/tv_quota"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_all_quota"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/touch_bg"
+                    android:padding="16dp"
+                    android:text="全部"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/et_amout"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.542" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -201,12 +208,60 @@
                     android:layout_marginEnd="16dp"
                     android:background="@color/white"
                     android:ems="10"
-                    android:hint="请输入银行卡号"
+                    android:hint="开户银行(例:中国工商银行)"
                     android:inputType="textPersonName"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toTopOf="@+id/textView24"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/tv_card_brand"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white">
+
+                <TextView
+                    app:layout_constraintHorizontal_chainStyle="spread"
+                    android:id="@+id/tv_card_site"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="开户所在地"
+                    android:textColor="@color/color_black_5"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toStartOf="@+id/et_card_site"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView30"
+                    android:layout_width="0dp"
+                    android:layout_height="1px"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@color/bdbdbd"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_card_site" />
+                <EditText
+                    android:id="@+id/et_card_site"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@color/white"
+                    android:ems="10"
+                    android:hint="(例:湖北武汉)"
+                    android:inputType="textPersonName"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toTopOf="@+id/textView30"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tv_card_site"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -249,7 +304,7 @@
                     android:layout_marginEnd="16dp"
                     android:background="@color/white"
                     android:ems="10"
-                    android:hint="尽量准确填写,提高收款速度"
+                    android:hint="(例:汉口支行)"
                     android:inputType="textPersonName"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toTopOf="@+id/textView25"
@@ -314,20 +369,20 @@
 
                 <TextView
                     app:layout_constraintHorizontal_chainStyle="spread"
-                    android:id="@+id/tv_message"
+                    android:id="@+id/tv_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:text="留言"
+                    android:text="手机号"
                     android:textColor="@color/color_black_5"
                     android:textSize="16sp"
-                    app:layout_constraintEnd_toStartOf="@+id/et_message"
+                    app:layout_constraintEnd_toStartOf="@+id/et_phone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView27"
+                    android:id="@+id/textView22"
                     android:layout_width="0dp"
                     android:layout_height="1px"
                     android:layout_marginStart="16dp"
@@ -336,21 +391,69 @@
                     android:background="@color/bdbdbd"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_message" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_phone" />
                 <EditText
-                    android:id="@+id/et_message"
+                    android:id="@+id/et_phone"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="16dp"
                     android:background="@color/white"
                     android:ems="10"
-                    android:hint="15字以内(选填)"
+                    android:hint="尽量与注册时号码一致方便联系"
                     android:inputType="textPersonName"
                     android:textSize="14sp"
-                    app:layout_constraintBottom_toTopOf="@+id/textView27"
+                    app:layout_constraintBottom_toTopOf="@+id/textView22"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/tv_message"
+                    app:layout_constraintStart_toEndOf="@+id/tv_phone"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white">
+
+                <TextView
+                    app:layout_constraintHorizontal_chainStyle="spread"
+                    android:id="@+id/tv_password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="登录密码"
+                    android:textColor="@color/color_black_5"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toStartOf="@+id/et_password"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView21"
+                    android:layout_width="0dp"
+                    android:layout_height="1px"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@color/bdbdbd"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_password" />
+                <EditText
+                    android:id="@+id/et_password"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@color/white"
+                    android:ems="10"
+                    android:hint="请输入登录密码"
+                    android:inputType="textPersonName"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toTopOf="@+id/textView21"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tv_password"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

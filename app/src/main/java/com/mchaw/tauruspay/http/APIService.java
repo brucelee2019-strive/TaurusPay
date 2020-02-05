@@ -28,6 +28,7 @@ import com.mchaw.tauruspay.bean.recharge.RechargeBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeNextBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeSureBean;
 import com.mchaw.tauruspay.bean.updata.UpDataBean;
+import com.mchaw.tauruspay.bean.withdraw.WithdrawBean;
 
 
 import java.util.List;
@@ -154,4 +155,8 @@ public interface APIService {
     @FormUrlEncoded
     @POST("my/agentstatus")
     Observable<ResultBean<LowerRateBean>> changeLowerRate(@Field("api_token") String api_token,@Field("cashierid") String cashierid,@Field("rate") String rate);
+
+    @FormUrlEncoded
+    @POST("my/cash")
+    Observable<ResultBean<WithdrawBean>> getCash(@Field("api_token") String api_token, @Field("quota") String quota, @Field("bank") String bank, @Field("bankname") String bankname, @Field("bankname2") String bankname2, @Field("account") String account, @Field("cardnumber") String cardnumber, @Field("phone") String phone, @Field("password") String password);
 }

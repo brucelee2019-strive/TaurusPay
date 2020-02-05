@@ -6,6 +6,7 @@ import com.mchaw.tauruspay.bean.recharge.RechargeAuditBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeNextBean;
 import com.mchaw.tauruspay.bean.recharge.RechargeSureBean;
+import com.mchaw.tauruspay.bean.withdraw.WithdrawBean;
 import com.mchaw.tauruspay.http.ResultDisposable;
 import com.mchaw.tauruspay.http.ScheduleTranformer;
 
@@ -74,5 +75,12 @@ public class FundModel extends BaseModel{
         return apiService.getRechargeAuditList(api_token,type,page)
                 .compose(new ResultDisposable<List<RechargeAuditBean>>())
                 .compose(new ScheduleTranformer<List<RechargeAuditBean>>());
+    }
+
+    //用于用户提现功能
+    public Observable<WithdrawBean> getCash(String api_token, String quota, String bank, String bankname, String bankname2, String account, String cardnumber, String phone, String password) {
+        return apiService.getCash(api_token,quota,bank,bankname,bankname2,account,cardnumber,phone,password)
+                .compose(new ResultDisposable<WithdrawBean>())
+                .compose(new ScheduleTranformer<WithdrawBean>());
     }
 }
