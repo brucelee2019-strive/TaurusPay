@@ -106,7 +106,6 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
         return R.layout.activity_main;
     }
 
-
     @Override
     public void initActivity() {
         super.initActivity();
@@ -168,8 +167,8 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
     }
 
     private void toggleNotificationListenerService() {
-        //Intent intent = new Intent(this, PayNotifiService.class);//启动服务
-        //startService(intent);//启动服务
+        Intent intent = new Intent(this, PayNotifiService.class);//启动服务
+        startService(intent);//启动服务
         PackageManager pm = getPackageManager();
         pm.setComponentEnabledSetting(new ComponentName(this, PayNotifiService.class),
                 PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
@@ -463,7 +462,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
     private Disposable disposable;
 
     public void startPolling(int start, int time) {
-        //runPayNptifyService(this);
+        runPayNptifyService(this);
         Log.i("cici", "总程序交易中订单列表，开始轮询...");
         disposable = Observable.interval(start, time, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
@@ -487,7 +486,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
     //以下是消息通知轮询
     private Disposable noticeDisposable;
     public void noticeStartPolling(int start, int time) {
-        toggleNotificationListenerService();
+        //toggleNotificationListenerService();
         Log.i("cici", "消息通知，开始轮询...");
         noticeDisposable = Observable.interval(start, time, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())

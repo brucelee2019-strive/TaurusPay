@@ -97,7 +97,7 @@
                     android:layout_marginStart="8dp"
                     android:background="@color/white"
                     android:ems="10"
-                    android:hint="请输入提现金额"
+                    android:hint="单位元(若有小数,例:2500.35)"
                     android:inputType="textPersonName"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toTopOf="@+id/textView27"

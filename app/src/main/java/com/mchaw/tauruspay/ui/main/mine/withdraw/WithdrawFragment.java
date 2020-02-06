@@ -101,6 +101,10 @@ public class WithdrawFragment extends BasePresentFragment<WithdrawPresenter> imp
                 getActivity().finish();
                 break;
             case R.id.tv_all_quota:
+                if ("0".equals(allKuCun)) {
+                    ToastUtils.showShortToast(getContext(),"亲，木有库存话费");
+                    return;
+                }
                 etQuota.setText(allKuCun);
                 break;
             default:

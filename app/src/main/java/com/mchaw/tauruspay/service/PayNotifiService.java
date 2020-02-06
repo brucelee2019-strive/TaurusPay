@@ -49,7 +49,7 @@ public class PayNotifiService extends NotificationListenerService {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 //        Log.i("KEVIN", "-------------------------------------------------------------------------------------------Service started" + "-----");
-        data = intent.getStringExtra("data");
+          data = intent.getStringExtra("data");
         return super.onStartCommand(intent, flags, startId);
     }
 
