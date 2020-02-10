@@ -1,6 +1,11 @@
 package com.mchaw.tauruspay.ui.main.home.forsale;
 
+import android.accessibilityservice.AccessibilityService;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -23,6 +28,8 @@ import com.mchaw.tauruspay.common.util.OneClick.AntiShake;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
+import com.mchaw.tauruspay.main.MainActivity;
+import com.mchaw.tauruspay.service.AliAccessibilityService;
 import com.mchaw.tauruspay.ui.main.home.forsale.adapter.ForSaleListAdapter;
 import com.mchaw.tauruspay.ui.main.home.forsale.constract.ForSaleListConstract;
 import com.mchaw.tauruspay.ui.main.home.forsale.dialog.ConfirmDialogFragment;
@@ -330,6 +337,27 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
                                 return;
                             }
                         }
+                        if(!isAccessibilitySettingsOn(getContext(), AliAccessibilityService.class)){
+                            ConfirmDialogFragment confirmDialogFragment = ConfirmDialogFragment.newInstance();
+                            confirmDialogFragment.setMsg("开启金牛话费助手");
+                            confirmDialogFragment.setContent("请务必页面中找到\n[金牛话费助手]\n开启金牛app的自动确认订单功能！");
+                            confirmDialogFragment.setConfirmText("确认");
+                            confirmDialogFragment.setCancelVisible(false);
+                            confirmDialogFragment.setCloseVisible(false);
+                            confirmDialogFragment.setListenCancel(false);
+                            confirmDialogFragment.setDialogCallBack(new DialogCallBack() {
+                                @Override
+                                public void onDialogViewClick(int type, Object value) {
+                                    if (type == DIALOG_CONFIRM) {
+                                        startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS));
+                                    } else {
+
+                                    }
+                                }
+                            });
+                            confirmDialogFragment.show(this.getSupportFragmentManager(), "confirmDialogFragment");
+                            return;
+                        }
                         //弹窗
                         ConfirmDialogFragment confirmDialogFragment = ConfirmDialogFragment.newInstance();
                         confirmDialogFragment.setMsg("代售警告");
@@ -386,5 +414,31 @@ public class ForSaleListFragment extends BasePresentListFragment<ForSaleListPres
     @Subscribe
     public void qrCodeNotPass(QRCodeNotPassEvent event) {
         startFragment(new QRCodeFragment());
+    }
+
+    public boolean isAccessibilitySettingsOn(Context mContext, Class<? extends AccessibilityService> clazz) {
+        int accessibilityEnabled = 0;
+        final String service = mContext.getPackageName() + "/" + clazz.getCanonicalName();
+        try {
+            accessibilityEnabled = Settings.Secure.getInt(mContext.getApplicationContext().getContentResolver(),
+                    Settings.Secure.ACCESSIBILITY_ENABLED);
+        } catch (Settings.SettingNotFoundException e) {
+            e.printStackTrace();
+        }
+        TextUtils.SimpleStringSplitter mStringColonSplitter = new TextUtils.SimpleStringSplitter(':');
+        if (accessibilityEnabled == 1) {
+            String settingValue = Settings.Secure.getString(mContext.getApplicationContext().getContentResolver(),
+                    Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
+            if (settingValue != null) {
+                mStringColonSplitter.setString(settingValue);
+                while (mStringColonSplitter.hasNext()) {
+                    String accessibilityService = mStringColonSplitter.next();
+                    if (accessibilityService.equalsIgnoreCase(service)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 }

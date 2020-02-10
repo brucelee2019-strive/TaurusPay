@@ -250,7 +250,7 @@
             android:layout_marginEnd="8dp"
             android:background="@drawable/touch_bg"
             android:gravity="center"
-            android:text="转账"
+            android:text="提现"
             android:textColor="@color/color_black_0"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/tv_broadcast_code"
@@ -264,7 +264,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/btn_transfer_btn"
             app:layout_constraintEnd_toStartOf="@+id/btn_transfer_btn"
             app:layout_constraintTop_toTopOf="@+id/btn_transfer_btn"
-            app:srcCompat="@drawable/zhuanzhang" />
+            app:srcCompat="@drawable/tixian_home_icon" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

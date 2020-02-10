@@ -187,6 +187,11 @@ public class WithdrawFragment extends BasePresentFragment<WithdrawPresenter> imp
         confirmDialogFragment.setDialogCallBack(new DialogCallBack() {
             @Override
             public void onDialogViewClick(int type, Object value) {
+                if (type == DIALOG_CONFIRM) {
+                   getActivity().finish();
+                } else {
+
+                }
             }
         });
         confirmDialogFragment.show(this.getFragmentManager(), "confirmDialogFragment");
@@ -194,7 +199,7 @@ public class WithdrawFragment extends BasePresentFragment<WithdrawPresenter> imp
 
     @Override
     public void setHomeDataBean(UserBean userBean) {
-        tvAllCost.setText(StringUtils.fenToYuan(userBean.getDeposit()));
-        allKuCun = StringUtils.fenToYuan(userBean.getDeposit());
+        tvAllCost.setText(StringUtils.fenToYuan(userBean.getQuota()));
+        allKuCun = StringUtils.fenToYuan(userBean.getQuota());
     }
 }

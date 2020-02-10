@@ -54,9 +54,9 @@ public class LoginActivity extends BasePresenterActivity<LoginPresenter> impleme
     @Override
     public void initActivity() {
         super.initActivity();
-        if (!notificationListenerEnable()) {
-            NotifyDialog.showDialog(getSupportFragmentManager());
-        }
+//        if (!notificationListenerEnable()) {
+//            NotifyDialog.showDialog(getSupportFragmentManager());
+//        }
         tvVersion.setText("版本:v"+ versionUtils.getAppVersionName(LoginActivity.this));
         presenter.getVersion();
     }
@@ -100,10 +100,10 @@ public class LoginActivity extends BasePresenterActivity<LoginPresenter> impleme
     }
     @OnClick({R.id.btn_login_btn, R.id.tv_register, R.id.tv_find_password})
     public void onClick(View view) {
-        if (!notificationListenerEnable()) {
-            NotifyDialog.showDialog(getSupportFragmentManager());
-            return;
-        }
+//        if (!notificationListenerEnable()) {
+//            NotifyDialog.showDialog(getSupportFragmentManager());
+//            return;
+//        }
         if (AntiShake.check(view.getId())) {    //判断是否多次点击
             return;
         }

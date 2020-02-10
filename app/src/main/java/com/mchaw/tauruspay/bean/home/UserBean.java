@@ -32,6 +32,15 @@ public class UserBean {
     private int type;
     private String code;
     private int rate;
+    private long quota;
+
+    public long getQuota() {
+        return quota;
+    }
+
+    public void setQuota(long quota) {
+        this.quota = quota;
+    }
 
     public int getRate() {
         return rate;

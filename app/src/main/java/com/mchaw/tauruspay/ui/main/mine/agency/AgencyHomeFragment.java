@@ -35,6 +35,7 @@ import com.mchaw.tauruspay.ui.main.home.transferaccounts.TransferAccountsFragmen
 import com.mchaw.tauruspay.ui.main.mine.agency.adapter.AgencyListAdapter;
 import com.mchaw.tauruspay.ui.main.mine.agency.constract.AgencyListConstract;
 import com.mchaw.tauruspay.ui.main.mine.agency.presenter.AgencyListPresenter;
+import com.mchaw.tauruspay.ui.main.mine.withdraw.WithdrawFragment;
 import com.mchaw.tauruspay.ui.repository.LoginModel;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -226,7 +227,7 @@ public class AgencyHomeFragment extends BasePresentListFragment<AgencyListPresen
                 roundDialogFragment.show(getSupportFragmentManager(), null);
                 break;
             case R.id.btn_transfer_btn:
-                startFragment(new TransferAccountsFragment());
+                startFragment(new WithdrawFragment());
                 break;
             default:
                 break;

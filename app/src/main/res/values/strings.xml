@@ -7,4 +7,6 @@
     <string name="bottom_discover">必看</string>
     <string name="bottom_mine">我的</string>
 
+    <string name="pay_test">1.请打开上方"金牛话费助手"开关.\n2.打开开关后，在弹窗上点击确认即可。相关权限开启后仅用于保障金牛话费app的自动订单确认功能。我们将严格保障您的信息安全，承诺不会将相关权限用于任何其他用途。\n3.自动设置需要几秒钟时间，设置过程中请不要点击屏幕确保设置成功。</string>
+
 </resources>

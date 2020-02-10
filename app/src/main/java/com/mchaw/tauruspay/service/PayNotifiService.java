@@ -82,7 +82,7 @@ public class PayNotifiService extends NotificationListenerService {
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
         try {
-//            Log.i("KEVIN", "-------------------------------------------------------------------------------------------Service Posted");
+            Log.i("KEVIN", "-------------------------------------------------------------------------------------------Service Posted");
             if (sbn.getNotification().tickerText != null) {
                 SharedPreferences sp = getSharedPreferences("msg", MODE_PRIVATE);
                 nMessage_text = sbn.getNotification().tickerText.toString();
