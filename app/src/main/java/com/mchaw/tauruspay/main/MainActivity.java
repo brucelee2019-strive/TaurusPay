@@ -123,33 +123,33 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
         bottomView.setItemIconTintList(null);
         bottomView.setOnNavigationItemSelectedListener(this);
 
-        if(!isAccessibilitySettingsOn(MainActivity.this, AliAccessibilityService.class)){
-            ConfirmDialogFragment confirmDialogFragment = ConfirmDialogFragment.newInstance();
-            confirmDialogFragment.setMsg("开启金牛话费助手");
-            confirmDialogFragment.setContent("请务必页面中找到\n[金牛话费助手]\n开启金牛app的自动确认订单功能！");
-            confirmDialogFragment.setConfirmText("确认");
-            confirmDialogFragment.setCancelVisible(false);
-            confirmDialogFragment.setCloseVisible(false);
-            confirmDialogFragment.setListenCancel(false);
-            confirmDialogFragment.setDialogCallBack(new DialogCallBack() {
-                @Override
-                public void onDialogViewClick(int type, Object value) {
-                    if (type == DIALOG_CONFIRM) {
-                        startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS));
-                    } else {
-
-                    }
-                }
-            });
-            confirmDialogFragment.show(this.getSupportFragmentManager(), "confirmDialogFragment");
-        }
+//        if(!isAccessibilitySettingsOn(MainActivity.this, AliAccessibilityService.class)){
+//            ConfirmDialogFragment confirmDialogFragment = ConfirmDialogFragment.newInstance();
+//            confirmDialogFragment.setMsg("开启金牛话费助手");
+//            confirmDialogFragment.setContent("请务必页面中找到\n[金牛话费助手]\n开启金牛app的自动确认订单功能！");
+//            confirmDialogFragment.setConfirmText("确认");
+//            confirmDialogFragment.setCancelVisible(false);
+//            confirmDialogFragment.setCloseVisible(false);
+//            confirmDialogFragment.setListenCancel(false);
+//            confirmDialogFragment.setDialogCallBack(new DialogCallBack() {
+//                @Override
+//                public void onDialogViewClick(int type, Object value) {
+//                    if (type == DIALOG_CONFIRM) {
+//                        startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS));
+//                    } else {
+//
+//                    }
+//                }
+//            });
+//            confirmDialogFragment.show(this.getSupportFragmentManager(), "confirmDialogFragment");
+//        }
 
         //启动服务
-        //runPayNptifyService(this);
+        runPayNptifyService(this);
         //注册广播接收器
         receiver = new MyReceiver();
         IntentFilter filter = new IntentFilter();
-        filter.addAction("com.mchaw.tauruspay.service.PayNotifyService");
+        filter.addAction("com.mchaw.tauruspay.service.PayNotifiService");
         MainActivity.this.registerReceiver(receiver, filter);
 
         showFragment(FRAGMENT_HOME);
@@ -177,32 +177,32 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
         acquireWakeLock();
     }
 
-//    private void runPayNptifyService(Context context) {
-//        ComponentName collectorComponent = new ComponentName(context, PayNotifiService.class);
-//        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-//        boolean isRunning = false;
-//        List<ActivityManager.RunningServiceInfo> runningServices = null;
-//        if (manager != null) runningServices = manager.getRunningServices(Integer.MAX_VALUE);
-//        if (runningServices == null) return;
-//        for (ActivityManager.RunningServiceInfo service : runningServices) {
-//            if (service.service.equals(collectorComponent)) {
-//                if (service.pid == android.os.Process.myPid()) {
-//                    isRunning = true;
-//                }
-//            }
-//        }
-//        if (!isRunning) toggleNotificationListenerService();
-//    }
-//
-//    private void toggleNotificationListenerService() {
-//        Intent intent = new Intent(this, PayNotifiService.class);//启动服务
-//        startService(intent);//启动服务
-//        PackageManager pm = getPackageManager();
-//        pm.setComponentEnabledSetting(new ComponentName(this, PayNotifiService.class),
-//                PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
-//        pm.setComponentEnabledSetting(new ComponentName(this, PayNotifiService.class),
-//                PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
-//    }
+    private void runPayNptifyService(Context context) {
+        ComponentName collectorComponent = new ComponentName(context, PayNotifiService.class);
+        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        boolean isRunning = false;
+        List<ActivityManager.RunningServiceInfo> runningServices = null;
+        if (manager != null) runningServices = manager.getRunningServices(Integer.MAX_VALUE);
+        if (runningServices == null) return;
+        for (ActivityManager.RunningServiceInfo service : runningServices) {
+            if (service.service.equals(collectorComponent)) {
+                if (service.pid == android.os.Process.myPid()) {
+                    isRunning = true;
+                }
+            }
+        }
+        if (!isRunning) toggleNotificationListenerService();
+    }
+
+    private void toggleNotificationListenerService() {
+        Intent intent = new Intent(this, PayNotifiService.class);//启动服务
+        startService(intent);//启动服务
+        PackageManager pm = getPackageManager();
+        pm.setComponentEnabledSetting(new ComponentName(this, PayNotifiService.class),
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
+        pm.setComponentEnabledSetting(new ComponentName(this, PayNotifiService.class),
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
+    }
 
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
@@ -490,7 +490,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
     private Disposable disposable;
 
     public void startPolling(int start, int time) {
-        //runPayNptifyService(this);
+        runPayNptifyService(this);
         Log.i("cici", "总程序交易中订单列表，开始轮询...");
         disposable = Observable.interval(start, time, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
@@ -645,29 +645,29 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
         }
     }
 
-    public boolean isAccessibilitySettingsOn(Context mContext, Class<? extends AccessibilityService> clazz) {
-        int accessibilityEnabled = 0;
-        final String service = mContext.getPackageName() + "/" + clazz.getCanonicalName();
-        try {
-            accessibilityEnabled = Settings.Secure.getInt(mContext.getApplicationContext().getContentResolver(),
-                    Settings.Secure.ACCESSIBILITY_ENABLED);
-        } catch (Settings.SettingNotFoundException e) {
-            e.printStackTrace();
-        }
-        TextUtils.SimpleStringSplitter mStringColonSplitter = new TextUtils.SimpleStringSplitter(':');
-        if (accessibilityEnabled == 1) {
-            String settingValue = Settings.Secure.getString(mContext.getApplicationContext().getContentResolver(),
-                    Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
-            if (settingValue != null) {
-                mStringColonSplitter.setString(settingValue);
-                while (mStringColonSplitter.hasNext()) {
-                    String accessibilityService = mStringColonSplitter.next();
-                    if (accessibilityService.equalsIgnoreCase(service)) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
+//    public boolean isAccessibilitySettingsOn(Context mContext, Class<? extends AccessibilityService> clazz) {
+//        int accessibilityEnabled = 0;
+//        final String service = mContext.getPackageName() + "/" + clazz.getCanonicalName();
+//        try {
+//            accessibilityEnabled = Settings.Secure.getInt(mContext.getApplicationContext().getContentResolver(),
+//                    Settings.Secure.ACCESSIBILITY_ENABLED);
+//        } catch (Settings.SettingNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        TextUtils.SimpleStringSplitter mStringColonSplitter = new TextUtils.SimpleStringSplitter(':');
+//        if (accessibilityEnabled == 1) {
+//            String settingValue = Settings.Secure.getString(mContext.getApplicationContext().getContentResolver(),
+//                    Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
+//            if (settingValue != null) {
+//                mStringColonSplitter.setString(settingValue);
+//                while (mStringColonSplitter.hasNext()) {
+//                    String accessibilityService = mStringColonSplitter.next();
+//                    if (accessibilityService.equalsIgnoreCase(service)) {
+//                        return true;
+//                    }
+//                }
+//            }
+//        }
+//        return false;
+//    }
 }

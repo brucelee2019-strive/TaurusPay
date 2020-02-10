@@ -56,7 +56,7 @@ public class AliAccessibilityService extends AccessibilityService {
                     Log.i("KEVIN", "---------------------------------------------------------------Service is money:" + (int) (vals * 100));
                     Intent intent = new Intent();
                     intent.putExtra("amout", (int) (vals * 100));
-                    intent.setAction("com.mchaw.tauruspay.service.PayNotifyService");
+                    intent.setAction("com.mchaw.tauruspay.service.AliAccessibilityService");
                     sendBroadcast(intent);
                 }
             }

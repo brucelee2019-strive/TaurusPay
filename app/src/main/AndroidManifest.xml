@@ -47,28 +47,28 @@
             android:name=".ui.GuideActivity"
             android:screenOrientation="portrait"></activity>
 
-<!--        <service-->
-<!--            android:name="com.mchaw.tauruspay.service.PayNotifiService"-->
-<!--            android:label="金牛话费"-->
-<!--            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"-->
-<!--            android:priority="1000">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.service.notification.NotificationListenerService" />-->
-<!--            </intent-filter>-->
-<!--        </service>-->
-
         <service
-            android:name=".service.AliAccessibilityService"
-            android:label="金牛话费助手"
-            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            android:name="com.mchaw.tauruspay.service.PayNotifiService"
+            android:label="金牛话费"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
+            android:priority="1000">
             <intent-filter>
-                <action android:name="android.accessibilityservice.AccessibilityService" />
+                <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
-
-            <meta-data
-                android:name="android.accessibilityservice"
-                android:resource="@xml/accessible_service_config_ali" />
         </service>
+
+<!--        <service-->
+<!--            android:name=".service.AliAccessibilityService"-->
+<!--            android:label="金牛话费助手"-->
+<!--            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.accessibilityservice.AccessibilityService" />-->
+<!--            </intent-filter>-->
+
+<!--            <meta-data-->
+<!--                android:name="android.accessibilityservice"-->
+<!--                android:resource="@xml/accessible_service_config_ali" />-->
+<!--        </service>-->
 
         <provider
             android:name="androidx.core.content.FileProvider"
