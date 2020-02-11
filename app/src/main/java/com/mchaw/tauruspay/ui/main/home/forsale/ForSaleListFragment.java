@@ -1,11 +1,6 @@
 package com.mchaw.tauruspay.ui.main.home.forsale;
 
-import android.accessibilityservice.AccessibilityService;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -28,8 +23,6 @@ import com.mchaw.tauruspay.common.util.OneClick.AntiShake;
 import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
-import com.mchaw.tauruspay.main.MainActivity;
-import com.mchaw.tauruspay.service.AliAccessibilityService;
 import com.mchaw.tauruspay.ui.main.home.forsale.adapter.ForSaleListAdapter;
 import com.mchaw.tauruspay.ui.main.home.forsale.constract.ForSaleListConstract;
 import com.mchaw.tauruspay.ui.main.home.forsale.dialog.ConfirmDialogFragment;

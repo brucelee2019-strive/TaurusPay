@@ -1,7 +1,6 @@
 package com.mchaw.tauruspay.main;
 
 import android.Manifest;
-import android.accessibilityservice.AccessibilityService;
 import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.content.ComponentName;
@@ -11,7 +10,6 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
-import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
@@ -29,7 +27,6 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.base.activity.BasePresenterActivity;
-import com.mchaw.tauruspay.base.dialog.DialogCallBack;
 import com.mchaw.tauruspay.bean.MainPollingBean;
 import com.mchaw.tauruspay.bean.eventbus.ForbiddenEvent;
 import com.mchaw.tauruspay.bean.eventbus.LoginSucceedEvent;
@@ -54,11 +51,9 @@ import com.mchaw.tauruspay.common.util.WarningToneUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
 import com.mchaw.tauruspay.main.constract.MainConstract;
 import com.mchaw.tauruspay.main.presenter.MainPresenter;
-import com.mchaw.tauruspay.service.AliAccessibilityService;
 import com.mchaw.tauruspay.ui.login.LoginActivity;
 import com.mchaw.tauruspay.ui.main.besure.BesureFragment;
 import com.mchaw.tauruspay.ui.main.home.HomeFragment;
-import com.mchaw.tauruspay.ui.main.home.forsale.dialog.ConfirmDialogFragment;
 import com.mchaw.tauruspay.ui.main.mine.MineFragment;
 import com.mchaw.tauruspay.service.PayNotifiService;
 //import com.mchaw.tauruspay.ui.SplashActivity;
@@ -82,8 +77,6 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import q.rorbin.badgeview.QBadgeView;
-
-import static com.mchaw.tauruspay.base.dialog.BaseDialogFragment.DIALOG_CONFIRM;
 
 public class MainActivity extends BasePresenterActivity<MainPresenter> implements MainConstract.View, BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -123,28 +116,6 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
         bottomView.setItemIconTintList(null);
         bottomView.setOnNavigationItemSelectedListener(this);
 
-//        if(!isAccessibilitySettingsOn(MainActivity.this, AliAccessibilityService.class)){
-//            ConfirmDialogFragment confirmDialogFragment = ConfirmDialogFragment.newInstance();
-//            confirmDialogFragment.setMsg("开启金牛话费助手");
-//            confirmDialogFragment.setContent("请务必页面中找到\n[金牛话费助手]\n开启金牛app的自动确认订单功能！");
-//            confirmDialogFragment.setConfirmText("确认");
-//            confirmDialogFragment.setCancelVisible(false);
-//            confirmDialogFragment.setCloseVisible(false);
-//            confirmDialogFragment.setListenCancel(false);
-//            confirmDialogFragment.setDialogCallBack(new DialogCallBack() {
-//                @Override
-//                public void onDialogViewClick(int type, Object value) {
-//                    if (type == DIALOG_CONFIRM) {
-//                        startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS));
-//                    } else {
-//
-//                    }
-//                }
-//            });
-//            confirmDialogFragment.show(this.getSupportFragmentManager(), "confirmDialogFragment");
-//        }
-
-        //启动服务
         runPayNptifyService(this);
         //注册广播接收器
         receiver = new MyReceiver();
@@ -490,7 +461,8 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
     private Disposable disposable;
 
     public void startPolling(int start, int time) {
-        runPayNptifyService(this);
+        //runPayNptifyService(this);
+        toggleNotificationListenerService();
         Log.i("cici", "总程序交易中订单列表，开始轮询...");
         disposable = Observable.interval(start, time, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
@@ -644,30 +616,4 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
             wakeLock = null;
         }
     }
-
-//    public boolean isAccessibilitySettingsOn(Context mContext, Class<? extends AccessibilityService> clazz) {
-//        int accessibilityEnabled = 0;
-//        final String service = mContext.getPackageName() + "/" + clazz.getCanonicalName();
-//        try {
-//            accessibilityEnabled = Settings.Secure.getInt(mContext.getApplicationContext().getContentResolver(),
-//                    Settings.Secure.ACCESSIBILITY_ENABLED);
-//        } catch (Settings.SettingNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//        TextUtils.SimpleStringSplitter mStringColonSplitter = new TextUtils.SimpleStringSplitter(':');
-//        if (accessibilityEnabled == 1) {
-//            String settingValue = Settings.Secure.getString(mContext.getApplicationContext().getContentResolver(),
-//                    Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
-//            if (settingValue != null) {
-//                mStringColonSplitter.setString(settingValue);
-//                while (mStringColonSplitter.hasNext()) {
-//                    String accessibilityService = mStringColonSplitter.next();
-//                    if (accessibilityService.equalsIgnoreCase(service)) {
-//                        return true;
-//                    }
-//                }
-//            }
-//        }
-//        return false;
-//    }
 }

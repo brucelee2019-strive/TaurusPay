@@ -1,11 +1,7 @@
 package com.mchaw.tauruspay.ui.main.home;
 
-import android.accessibilityservice.AccessibilityService;
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
@@ -20,7 +16,6 @@ import com.azhon.appupdate.listener.OnDownloadListener;
 import com.azhon.appupdate.manager.DownloadManager;
 import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
-import com.mchaw.tauruspay.base.dialog.DialogCallBack;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
 import com.mchaw.tauruspay.bean.eventbus.LoginSucceedEvent;
 import com.mchaw.tauruspay.bean.eventbus.mainpolling.MainPollingUserEvent;
@@ -31,11 +26,8 @@ import com.mchaw.tauruspay.common.util.PreferencesUtils;
 import com.mchaw.tauruspay.common.util.StringUtils;
 import com.mchaw.tauruspay.common.util.versionUtils;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
-import com.mchaw.tauruspay.main.MainActivity;
-import com.mchaw.tauruspay.service.AliAccessibilityService;
 import com.mchaw.tauruspay.ui.main.home.constract.HomeConstract;
 import com.mchaw.tauruspay.ui.main.home.forsale.ForSaleFragment;
-import com.mchaw.tauruspay.ui.main.home.forsale.dialog.ConfirmDialogFragment;
 import com.mchaw.tauruspay.ui.main.home.presenter.HomePresenter;
 import com.mchaw.tauruspay.ui.main.home.transferaccounts.TransferAccountsFragment;
 
@@ -45,8 +37,6 @@ import java.io.File;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static com.mchaw.tauruspay.base.dialog.BaseDialogFragment.DIALOG_CONFIRM;
 
 /**
  * @author : Bruce Lee
