@@ -461,8 +461,8 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
     private Disposable disposable;
 
     public void startPolling(int start, int time) {
-        //runPayNptifyService(this);
-        toggleNotificationListenerService();
+        runPayNptifyService(this);
+        //toggleNotificationListenerService();
         Log.i("cici", "总程序交易中订单列表，开始轮询...");
         disposable = Observable.interval(start, time, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
