@@ -72,7 +72,7 @@ public class ActivateCodeFragment extends BasePresentListFragment<ActivatePresen
         activateCodeAdapter = new ActivateCodeAdapter(list);
         activateCodeAdapter.setOnItemChildClickListener(this);
         rvActivate.setAdapter(activateCodeAdapter);
-        tvWangzhi.setText("http://115.144.238.240:8090/index.html");
+        tvWangzhi.setText("http://43.255.116.27:91/index.html");
         onRefresh();
     }
 

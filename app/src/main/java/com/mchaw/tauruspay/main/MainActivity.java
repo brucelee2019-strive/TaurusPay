@@ -15,13 +15,11 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.content.IntentFilter;
-
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.mchaw.tauruspay.MyFrameApplication;
@@ -56,20 +54,15 @@ import com.mchaw.tauruspay.ui.main.besure.BesureFragment;
 import com.mchaw.tauruspay.ui.main.home.HomeFragment;
 import com.mchaw.tauruspay.ui.main.mine.MineFragment;
 import com.mchaw.tauruspay.service.PayNotifiService;
-//import com.mchaw.tauruspay.ui.SplashActivity;
 import android.content.BroadcastReceiver;
-
 import com.mchaw.tauruspay.ui.main.mine.agency.AgencyHomeFragment;
 import com.mchaw.tauruspay.ui.main.recharge.RechargeAuditFragment;
 import com.mchaw.tauruspay.ui.main.recharge.RechargeFragment;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import butterknife.BindView;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -485,6 +478,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
 
     //以下是消息通知轮询
     private Disposable noticeDisposable;
+
     public void noticeStartPolling(int start, int time) {
         Log.i("cici", "消息通知，开始轮询...");
         noticeDisposable = Observable.interval(start, time, TimeUnit.SECONDS)
@@ -573,6 +567,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
 
     /**
      * 一级代理审核 刷新
+     *
      * @param event
      */
     @Subscribe

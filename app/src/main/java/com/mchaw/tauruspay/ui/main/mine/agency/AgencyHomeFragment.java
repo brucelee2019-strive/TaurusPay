@@ -107,7 +107,7 @@ public class AgencyHomeFragment extends BasePresentListFragment<AgencyListPresen
     @Override
     protected void initFragment() {
         super.initFragment();
-        tvDownLink.setText("http://115.144.238.240:8090/index.html");
+        tvDownLink.setText("http://43.255.116.27:91/index.html");
         rvAgencyList.setLayoutManager(new LinearLayoutManager(getContext()));
         agencyListAdapter = new AgencyListAdapter(list);
         agencyListAdapter.setOnItemChildClickListener(this);

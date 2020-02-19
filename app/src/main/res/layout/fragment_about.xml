@@ -42,7 +42,7 @@
             android:id="@+id/textView44"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="下载地址:http://115.144.238.240:8090/index.html"
+            android:text="下载地址:http://43.255.116.27:91/index.html"
             android:textColor="@color/color_black_0"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/textView7"

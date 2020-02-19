@@ -95,7 +95,7 @@ public class AgencyListFragment extends BasePresentListFragment<AgencyListPresen
         rvAgencyList.setAdapter(agencyListAdapter);
         tvLive.setText(MyFrameApplication.userType == 1 ? "(一级代理)" : "(二级代理)");
         //tvBroadcastCode.setText(MyFrameApplication.userInviteCode);
-        tvDownLink.setText("http://115.144.238.240:8090/index.html");
+        tvDownLink.setText("http://43.255.116.27:91/index.html");
         btnAgencyRule.setVisibility(MyFrameApplication.userType == 1 ? View.VISIBLE : View.GONE);
         if (MyFrameApplication.userType == 1) {
             for (int i = 0; i < MyFrameApplication.userRate; i++) {
