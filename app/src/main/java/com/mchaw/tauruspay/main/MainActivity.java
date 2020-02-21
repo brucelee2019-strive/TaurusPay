@@ -77,8 +77,6 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
     public static final int FRAGMENT_RECHARGE = 1;
     public static final int FRAGMENT_BESURE = 2;
     public static final int FRAGMENT_MINE = 3;
-
-    private MyReceiver receiver = null;
     private HomeFragment homeFragment;
     private RechargeFragment rechargeFragment;
     private RechargeAuditFragment rechargeAuditFragment;
@@ -110,12 +108,6 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
         bottomView.setOnNavigationItemSelectedListener(this);
 
         runPayNptifyService(this);
-        //注册广播接收器
-        receiver = new MyReceiver();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("com.mchaw.tauruspay.service.PayNotifiService");
-        MainActivity.this.registerReceiver(receiver, filter);
-
         showFragment(FRAGMENT_HOME);
         //动态权限申请
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {

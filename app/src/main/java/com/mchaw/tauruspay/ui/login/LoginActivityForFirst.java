@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -17,7 +18,9 @@ import com.azhon.appupdate.listener.OnDownloadListener;
 import com.azhon.appupdate.manager.DownloadManager;
 import com.mchaw.tauruspay.MyFrameApplication;
 import com.mchaw.tauruspay.R;
+import com.mchaw.tauruspay.base.activity.BasePresenterActivity;
 import com.mchaw.tauruspay.base.fragment.BasePresentFragment;
+import com.mchaw.tauruspay.base.fragment.helper.FragmentStartHelper;
 import com.mchaw.tauruspay.bean.login.LoginBean;
 import com.mchaw.tauruspay.bean.login.LoginOutBean;
 import com.mchaw.tauruspay.bean.updata.UpDataBean;
@@ -43,7 +46,7 @@ import butterknife.OnClick;
  * @date : 2019/12/18 15:18
  * @description:
  */
-public class LoginFragmentForFirst extends BasePresentFragment<LoginPresenter> implements LoginConstract.View, OnDownloadListener, View.OnClickListener, OnButtonClickListener {
+public class LoginActivityForFirst extends BasePresenterActivity<LoginPresenter> implements LoginConstract.View, OnDownloadListener, View.OnClickListener, OnButtonClickListener {
 
     @BindView(R.id.et_account)
     EditText etUserName;
@@ -61,29 +64,23 @@ public class LoginFragmentForFirst extends BasePresentFragment<LoginPresenter> i
     private int qzgx;
 
     @Override
-    protected int getContentViewId() {
+    public int getContentViewId() {
         return R.layout.fragment_login;
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        setUserVisibleHint(true);
-        super.onActivityCreated(savedInstanceState);
-    }
-
-    @Override
-    protected void initFragment() {
-        super.initFragment();
+    public void initActivity() {
+        super.initActivity();
         if (!notificationListenerEnable()) {
             NotifyDialog.showDialog(getSupportFragmentManager());
         }
-        tvVersion.setText("版本:v"+ versionUtils.getAppVersionName(getContext()));
+        tvVersion.setText("版本:v"+ versionUtils.getAppVersionName(this));
         presenter.getVersion();
     }
 
     @Override
-    public void injectFragmentComponent(ActivityComponent component) {
-        super.injectFragmentComponent(component);
+    public void injectActivityComponent(ActivityComponent component) {
+        super.injectActivityComponent(component);
         component.inject(this);
     }
 
@@ -95,12 +92,12 @@ public class LoginFragmentForFirst extends BasePresentFragment<LoginPresenter> i
         }
         MyFrameApplication.tokenStr = loginBean.getToken();
         MyFrameApplication.userType = loginBean.getType();
-        PreferencesUtils.putString(getContext(),"token",loginBean.getToken());
-        PreferencesUtils.putString(getContext(),"name",loginBean.getName());
-        PreferencesUtils.putString(getContext(),"payname",loginBean.getPayname());
-        Intent intent = new Intent(getActivity(), MainActivity.class);
+        PreferencesUtils.putString(this,"token",loginBean.getToken());
+        PreferencesUtils.putString(this,"name",loginBean.getName());
+        PreferencesUtils.putString(this,"payname",loginBean.getPayname());
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-        getActivity().finish();
+        this.finish();
     }
 
     @Override
@@ -125,7 +122,7 @@ public class LoginFragmentForFirst extends BasePresentFragment<LoginPresenter> i
         apkSize = upDataBean.getApkSize();
         download = upDataBean.getDownload();
         qzgx = upDataBean.getType();
-        if (versionUtils.getAppVersionCode(getContext()) < versionCode) {
+        if (versionUtils.getAppVersionCode(this) < versionCode) {
             startUpdate(versionCode, versionName, apkSize, description, download, qzgx);
         }
     }
@@ -144,11 +141,11 @@ public class LoginFragmentForFirst extends BasePresentFragment<LoginPresenter> i
                 login(etUserName.getText().toString(), "1234", etPasswd.getText().toString());
                 break;
             case R.id.tv_register:
-                startFragment(new RegisterFragment());
+                FragmentStartHelper.startFragment(this,new RegisterFragment());
                 break;
             case R.id.tv_find_password:
                 //startFragment(new PasswordFragment());
-                ToastUtils.showShortToast(getContext(),"请联系客服！");
+                ToastUtils.showShortToast(this,"请联系客服！");
                 break;
             default:
                 break;
@@ -157,23 +154,26 @@ public class LoginFragmentForFirst extends BasePresentFragment<LoginPresenter> i
 
     private void login(String username, String code, String passwd) {
         if (TextUtils.isEmpty(username)) {
-            ToastUtils.showShortToast(getContext(), "用户名不能为空！");
+            ToastUtils.showShortToast(this, "用户名不能为空！");
             return;
         }
         if (TextUtils.isEmpty(passwd)) {
-            ToastUtils.showShortToast(getContext(), "密码不能为空！");
+            ToastUtils.showShortToast(this, "密码不能为空！");
             return;
         }
         if (TextUtils.isEmpty(code)) {
-            ToastUtils.showShortToast(getContext(), "验证码不能为空！");
+            ToastUtils.showShortToast(this, "验证码不能为空！");
             return;
         }
         presenter.getLoginBean(username, code, passwd,MyFrameApplication.pIp);
-        LoadingDialog.showDialog(getChildFragmentManager());
+        LoadingDialog.showDialog(getSupportFragmentManager());
     }
 
     @Override
-    public boolean onBackPressed() {
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            return true;
+        }
         return false;
     }
 
@@ -204,7 +204,7 @@ public class LoginFragmentForFirst extends BasePresentFragment<LoginPresenter> i
                 //设置强制更新
                 .setForcedUpgrade(qzgx == 1 ? true : false);
 
-        manager = DownloadManager.getInstance(getContext());
+        manager = DownloadManager.getInstance(this);
         manager.setApkName("jnhf025.apk")
                 .setApkUrl(download)
                 .setSmallIcon(R.mipmap.ic_launcher)
@@ -213,7 +213,7 @@ public class LoginFragmentForFirst extends BasePresentFragment<LoginPresenter> i
                 .setApkVersionCode(versionCode)
                 .setApkVersionName(versionName)
                 .setApkSize(apkSize)
-                .setAuthorities(getContext().getPackageName())
+                .setAuthorities(this.getPackageName())
                 .setApkDescription(description)
                 .download();
     }
@@ -251,8 +251,8 @@ public class LoginFragmentForFirst extends BasePresentFragment<LoginPresenter> i
 
     private boolean notificationListenerEnable() {
         boolean enable = false;
-        String packageName = getActivity().getPackageName();
-        String flat= Settings.Secure.getString(getActivity().getContentResolver(),"enabled_notification_listeners");
+        String packageName = this.getPackageName();
+        String flat= Settings.Secure.getString(this.getContentResolver(),"enabled_notification_listeners");
         if (flat != null) {
             enable= flat.contains(packageName);
         }

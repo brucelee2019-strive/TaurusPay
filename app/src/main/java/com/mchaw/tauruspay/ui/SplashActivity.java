@@ -12,11 +12,10 @@ import com.mchaw.tauruspay.base.activity.BasePresenterActivity;
 import com.mchaw.tauruspay.base.fragment.helper.FragmentStartHelper;
 import com.mchaw.tauruspay.bean.home.UserBean;
 import com.mchaw.tauruspay.bean.updata.UpDataBean;
-import com.mchaw.tauruspay.common.util.ToastUtils;
 import com.mchaw.tauruspay.main.MainActivity;
 import com.mchaw.tauruspay.R;
 import com.mchaw.tauruspay.di.component.ActivityComponent;
-import com.mchaw.tauruspay.ui.login.LoginFragmentForFirst;
+import com.mchaw.tauruspay.ui.login.LoginActivityForFirst;
 import com.mchaw.tauruspay.ui.main.home.constract.HomeConstract;
 import com.mchaw.tauruspay.ui.main.home.presenter.HomePresenter;
 
@@ -64,7 +63,8 @@ public class SplashActivity extends BasePresenterActivity<HomePresenter> impleme
         new Handler().postDelayed(new Runnable() {
             public void run() {
                 if (TextUtils.isEmpty(MyFrameApplication.tokenStr)) {
-                    FragmentStartHelper.startFragment(SplashActivity.this, new LoginFragmentForFirst());
+                    Intent intent = new Intent(SplashActivity.this, LoginActivityForFirst.class);
+                    startActivity(intent);
                     SplashActivity.this.finish();
                 } else {
                     Intent intent = new Intent(SplashActivity.this, MainActivity.class);
