@@ -38,11 +38,9 @@ public class PayNotifiService extends NotificationListenerService {
     Handler mHandler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message msg) {
-            if (msg.what == 0) {
                 //String msgString = (String) msg.obj;
                 //Toast.makeText(getApplicationContext(), msgString, Toast.LENGTH_LONG).show();
                 toggleNotificationListenerService();
-            }
         }
     };
 
@@ -102,6 +100,13 @@ public class PayNotifiService extends NotificationListenerService {
         } catch (Exception e) {
             //Toast.makeText(PayNotifiService.this, "不可解析的通知", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        Message message = new Message();
+        mHandler.sendMessage(message);
+        super.onDestroy();
     }
 
     private void writeData(String str) {
